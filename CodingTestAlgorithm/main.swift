@@ -62,3 +62,14 @@ let arr = [1, 2, 3, 4]
 var k = arr.reduce(0, +)
 print(Double(k) / Double(arr.count))
 
+// MARK: - LV1 x만큼 간격이 있는 n개의 숫자
+let x = -2
+let n = 5
+
+var newArr = Array(repeating: 0, count: n)
+for i in 1...n {
+    newArr[i-1] = x*(i)
+}
+print(newArr)
+
+print(Array(1...5).map{ Int64($0 * x)})
