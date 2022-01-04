@@ -80,5 +80,13 @@ import Foundation
 
 // MARK: - LV1 핸드폰 번호 가리기
 
-let phoneNum: String = "01033334444"
-print(String(repeating: "*", count: phoneNum.count - 4) + phoneNum.suffix(4))
+//let phoneNum: String = "01033334444"
+//print(String(repeating: "*", count: phoneNum.count - 4) + phoneNum.suffix(4))
+
+// MARK: - LV1 하샤드 수
+
+let x: Int = 13
+var a: Int = 0
+print((x % String(x).map { Int(String($0))! }.reduce(0, +) == 0) ? true : false)
+
+
