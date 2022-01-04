@@ -91,30 +91,50 @@ import Foundation
 
 // MARK: - LV1 콜라츠 추측
 
-var num: Int = 626331
-var count: Int = 0
+//var num: Int = 626331
+//var count: Int = 0
+//
+//if num == 1 {
+//    print(1)
+//}
+//while count <= 500 {
+//    if num % 2 == 0 {
+//        num = num / 2
+//    } else {
+//        num = (num * 3) + 1
+//    }
+//
+//    count += 1
+//
+//    if num == 1 {
+//        print(count)
+//        break
+//    }
+//
+//    if count > 500 {
+//        print(-1)
+//        break
+//    }
+//
+//
+//}
 
-if num == 1 {
-    print(1)
+
+// MARK: - LV1 최대공약수와 최소공배수
+
+
+func gcd(_ a: Int, _ b: Int) -> Int {
+    let k: Int = a % b
+    return k == 0 ? min(a, b) : gcd(b, k)
 }
-while count <= 500 {
-    if num % 2 == 0 {
-        num = num / 2
-    } else {
-        num = (num * 3) + 1
-    }
-    
-    count += 1
-    
-    if num == 1 {
-        print(count)
-        break
-    }
-    
-    if count > 500 {
-        print(-1)
-        break
-    }
-    
-    
+
+func lcm(_ a: Int, _ b: Int) -> Int {
+    return a * b / gcd(a, b)
 }
+
+func solution(_ a: Int, _ b: Int) -> [Int] {
+    return [gcd(a, b), lcm(a, b)]
+}
+
+print(solution(2, 5))
+
