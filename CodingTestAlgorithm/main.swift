@@ -85,8 +85,36 @@ import Foundation
 
 // MARK: - LV1 하샤드 수
 
-let x: Int = 13
-var a: Int = 0
-print((x % String(x).map { Int(String($0))! }.reduce(0, +) == 0) ? true : false)
+//let x: Int = 13
+//var a: Int = 0
+//print((x % String(x).map { Int(String($0))! }.reduce(0, +) == 0) ? true : false)
 
+// MARK: - LV1 콜라츠 추측
 
+var num: Int = 626331
+var count: Int = 0
+
+if num == 1 {
+    print(1)
+}
+while count <= 500 {
+    if num % 2 == 0 {
+        num = num / 2
+    } else {
+        num = (num * 3) + 1
+    }
+    
+    count += 1
+    
+    if num == 1 {
+        print(count)
+        break
+    }
+    
+    if count > 500 {
+        print(-1)
+        break
+    }
+    
+    
+}
