@@ -8,6 +8,7 @@
 import Foundation
 
 // MARK: - LV1 직사각형 별찍기
+
 //let n = readLine()!.components(separatedBy: [" "]).map { Int($0)! }
 //let (a, b) = (n[0], n[1])
 //
@@ -25,6 +26,7 @@ import Foundation
 //}
 
 // MARK: - LV1 행렬의 덧셈
+
 //let arr1 = [[1,2],[2,3]]
 //let arr2 = [[3,4],[5,6]]
 //
@@ -57,19 +59,26 @@ import Foundation
 //}
 
 // MARK: - LV1 평균 구하기
-let arr = [1, 2, 3, 4]
 
-var k = arr.reduce(0, +)
-print(Double(k) / Double(arr.count))
+//let arr = [1, 2, 3, 4]
+//
+//var k = arr.reduce(0, +)
+//print(Double(k) / Double(arr.count))
 
 // MARK: - LV1 x만큼 간격이 있는 n개의 숫자
-let x = -2
-let n = 5
 
-var newArr = Array(repeating: 0, count: n)
-for i in 1...n {
-    newArr[i-1] = x*(i)
-}
-print(newArr)
+//let x = -2
+//let n = 5
+//
+//var newArr = Array(repeating: 0, count: n)
+//for i in 1...n {
+//    newArr[i-1] = x*(i)
+//}
+//print(newArr)
+//
+//print(Array(1...5).map{ Int64($0 * x)})
 
-print(Array(1...5).map{ Int64($0 * x)})
+// MARK: - LV1 핸드폰 번호 가리기
+
+let phoneNum: String = "01033334444"
+print(String(repeating: "*", count: phoneNum.count - 4) + phoneNum.suffix(4))
