@@ -155,14 +155,19 @@ import Foundation
 
 // MARK: - LV1 정수 제곱근 판별
 
+//func solution(_ n: Int64) -> Int64 {
+//    let result = Int64(sqrt(Double(n)))
+//    print(type(of: result * result == n ? (result + 1) * (result + 1) : -1))
+//    return result * result == n ? (result + 1) * (result + 1) : -1
+//}
+//
+//print(solution(121))
+
+// MARK: - LV1 정수 내림차순으로 배치하기
+
 func solution(_ n: Int64) -> Int64 {
-    let result = Int64(sqrt(Double(n)))
-    print(type(of: result * result == n ? (result + 1) * (result + 1) : -1))
-    return result * result == n ? (result + 1) * (result + 1) : -1
+    
+    return Int64(String(n).map{String($0)}.sorted(by: >).joined(separator: ""))!
 }
 
-print(solution(121))
-
-
-
-
+print(solution(123))
