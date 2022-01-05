@@ -139,7 +139,18 @@ import Foundation
 //print(solution(2, 5))
 
 // MARK: - LV1 짝수와 홀수
-func solution(_ num: Int) -> String {
-    return num % 2 == 0 ? "Even" : "Odd"
-    
+
+//func solution(_ num: Int) -> String {
+//    return num % 2 == 0 ? "Even" : "Odd"
+//
+//}
+
+// MARK: - LV1 제일 작은 수 제거하기
+
+func solution(_ arr: [Int]) -> [Int] {
+    var newArr = arr
+    newArr.remove(at: newArr.firstIndex(of: newArr.min()!)!)
+    return newArr.count == 0 ? [-1] : newArr
 }
+
+
