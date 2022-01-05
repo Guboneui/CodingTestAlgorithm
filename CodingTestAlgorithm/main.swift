@@ -123,18 +123,23 @@ import Foundation
 // MARK: - LV1 최대공약수와 최소공배수
 
 
-func gcd(_ a: Int, _ b: Int) -> Int {
-    let k: Int = a % b
-    return k == 0 ? min(a, b) : gcd(b, k)
+//func gcd(_ a: Int, _ b: Int) -> Int {
+//    let k: Int = a % b
+//    return k == 0 ? min(a, b) : gcd(b, k)
+//}
+//
+//func lcm(_ a: Int, _ b: Int) -> Int {
+//    return a * b / gcd(a, b)
+//}
+//
+//func solution(_ a: Int, _ b: Int) -> [Int] {
+//    return [gcd(a, b), lcm(a, b)]
+//}
+//
+//print(solution(2, 5))
+
+// MARK: - LV1 짝수와 홀수
+func solution(_ num: Int) -> String {
+    return num % 2 == 0 ? "Even" : "Odd"
+    
 }
-
-func lcm(_ a: Int, _ b: Int) -> Int {
-    return a * b / gcd(a, b)
-}
-
-func solution(_ a: Int, _ b: Int) -> [Int] {
-    return [gcd(a, b), lcm(a, b)]
-}
-
-print(solution(2, 5))
-
