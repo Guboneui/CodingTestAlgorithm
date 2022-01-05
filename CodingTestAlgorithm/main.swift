@@ -147,10 +147,22 @@ import Foundation
 
 // MARK: - LV1 제일 작은 수 제거하기
 
-func solution(_ arr: [Int]) -> [Int] {
-    var newArr = arr
-    newArr.remove(at: newArr.firstIndex(of: newArr.min()!)!)
-    return newArr.count == 0 ? [-1] : newArr
+//func solution(_ arr: [Int]) -> [Int] {
+//    var newArr = arr
+//    newArr.remove(at: newArr.firstIndex(of: newArr.min()!)!)
+//    return newArr.count == 0 ? [-1] : newArr
+//}
+
+// MARK: - LV1 정수 제곱근 판별
+
+func solution(_ n: Int64) -> Int64 {
+    let result = Int64(sqrt(Double(n)))
+    print(type(of: result * result == n ? (result + 1) * (result + 1) : -1))
+    return result * result == n ? (result + 1) * (result + 1) : -1
 }
+
+print(solution(121))
+
+
 
 
