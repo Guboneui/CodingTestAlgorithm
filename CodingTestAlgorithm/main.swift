@@ -239,3 +239,10 @@ func solution(_ n:Int) -> Int {
 }
 
 print(solution(12))
+
+func solution2(_ n: Int) -> Int {
+    guard n != 0 else { return 0 }
+    return Array(1...n).filter{n % $0 == 0}.reduce(0, +)
+}
+
+print(solution2(12))
