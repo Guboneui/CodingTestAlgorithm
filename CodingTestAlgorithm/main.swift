@@ -191,31 +191,51 @@ import Foundation
 
 // MARK: - LV1 이상한 문자 만들기
 
-func solution(_ s:String) -> String {
-    var k = s.components(separatedBy: " ")
-    if k.count == 0 {
-        return ""
-    } else {
-        for i in 0..<k.count {
-            var result: String = ""
-            for j in 0..<k[i].count {
-                var text: String = ""
-                let index = k[i].index(k[i].startIndex, offsetBy: j)
-                if j % 2 == 0 {
-                    text = String(k[i][index].uppercased())
-                } else {
-                    text = String(k[i][index].lowercased())
-                }
-                result += text
-            }
-            k[i] = result
-        }
+//func solution(_ s:String) -> String {
+//    var k = s.components(separatedBy: " ")
+//    if k.count == 0 {
+//        return ""
+//    } else {
+//        for i in 0..<k.count {
+//            var result: String = ""
+//            for j in 0..<k[i].count {
+//                var text: String = ""
+//                let index = k[i].index(k[i].startIndex, offsetBy: j)
+//                if j % 2 == 0 {
+//                    text = String(k[i][index].uppercased())
+//                } else {
+//                    text = String(k[i][index].lowercased())
+//                }
+//                result += text
+//            }
+//            k[i] = result
+//        }
+//
+//        return k.joined(separator: " ")
+//    }
+//
+//
+//}
+//print(solution("abc abc"))
 
-        return k.joined(separator: " ")
-    }
+
+// MARK: - LV1 약수의 합
+
+func solution(_ n:Int) -> Int {
     
+    var list: [Int] = []
+    if n == 0 {
+        return 0
+    } else {
+        for i in 1...n {
+            if n % i == 0 {
+                list.append(i)
+            }
+        }
+        
+        return list.reduce(0, +)
+    }
     
 }
 
-
-print(solution("abc abc"))
+print(solution(12))
