@@ -172,11 +172,19 @@ import Foundation
 //
 //print(solution(123))
 
-// MARK: - 자연수 뒤집어 배열로 만들기
+// MARK: - LV1 자연수 뒤집어 배열로 만들기
 
-func solution(_ n: Int64) -> [Int] {
-    return String(n).map{Int(String($0))!}.reversed()
+//func solution(_ n: Int64) -> [Int] {
+//    return String(n).map{Int(String($0))!}.reversed()
+//}
+//
+//print(solution(12345))
+
+// MARK: - LV1 자릿수 더하기
+
+func solution(_ n: Int) -> Int {
+    
+    return String(n).map{Int(String($0))!}.reduce(0, +)
 }
 
-print(solution(12345))
-
+print(solution(987))
