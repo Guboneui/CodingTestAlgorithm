@@ -182,9 +182,40 @@ import Foundation
 
 // MARK: - LV1 자릿수 더하기
 
-func solution(_ n: Int) -> Int {
+//func solution(_ n: Int) -> Int {
+//
+//    return String(n).map{Int(String($0))!}.reduce(0, +)
+//}
+//
+//print(solution(987))
+
+// MARK: - LV1 이상한 문자 만들기
+
+func solution(_ s:String) -> String {
+    var k = s.components(separatedBy: " ")
+    if k.count == 0 {
+        return ""
+    } else {
+        for i in 0..<k.count {
+            var result: String = ""
+            for j in 0..<k[i].count {
+                var text: String = ""
+                let index = k[i].index(k[i].startIndex, offsetBy: j)
+                if j % 2 == 0 {
+                    text = String(k[i][index].uppercased())
+                } else {
+                    text = String(k[i][index].lowercased())
+                }
+                result += text
+            }
+            k[i] = result
+        }
+
+        return k.joined(separator: " ")
+    }
     
-    return String(n).map{Int(String($0))!}.reduce(0, +)
+    
 }
 
-print(solution(987))
+
+print(solution("abc abc"))
