@@ -165,9 +165,18 @@ import Foundation
 
 // MARK: - LV1 정수 내림차순으로 배치하기
 
-func solution(_ n: Int64) -> Int64 {
-    
-    return Int64(String(n).map{String($0)}.sorted(by: >).joined(separator: ""))!
+//func solution(_ n: Int64) -> Int64 {
+//
+//    return Int64(String(n).map{String($0)}.sorted(by: >).joined(separator: ""))!
+//}
+//
+//print(solution(123))
+
+// MARK: - 자연수 뒤집어 배열로 만들기
+
+func solution(_ n: Int64) -> [Int] {
+    return String(n).map{Int(String($0))!}.reversed()
 }
 
-print(solution(123))
+print(solution(12345))
+
