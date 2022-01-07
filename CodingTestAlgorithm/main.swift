@@ -221,28 +221,37 @@ import Foundation
 
 // MARK: - LV1 약수의 합
 
-func solution(_ n:Int) -> Int {
+//func solution(_ n:Int) -> Int {
+//
+//    var list: [Int] = []
+//    if n == 0 {
+//        return 0
+//    } else {
+//        for i in 1...n {
+//            if n % i == 0 {
+//                list.append(i)
+//            }
+//        }
+//
+//        return list.reduce(0, +)
+//    }
+//
+//}
+//
+//print(solution(12))
+//
+//func solution2(_ n: Int) -> Int {
+//    guard n != 0 else { return 0 }
+//    return Array(1...n).filter{n % $0 == 0}.reduce(0, +)
+//}
+//
+//print(solution2(12))
+
+// MARK: - LV1 문자열을 정수로 바꾸기
+
+func solution(_ s: String) -> Int {
     
-    var list: [Int] = []
-    if n == 0 {
-        return 0
-    } else {
-        for i in 1...n {
-            if n % i == 0 {
-                list.append(i)
-            }
-        }
-        
-        return list.reduce(0, +)
-    }
-    
+    return Int(s)!
 }
 
-print(solution(12))
-
-func solution2(_ n: Int) -> Int {
-    guard n != 0 else { return 0 }
-    return Array(1...n).filter{n % $0 == 0}.reduce(0, +)
-}
-
-print(solution2(12))
+print(solution("-1234"))
