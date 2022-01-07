@@ -317,8 +317,17 @@ import Foundation
 
 // MARK: - LV1 문자열 내 p와 y의 개수
 
-func solution(_ s: String) -> Bool {
-    return s.lowercased().filter{$0 == "p"}.count == s.lowercased().filter{$0 == "y"}.count
-}
+//func solution(_ s: String) -> Bool {
+//    return s.lowercased().filter{$0 == "p"}.count == s.lowercased().filter{$0 == "y"}.count
+//}
+//
+//print(solution("pPoooyY"))
 
-print(solution("pPoooyY"))
+// MARK: - LV1 두 정수 사이의 합
+
+func solution(_ a: Int, _ b: Int) -> Int64 {
+    return Int64(Array(a > b ? b...a : a...b).reduce(0, +))
+}
+print(solution(2, 5))
+print(Array(2...5))
+
