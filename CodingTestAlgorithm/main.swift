@@ -295,11 +295,12 @@ import Foundation
 // MARK: - LV1 문자열 다루기 기본
 
 func solution(_ s: String) -> Bool {
-    if s.count == 4 || s.count == 6 {
-        return s.map{Int(String($0))}.contains(nil) ? false : true
-    } else {
-        return false
-    }
+//    if s.count == 4 || s.count == 6 {
+//        return s.map{Int(String($0))}.contains(nil) ? false : true
+//    } else {
+//        return false
+//    }
+    return (Int(s) != nil && (s.count == 4 || s.count == 6)) ? true : false
 }
 
 print(solution("a234"))
