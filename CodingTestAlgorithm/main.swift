@@ -249,9 +249,17 @@ import Foundation
 
 // MARK: - LV1 문자열을 정수로 바꾸기
 
-func solution(_ s: String) -> Int {
-    
-    return Int(s)!
+//func solution(_ s: String) -> Int {
+//
+//    return Int(s)!
+//}
+//
+//print(solution("-1234"))
+
+// MARK: - LV1 수박수박수박수박수박수?
+
+func solution(_ n: Int) -> String {
+    return String(repeating: "수박", count: n / 2)+"\(n % 2 == 0 ? "" : "수")"
 }
 
-print(solution("-1234"))
+print(solution(5))
