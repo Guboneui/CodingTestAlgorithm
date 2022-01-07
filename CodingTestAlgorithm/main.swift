@@ -307,10 +307,18 @@ import Foundation
 
 // MARK: - LV1 문자열 내림차순으로 정렬
 
-func solution(_ s: String) -> String {
-    // 방법 1
-    // return s.map{String($0)}.sorted(by: >).joined(separator: "")
-    
-    return String(s.sorted(by: >))
+//func solution(_ s: String) -> String {
+//    // 방법 1
+//    // return s.map{String($0)}.sorted(by: >).joined(separator: "")
+//
+//    return String(s.sorted(by: >))
+//}
+//solution("Zbcdefg")
+
+// MARK: - LV1 문자열 내 p와 y의 개수
+
+func solution(_ s: String) -> Bool {
+    return s.lowercased().filter{$0 == "p"}.count == s.lowercased().filter{$0 == "y"}.count
 }
-solution("Zbcdefg")
+
+print(solution("pPoooyY"))
