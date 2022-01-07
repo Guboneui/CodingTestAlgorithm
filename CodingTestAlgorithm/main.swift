@@ -266,21 +266,28 @@ import Foundation
 
 // MARK: - LV1 소수 찾기
 
-func solution(_ n: Int) -> Int {
-    var numberArray = Array(repeating: 0, count: n+1)
-    var count = 0
-    
-    for i in 2...n {
-        if numberArray[i] == 0 {
-            count += 1
-        }
-        
-        for i in stride(from: i, through: n, by: i) {
-            numberArray[i] = 1
-        }
-    }
-    return count
+//func solution(_ n: Int) -> Int {
+//    var numberArray = Array(repeating: 0, count: n+1)
+//    var count = 0
+//
+//    for i in 2...n {
+//        if numberArray[i] == 0 {
+//            count += 1
+//        }
+//
+//        for i in stride(from: i, through: n, by: i) {
+//            numberArray[i] = 1
+//        }
+//    }
+//    return count
+//}
+//
+//print(solution(5))
+
+// MARK: - LV1 서울에서 김서방 찾기
+
+func solution(_ seoul: [String]) -> String {
+    return "김서방은 \(seoul.firstIndex(of: "Kim")!)에 있다"
 }
 
-print(solution(5))
-
+print(solution(["Jane", "Kim"]))
