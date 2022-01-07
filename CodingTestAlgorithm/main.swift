@@ -294,13 +294,23 @@ import Foundation
 
 // MARK: - LV1 문자열 다루기 기본
 
-func solution(_ s: String) -> Bool {
-//    if s.count == 4 || s.count == 6 {
-//        return s.map{Int(String($0))}.contains(nil) ? false : true
-//    } else {
-//        return false
-//    }
-    return (Int(s) != nil && (s.count == 4 || s.count == 6)) ? true : false
-}
+//func solution(_ s: String) -> Bool {
+////    if s.count == 4 || s.count == 6 {
+////        return s.map{Int(String($0))}.contains(nil) ? false : true
+////    } else {
+////        return false
+////    }
+//    return (Int(s) != nil && (s.count == 4 || s.count == 6)) ? true : false
+//}
+//
+//print(solution("a234"))
 
-print(solution("a234"))
+// MARK: - LV1 문자열 내림차순으로 정렬
+
+func solution(_ s: String) -> String {
+    // 방법 1
+    // return s.map{String($0)}.sorted(by: >).joined(separator: "")
+    
+    return String(s.sorted(by: >))
+}
+solution("Zbcdefg")
