@@ -286,8 +286,20 @@ import Foundation
 
 // MARK: - LV1 서울에서 김서방 찾기
 
-func solution(_ seoul: [String]) -> String {
-    return "김서방은 \(seoul.firstIndex(of: "Kim")!)에 있다"
+//func solution(_ seoul: [String]) -> String {
+//    return "김서방은 \(seoul.firstIndex(of: "Kim")!)에 있다"
+//}
+//
+//print(solution(["Jane", "Kim"]))
+
+// MARK: - LV1 문자열 다루기 기본
+
+func solution(_ s: String) -> Bool {
+    if s.count == 4 || s.count == 6 {
+        return s.map{Int(String($0))}.contains(nil) ? false : true
+    } else {
+        return false
+    }
 }
 
-print(solution(["Jane", "Kim"]))
+print(solution("a234"))
