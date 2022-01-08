@@ -369,13 +369,28 @@ import Foundation
 
 // MARK: - LV1 부족한 금액 계산하기
 
-func solution(_ price: Int, _ money: Int, _ count: Int) -> Int64 {
-    var arr: [Int] = []
-    for i in 1...count {
-        arr.append(price * i)
-    }
+//func solution(_ price: Int, _ money: Int, _ count: Int) -> Int64 {
+//    var arr: [Int] = []
+//    for i in 1...count {
+//        arr.append(price * i)
+//    }
+//
+//    return money - arr.reduce(0, +) < 0 ? Int64(arr.reduce(0, +) - money) : 0
+//}
+//
+//print(solution(3, 20, 4))
+
+// MARK: - LV1 나머지가 1이 되는 수 찾기
+
+func solution(_ n: Int) -> Int {
     
-    return money - arr.reduce(0, +) < 0 ? Int64(arr.reduce(0, +) - money) : 0
+    var result: [Int] = []
+    for i in 2...n-1 {
+        if (n-1) % i == 0 {
+            result.append(i)
+        }
+    }
+    return result[0]
 }
 
-print(solution(3, 20, 4))
+solution(12)
