@@ -474,10 +474,36 @@ import Foundation
 
 // MARK: - LV1 3진법 뒤집기
 
-func solution(_ n: Int) -> Int {
-    var result = String(n, radix: 3)
-    var answer = Int(String(result.reversed()), radix: 3)!
-    return answer
+//func solution(_ n: Int) -> Int {
+//    var result = String(n, radix: 3)
+//    var answer = Int(String(result.reversed()), radix: 3)!
+//    return answer
+//}
+//
+//print(solution(45))
+
+// MARK: - LV1 약수의 개수와 덧셈
+
+func solution(_ left: Int, _ right: Int) -> Int {
+//    var result = 0
+//    for i in left...right{
+//        var arr: [Int] = []
+//        for j in 1...i {
+//            if i%j == 0 {
+//                arr.append(j)
+//            }
+//        }
+//        if arr.count % 2 == 0 {
+//            result += i
+//        } else {
+//            result -= i
+//        }
+//    }
+//
+//    return result
+    
+    return Array(left...right).map{ i in (1...i).filter{ i % $0 == 0}.count%2 == 0 ? i : -i}.reduce(0, +)
+    
 }
 
-print(solution(45))
+print(solution(13, 17))
