@@ -325,9 +325,30 @@ import Foundation
 
 // MARK: - LV1 두 정수 사이의 합
 
-func solution(_ a: Int, _ b: Int) -> Int64 {
-    return Int64(Array(a > b ? b...a : a...b).reduce(0, +))
-}
-print(solution(2, 5))
-print(Array(2...5))
+//func solution(_ a: Int, _ b: Int) -> Int64 {
+//    return Int64(Array(a > b ? b...a : a...b).reduce(0, +))
+//}
+//print(solution(2, 5))
+//print(Array(2...5))
 
+// MARK: - LV1 나누어 떨어지는 숫자 배열
+
+func solution(_ arr: [Int], _ divisor: Int) -> [Int] {
+//    var result: [Int] = []
+//    arr.map {
+//        if $0 % divisor == 0 {
+//            result.append($0)
+//        }
+//    }
+//
+//    if result.count == 0 {
+//        return [-1]
+//    } else {
+//        return result.sorted()
+//    }
+    
+    let result = arr.filter{$0 % divisor == 0}.sorted()
+    return result == [] ? [-1] : result
+}
+
+print(solution([5, 9, 7, 10], 5))
