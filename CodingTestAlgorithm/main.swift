@@ -355,14 +355,27 @@ import Foundation
 
 // MARK: - LV1 가운데 글자 가져오기
 
-func solution(_ s: String) -> String {
-    
-    if s.count % 2 != 0 {
-        return String(Array(s)[s.count / 2])
-    } else {
-        return String(Array(s)[(s.count / 2) - 1 ... s.count / 2])
-    }
+//func solution(_ s: String) -> String {
+//
+//    if s.count % 2 != 0 {
+//        return String(Array(s)[s.count / 2])
+//    } else {
+//        return String(Array(s)[(s.count / 2) - 1 ... s.count / 2])
+//    }
+//
+//}
+//
+//print(solution("qwer"))
 
+// MARK: - LV1 부족한 금액 계산하기
+
+func solution(_ price: Int, _ money: Int, _ count: Int) -> Int64 {
+    var arr: [Int] = []
+    for i in 1...count {
+        arr.append(price * i)
+    }
+    
+    return money - arr.reduce(0, +) < 0 ? Int64(arr.reduce(0, +) - money) : 0
 }
 
-print(solution("qwer"))
+print(solution(3, 20, 4))
