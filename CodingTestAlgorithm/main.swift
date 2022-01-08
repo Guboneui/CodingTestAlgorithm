@@ -397,7 +397,7 @@ import Foundation
 
 // MARK: - LV1 최소직사각형
 
-func solution(_ sizes: [[Int]]) -> Int {
+//func solution(_ sizes: [[Int]]) -> Int {
 //    var arr: [[Int]] = sizes
 //    for i in 0..<sizes.count {
 //        var k = sizes[i]
@@ -427,9 +427,22 @@ func solution(_ sizes: [[Int]]) -> Int {
 //
 //    return width.max()! * height.max()!
     
-    let arr = sizes.map{$0.sorted()}
-    return arr.map{$0[0]}.max()! * arr.map{$0[1]}.max()!
+//    let arr = sizes.map{$0.sorted()}
+//    return arr.map{$0[0]}.max()! * arr.map{$0[1]}.max()!
+//}
+//
+//print(solution([[60, 50], [30, 70], [60, 30], [80, 40]]))
+
+// MARK: - LV1 두 개 뽑아서 더하기
+
+func solution(_ numbers: [Int]) -> [Int] {
+    var result: [Int] = []
+    for i in 0..<numbers.count{
+        for j in i+1..<numbers.count{
+            result.append(numbers[i] + numbers[j])
+        }
+    }
+    return Set(result).sorted()
 }
 
-print(solution([[60, 50], [30, 70], [60, 30], [80, 40]]))
-
+print(Array(5..<5))
