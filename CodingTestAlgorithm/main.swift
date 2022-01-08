@@ -382,15 +382,54 @@ import Foundation
 
 // MARK: - LV1 나머지가 1이 되는 수 찾기
 
-func solution(_ n: Int) -> Int {
+//func solution(_ n: Int) -> Int {
+//
+//    var result: [Int] = []
+//    for i in 2...n-1 {
+//        if (n-1) % i == 0 {
+//            result.append(i)
+//        }
+//    }
+//    return result[0]
+//}
+//
+//solution(12)
+
+// MARK: - LV1 최소직사각형
+
+func solution(_ sizes: [[Int]]) -> Int {
+//    var arr: [[Int]] = sizes
+//    for i in 0..<sizes.count {
+//        var k = sizes[i]
+//        var first = k[0]
+//        var second = k[1]
+//        if first < second {
+//            arr[i][0] = second
+//            arr[i][1] = first
+//        }
+//
+//    }
+//    print(arr)
+//
+//    var result = arr.flatMap{$0}
+//    var width: [Int] = []
+//    var height: [Int] = []
+//
+//    for i in 0..<result.count {
+//        if i % 2 == 0 {
+//            width.append(result[i])
+//        } else {
+//            height.append(result[i])
+//        }
+//    }
+//
+//
+//
+//    return width.max()! * height.max()!
     
-    var result: [Int] = []
-    for i in 2...n-1 {
-        if (n-1) % i == 0 {
-            result.append(i)
-        }
-    }
-    return result[0]
+    let arr = sizes.map{$0.sorted()}
+    return arr.map{$0[0]}.max()! * arr.map{$0[1]}.max()!
 }
 
-solution(12)
+print(solution([[60, 50], [30, 70], [60, 30], [80, 40]]))
+
