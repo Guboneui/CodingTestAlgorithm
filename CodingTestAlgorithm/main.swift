@@ -435,14 +435,39 @@ import Foundation
 
 // MARK: - LV1 두 개 뽑아서 더하기
 
-func solution(_ numbers: [Int]) -> [Int] {
-    var result: [Int] = []
-    for i in 0..<numbers.count{
-        for j in i+1..<numbers.count{
-            result.append(numbers[i] + numbers[j])
-        }
-    }
-    return Set(result).sorted()
+//func solution(_ numbers: [Int]) -> [Int] {
+//    var result: [Int] = []
+//    for i in 0..<numbers.count{
+//        for j in i+1..<numbers.count{
+//            result.append(numbers[i] + numbers[j])
+//        }
+//    }
+//    return Set(result).sorted()
+//}
+//
+//print(Array(5..<5))
+
+
+// MARK: - LV1 2016년
+
+func solution(_ a: Int, _ b: Int) -> String {
+    let month: [Int] = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    let day: [String] = ["THU", "FRI", "SAT", "SUN", "MON","TUE", "WED"]
+//
+//    if a == 1 {
+//        return day[b%7]
+//    } else if a == 2{
+//        return day[(31 + b) % 7]
+//    } else {
+//        var result = 0
+//        for i in 0...a-2 {
+//            result += month[i]
+//        }
+//        return day[(result + b) % 7]
+//    }
+    
+    let totalDay = month[0..<a-1].reduce(0, +) + b
+    return day[totalDay%7]
 }
 
-print(Array(5..<5))
+print(solution(5, 24))
