@@ -622,50 +622,79 @@ import Foundation
 
 // MARK: - LV1 신규 아이디 추천
 
-func solution(_ new_id: String) -> String {
-    var text = new_id.lowercased()
+//func solution(_ new_id: String) -> String {
+//    var text = new_id.lowercased()
+//
+//    var result: String = ""
+//
+//    for i in text {
+//        if i.isLetter || i.isNumber || i == "." || i == "-" || i == "_" {
+//            result.append(i)
+//        }
+//    }
+//
+//    while result.contains("..") {
+//        result = result.replacingOccurrences(of: "..", with: ".")
+//    }
+//
+//
+//    while result.hasPrefix(".") {
+//        result.removeFirst()
+//    }
+//
+//    while result.hasSuffix(".") {
+//        result.removeLast()
+//    }
+//
+//    if result == "" {
+//        result = "a"
+//    }
+//
+//    if result.count > 15 {
+//        let index = result.index(result.startIndex, offsetBy: 15)
+//        result = String(result[result.startIndex..<index])
+//        if result.hasSuffix(".") {
+//            result.removeLast()
+//        }
+//    }
+//
+//    if result.count < 3 {
+//        while result.count != 3 {
+//            result += String(result.last!)
+//        }
+//    }
+//
+//
+//    return result
+//
+//}
+//print(solution("............"))
+
+
+// MARK: - LV1 숫자 문자열과 영단어
+func solution(_ s: String) -> Int {
+//    var result: String = s
+//    result = result.replacingOccurrences(of: "one", with: "1")
+//    result = result.replacingOccurrences(of: "two", with: "2")
+//    result = result.replacingOccurrences(of: "three", with: "3")
+//    result = result.replacingOccurrences(of: "four", with: "4")
+//    result = result.replacingOccurrences(of: "five", with: "5")
+//    result = result.replacingOccurrences(of: "six", with: "6")
+//    result = result.replacingOccurrences(of: "seven", with: "7")
+//    result = result.replacingOccurrences(of: "eight", with: "8")
+//    result = result.replacingOccurrences(of: "nine", with: "9")
+//
+//
+//
+//    print(result)
+//    return Int(result)!
     
-    var result: String = ""
-    
-    for i in text {
-        if i.isLetter || i.isNumber || i == "." || i == "-" || i == "_" {
-            result.append(i)
-        }
+    let arr = ["zero","one","two","three","four","five","six","seven","eight","nine"]
+    var result = s
+    for i in 0..<arr.count {
+        result = result.replacingOccurrences(of: arr[i], with: String(i))
     }
-    
-    while result.contains("..") {
-        result = result.replacingOccurrences(of: "..", with: ".")
-    }
-    
-    
-    while result.hasPrefix(".") {
-        result.removeFirst()
-    }
-    
-    while result.hasSuffix(".") {
-        result.removeLast()
-    }
-    
-    if result == "" {
-        result = "a"
-    }
-    
-    if result.count > 15 {
-        let index = result.index(result.startIndex, offsetBy: 15)
-        result = String(result[result.startIndex..<index])
-        if result.hasSuffix(".") {
-            result.removeLast()
-        }
-    }
-    
-    if result.count < 3 {
-        while result.count != 3 {
-            result += String(result.last!)
-        }
-    }
-    
-    
-    return result
-    
+       return Int(result)!
 }
-print(solution("............"))
+
+print(solution("one4seveneight"))
