@@ -672,29 +672,83 @@ import Foundation
 
 
 // MARK: - LV1 숫자 문자열과 영단어
-func solution(_ s: String) -> Int {
-//    var result: String = s
-//    result = result.replacingOccurrences(of: "one", with: "1")
-//    result = result.replacingOccurrences(of: "two", with: "2")
-//    result = result.replacingOccurrences(of: "three", with: "3")
-//    result = result.replacingOccurrences(of: "four", with: "4")
-//    result = result.replacingOccurrences(of: "five", with: "5")
-//    result = result.replacingOccurrences(of: "six", with: "6")
-//    result = result.replacingOccurrences(of: "seven", with: "7")
-//    result = result.replacingOccurrences(of: "eight", with: "8")
-//    result = result.replacingOccurrences(of: "nine", with: "9")
+//func solution(_ s: String) -> Int {
+////    var result: String = s
+////    result = result.replacingOccurrences(of: "one", with: "1")
+////    result = result.replacingOccurrences(of: "two", with: "2")
+////    result = result.replacingOccurrences(of: "three", with: "3")
+////    result = result.replacingOccurrences(of: "four", with: "4")
+////    result = result.replacingOccurrences(of: "five", with: "5")
+////    result = result.replacingOccurrences(of: "six", with: "6")
+////    result = result.replacingOccurrences(of: "seven", with: "7")
+////    result = result.replacingOccurrences(of: "eight", with: "8")
+////    result = result.replacingOccurrences(of: "nine", with: "9")
+////
+////
+////
+////    print(result)
+////    return Int(result)!
 //
+//    let arr = ["zero","one","two","three","four","five","six","seven","eight","nine"]
+//    var result = s
+//    for i in 0..<arr.count {
+//        result = result.replacingOccurrences(of: arr[i], with: String(i))
+//    }
+//       return Int(result)!
+//}
 //
+//print(solution("one4seveneight"))
+
+// MARK: - LV1 로또의 최고 순위와 최저 순위
+
+func solution(_ lottos:[Int], _ win_nums:[Int]) -> [Int] {
+//    var result: [Int] = Array(repeating: 0, count: 2)
 //
-//    print(result)
-//    return Int(result)!
+//    var count = 0
+//    var zeroCount = 0
+//    for i in 0..<lottos.count {
+//        if win_nums.contains(lottos[i]) {
+//            count += 1
+//        }
+//        if lottos[i] == 0 {
+//            zeroCount += 1
+//        }
+//    }
+//
+//    if count + zeroCount == 6 {
+//        result[0] = 1
+//    } else if count + zeroCount == 5 {
+//        result[0] = 2
+//    } else if count + zeroCount == 4 {
+//        result[0] = 3
+//    } else if count + zeroCount == 3 {
+//        result[0] = 4
+//    } else if count + zeroCount == 2 {
+//        result[0] = 5
+//    } else {
+//        result[0] = 6
+//    }
+//
+//    if count == 6 {
+//        result[1] = 1
+//    } else if count == 5 {
+//        result[1] = 2
+//    } else if count == 4 {
+//        result[1] = 3
+//    } else if count == 3 {
+//        result[1] = 4
+//    } else if count == 2 {
+//        result[1] = 5
+//    } else {
+//        result[1] = 6
+//    }
+//
+//    return result
     
-    let arr = ["zero","one","two","three","four","five","six","seven","eight","nine"]
-    var result = s
-    for i in 0..<arr.count {
-        result = result.replacingOccurrences(of: arr[i], with: String(i))
-    }
-       return Int(result)!
+    let zeroCount = lottos.filter{$0 == 0}.count
+    let winCount = win_nums.filter{lottos.contains($0)}.count
+    
+    return [min(7-winCount-zeroCount, 6), min(7-winCount,6)]
 }
 
-print(solution("one4seveneight"))
+print(solution([0,0,0,0,0,0], [38, 19, 20, 40, 15, 25]))
