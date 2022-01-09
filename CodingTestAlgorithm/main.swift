@@ -599,15 +599,23 @@ import Foundation
 
 // MARK: - LV1 음양 더하기
 
-func solution(_ absolutes: [Int], _ signs: [Bool]) -> Int {
-//    var result: [Int] = []
-//    for i in 0..<absolutes.count {
-//        if signs[i] == true {
-//            result.append(absolutes[i])
-//        } else {
-//            result.append(absolutes[i] * (-1))
-//        }
-//    }
-//    return result.reduce(0, +)
-    return (0..<absolutes.count).map{ signs[$0] ? absolutes[$0] : -absolutes[$0]}.reduce(0, +)
+//func solution(_ absolutes: [Int], _ signs: [Bool]) -> Int {
+////    var result: [Int] = []
+////    for i in 0..<absolutes.count {
+////        if signs[i] == true {
+////            result.append(absolutes[i])
+////        } else {
+////            result.append(absolutes[i] * (-1))
+////        }
+////    }
+////    return result.reduce(0, +)
+//    return (0..<absolutes.count).map{ signs[$0] ? absolutes[$0] : -absolutes[$0]}.reduce(0, +)
+//}
+
+// MARK: - LV1 없는 숫자 더하기
+
+func solution(_ numbers: [Int]) -> Int {
+    
+    //return 55 - numbers.reduce(0, +)
+    return (0...9).filter{!numbers.contains($0)}.reduce(0, +)
 }
