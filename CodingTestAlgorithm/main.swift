@@ -593,6 +593,21 @@ import Foundation
 //print(solution([1,2,3,4]))
 
 // MARK: - LV1 내적
-func solution(_ a:[Int], _ b:[Int]) -> Int {
-    return zip(a, b).map(*).reduce(0, +)
+//func solution(_ a:[Int], _ b:[Int]) -> Int {
+//    return zip(a, b).map(*).reduce(0, +)
+//}
+
+// MARK: - LV1 음양 더하기
+
+func solution(_ absolutes: [Int], _ signs: [Bool]) -> Int {
+//    var result: [Int] = []
+//    for i in 0..<absolutes.count {
+//        if signs[i] == true {
+//            result.append(absolutes[i])
+//        } else {
+//            result.append(absolutes[i] * (-1))
+//        }
+//    }
+//    return result.reduce(0, +)
+    return (0..<absolutes.count).map{ signs[$0] ? absolutes[$0] : -absolutes[$0]}.reduce(0, +)
 }
