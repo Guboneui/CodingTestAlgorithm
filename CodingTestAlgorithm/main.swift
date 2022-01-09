@@ -484,7 +484,7 @@ import Foundation
 
 // MARK: - LV1 약수의 개수와 덧셈
 
-func solution(_ left: Int, _ right: Int) -> Int {
+//func solution(_ left: Int, _ right: Int) -> Int {
 //    var result = 0
 //    for i in left...right{
 //        var arr: [Int] = []
@@ -502,8 +502,49 @@ func solution(_ left: Int, _ right: Int) -> Int {
 //
 //    return result
     
-    return Array(left...right).map{ i in (1...i).filter{ i % $0 == 0}.count%2 == 0 ? i : -i}.reduce(0, +)
+    //return Array(left...right).map{ i in (1...i).filter{ i % $0 == 0}.count%2 == 0 ? i : -i}.reduce(0, +)
     
+//}
+
+//print(solution(13, 17))
+//print(Array(1...3))
+
+// MARK: - LV1 모의고사
+
+func solution(_ answers: [Int]) -> [Int] {
+    let first: [Int] = [1, 2, 3, 4, 5]
+    let second: [Int] = [2, 1, 2, 3, 2, 4, 2, 5]
+    let third: [Int] = [3, 3, 1, 1, 2, 2, 4, 4, 5, 5]
+    
+    var result: [Int] = [0, 0, 0]
+    
+    answers.enumerated().forEach { index, value in
+        if first[index % first.count] == value {
+            result[0] += 1
+        }
+        
+        if second[index % second.count] == value {
+            result[1] += 1
+        }
+        
+        if third[index % third.count] == value {
+            result[2] += 1
+        }
+    }
+    
+    print(result)
+    
+    var totalResult: [Int] = []
+    result.enumerated().forEach { index, value in
+        if value == result.max() ?? 0 {
+            totalResult.append(index + 1)
+        }
+    }
+    print(totalResult)
+    
+    return totalResult
 }
 
-print(solution(13, 17))
+solution([1, 3, 2, 4, 2])
+
+
