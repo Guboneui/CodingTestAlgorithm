@@ -511,40 +511,54 @@ import Foundation
 
 // MARK: - LV1 모의고사
 
-func solution(_ answers: [Int]) -> [Int] {
-    let first: [Int] = [1, 2, 3, 4, 5]
-    let second: [Int] = [2, 1, 2, 3, 2, 4, 2, 5]
-    let third: [Int] = [3, 3, 1, 1, 2, 2, 4, 4, 5, 5]
-    
-    var result: [Int] = [0, 0, 0]
-    
-    answers.enumerated().forEach { index, value in
-        if first[index % first.count] == value {
-            result[0] += 1
-        }
-        
-        if second[index % second.count] == value {
-            result[1] += 1
-        }
-        
-        if third[index % third.count] == value {
-            result[2] += 1
-        }
+//func solution(_ answers: [Int]) -> [Int] {
+//    let first: [Int] = [1, 2, 3, 4, 5]
+//    let second: [Int] = [2, 1, 2, 3, 2, 4, 2, 5]
+//    let third: [Int] = [3, 3, 1, 1, 2, 2, 4, 4, 5, 5]
+//
+//    var result: [Int] = [0, 0, 0]
+//
+//    answers.enumerated().forEach { index, value in
+//        if first[index % first.count] == value {
+//            result[0] += 1
+//        }
+//
+//        if second[index % second.count] == value {
+//            result[1] += 1
+//        }
+//
+//        if third[index % third.count] == value {
+//            result[2] += 1
+//        }
+//    }
+//
+//    print(result)
+//
+//    var totalResult: [Int] = []
+//    result.enumerated().forEach { index, value in
+//        if value == result.max() ?? 0 {
+//            totalResult.append(index + 1)
+//        }
+//    }
+//    print(totalResult)
+//
+//    return totalResult
+//}
+//
+//solution([1, 3, 2, 4, 2])
+
+// MARK: - LV1 K번째수
+
+func solution(_ array: [Int], _ commands: [[Int]]) -> [Int] {
+    var result: [Int] = []
+    for arr in commands {
+        var i = arr[0]
+        var j = arr[1]
+        var k = arr[2]
+        result.append(array[(i-1)...(j-1)].sorted()[k-1])
     }
-    
-    print(result)
-    
-    var totalResult: [Int] = []
-    result.enumerated().forEach { index, value in
-        if value == result.max() ?? 0 {
-            totalResult.append(index + 1)
-        }
-    }
-    print(totalResult)
-    
-    return totalResult
+    return result
 }
 
-solution([1, 3, 2, 4, 2])
-
+solution([1, 5, 2, 6, 3, 7, 4], [[2, 5, 3], [4, 4, 1], [1, 7, 3]])
 
