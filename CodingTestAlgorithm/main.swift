@@ -563,31 +563,36 @@ import Foundation
 //solution([1, 5, 2, 6, 3, 7, 4], [[2, 5, 3], [4, 4, 1], [1, 7, 3]])
 
 // MARK: - LV1 소수 만들기
-func solution(_ nums: [Int]) -> Int {
-    var arr: [Int] = []
-    for i in 0..<nums.count - 2 {
-        for j in i+1..<nums.count {
-            for k in j+1..<nums.count {
-                arr.append(nums[i] + nums[j] + nums[k])
-            }
-        }
-    }
-    var result = 0
-    for num in arr  {
-        var k: [Int] = []
-        for i in 2...num {
-            
-            if num % i == 0 {
-                k.append(i)
-            }
-        }
-        
-        if k.count == 1 {
-            result += 1
-        }
-    }
-    return result
+//func solution(_ nums: [Int]) -> Int {
+//    var arr: [Int] = []
+//    for i in 0..<nums.count - 2 {
+//        for j in i+1..<nums.count {
+//            for k in j+1..<nums.count {
+//                arr.append(nums[i] + nums[j] + nums[k])
+//            }
+//        }
+//    }
+//    var result = 0
+//    for num in arr  {
+//        var k: [Int] = []
+//        for i in 2...num {
+//
+//            if num % i == 0 {
+//                k.append(i)
+//            }
+//        }
+//
+//        if k.count == 1 {
+//            result += 1
+//        }
+//    }
+//    return result
+//
+//}
+//
+//print(solution([1,2,3,4]))
 
+// MARK: - LV1 내적
+func solution(_ a:[Int], _ b:[Int]) -> Int {
+    return zip(a, b).map(*).reduce(0, +)
 }
-
-print(solution([1,2,3,4]))
