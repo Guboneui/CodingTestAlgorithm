@@ -426,7 +426,7 @@ import Foundation
 //
 //
 //    return width.max()! * height.max()!
-    
+
 //    let arr = sizes.map{$0.sorted()}
 //    return arr.map{$0[0]}.max()! * arr.map{$0[1]}.max()!
 //}
@@ -501,9 +501,9 @@ import Foundation
 //    }
 //
 //    return result
-    
-    //return Array(left...right).map{ i in (1...i).filter{ i % $0 == 0}.count%2 == 0 ? i : -i}.reduce(0, +)
-    
+
+//return Array(left...right).map{ i in (1...i).filter{ i % $0 == 0}.count%2 == 0 ? i : -i}.reduce(0, +)
+
 //}
 
 //print(solution(13, 17))
@@ -614,8 +614,58 @@ import Foundation
 
 // MARK: - LV1 없는 숫자 더하기
 
-func solution(_ numbers: [Int]) -> Int {
+//func solution(_ numbers: [Int]) -> Int {
+//
+//    //return 55 - numbers.reduce(0, +)
+//    return (0...9).filter{!numbers.contains($0)}.reduce(0, +)
+//}
+
+// MARK: - LV1 신규 아이디 추천
+
+func solution(_ new_id: String) -> String {
+    var text = new_id.lowercased()
     
-    //return 55 - numbers.reduce(0, +)
-    return (0...9).filter{!numbers.contains($0)}.reduce(0, +)
+    var result: String = ""
+    
+    for i in text {
+        if i.isLetter || i.isNumber || i == "." || i == "-" || i == "_" {
+            result.append(i)
+        }
+    }
+    
+    while result.contains("..") {
+        result = result.replacingOccurrences(of: "..", with: ".")
+    }
+    
+    
+    while result.hasPrefix(".") {
+        result.removeFirst()
+    }
+    
+    while result.hasSuffix(".") {
+        result.removeLast()
+    }
+    
+    if result == "" {
+        result = "a"
+    }
+    
+    if result.count > 15 {
+        let index = result.index(result.startIndex, offsetBy: 15)
+        result = String(result[result.startIndex..<index])
+        if result.hasSuffix(".") {
+            result.removeLast()
+        }
+    }
+    
+    if result.count < 3 {
+        while result.count != 3 {
+            result += String(result.last!)
+        }
+    }
+    
+    
+    return result
+    
 }
+print(solution("............"))
