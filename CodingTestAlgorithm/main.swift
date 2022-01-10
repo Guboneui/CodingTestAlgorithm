@@ -977,36 +977,89 @@ import Foundation
 
 
 // MARK: - LV1 [1차] 다트 게임
-func solution(_ dartResult: String) -> Int {
+//func solution(_ dartResult: String) -> Int {
+//
+//    var num: String = ""
+//    var result: [Int] = []
+//    for i in Array(dartResult) {
+//        if Int(String(i)) != nil {
+//            num += String(i)
+//        } else if i == "S" {
+//            result.append(Int(num)! * 1)
+//            num = ""
+//        } else if i == "D" {
+//            result.append(Int(num)! * Int(num)!)
+//            num = ""
+//        } else if i == "T" {
+//            result.append(Int(num)! * Int(num)! * Int(num)!)
+//            num = ""
+//        } else if i == "*" {
+//            if result.count > 1 {
+//                let index = result.count - 2
+//                result[index] *= 2
+//            }
+//            result[result.count - 1] *= 2
+//
+//        } else if i == "#" {
+//            result[result.count - 1] *= -1
+//        }
+//    }
+//
+//    print(result)
+//    return result.reduce(0, +)
+//}
+//
+//solution("1D2S#10S")
 
-    var num: String = ""
-    var result: [Int] = []
-    for i in Array(dartResult) {
-        if Int(String(i)) != nil {
-            num += String(i)
-        } else if i == "S" {
-            result.append(Int(num)! * 1)
-            num = ""
-        } else if i == "D" {
-            result.append(Int(num)! * Int(num)!)
-            num = ""
-        } else if i == "T" {
-            result.append(Int(num)! * Int(num)! * Int(num)!)
-            num = ""
-        } else if i == "*" {
-            if result.count > 1 {
-                let index = result.count - 2
-                result[index] *= 2
+
+// MARK: - LV1 [1차] 비밀지도
+func solution(_ n: Int, _ arr1: [Int], _ arr2: [Int]) -> [String] {
+    var newArr1 = arr1.map{String($0, radix: 2)}
+    for i in 0..<newArr1.count {
+        if newArr1[i].count < n {
+            while newArr1[i].count < n {
+                newArr1[i].insert("0", at: newArr1[i].startIndex)
             }
-            result[result.count - 1] *= 2
-            
-        } else if i == "#" {
-            result[result.count - 1] *= -1
         }
     }
     
-    print(result)
-    return result.reduce(0, +)
+    var newArr2 = arr2.map{String($0, radix: 2)}
+    for i in 0..<newArr2.count {
+        if newArr2[i].count < n {
+            while newArr2[i].count < n {
+                newArr2[i].insert("0", at: newArr2[i].startIndex)
+            }
+        }
+    }
+    
+    var result: [[String]] = Array(repeating: Array(repeating: "", count: n), count: n)
+    
+    for i in 0..<n {
+        for j in 0..<n {
+            var k = ""
+            var a = newArr1[i]
+            var b = newArr2[i]
+            if Array(a)[j] == "1" || Array(b)[j] == "1" {
+                k += "#"
+            } else {
+                k += " "
+            }
+            result[i][j] = k
+        }
+        
+    }
+    
+    print(result.map{$0.joined()})
+    
+
+    
+
+    return result.map{$0.joined()}
 }
 
-solution("1D2S#10S")
+solution(5, [9, 20, 28, 18, 11], [30, 1, 21, 17, 28])
+
+var arr1 = [1, 20, 28, 18, 11]
+var arr2 = [1, 1, 21, 17, 28]
+var retArray = String(arr1[0] | arr2[0], radix: 2)
+print("retArray: \(retArray)")
