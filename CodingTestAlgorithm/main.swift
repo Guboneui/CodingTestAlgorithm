@@ -860,15 +860,117 @@ import Foundation
 //    return result
 //}
 
-func solution(_ strings:[String], _ n:Int) -> [String] {
-    return strings.sorted{
-        Array($0)[n] == Array($1)[n] ? $0 < $1 : Array($0)[n] < Array($1)[n]
+//func solution(_ strings:[String], _ n:Int) -> [String] {
+//    return strings.sorted{
+//        Array($0)[n] == Array($1)[n] ? $0 < $1 : Array($0)[n] < Array($1)[n]
+//    }
+//}
+//
+//print(solution(["abce", "abcd", "cdx"], 2))
+//var k = [1, 2, 3, 4, 5]
+//print(k.sorted(by: {$0 < $1}))
+//print(k.sorted(by: {$0 > $1}))
+
+
+// MARK: - LV1 체육복
+
+func solution(_ n: Int, _ lost: [Int], reserve: [Int]) -> Int {
+    
+    //    // 학생들이 가지고 있는 최초 체육복 수 배열
+    //    var result: [Int] = Array(repeating: 1, count: n)
+    //    for i in 1...n {
+    //        if lost.contains(i) {
+    //            result[i-1] -= 1
+    //        }
+    //        if reserve.contains(i) {
+    //            result[i-1] += 1
+    //        }
+    //    }
+    //
+    //    print("init: \(result)")
+    //
+    //    // 실질적인 탐욕법 사용해야 하는데....
+    //    for i in 0..<result.count {
+    //        if result[i] == 1 {
+    //            print(result)
+    //        } else if result[i] == 0 {
+    //            if i-1 == -1 {  // 첫번째 라는 것 -> 뒤에꺼만 확인
+    //                if result[i+1] == 2 {
+    //                    result[i+1] = 1
+    //                    result[i] = 1
+    //                    print(result)
+    //
+    //                }
+    //            } else if i+1 == n {
+    //                if result[i-1] == 2 {
+    //                    result[i-1] = 1
+    //                    result[i] = 1
+    //                    print(result)
+    //
+    //                }
+    //            } else {
+    //                if result[i-1] == 2 {
+    //                    result[i-1] = 1
+    //                    result[i] = 1
+    //                    print(result)
+    //
+    //                } else if result[i+1] == 2 {
+    //                    result[i+1] = 1
+    //                    result[i] = 1
+    //                    print(result)
+    //
+    //                }
+    //            }
+    //
+    //        } else if result[i] == 2 {
+    //            if i-1 == -1 {  // 첫번째 라는 것 -> 뒤에꺼만 확인
+    //                if result[i+1] == 0 {
+    //                    result[i+1] = 1
+    //                    result[i] = 1
+    //                    print(result)
+    //
+    //                }
+    //            } else if i+1 == n {
+    //                if result[i-1] == 0 {
+    //                    result[i-1] = 1
+    //                    result[i] = 1
+    //                    print(result)
+    //
+    //                }
+    //            } else {
+    //
+    //                if result[i-1] == 0 {
+    //                    result[i-1] = 1
+    //                    result[i] = 1
+    //                    print(result)
+    //
+    //                } else if result[i+1] == 0 {
+    //                    result[i+1] = 1
+    //                    result[i] = 1
+    //                    print(result)
+    //
+    //                }
+    //            }
+    //
+    //        }
+    //    }
+    //
+    //
+    //    return result.filter{$0 >= 1}.count
+    
+    let newReserve = reserve.filter { !lost.contains($0) }
+    let newLost = lost.filter { !reserve.contains($0) }
+    
+    var lostPeople: Int = newLost.count
+    
+    newReserve.forEach {
+        let isLend: Bool = newLost.contains($0 - 1) || newLost.contains($0 + 1)
+        if isLend && lostPeople > 0 {
+            lostPeople -= 1
+        }
     }
+    
+    return n - lostPeople
 }
 
-print(solution(["abce", "abcd", "cdx"], 2))
-var k = [1, 2, 3, 4, 5]
-print(k.sorted(by: {$0 < $1}))
-print(k.sorted(by: {$0 > $1}))
-
-
+print(solution(5, [2, 4], reserve: [3, 2]))
