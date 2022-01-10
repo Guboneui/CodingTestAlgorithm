@@ -701,54 +701,75 @@ import Foundation
 
 // MARK: - LV1 로또의 최고 순위와 최저 순위
 
-func solution(_ lottos:[Int], _ win_nums:[Int]) -> [Int] {
-//    var result: [Int] = Array(repeating: 0, count: 2)
+//func solution(_ lottos:[Int], _ win_nums:[Int]) -> [Int] {
+////    var result: [Int] = Array(repeating: 0, count: 2)
+////
+////    var count = 0
+////    var zeroCount = 0
+////    for i in 0..<lottos.count {
+////        if win_nums.contains(lottos[i]) {
+////            count += 1
+////        }
+////        if lottos[i] == 0 {
+////            zeroCount += 1
+////        }
+////    }
+////
+////    if count + zeroCount == 6 {
+////        result[0] = 1
+////    } else if count + zeroCount == 5 {
+////        result[0] = 2
+////    } else if count + zeroCount == 4 {
+////        result[0] = 3
+////    } else if count + zeroCount == 3 {
+////        result[0] = 4
+////    } else if count + zeroCount == 2 {
+////        result[0] = 5
+////    } else {
+////        result[0] = 6
+////    }
+////
+////    if count == 6 {
+////        result[1] = 1
+////    } else if count == 5 {
+////        result[1] = 2
+////    } else if count == 4 {
+////        result[1] = 3
+////    } else if count == 3 {
+////        result[1] = 4
+////    } else if count == 2 {
+////        result[1] = 5
+////    } else {
+////        result[1] = 6
+////    }
+////
+////    return result
 //
-//    var count = 0
-//    var zeroCount = 0
-//    for i in 0..<lottos.count {
-//        if win_nums.contains(lottos[i]) {
-//            count += 1
-//        }
-//        if lottos[i] == 0 {
-//            zeroCount += 1
-//        }
-//    }
+//    let zeroCount = lottos.filter{$0 == 0}.count
+//    let winCount = win_nums.filter{lottos.contains($0)}.count
 //
-//    if count + zeroCount == 6 {
-//        result[0] = 1
-//    } else if count + zeroCount == 5 {
-//        result[0] = 2
-//    } else if count + zeroCount == 4 {
-//        result[0] = 3
-//    } else if count + zeroCount == 3 {
-//        result[0] = 4
-//    } else if count + zeroCount == 2 {
-//        result[0] = 5
-//    } else {
-//        result[0] = 6
-//    }
+//    return [min(7-winCount-zeroCount, 6), min(7-winCount,6)]
+//}
 //
-//    if count == 6 {
-//        result[1] = 1
-//    } else if count == 5 {
-//        result[1] = 2
-//    } else if count == 4 {
-//        result[1] = 3
-//    } else if count == 3 {
-//        result[1] = 4
-//    } else if count == 2 {
-//        result[1] = 5
-//    } else {
-//        result[1] = 6
-//    }
-//
-//    return result
+//print(solution([0,0,0,0,0,0], [38, 19, 20, 40, 15, 25]))
+
+// MARK: - LV1 예산
+
+func solution(_ d: [Int], _ budget: Int) -> Int {
+    var result = 0
+    var arr = d.sorted()
+    var money = budget
     
-    let zeroCount = lottos.filter{$0 == 0}.count
-    let winCount = win_nums.filter{lottos.contains($0)}.count
+    for i in arr {
+        if money >= i {
+            money -= i
+            result += 1
+        } else {
+            break
+        }
+    }
     
-    return [min(7-winCount-zeroCount, 6), min(7-winCount,6)]
+    return result
 }
 
-print(solution([0,0,0,0,0,0], [38, 19, 20, 40, 15, 25]))
+print(solution([1, 3, 2, 5, 4], 9))
