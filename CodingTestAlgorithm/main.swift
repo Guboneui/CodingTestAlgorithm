@@ -755,21 +755,88 @@ import Foundation
 
 // MARK: - LV1 예산
 
-func solution(_ d: [Int], _ budget: Int) -> Int {
-    var result = 0
-    var arr = d.sorted()
-    var money = budget
+//func solution(_ d: [Int], _ budget: Int) -> Int {
+//    var result = 0
+//    var arr = d.sorted()
+//    var money = budget
+//
+//    for i in arr {
+//        if money >= i {
+//            money -= i
+//            result += 1
+//        } else {
+//            break
+//        }
+//    }
+//
+//    return result
+//}
+//
+//print(solution([1, 3, 2, 5, 4], 9))
+
+
+// MARK: - LV1 실패율
+
+//func solution(_ N: Int, _ stages: [Int]) -> [Int] {
+//
+//    var failure: [Int : Float] = [:]
+//    var player: Int = stages.count
+//    for i in 1...N {
+//        //도달한 수
+//               let a = stages.filter{$0 >= i}.count
+//               //클리어한 수
+//               let b = a - stages.filter{$0 > i}.count
+//               //실패율
+//               let failCount = Float(b) / Float(a)
+//
+//        failure[i] = failCount
+//    }
+//
+//    return failure.sorted(by: <).sorted(by: {$0.value > $1.value}).map{$0.key}
+//}
+//
+//print(solution(6, [6,6,6,6]))
+
+// MARK: - LV1 시저암호
+
+func solution(_ s: String, _ n: Int) -> String {
+//    let upperCased: [String] = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+//    let lowerCased: [String] = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+//
+//    var k = s.map{String($0)}
+//    var result: String = ""
+//    for i in k {
+//        if upperCased.contains(i) {
+//            var index = upperCased.firstIndex(of: i)! + n
+//            if index > upperCased.count - 1 {
+//                index -= upperCased.count
+//                result += upperCased[index]
+//            } else {
+//                result += upperCased[index]
+//            }
+//
+//        } else if lowerCased.contains(i) {
+//            var index = lowerCased.firstIndex(of: i)! + n
+//            if index > lowerCased.count - 1 {
+//                index -= lowerCased.count
+//                result += lowerCased[index]
+//            } else {
+//                result += lowerCased[index]
+//            }
+//
+//        } else {
+//            result += " "
+//        }
+//    }
+//    return result
     
-    for i in arr {
-        if money >= i {
-            money -= i
-            result += 1
-        } else {
-            break
-        }
-    }
+    let alphabets = "abcdefghijklmnopqrstuvwxyz".map{$0}
+    return String(s.map {
+        guard let index = alphabets.firstIndex(of: Character($0.lowercased())) else {return $0}
+        let letter = alphabets[(index + n) % alphabets.count]
+        return $0.isUppercase ? Character(letter.uppercased()) : letter
+    })
     
-    return result
 }
 
-print(solution([1, 3, 2, 5, 4], 9))
+print(solution("a B z", 4))
