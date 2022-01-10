@@ -799,44 +799,76 @@ import Foundation
 
 // MARK: - LV1 시저암호
 
-func solution(_ s: String, _ n: Int) -> String {
-//    let upperCased: [String] = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
-//    let lowerCased: [String] = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+//func solution(_ s: String, _ n: Int) -> String {
+////    let upperCased: [String] = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+////    let lowerCased: [String] = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+////
+////    var k = s.map{String($0)}
+////    var result: String = ""
+////    for i in k {
+////        if upperCased.contains(i) {
+////            var index = upperCased.firstIndex(of: i)! + n
+////            if index > upperCased.count - 1 {
+////                index -= upperCased.count
+////                result += upperCased[index]
+////            } else {
+////                result += upperCased[index]
+////            }
+////
+////        } else if lowerCased.contains(i) {
+////            var index = lowerCased.firstIndex(of: i)! + n
+////            if index > lowerCased.count - 1 {
+////                index -= lowerCased.count
+////                result += lowerCased[index]
+////            } else {
+////                result += lowerCased[index]
+////            }
+////
+////        } else {
+////            result += " "
+////        }
+////    }
+////    return result
 //
-//    var k = s.map{String($0)}
-//    var result: String = ""
-//    for i in k {
-//        if upperCased.contains(i) {
-//            var index = upperCased.firstIndex(of: i)! + n
-//            if index > upperCased.count - 1 {
-//                index -= upperCased.count
-//                result += upperCased[index]
-//            } else {
-//                result += upperCased[index]
-//            }
+//    let alphabets = "abcdefghijklmnopqrstuvwxyz".map{$0}
+//    return String(s.map {
+//        guard let index = alphabets.firstIndex(of: Character($0.lowercased())) else {return $0}
+//        let letter = alphabets[(index + n) % alphabets.count]
+//        return $0.isUppercase ? Character(letter.uppercased()) : letter
+//    })
 //
-//        } else if lowerCased.contains(i) {
-//            var index = lowerCased.firstIndex(of: i)! + n
-//            if index > lowerCased.count - 1 {
-//                index -= lowerCased.count
-//                result += lowerCased[index]
-//            } else {
-//                result += lowerCased[index]
-//            }
+//}
 //
-//        } else {
-//            result += " "
-//        }
+//print(solution("a B z", 4))
+
+
+// MARK: - LV1 문자열 내 마음대로 정렬하기
+
+//func solution(_ strings: [String], _ n: Int) -> [String] {
+//    var k: [Int:String] = [:]
+//    strings.sorted().enumerated().forEach { key, value in
+//        var s = Array(value)[n]
+//        k[key] = String(s)
 //    }
+//    var newDic = k.sorted{$0.1 < $1.1}
+//    var result: [String] = []
+//    for (key, value) in newDic {
+//        print("key: \(key), value: \(value)")
+//        result.append(strings.sorted()[key])
+//    }
+//    print(result)
 //    return result
-    
-    let alphabets = "abcdefghijklmnopqrstuvwxyz".map{$0}
-    return String(s.map {
-        guard let index = alphabets.firstIndex(of: Character($0.lowercased())) else {return $0}
-        let letter = alphabets[(index + n) % alphabets.count]
-        return $0.isUppercase ? Character(letter.uppercased()) : letter
-    })
-    
+//}
+
+func solution(_ strings:[String], _ n:Int) -> [String] {
+    return strings.sorted{
+        Array($0)[n] == Array($1)[n] ? $0 < $1 : Array($0)[n] < Array($1)[n]
+    }
 }
 
-print(solution("a B z", 4))
+print(solution(["abce", "abcd", "cdx"], 2))
+var k = [1, 2, 3, 4, 5]
+print(k.sorted(by: {$0 < $1}))
+print(k.sorted(by: {$0 > $1}))
+
+
