@@ -1070,24 +1070,38 @@ import Foundation
 
 // MARK: - 백준 2839번
 
-func solution() -> Int {
-    var text = Int(readLine()!)!
-    var result: Int = 0
-    
-    if text % 5 == 0 {
-        return text / 5
-    } else {
-        while text >= 0 {
-            text -= 3
-            result += 1
-            if text % 5 == 0 {
-                return result + (text / 5)
-            }
-        }
-    }
-    
-    return -1
-}
+//func solution() -> Int {
+//    var text = Int(readLine()!)!
+//    var result: Int = 0
+//
+//    if text % 5 == 0 {
+//        return text / 5
+//    } else {
+//        while text >= 0 {
+//            text -= 3
+//            result += 1
+//            if text % 5 == 0 {
+//                return result + (text / 5)
+//            }
+//        }
+//    }
+//
+//    return -1
+//}
+//
+//
+//print(solution())
 
+
+// MARK: - 백준 11399번
+func solution() -> Int {
+    var n = Int(readLine()!)!
+    var arr = readLine()!.components(separatedBy: " ").map{Int($0)!}.sorted()
+    var result = 0
+    for (index, value) in arr.enumerated() {
+        result += value * (n - index)
+    }
+    return result
+}
 
 print(solution())
