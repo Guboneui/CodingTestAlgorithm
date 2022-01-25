@@ -1012,54 +1012,82 @@ import Foundation
 //solution("1D2S#10S")
 
 
-// MARK: - LV1 [1차] 비밀지도
-func solution(_ n: Int, _ arr1: [Int], _ arr2: [Int]) -> [String] {
-    var newArr1 = arr1.map{String($0, radix: 2)}
-    for i in 0..<newArr1.count {
-        if newArr1[i].count < n {
-            while newArr1[i].count < n {
-                newArr1[i].insert("0", at: newArr1[i].startIndex)
-            }
-        }
-    }
-    
-    var newArr2 = arr2.map{String($0, radix: 2)}
-    for i in 0..<newArr2.count {
-        if newArr2[i].count < n {
-            while newArr2[i].count < n {
-                newArr2[i].insert("0", at: newArr2[i].startIndex)
-            }
-        }
-    }
-    
-    var result: [[String]] = Array(repeating: Array(repeating: "", count: n), count: n)
-    
-    for i in 0..<n {
-        for j in 0..<n {
-            var k = ""
-            var a = newArr1[i]
-            var b = newArr2[i]
-            if Array(a)[j] == "1" || Array(b)[j] == "1" {
-                k += "#"
-            } else {
-                k += " "
-            }
-            result[i][j] = k
-        }
-        
-    }
-    
-    print(result.map{$0.joined()})
-    
+//// MARK: - LV1 [1차] 비밀지도
+//func solution(_ n: Int, _ arr1: [Int], _ arr2: [Int]) -> [String] {
+//    var newArr1 = arr1.map{String($0, radix: 2)}
+//    for i in 0..<newArr1.count {
+//        if newArr1[i].count < n {
+//            while newArr1[i].count < n {
+//                newArr1[i].insert("0", at: newArr1[i].startIndex)
+//            }
+//        }
+//    }
+//
+//    var newArr2 = arr2.map{String($0, radix: 2)}
+//    for i in 0..<newArr2.count {
+//        if newArr2[i].count < n {
+//            while newArr2[i].count < n {
+//                newArr2[i].insert("0", at: newArr2[i].startIndex)
+//            }
+//        }
+//    }
+//
+//    var result: [[String]] = Array(repeating: Array(repeating: "", count: n), count: n)
+//
+//    for i in 0..<n {
+//        for j in 0..<n {
+//            var k = ""
+//            var a = newArr1[i]
+//            var b = newArr2[i]
+//            if Array(a)[j] == "1" || Array(b)[j] == "1" {
+//                k += "#"
+//            } else {
+//                k += " "
+//            }
+//            result[i][j] = k
+//        }
+//
+//    }
+//
+//    print(result.map{$0.joined()})
+//
+//
+//
+//
+//    return result.map{$0.joined()}
+//}
+//
+//solution(5, [9, 20, 28, 18, 11], [30, 1, 21, 17, 28])
+//
+//var arr1 = [1, 20, 28, 18, 11]
+//var arr2 = [1, 1, 21, 17, 28]
+//var retArray = String(arr1[0] | arr2[0], radix: 2)
+//print("retArray: \(retArray)")
 
-    
 
-    return result.map{$0.joined()}
+
+// MARK: - 백준
+
+// MARK: - 백준 2839번
+
+func solution() -> Int {
+    var text = Int(readLine()!)!
+    var result: Int = 0
+    
+    if text % 5 == 0 {
+        return text / 5
+    } else {
+        while text >= 0 {
+            text -= 3
+            result += 1
+            if text % 5 == 0 {
+                return result + (text / 5)
+            }
+        }
+    }
+    
+    return -1
 }
 
-solution(5, [9, 20, 28, 18, 11], [30, 1, 21, 17, 28])
 
-var arr1 = [1, 20, 28, 18, 11]
-var arr2 = [1, 1, 21, 17, 28]
-var retArray = String(arr1[0] | arr2[0], radix: 2)
-print("retArray: \(retArray)")
+print(solution())
