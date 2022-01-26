@@ -1168,28 +1168,72 @@ import Foundation
 
 // MARK: - 백준 1931번
 
+//func solution() -> Int {
+//    var n = Int(readLine()!)!
+//    var time: [[Int]] = []
+//    for i in 0..<n {
+//        time.append(Array(readLine()!.components(separatedBy: " ").map{Int($0)!}))
+//    }
+//    time.sort {
+//        if $0[1] == $1[1] {
+//            return $0[0] < $1[0]
+//        }
+//        return $0[1] < $1[1]
+//    }
+//    var result = 0
+//    var currentTime: Int = 0
+//    for i in time {
+//        if i[0] >= currentTime {
+//            currentTime = i[1]
+//            result += 1
+//        }
+//    }
+//
+//    return result
+//}
+//
+//print(solution())
+
+// MARK: - 백준 1026
+
 func solution() -> Int {
-    var n = Int(readLine()!)!
-    var time: [[Int]] = []
-    for i in 0..<n {
-        time.append(Array(readLine()!.components(separatedBy: " ").map{Int($0)!}))
+    let n = Int(readLine()!)!
+    var a: [Int] = readLine()!.components(separatedBy: " ").map{Int($0)!}
+    var b: [Int] = readLine()!.components(separatedBy: " ").map{Int($0)!}
+    
+    print(a)
+    print(b)
+    
+    var maxA = a.max()! + 1
+    
+    var sortedB: [[Int]] = []
+    
+    var newA = Array(repeating: 0, count: n)
+    for (index, value) in b.enumerated() {
+        sortedB.append([index, value])
     }
-    time.sort {
-        if $0[1] == $1[1] {
-            return $0[0] < $1[0]
+    
+    sortedB.sort {
+        return $0[1] > $1[1]
+    }
+    print(sortedB)
+    
+    for i in 0..<sortedB.count {
+        newA[sortedB[i][0]] = a.min()!
+        if let indexA = a.firstIndex(of: a.min()!) {
+            a[indexA] = maxA
         }
-        return $0[1] < $1[1]
     }
+    
+    print(newA)
+    print(b)
+    
     var result = 0
-    var currentTime: Int = 0
-    for i in time {
-        if i[0] >= currentTime {
-            currentTime = i[1]
-            result += 1
-        }
+    
+    for i in 0..<n {
+        result += newA[i] * b[i]
     }
     
     return result
 }
-
 print(solution())
