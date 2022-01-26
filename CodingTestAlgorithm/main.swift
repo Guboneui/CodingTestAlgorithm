@@ -1196,44 +1196,65 @@ import Foundation
 
 // MARK: - 백준 1026
 
+//func solution() -> Int {
+//    let n = Int(readLine()!)!
+//    var a: [Int] = readLine()!.components(separatedBy: " ").map{Int($0)!}
+//    var b: [Int] = readLine()!.components(separatedBy: " ").map{Int($0)!}
+//
+//    print(a)
+//    print(b)
+//
+//    var maxA = a.max()! + 1
+//
+//    var sortedB: [[Int]] = []
+//
+//    var newA = Array(repeating: 0, count: n)
+//    for (index, value) in b.enumerated() {
+//        sortedB.append([index, value])
+//    }
+//
+//    sortedB.sort {
+//        return $0[1] > $1[1]
+//    }
+//    print(sortedB)
+//
+//    for i in 0..<sortedB.count {
+//        newA[sortedB[i][0]] = a.min()!
+//        if let indexA = a.firstIndex(of: a.min()!) {
+//            a[indexA] = maxA
+//        }
+//    }
+//
+//    print(newA)
+//    print(b)
+//
+//    var result = 0
+//
+//    for i in 0..<n {
+//        result += newA[i] * b[i]
+//    }
+//
+//    return result
+//}
+//print(solution())
+
+// MARK: - 백준 1541
+
 func solution() -> Int {
-    let n = Int(readLine()!)!
-    var a: [Int] = readLine()!.components(separatedBy: " ").map{Int($0)!}
-    var b: [Int] = readLine()!.components(separatedBy: " ").map{Int($0)!}
     
-    print(a)
-    print(b)
+    let cal = readLine()!.components(separatedBy: "-")
     
-    var maxA = a.max()! + 1
-    
-    var sortedB: [[Int]] = []
-    
-    var newA = Array(repeating: 0, count: n)
-    for (index, value) in b.enumerated() {
-        sortedB.append([index, value])
-    }
-    
-    sortedB.sort {
-        return $0[1] > $1[1]
-    }
-    print(sortedB)
-    
-    for i in 0..<sortedB.count {
-        newA[sortedB[i][0]] = a.min()!
-        if let indexA = a.firstIndex(of: a.min()!) {
-            a[indexA] = maxA
+    var arr: [Int] = []
+    for i in cal {
+        if i.contains("+") {
+            arr.append(i.components(separatedBy: "+").map{Int($0)!}.reduce(0, +))
+            
+        } else {
+            arr.append(Int(i)!)
         }
     }
-    
-    print(newA)
-    print(b)
-    
-    var result = 0
-    
-    for i in 0..<n {
-        result += newA[i] * b[i]
-    }
-    
-    return result
+
+    return Int(arr.reduce(arr[0]*2, -))
 }
+
 print(solution())
