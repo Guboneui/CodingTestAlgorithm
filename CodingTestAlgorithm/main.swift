@@ -1240,21 +1240,43 @@ import Foundation
 
 // MARK: - 백준 1541
 
+//func solution() -> Int {
+//
+//    let cal = readLine()!.components(separatedBy: "-")
+//
+//    var arr: [Int] = []
+//    for i in cal {
+//        if i.contains("+") {
+//            arr.append(i.components(separatedBy: "+").map{Int($0)!}.reduce(0, +))
+//
+//        } else {
+//            arr.append(Int(i)!)
+//        }
+//    }
+//
+//    return Int(arr.reduce(arr[0]*2, -))
+//}
+//
+//print(solution())
+
+// MARK: - 백준 5585
+
 func solution() -> Int {
+    var change = 1000 - Int(readLine()!)!
+    var coin: [Int] = [500, 100, 50, 10, 5, 1]
+    var result = 0
     
-    let cal = readLine()!.components(separatedBy: "-")
-    
-    var arr: [Int] = []
-    for i in cal {
-        if i.contains("+") {
-            arr.append(i.components(separatedBy: "+").map{Int($0)!}.reduce(0, +))
-            
+    for i in coin {
+        if change == 0 {
+            break
         } else {
-            arr.append(Int(i)!)
+            result += change / i
+            change %= i
         }
     }
+    
 
-    return Int(arr.reduce(arr[0]*2, -))
+    return result
 }
 
 print(solution())
