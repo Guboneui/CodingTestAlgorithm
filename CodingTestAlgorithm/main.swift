@@ -1066,7 +1066,7 @@ import Foundation
 
 
 
-// MARK: - 백준
+// MARK: - 백준 (그리디 알고리즘)
 
 // MARK: - 백준 2839번
 
@@ -1094,14 +1094,74 @@ import Foundation
 
 
 // MARK: - 백준 11399번
-func solution() -> Int {
-    var n = Int(readLine()!)!
-    var arr = readLine()!.components(separatedBy: " ").map{Int($0)!}.sorted()
-    var result = 0
-    for (index, value) in arr.enumerated() {
-        result += value * (n - index)
+//func solution() -> Int {
+//    var n = Int(readLine()!)!
+//    var arr = readLine()!.components(separatedBy: " ").map{Int($0)!}.sorted()
+//    var result = 0
+//    for (index, value) in arr.enumerated() {
+//        result += value * (n - index)
+//    }
+//    return result
+//}
+//
+//print(solution())
+
+// MARK: - 백준 11047번 sol1
+func solution1() -> Int {
+    var arr = readLine()!.components(separatedBy: " ").map{Int($0)!}
+    
+    
+    var coin: [Int] = []
+    for i in 0..<arr[0] {
+        coin.append(Int(readLine()!)!)
     }
+    coin.sort(by: >)
+    print(arr)
+    print(coin)
+    var money: Int = arr[1]
+    var result: Int = 0
+    var index: Int = 0
+    while money > 0 {
+        print("index: \(index)")
+        money -= coin[index]
+
+        if money < 0 {
+            money += coin[index]
+            index += 1
+        } else {
+            result += 1
+        }
+
+
+    }
+    
+
+ 
     return result
 }
+print(solution1())
 
-print(solution())
+// MARK: - 백준 11047번 sol2
+
+func solution2() -> Int {
+    var arr = readLine()!.components(separatedBy: " ").map{Int($0)!}
+    var coin: [Int] = []
+    for i in 0..<arr[0] {
+        coin.append(Int(readLine()!)!)
+    }
+    coin.sort(by: >)
+
+    var money: Int = arr[1]
+    var result: Int = 0
+
+    for i in coin {
+        if money == 0 {
+            break
+        }
+        result += money / i
+        money %= i
+    }
+ 
+    return result
+}
+print(solution2())
