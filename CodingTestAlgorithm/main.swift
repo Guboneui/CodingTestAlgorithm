@@ -1106,62 +1106,90 @@ import Foundation
 //
 //print(solution())
 
-// MARK: - 백준 11047번 sol1
-func solution1() -> Int {
-    var arr = readLine()!.components(separatedBy: " ").map{Int($0)!}
-    
-    
-    var coin: [Int] = []
-    for i in 0..<arr[0] {
-        coin.append(Int(readLine()!)!)
-    }
-    coin.sort(by: >)
-    print(arr)
-    print(coin)
-    var money: Int = arr[1]
-    var result: Int = 0
-    var index: Int = 0
-    while money > 0 {
-        print("index: \(index)")
-        money -= coin[index]
+//// MARK: - 백준 11047번 sol1
+//func solution1() -> Int {
+//    var arr = readLine()!.components(separatedBy: " ").map{Int($0)!}
+//
+//
+//    var coin: [Int] = []
+//    for i in 0..<arr[0] {
+//        coin.append(Int(readLine()!)!)
+//    }
+//    coin.sort(by: >)
+//    print(arr)
+//    print(coin)
+//    var money: Int = arr[1]
+//    var result: Int = 0
+//    var index: Int = 0
+//    while money > 0 {
+//        print("index: \(index)")
+//        money -= coin[index]
+//
+//        if money < 0 {
+//            money += coin[index]
+//            index += 1
+//        } else {
+//            result += 1
+//        }
+//
+//
+//    }
+//
+//
+//
+//    return result
+//}
+//print(solution1())
+//
+//// MARK: - 백준 11047번 sol2
+//
+//func solution2() -> Int {
+//    var arr = readLine()!.components(separatedBy: " ").map{Int($0)!}
+//    var coin: [Int] = []
+//    for i in 0..<arr[0] {
+//        coin.append(Int(readLine()!)!)
+//    }
+//    coin.sort(by: >)
+//
+//    var money: Int = arr[1]
+//    var result: Int = 0
+//
+//    for i in coin {
+//        if money == 0 {
+//            break
+//        }
+//        result += money / i
+//        money %= i
+//    }
+//
+//    return result
+//}
+//print(solution2())
 
-        if money < 0 {
-            money += coin[index]
-            index += 1
-        } else {
+// MARK: - 백준 1931번
+
+func solution() -> Int {
+    var n = Int(readLine()!)!
+    var time: [[Int]] = []
+    for i in 0..<n {
+        time.append(Array(readLine()!.components(separatedBy: " ").map{Int($0)!}))
+    }
+    time.sort {
+        if $0[1] == $1[1] {
+            return $0[0] < $1[0]
+        }
+        return $0[1] < $1[1]
+    }
+    var result = 0
+    var currentTime: Int = 0
+    for i in time {
+        if i[0] >= currentTime {
+            currentTime = i[1]
             result += 1
         }
-
-
     }
     
-
- 
     return result
 }
-print(solution1())
 
-// MARK: - 백준 11047번 sol2
-
-func solution2() -> Int {
-    var arr = readLine()!.components(separatedBy: " ").map{Int($0)!}
-    var coin: [Int] = []
-    for i in 0..<arr[0] {
-        coin.append(Int(readLine()!)!)
-    }
-    coin.sort(by: >)
-
-    var money: Int = arr[1]
-    var result: Int = 0
-
-    for i in coin {
-        if money == 0 {
-            break
-        }
-        result += money / i
-        money %= i
-    }
- 
-    return result
-}
-print(solution2())
+print(solution())
