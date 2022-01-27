@@ -1350,19 +1350,54 @@ import Foundation
 //print(solution())
 
 // MARK: - 백준 13305
+//func solution() -> Int {
+//    var n = Int(readLine()!)!
+//    var distance = readLine()!.components(separatedBy: " ").map{Int($0)!}
+//    var price = readLine()!.components(separatedBy: " ").map{Int($0)!}
+//    for i in 1..<n {
+//        if price[i-1] < price[i] {
+//            price[i] = price[i-1]
+//        }
+//    }
+//    var result = 0
+//    for i in 0..<distance.count {
+//        result += distance[i] * price[i]
+//    }
+//
+//    return result
+//}
+//print(solution())
+
+// MARK: - 백준 1339
+
 func solution() -> Int {
-    var n = Int(readLine()!)!
-    var distance = readLine()!.components(separatedBy: " ").map{Int($0)!}
-    var price = readLine()!.components(separatedBy: " ").map{Int($0)!}
-    for i in 1..<n {
-        if price[i-1] < price[i] {
-            price[i] = price[i-1]
+    let n = Int(readLine()!)!
+    var strs: [[String]] = []
+    var dict: [String:Int] = [:]
+    for _ in 0..<n {
+        let str = readLine()!.reversed().map{String($0)}
+        strs.append(str)
+    }
+    
+    for i in 0..<strs.count {
+        for j in 0..<strs[i].count {
+            let target = strs[i][j]
+            if let _ = dict[target] {
+                dict[target]! += Int(pow(Double(10), Double(j)))
+            } else {
+                dict[target] = Int(pow(Double(10), Double(j)))
+            }
         }
     }
+    
+    var newDict = dict.sorted(by: {$0.1 > $1.1})
     var result = 0
-    for i in 0..<distance.count {
-        result += distance[i] * price[i]
+    var num = 9
+    for (key, value) in newDict {
+        result += value * num
+        num -= 1
     }
+    
     
     return result
 }
