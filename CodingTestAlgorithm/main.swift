@@ -1261,22 +1261,47 @@ import Foundation
 
 // MARK: - 백준 5585
 
-func solution() -> Int {
-    var change = 1000 - Int(readLine()!)!
-    var coin: [Int] = [500, 100, 50, 10, 5, 1]
-    var result = 0
+//func solution() -> Int {
+//    var change = 1000 - Int(readLine()!)!
+//    var coin: [Int] = [500, 100, 50, 10, 5, 1]
+//    var result = 0
+//
+//    for i in coin {
+//        if change == 0 {
+//            break
+//        } else {
+//            result += change / i
+//            change %= i
+//        }
+//    }
+//
+//
+//    return result
+//}
+//
+//print(solution())
+
+// MARK: - 백준 10162
+func solution() -> String {
+    var time: Int = Int(readLine()!)!
+    var timeArray: [Int] = [300, 60, 10]
+    var resultArray: [Int] = [0, 0, 0]
     
-    for i in coin {
-        if change == 0 {
-            break
-        } else {
-            result += change / i
-            change %= i
+    if time % 10 != 0 {
+        return "-1"
+    } else {
+        for i in 0..<timeArray.count {
+            if time == 0 {
+                break
+            }
+            resultArray[i] = time / timeArray[i]
+            time %= timeArray[i]
+            
+            
         }
     }
     
-
-    return result
+    return resultArray.map{String($0)}.joined(separator: " ")
 }
 
 print(solution())
