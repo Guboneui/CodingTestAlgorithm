@@ -1282,26 +1282,48 @@ import Foundation
 //print(solution())
 
 // MARK: - 백준 10162
+//func solution() -> String {
+//    var time: Int = Int(readLine()!)!
+//    var timeArray: [Int] = [300, 60, 10]
+//    var resultArray: [Int] = [0, 0, 0]
+//
+//    if time % 10 != 0 {
+//        return "-1"
+//    } else {
+//        for i in 0..<timeArray.count {
+//            if time == 0 {
+//                break
+//            }
+//            resultArray[i] = time / timeArray[i]
+//            time %= timeArray[i]
+//
+//
+//        }
+//    }
+//
+//    return resultArray.map{String($0)}.joined(separator: " ")
+//}
+//
+//print(solution())
+
+// MARK: - 백준 10610
+
 func solution() -> String {
-    var time: Int = Int(readLine()!)!
-    var timeArray: [Int] = [300, 60, 10]
-    var resultArray: [Int] = [0, 0, 0]
-    
-    if time % 10 != 0 {
+    var arr = readLine()!.map{Int(String($0))!}
+    if !arr.contains(0) {
         return "-1"
-    } else {
-        for i in 0..<timeArray.count {
-            if time == 0 {
-                break
-            }
-            resultArray[i] = time / timeArray[i]
-            time %= timeArray[i]
-            
-            
-        }
     }
     
-    return resultArray.map{String($0)}.joined(separator: " ")
+    arr.remove(at: arr.firstIndex(of: 0)!)
+    if arr.reduce(0, +) % 3 != 0 {
+        return "-1"
+    }
+    
+    var result = ""
+    result = arr.map{String($0)}.sorted(by: >).joined(separator: "") + "0"
+    
+  
+    return result
 }
 
 print(solution())
