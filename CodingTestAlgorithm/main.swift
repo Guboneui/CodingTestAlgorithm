@@ -1308,22 +1308,43 @@ import Foundation
 
 // MARK: - 백준 10610
 
-func solution() -> String {
-    var arr = readLine()!.map{Int(String($0))!}
-    if !arr.contains(0) {
-        return "-1"
+//func solution() -> String {
+//    var arr = readLine()!.map{Int(String($0))!}
+//    if !arr.contains(0) {
+//        return "-1"
+//    }
+//
+//    arr.remove(at: arr.firstIndex(of: 0)!)
+//    if arr.reduce(0, +) % 3 != 0 {
+//        return "-1"
+//    }
+//
+//    var result = ""
+//    result = arr.map{String($0)}.sorted(by: >).joined(separator: "") + "0"
+//
+//
+//    return result
+//}
+//
+//print(solution())
+
+// MARK: - 백준 1789
+func solution() -> Int {
+    var n = Int(readLine()!)!
+    var result = 0
+    var count = 0
+    var i = 1
+    while count <= n {
+        count += i
+        i += 1
+        result += 1
     }
     
-    arr.remove(at: arr.firstIndex(of: 0)!)
-    if arr.reduce(0, +) % 3 != 0 {
-        return "-1"
+    if count == n {
+        return result
+    } else {
+        return result - 1
     }
-    
-    var result = ""
-    result = arr.map{String($0)}.sorted(by: >).joined(separator: "") + "0"
-    
-  
-    return result
 }
 
 print(solution())
