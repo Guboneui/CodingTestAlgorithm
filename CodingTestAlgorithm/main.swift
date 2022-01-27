@@ -1329,22 +1329,41 @@ import Foundation
 //print(solution())
 
 // MARK: - 백준 1789
+//func solution() -> Int {
+//    var n = Int(readLine()!)!
+//    var result = 0
+//    var count = 0
+//    var i = 1
+//    while count <= n {
+//        count += i
+//        i += 1
+//        result += 1
+//    }
+//
+//    if count == n {
+//        return result
+//    } else {
+//        return result - 1
+//    }
+//}
+//
+//print(solution())
+
+// MARK: - 백준 13305
 func solution() -> Int {
     var n = Int(readLine()!)!
+    var distance = readLine()!.components(separatedBy: " ").map{Int($0)!}
+    var price = readLine()!.components(separatedBy: " ").map{Int($0)!}
+    for i in 1..<n {
+        if price[i-1] < price[i] {
+            price[i] = price[i-1]
+        }
+    }
     var result = 0
-    var count = 0
-    var i = 1
-    while count <= n {
-        count += i
-        i += 1
-        result += 1
+    for i in 0..<distance.count {
+        result += distance[i] * price[i]
     }
     
-    if count == n {
-        return result
-    } else {
-        return result - 1
-    }
+    return result
 }
-
 print(solution())
