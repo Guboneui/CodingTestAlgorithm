@@ -1580,23 +1580,32 @@ import Foundation
 func solution() -> Int {
     var arr = readLine()!.components(separatedBy: " ").map{Int($0)!}
     var n = arr.min()!
-    
+
+//    while true {
+//        var count = 0
+//        for i in arr {
+//            if n % i == 0 {
+//                count += 1
+//            }
+//        }
+//
+//        if count >= 3 {
+//            break
+//        }
+//        n += 1
+//
+//    }
+
     while true {
-        var count = 0
-        for i in arr {
-            if n % i == 0 {
-                count += 1
-            }
-        }
-        
-        if count >= 3 {
+        var newArr = arr.filter { n % $0 == 0 }
+        if newArr.count >= 3 {
             break
         }
         n += 1
-        
     }
-    
     return n
 }
 
 print(solution())
+
+// MARK: -
