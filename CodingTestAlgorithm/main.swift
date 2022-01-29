@@ -1720,12 +1720,48 @@ import Foundation
 //}
 //solution()
 
-func solution2() {
-    while let s = readLine(), s != "0" {
-        print(s == String(s.reversed()) ? "yes" : "no")
+//func solution2() {
+//    while let s = readLine(), s != "0" {
+//        print(s == String(s.reversed()) ? "yes" : "no")
+//    }
+//}
+//
+//solution2()
+
+
+// MARK: - 백준 1268번 임시 반장 정하기 - 다시 풀기 필요
+func solution() -> Int {
+    var n = Int(readLine()!)!
+    var student: [[String]] = []
+    var result: [Int] = []
+    for _ in 0..<n {
+        student.append(readLine()!.components(separatedBy: " "))
     }
+    
+    var maxCount = -1
+    var target = 0
+    
+    for stu in 0..<n {
+        var same: Set<Int> = []
+        for year in 0..<n {
+            let selfClass = student[stu][year]
+            for (index, value) in student.enumerated() {
+                if value[year] == selfClass {
+                    same.insert(index)
+                }
+            }
+        }
+        
+        if same.count > maxCount {
+            maxCount = same.count
+            target = stu
+        }
+    }
+    
+    print(target + 1)
+    
+    return 0
 }
 
-solution2()
-
+print(solution())
 
