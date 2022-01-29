@@ -1551,26 +1551,52 @@ import Foundation
 
 // MARK: - 백준 1110번 더하기 사이클
 
-func solution() -> Int {
-    let n = Int(readLine()!)!
-    var result = String(n)
-    if n == 0 {
-        return 1
-    }
-    var count = 0
-    while true {
-        
-        if result.count == 1 {
-            result = "0" + result
-        }
+//func solution() -> Int {
+//    let n = Int(readLine()!)!
+//    var result = String(n)
+//    if n == 0 {
+//        return 1
+//    }
+//    var count = 0
+//    while true {
+//
+//        if result.count == 1 {
+//            result = "0" + result
+//        }
+//
+//        result = "\(Int(result)! % 10)" + "\(result.map{Int(String($0))!}.reduce(0, +) % 10)"
+//        count += 1
+//        if Int(result) == n {
+//            break
+//        }
+//    }
+//    return count
+//}
+//
+//print(solution())
 
-        result = "\(Int(result)! % 10)" + "\(result.map{Int(String($0))!}.reduce(0, +) % 10)"
-        count += 1
-        if Int(result) == n {
+// MARK: - 백준 1145번 적어도 대부분의 배수
+
+func solution() -> Int {
+    var arr = readLine()!.components(separatedBy: " ").map{Int($0)!}
+    var n = arr.min()!
+    
+    while true {
+        var count = 0
+        for i in arr {
+            if n % i == 0 {
+                count += 1
+            }
+        }
+        
+        if count >= 3 {
             break
         }
+        n += 1
+        
     }
-    return count
+    
+    return n
 }
 
 print(solution())
