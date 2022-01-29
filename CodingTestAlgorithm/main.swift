@@ -1577,35 +1577,61 @@ import Foundation
 
 // MARK: - 백준 1145번 적어도 대부분의 배수
 
-func solution() -> Int {
-    var arr = readLine()!.components(separatedBy: " ").map{Int($0)!}
-    var n = arr.min()!
-
-//    while true {
-//        var count = 0
-//        for i in arr {
-//            if n % i == 0 {
-//                count += 1
-//            }
-//        }
+//func solution() -> Int {
+//    var arr = readLine()!.components(separatedBy: " ").map{Int($0)!}
+//    var n = arr.min()!
 //
-//        if count >= 3 {
+////    while true {
+////        var count = 0
+////        for i in arr {
+////            if n % i == 0 {
+////                count += 1
+////            }
+////        }
+////
+////        if count >= 3 {
+////            break
+////        }
+////        n += 1
+////
+////    }
+//
+//    while true {
+//        var newArr = arr.filter { n % $0 == 0 }
+//        if newArr.count >= 3 {
 //            break
 //        }
 //        n += 1
-//
 //    }
+//    return n
+//}
+//
+//print(solution())
 
-    while true {
-        var newArr = arr.filter { n % $0 == 0 }
-        if newArr.count >= 3 {
-            break
+// MARK: - 백준 1157번 단어 공부
+
+func solution() -> String {
+    var text: String = readLine()!.uppercased()
+    var alphabet: [String:Int] = [:]
+    
+    for i in text {
+        if let _ = alphabet[String(i)] {
+            alphabet[String(i)]! += 1
+        } else {
+            alphabet[String(i)] = 1
         }
-        n += 1
     }
-    return n
+    
+    var result: [String] = []
+    
+    for key in alphabet.keys {
+        if alphabet[key] == alphabet.values.max() {
+            result.append(key)
+        }
+    }
+    
+    return result.count == 1 ? result[0] : "?"
 }
 
 print(solution())
 
-// MARK: -
