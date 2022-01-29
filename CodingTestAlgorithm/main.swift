@@ -1521,30 +1521,56 @@ import Foundation
 
 // MARK: - 백준 1032번 명령 프롬프트
 
-func solution() -> String {
-    let n: Int = Int(readLine()!)!
-    
-    if n == 1 {
-        return readLine()!
+//func solution() -> String {
+//    let n: Int = Int(readLine()!)!
+//
+//    if n == 1 {
+//        return readLine()!
+//    }
+//
+//
+//    var arr: [[String]] = []
+//    for _ in 0..<n {
+//        arr.append(readLine()!.map{String($0)})
+//    }
+//
+//    var compareText: [String] = arr.removeFirst()
+//
+//    for item in arr {
+//        for index in 0..<item.count {
+//            if compareText[index] != item[index] {
+//                compareText[index] = "?"
+//            }
+//        }
+//    }
+//
+//    return compareText.joined()
+//}
+//
+//print(solution())
+
+// MARK: - 백준 1110번 더하기 사이클
+
+func solution() -> Int {
+    let n = Int(readLine()!)!
+    var result = String(n)
+    if n == 0 {
+        return 1
     }
-    
-    
-    var arr: [[String]] = []
-    for _ in 0..<n {
-        arr.append(readLine()!.map{String($0)})
-    }
-    
-    var compareText: [String] = arr.removeFirst()
-    
-    for item in arr {
-        for index in 0..<item.count {
-            if compareText[index] != item[index] {
-                compareText[index] = "?"
-            }
+    var count = 0
+    while true {
+        
+        if result.count == 1 {
+            result = "0" + result
+        }
+
+        result = "\(Int(result)! % 10)" + "\(result.map{Int(String($0))!}.reduce(0, +) % 10)"
+        count += 1
+        if Int(result) == n {
+            break
         }
     }
-    
-    return compareText.joined()
+    return count
 }
 
 print(solution())
