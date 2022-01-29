@@ -1637,17 +1637,53 @@ import Foundation
 
 // MARK: - 백준 1193번 분수찾기
 
-func solution() -> String {
-    var n = Int(readLine()!)!
-    var count = 1
-    while true {
-        n = n - count
-        if n <= 0 {
-            break
-        }
-        count += 1
-    }
+//func solution() -> String {
+//    var n = Int(readLine()!)!
+//    var count = 1
+//    while true {
+//        n = n - count
+//        if n <= 0 {
+//            break
+//        }
+//        count += 1
+//    }
+//
+//    return count % 2 == 1 ? "\(-n+1)/\(n+count)" : "\(n+count)/\(-n+1)"
+//}
+//print(solution())
 
-    return count % 2 == 1 ? "\(-n+1)/\(n+count)" : "\(n+count)/\(-n+1)"
+// MARK: - 백준 1236번 성 지키기
+func solution() -> Int {
+    
+    var num = readLine()!.components(separatedBy: " ").map{Int($0)!}
+    var castle: [[String]] = []
+    for _ in 0..<num[0] {
+        castle.append(readLine()!.map{String($0)})
+    }
+    
+    var a = 0
+    var b = 0
+    
+    
+    for item in castle {
+        if !item.contains("X") {
+            a += 1
+        }
+    }
+    
+    for i in 0..<num[1] {
+        var temp: [String] = []
+        for j in 0..<num[0] {
+            temp.append(castle[j][i])
+        }
+        if !temp.contains("X") {
+            b += 1
+        }
+    }
+    
+    return max(a, b)
 }
+
 print(solution())
+
+
