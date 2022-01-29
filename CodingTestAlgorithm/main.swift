@@ -1449,28 +1449,71 @@ import Foundation
 //print(sum)
 
 // MARK: - 백준 1439
-func solution() -> Int {
-    var arr = readLine()!.map{Int(String($0))!}
-    var zeroCount: Int = 0
-    var oneCount: Int = 0
+//func solution() -> Int {
+//    var arr = readLine()!.map{Int(String($0))!}
+//    var zeroCount: Int = 0
+//    var oneCount: Int = 0
+//
+//    if arr[0] == 0 {
+//        zeroCount = 1
+//    } else {
+//        oneCount = 1
+//    }
+//
+//    for i in 1..<arr.count {
+//        if arr[i] != arr[i-1] {
+//            if arr[i] == 0 {
+//                zeroCount += 1
+//            } else {
+//                oneCount += 1
+//            }
+//        }
+//    }
+//
+//    return min(zeroCount, oneCount)
+//}
+//
+//print(solution())
 
-    if arr[0] == 0 {
-        zeroCount = 1
-    } else {
-        oneCount = 1
-    }
+// MARK: - 백준 4796
+func solution() {
+    var result: [Int] = []
+    var camping: [[Int]] = []
     
-    for i in 1..<arr.count {
-        if arr[i] != arr[i-1] {
-            if arr[i] == 0 {
-                zeroCount += 1
+    while true {
+        var k: [Int] = []
+        k.append(contentsOf: readLine()!.components(separatedBy: " ").map{Int($0)!})
+        if k.count == 3 {
+            if k == [0, 0, 0] {
+                break
             } else {
-                oneCount += 1
+                camping.append(k)
             }
+            
         }
+        
     }
     
-    return min(zeroCount, oneCount)
+    
+    for i in 0..<camping.count {
+        
+        var arr = camping[i]
+        var days = arr[2] / arr[1] * arr[0]
+        if arr[0] >= arr[2] % arr[1] {
+            days += arr[2] % arr[1]
+        } else {
+            days += arr[0]
+        }
+        
+        result.append(days)
+        
+        
+    }
+    for i in 0..<result.count {
+        print("Case \(i+1): \(result[i])")
+    }
+    
 }
+
 
 print(solution())
