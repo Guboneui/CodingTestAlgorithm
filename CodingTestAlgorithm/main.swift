@@ -1476,44 +1476,75 @@ import Foundation
 //print(solution())
 
 // MARK: - 백준 4796
-func solution() {
-    var result: [Int] = []
-    var camping: [[Int]] = []
-    
-    while true {
-        var k: [Int] = []
-        k.append(contentsOf: readLine()!.components(separatedBy: " ").map{Int($0)!})
-        if k.count == 3 {
-            if k == [0, 0, 0] {
-                break
-            } else {
-                camping.append(k)
-            }
-            
-        }
-        
-    }
-    
-    
-    for i in 0..<camping.count {
-        
-        var arr = camping[i]
-        var days = arr[2] / arr[1] * arr[0]
-        if arr[0] >= arr[2] % arr[1] {
-            days += arr[2] % arr[1]
-        } else {
-            days += arr[0]
-        }
-        
-        result.append(days)
-        
-        
-    }
-    for i in 0..<result.count {
-        print("Case \(i+1): \(result[i])")
-    }
-    
-}
+//func solution() {
+//    var result: [Int] = []
+//    var camping: [[Int]] = []
+//
+//    while true {
+//        var k: [Int] = []
+//        k.append(contentsOf: readLine()!.components(separatedBy: " ").map{Int($0)!})
+//        if k.count == 3 {
+//            if k == [0, 0, 0] {
+//                break
+//            } else {
+//                camping.append(k)
+//            }
+//
+//        }
+//
+//    }
+//
+//
+//    for i in 0..<camping.count {
+//
+//        var arr = camping[i]
+//        var days = arr[2] / arr[1] * arr[0]
+//        if arr[0] >= arr[2] % arr[1] {
+//            days += arr[2] % arr[1]
+//        } else {
+//            days += arr[0]
+//        }
+//
+//        result.append(days)
+//
+//
+//    }
+//    for i in 0..<result.count {
+//        print("Case \(i+1): \(result[i])")
+//    }
+//
+//}
+//
+//
+//print(solution())
 
+
+// MARK: - 백준 1032번 명령 프롬프트
+
+func solution() -> String {
+    let n: Int = Int(readLine()!)!
+    
+    if n == 1 {
+        return readLine()!
+    }
+    
+    
+    var arr: [[String]] = []
+    for _ in 0..<n {
+        arr.append(readLine()!.map{String($0)})
+    }
+    
+    var compareText: [String] = arr.removeFirst()
+    
+    for item in arr {
+        for index in 0..<item.count {
+            if compareText[index] != item[index] {
+                compareText[index] = "?"
+            }
+        }
+    }
+    
+    return compareText.joined()
+}
 
 print(solution())
