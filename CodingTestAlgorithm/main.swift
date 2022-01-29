@@ -1404,50 +1404,73 @@ import Foundation
 //print(solution())
 
 // MAKR: - 백준 1715
-let n = Int(readLine()!)!
+//let n = Int(readLine()!)!
+//
+//var card = [Int]()
+//
+//for _ in 0..<n {
+//    card.append(Int(readLine()!)!)
+//}
+//
+//card.sort(by: >)
+//
+//func insert(_ target: Int) {
+//    var (low,high) = (0,card.count)
+//
+//    while low < high {
+//        let mid = (low+high)/2
+//
+//        if card[mid] <= target {
+//            high = mid
+//        } else {
+//            low = mid + 1
+//        }
+//    }
+//    card.insert(target,at: high)
+//
+//}
+//
+//var sum = 0
+//
+//while true {
+//    if card.count == 1 {
+//        break
+//    }
+//
+//    let c1 = card.removeLast()
+//    let c2 = card.removeLast()
+//
+//    let newCard = c1+c2
+//    sum += newCard
+//
+//    insert(newCard)
+//}
+//
+//print(sum)
 
-var card = [Int]()
+// MARK: - 백준 1439
+func solution() -> Int {
+    var arr = readLine()!.map{Int(String($0))!}
+    var zeroCount: Int = 0
+    var oneCount: Int = 0
 
-for _ in 0..<n {
-    card.append(Int(readLine()!)!)
-}
-
-card.sort(by: >)
-
-func insert(_ target: Int) {
-    var (low,high) = (0,card.count)
-
-    while low < high {
-        let mid = (low+high)/2
-        
-        if card[mid] <= target {
-            high = mid
-        } else {
-            low = mid + 1
+    if arr[0] == 0 {
+        zeroCount = 1
+    } else {
+        oneCount = 1
+    }
+    
+    for i in 1..<arr.count {
+        if arr[i] != arr[i-1] {
+            if arr[i] == 0 {
+                zeroCount += 1
+            } else {
+                oneCount += 1
+            }
         }
     }
-    card.insert(target,at: high)
     
+    return min(zeroCount, oneCount)
 }
 
-var sum = 0
-
-while true {
-    if card.count == 1 {
-        break
-    }
-
-    let c1 = card.removeLast()
-    let c2 = card.removeLast()
-
-    let newCard = c1+c2
-    sum += newCard
-
-    insert(newCard)
-}
-
-
-
-
-
-print(sum)
+print(solution())
