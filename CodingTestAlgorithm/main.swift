@@ -1653,37 +1653,79 @@ import Foundation
 //print(solution())
 
 // MARK: - 백준 1236번 성 지키기
-func solution() -> Int {
-    
-    var num = readLine()!.components(separatedBy: " ").map{Int($0)!}
-    var castle: [[String]] = []
-    for _ in 0..<num[0] {
-        castle.append(readLine()!.map{String($0)})
+//func solution() -> Int {
+//
+//    var num = readLine()!.components(separatedBy: " ").map{Int($0)!}
+//    var castle: [[String]] = []
+//    for _ in 0..<num[0] {
+//        castle.append(readLine()!.map{String($0)})
+//    }
+//
+//    var a = 0
+//    var b = 0
+//
+//
+//    for item in castle {
+//        if !item.contains("X") {
+//            a += 1
+//        }
+//    }
+//
+//    for i in 0..<num[1] {
+//        var temp: [String] = []
+//        for j in 0..<num[0] {
+//            temp.append(castle[j][i])
+//        }
+//        if !temp.contains("X") {
+//            b += 1
+//        }
+//    }
+//
+//    return max(a, b)
+//}
+//
+//print(solution())
+
+// MARK: - 백준 1259번 팰린드롬수
+//func solution() {
+//    var arr: [[String]] = []
+//    while true {
+//        var k: [String] = []
+//        k = readLine()!.map{String($0)}
+//        if k == ["0"] {
+//            break
+//        }
+//        arr.append(k)
+//    }
+//
+//
+//
+//    var result: [String] = []
+//
+//
+//    for item in arr {
+//        var initial = item.joined()
+//        var reverse = item.reversed().joined()
+//
+//        if initial == reverse {
+//            result.append("yes")
+//        } else {
+//            result.append("no")
+//        }
+//    }
+//
+//    for i in result {
+//        print(i)
+//    }
+//}
+//solution()
+
+func solution2() {
+    while let s = readLine(), s != "0" {
+        print(s == String(s.reversed()) ? "yes" : "no")
     }
-    
-    var a = 0
-    var b = 0
-    
-    
-    for item in castle {
-        if !item.contains("X") {
-            a += 1
-        }
-    }
-    
-    for i in 0..<num[1] {
-        var temp: [String] = []
-        for j in 0..<num[0] {
-            temp.append(castle[j][i])
-        }
-        if !temp.contains("X") {
-            b += 1
-        }
-    }
-    
-    return max(a, b)
 }
 
-print(solution())
+solution2()
 
 
