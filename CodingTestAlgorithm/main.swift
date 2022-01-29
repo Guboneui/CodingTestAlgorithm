@@ -1370,35 +1370,84 @@ import Foundation
 
 // MARK: - 백준 1339
 
-func solution() -> Int {
-    let n = Int(readLine()!)!
-    var strs: [[String]] = []
-    var dict: [String:Int] = [:]
-    for _ in 0..<n {
-        let str = readLine()!.reversed().map{String($0)}
-        strs.append(str)
-    }
-    
-    for i in 0..<strs.count {
-        for j in 0..<strs[i].count {
-            let target = strs[i][j]
-            if let _ = dict[target] {
-                dict[target]! += Int(pow(Double(10), Double(j)))
-            } else {
-                dict[target] = Int(pow(Double(10), Double(j)))
-            }
+//func solution() -> Int {
+//    let n = Int(readLine()!)!
+//    var strs: [[String]] = []
+//    var dict: [String:Int] = [:]
+//    for _ in 0..<n {
+//        let str = readLine()!.reversed().map{String($0)}
+//        strs.append(str)
+//    }
+//
+//    for i in 0..<strs.count {
+//        for j in 0..<strs[i].count {
+//            let target = strs[i][j]
+//            if let _ = dict[target] {
+//                dict[target]! += Int(pow(Double(10), Double(j)))
+//            } else {
+//                dict[target] = Int(pow(Double(10), Double(j)))
+//            }
+//        }
+//    }
+//
+//    var newDict = dict.sorted(by: {$0.1 > $1.1})
+//    var result = 0
+//    var num = 9
+//    for (key, value) in newDict {
+//        result += value * num
+//        num -= 1
+//    }
+//
+//
+//    return result
+//}
+//print(solution())
+
+// MAKR: - 백준 1715
+let n = Int(readLine()!)!
+
+var card = [Int]()
+
+for _ in 0..<n {
+    card.append(Int(readLine()!)!)
+}
+
+card.sort(by: >)
+
+func insert(_ target: Int) {
+    var (low,high) = (0,card.count)
+
+    while low < high {
+        let mid = (low+high)/2
+        
+        if card[mid] <= target {
+            high = mid
+        } else {
+            low = mid + 1
         }
     }
+    card.insert(target,at: high)
     
-    var newDict = dict.sorted(by: {$0.1 > $1.1})
-    var result = 0
-    var num = 9
-    for (key, value) in newDict {
-        result += value * num
-        num -= 1
-    }
-    
-    
-    return result
 }
-print(solution())
+
+var sum = 0
+
+while true {
+    if card.count == 1 {
+        break
+    }
+
+    let c1 = card.removeLast()
+    let c2 = card.removeLast()
+
+    let newCard = c1+c2
+    sum += newCard
+
+    insert(newCard)
+}
+
+
+
+
+
+print(sum)
