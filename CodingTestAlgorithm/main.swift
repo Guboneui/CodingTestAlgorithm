@@ -1610,28 +1610,44 @@ import Foundation
 
 // MARK: - 백준 1157번 단어 공부
 
+//func solution() -> String {
+//    var text: String = readLine()!.uppercased()
+//    var alphabet: [String:Int] = [:]
+//
+//    for i in text {
+//        if let _ = alphabet[String(i)] {
+//            alphabet[String(i)]! += 1
+//        } else {
+//            alphabet[String(i)] = 1
+//        }
+//    }
+//
+//    var result: [String] = []
+//
+//    for key in alphabet.keys {
+//        if alphabet[key] == alphabet.values.max() {
+//            result.append(key)
+//        }
+//    }
+//
+//    return result.count == 1 ? result[0] : "?"
+//}
+//
+//print(solution())
+
+// MARK: - 백준 1193번 분수찾기
+
 func solution() -> String {
-    var text: String = readLine()!.uppercased()
-    var alphabet: [String:Int] = [:]
-    
-    for i in text {
-        if let _ = alphabet[String(i)] {
-            alphabet[String(i)]! += 1
-        } else {
-            alphabet[String(i)] = 1
+    var n = Int(readLine()!)!
+    var count = 1
+    while true {
+        n = n - count
+        if n <= 0 {
+            break
         }
+        count += 1
     }
-    
-    var result: [String] = []
-    
-    for key in alphabet.keys {
-        if alphabet[key] == alphabet.values.max() {
-            result.append(key)
-        }
-    }
-    
-    return result.count == 1 ? result[0] : "?"
+
+    return count % 2 == 1 ? "\(-n+1)/\(n+count)" : "\(n+count)/\(-n+1)"
 }
-
 print(solution())
-
