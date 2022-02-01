@@ -1741,12 +1741,51 @@ import Foundation
 
 // MARK: - 백준 2558번 A+B-2
 
-func solution() -> Int{
-    var num: [Int] = []
-    for i in 0..<2 {
-        num.append(Int(readLine()!)!)
+//func solution() -> Int{
+//    var num: [Int] = []
+//    for i in 0..<2 {
+//        num.append(Int(readLine()!)!)
+//    }
+//    return num.reduce(0, +)
+//}
+//
+//print(solution())
+
+
+// MARK: - 백준 1855번 암호
+
+func solution() -> String {
+    let n: Int = Int(readLine()!)!
+    let text: String = readLine()!
+    var arr: [[Character]] = []
+    
+    var tempArr: [Character] = []
+    
+    for t in text {
+        tempArr.append(t)
+        if tempArr.count == 3 {
+            arr.append(tempArr)
+            tempArr.removeAll()
+        }
     }
-    return num.reduce(0, +)
+    
+    for i in 0..<arr.count {
+        if i%2 != 0 {
+            arr[i] = arr[i].reversed()
+        }
+    }
+
+    var result: String = ""
+    
+    for i in 0..<n {
+        for j in 0..<arr.count {
+            result.append(arr[j][i])
+        }
+    }
+    
+    return result
 }
 
 print(solution())
+
+
