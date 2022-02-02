@@ -1730,38 +1730,38 @@ import Foundation
 
 
 // MARK: - 백준 1268번 임시 반장 정하기 - 다시 풀기 필요
-func solution() -> Int {
-    let n: Int = Int(readLine()!)!
-    var student: [[Int]] = []
-    for _ in 0..<n {
-        student.append(Array(readLine()!.components(separatedBy: " ").map{Int($0)!}))
-    }
-    
-    var maxCount = -1
-    var target = 0
-    
-    for i in 0..<n {
-        var same: Set<Int> = []
-        for j in 0..<5 {
-            let selfClass = student[i][j]
-            for (index, value) in student.enumerated() {
-                if value[j] == selfClass {
-                    same.insert(index)
-                }
-            }
-            
-        }
-        
-        if same.count > maxCount {
-            maxCount = same.count
-            target = i
-        }
-    }
-    
-    return target + 1
-}
-
-print(solution())
+//func solution() -> Int {
+//    let n: Int = Int(readLine()!)!
+//    var student: [[Int]] = []
+//    for _ in 0..<n {
+//        student.append(Array(readLine()!.components(separatedBy: " ").map{Int($0)!}))
+//    }
+//
+//    var maxCount = -1
+//    var target = 0
+//
+//    for i in 0..<n {
+//        var same: Set<Int> = []
+//        for j in 0..<5 {
+//            let selfClass = student[i][j]
+//            for (index, value) in student.enumerated() {
+//                if value[j] == selfClass {
+//                    same.insert(index)
+//                }
+//            }
+//
+//        }
+//
+//        if same.count > maxCount {
+//            maxCount = same.count
+//            target = i
+//        }
+//    }
+//
+//    return target + 1
+//}
+//
+//print(solution())
 
 
 
@@ -1816,3 +1816,53 @@ print(solution())
 //print(solution())
 
 
+// MARK: - 백준 1296번 팀 이름 정하기
+
+func solution() -> String {
+    var name: String = readLine()!
+    let n: Int = Int(readLine()!)!
+    var percent = 0
+    var result: String = ""
+    
+    var nameArray: [String] = []
+    for _ in 0..<n {
+        nameArray.append(readLine()!)
+    }
+    
+    for i in nameArray {
+        let arr = Array(i + name)
+        var dict: [String : Int] = [:]
+        dict["L"] = arr.filter({String($0) == "L"}).count
+        dict["O"] = arr.filter({String($0) == "O"}).count
+        dict["V"] = arr.filter({String($0) == "V"}).count
+        dict["E"] = arr.filter({String($0) == "E"}).count
+        
+        let per = cal(dict["L"]!, dict["O"]!, dict["V"]!, dict["E"]!)
+        
+        print(per)
+        print("i: \(i)")
+        if per > percent {
+            percent = per
+            result = i
+        } else if per == percent{
+            if per == 0 && result.isEmpty {
+                result = i
+                percent = per
+            }
+            
+            if result > i {
+                result = i
+            }
+        }
+        
+    }
+    return result
+}
+
+func cal(_ L: Int, _ O: Int, _ V: Int, _ E: Int) -> Int {
+    return ((L+O) * (L+V) * (L+E) * (O+V) * (O+E) * (V+E)) % 100
+}
+
+
+
+print(solution())
