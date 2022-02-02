@@ -1730,12 +1730,39 @@ import Foundation
 
 
 // MARK: - 백준 1268번 임시 반장 정하기 - 다시 풀기 필요
-//func solution() -> Int {
-//
-//    return 0
-//}
-//
-//print(solution())
+func solution() -> Int {
+    let n: Int = Int(readLine()!)!
+    var student: [[Int]] = []
+    for _ in 0..<n {
+        student.append(Array(readLine()!.components(separatedBy: " ").map{Int($0)!}))
+    }
+    
+    var maxCount = -1
+    var target = 0
+    
+    for i in 0..<n {
+        var same: Set<Int> = []
+        for j in 0..<5 {
+            let selfClass = student[i][j]
+            for (index, value) in student.enumerated() {
+                if value[j] == selfClass {
+                    same.insert(index)
+                }
+            }
+            
+        }
+        
+        if same.count > maxCount {
+            maxCount = same.count
+            target = i
+        }
+    }
+    
+    return target + 1
+}
+
+print(solution())
+
 
 
 
@@ -1754,38 +1781,38 @@ import Foundation
 
 // MARK: - 백준 1855번 암호
 
-func solution() -> String {
-    let n: Int = Int(readLine()!)!
-    let text: String = readLine()!
-    var arr: [[Character]] = []
-    
-    var tempArr: [Character] = []
-    
-    for t in text {
-        tempArr.append(t)
-        if tempArr.count == 3 {
-            arr.append(tempArr)
-            tempArr.removeAll()
-        }
-    }
-    
-    for i in 0..<arr.count {
-        if i%2 != 0 {
-            arr[i] = arr[i].reversed()
-        }
-    }
-
-    var result: String = ""
-    
-    for i in 0..<n {
-        for j in 0..<arr.count {
-            result.append(arr[j][i])
-        }
-    }
-    
-    return result
-}
-
-print(solution())
+//func solution() -> String {
+//    let n: Int = Int(readLine()!)!
+//    let text: String = readLine()!
+//    var arr: [[Character]] = []
+//
+//    var tempArr: [Character] = []
+//
+//    for t in text {
+//        tempArr.append(t)
+//        if tempArr.count == 3 {
+//            arr.append(tempArr)
+//            tempArr.removeAll()
+//        }
+//    }
+//
+//    for i in 0..<arr.count {
+//        if i%2 != 0 {
+//            arr[i] = arr[i].reversed()
+//        }
+//    }
+//
+//    var result: String = ""
+//
+//    for i in 0..<n {
+//        for j in 0..<arr.count {
+//            result.append(arr[j][i])
+//        }
+//    }
+//
+//    return result
+//}
+//
+//print(solution())
 
 
