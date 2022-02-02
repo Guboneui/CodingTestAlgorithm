@@ -1818,51 +1818,79 @@ import Foundation
 
 // MARK: - 백준 1296번 팀 이름 정하기
 
+//func solution() -> String {
+//    var name: String = readLine()!
+//    let n: Int = Int(readLine()!)!
+//    var percent = 0
+//    var result: String = ""
+//
+//    var nameArray: [String] = []
+//    for _ in 0..<n {
+//        nameArray.append(readLine()!)
+//    }
+//
+//    for i in nameArray {
+//        let arr = Array(i + name)
+//        var dict: [String : Int] = [:]
+//        dict["L"] = arr.filter({String($0) == "L"}).count
+//        dict["O"] = arr.filter({String($0) == "O"}).count
+//        dict["V"] = arr.filter({String($0) == "V"}).count
+//        dict["E"] = arr.filter({String($0) == "E"}).count
+//
+//        let per = cal(dict["L"]!, dict["O"]!, dict["V"]!, dict["E"]!)
+//
+//        print(per)
+//        print("i: \(i)")
+//        if per > percent {
+//            percent = per
+//            result = i
+//        } else if per == percent{
+//            if per == 0 && result.isEmpty {
+//                result = i
+//                percent = per
+//            }
+//
+//            if result > i {
+//                result = i
+//            }
+//        }
+//
+//    }
+//    return result
+//}
+//
+//func cal(_ L: Int, _ O: Int, _ V: Int, _ E: Int) -> Int {
+//    return ((L+O) * (L+V) * (L+E) * (O+V) * (O+E) * (V+E)) % 100
+//}
+//
+//
+//
+//print(solution())
+
+
+// MARK: - 백준 1356 유진수
+
 func solution() -> String {
-    var name: String = readLine()!
-    let n: Int = Int(readLine()!)!
-    var percent = 0
-    var result: String = ""
-    
-    var nameArray: [String] = []
-    for _ in 0..<n {
-        nameArray.append(readLine()!)
+    var n: Int = Int(readLine()!)!
+    if n == 1 {
+        return "NO"
     }
     
-    for i in nameArray {
-        let arr = Array(i + name)
-        var dict: [String : Int] = [:]
-        dict["L"] = arr.filter({String($0) == "L"}).count
-        dict["O"] = arr.filter({String($0) == "O"}).count
-        dict["V"] = arr.filter({String($0) == "V"}).count
-        dict["E"] = arr.filter({String($0) == "E"}).count
+    var target = 1
+    
+    for i in 1..<String(n).count {
+        var first = Array(String(n))[..<i]
+        var second = Array(String(n))[i...]
+       
+        var firstMul = first.map{Int(String($0))!}.reduce(1, *)
+        var secondMul = second.map{Int(String($0))!}.reduce(1, *)
         
-        let per = cal(dict["L"]!, dict["O"]!, dict["V"]!, dict["E"]!)
-        
-        print(per)
-        print("i: \(i)")
-        if per > percent {
-            percent = per
-            result = i
-        } else if per == percent{
-            if per == 0 && result.isEmpty {
-                result = i
-                percent = per
-            }
-            
-            if result > i {
-                result = i
-            }
+        if firstMul == secondMul {
+            return "YES"
         }
-        
+
     }
-    return result
+    return "NO"
 }
-
-func cal(_ L: Int, _ O: Int, _ V: Int, _ E: Int) -> Int {
-    return ((L+O) * (L+V) * (L+E) * (O+V) * (O+E) * (V+E)) % 100
-}
-
-
-
 print(solution())
+
