@@ -1896,14 +1896,70 @@ import Foundation
 
 // MARK: - 백준 1357번 뒤집힌 덧셈
 
-func solution() -> Int {
-    let numArray: [Int] = readLine()!.components(separatedBy: " ").map{Int($0)!}
-    var result: [Int] = []
+//func solution() -> Int {
+//    let numArray: [Int] = readLine()!.components(separatedBy: " ").map{Int($0)!}
+//    var result: [Int] = []
+//
+//    for i in 0..<numArray.count {
+//        result.append(Int(String(String(numArray[i]).reversed()))!)
+//    }
+//
+//    return Int(String(String(result.reduce(0, +)).reversed()))!
+//}
+//print(solution())
+
+// MARK: - 백준 1384번 메시지
+
+func solution() {
     
-    for i in 0..<numArray.count {
-        result.append(Int(String(String(numArray[i]).reversed()))!)
+    
+    var count: Int = 1
+    while true {
+        let n: Int = Int(readLine()!)!
+        var student: [String] = []
+        var message: [[String]] = []
+        
+        if n == 0 {
+            break
+        } else {
+            var target = 0
+            for i in 0..<n {
+                var temp: [String] = []
+                temp = readLine()!.components(separatedBy: " ").map{String($0)}
+                student.append(temp[0])
+                
+                var tempMessage: [String] = Array(temp[1..<n])
+                message.append(tempMessage)
+                
+            }
+            
+            print("Group \(count)")
+            count += 1
+            
+            var result: [String] = []
+            
+            for i in 0..<message.count {
+                for j in 0..<message[i].count {
+                    if message[i][j] == "N" {
+                       
+                        var index = n + i - 1 - j
+                        index = index % n
+                        print("\(student[index]) was nasty about \(student[i])")
+                        target = 1
+
+                    }
+                }
+            }
+            
+            if target == 0 {
+                print("Nobody was nasty")
+            }
+            print("")
+            
+        }
+        
     }
     
-    return Int(String(String(result.reduce(0, +)).reversed()))!
 }
-print(solution())
+
+solution()
