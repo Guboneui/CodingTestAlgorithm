@@ -1870,27 +1870,40 @@ import Foundation
 
 // MARK: - 백준 1356 유진수
 
-func solution() -> String {
-    var n: Int = Int(readLine()!)!
-    if n == 1 {
-        return "NO"
-    }
-    
-    var target = 1
-    
-    for i in 1..<String(n).count {
-        var first = Array(String(n))[..<i]
-        var second = Array(String(n))[i...]
-       
-        var firstMul = first.map{Int(String($0))!}.reduce(1, *)
-        var secondMul = second.map{Int(String($0))!}.reduce(1, *)
-        
-        if firstMul == secondMul {
-            return "YES"
-        }
+//func solution() -> String {
+//    var n: Int = Int(readLine()!)!
+//    if n == 1 {
+//        return "NO"
+//    }
+//
+//    var target = 1
+//
+//    for i in 1..<String(n).count {
+//        var first = Array(String(n))[..<i]
+//        var second = Array(String(n))[i...]
+//
+//        var firstMul = first.map{Int(String($0))!}.reduce(1, *)
+//        var secondMul = second.map{Int(String($0))!}.reduce(1, *)
+//
+//        if firstMul == secondMul {
+//            return "YES"
+//        }
+//
+//    }
+//    return "NO"
+//}
+//print(solution())
 
+// MARK: - 백준 1357번 뒤집힌 덧셈
+
+func solution() -> Int {
+    let numArray: [Int] = readLine()!.components(separatedBy: " ").map{Int($0)!}
+    var result: [Int] = []
+    
+    for i in 0..<numArray.count {
+        result.append(Int(String(String(numArray[i]).reversed()))!)
     }
-    return "NO"
+    
+    return Int(String(String(result.reduce(0, +)).reversed()))!
 }
 print(solution())
-
