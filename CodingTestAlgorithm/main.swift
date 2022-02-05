@@ -2195,17 +2195,42 @@ import Foundation
 
 // MARK: - 백준 2748번 피보나치 수 2
 
+//func solution() -> Int {
+//    let n: Int = Int(readLine()!)!
+//    var fibo: [Int] = [1, 1]
+//    if n == 1 || n == 2{
+//        return 1
+//    } else {
+//        for i in 2..<n{
+//            fibo.append(fibo[i-2] + fibo[i-1])
+//        }
+//        return fibo[n-1]
+//    }
+//}
+//
+//print(solution())
+
+// MARK: - 백준 10844번 쉬운 계단 수
+
 func solution() -> Int {
     let n: Int = Int(readLine()!)!
-    var fibo: [Int] = [1, 1]
-    if n == 1 || n == 2{
-        return 1
-    } else {
-        for i in 2..<n{
-            fibo.append(fibo[i-2] + fibo[i-1])
+    
+    var arr: [[Int]] = Array(repeating: Array(repeating: 0, count: 10), count: n+1)
+    arr[1] = [0, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    arr[2] = [1, 1, 2, 2, 2, 2, 2, 2, 2, 1]
+    
+    for i in 3...n {
+        for j in 0...9 {
+            if j == 0 {
+                arr[i][j] = arr[i-1][j+1] % 1000000000
+            } else if j == 9 {
+                arr[i][j] = arr[i-1][j-1] % 1000000000
+            } else {
+                arr[i][j] = (arr[i-1][j-1] + arr[i-1][j+1]) % 1000000000
+            }
         }
-        return fibo[n-1]
     }
+    
+    return arr[n].reduce(0, +) % 1000000000
 }
-
 print(solution())
