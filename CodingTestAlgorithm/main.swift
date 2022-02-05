@@ -2009,20 +2009,42 @@ import Foundation
 
 // MARK: - 백준 11726번 2xn 타일링
 
+//func solution() -> Int {
+//
+//    let n: Int = Int(readLine()!)!
+//    var arr: [Int] = Array(repeating: 0, count: 1001)
+//
+//    arr[1] = 1
+//    arr[2] = 2
+//
+//    for i in stride(from: 3, through: n, by: 1) {
+//        arr[i] = (arr[i-2] + arr[i-1]) % 10007
+//    }
+//
+//    return arr[n]
+//
+//}
+//
+//print(solution())
+
+//MARK: - 백준 1149번 RGB거리
+
 func solution() -> Int {
-    
     let n: Int = Int(readLine()!)!
-    var arr: [Int] = Array(repeating: 0, count: 1001)
-    
-    arr[1] = 1
-    arr[2] = 2
-    
-    for i in stride(from: 3, through: n, by: 1) {
-        arr[i] = (arr[i-2] + arr[i-1]) % 10007
+    var arr: [[Int]] = []
+    for _ in 0..<n {
+        arr.append(Array(readLine()!.components(separatedBy: " ").map{Int($0)!}))
     }
     
-    return arr[n]
-    
+    var result: [[Int]] = []
+    result.append(arr[0])
+    for i in 1..<n {
+        var temp: [Int] = []
+        temp.append(min(result[i-1][1], result[i-1][2]) + arr[i][0])
+        temp.append(min(result[i-1][0], result[i-1][2]) + arr[i][1])
+        temp.append(min(result[i-1][0], result[i-1][1]) + arr[i][2])
+        result.append(temp)
+    }
+    return result.popLast()!.min()!
 }
-
 print(solution())
