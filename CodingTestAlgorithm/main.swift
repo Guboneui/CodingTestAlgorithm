@@ -2083,37 +2083,83 @@ import Foundation
 
 // MARK: - 백준 1932번 정수 삼각형
 
+//func solution() -> Int {
+//    let n: Int = Int(readLine()!)!
+//    var arr: [[Int]] = []
+//    var result: [[Int]] = []
+//    for _ in 0..<n {
+//        arr.append(readLine()!.components(separatedBy: " ").map{Int($0)!})
+//    }
+//
+//    result.append(arr[0])
+//    if n == 1 {
+//        return result[0].min()!
+//    }
+//
+//    for index in 1..<n {
+//        var temp: [Int] = []
+//        for i in 0..<arr[index].count {
+//            if i == 0 {
+//                temp.append(result[index-1][0] + arr[index][0])
+//            } else if i == arr[index].count - 1{
+//                temp.append(result[index-1][i-1] + arr[index][i])
+//            } else {
+//                temp.append(max(result[index-1][i-1] + arr[index][i], result[index-1][i] + arr[index][i]))
+//            }
+//
+//        }
+//
+//        result.append(temp)
+//    }
+//
+//
+//    return result.popLast()!.max()!
+//}
+//
+//print(solution())
+
+// MARK: - 백준 11053번 가장 긴 증가하는 부분 수열
+
+//func solution() -> Int {
+//    let n: Int = Int(readLine()!)!
+//    let arr: [Int] = readLine()!.components(separatedBy: " ").map{Int(String($0))!}
+//    var result: [Int] = Array(repeating: 1, count: n)
+//
+//
+//    for i in 1..<n {
+//        for j in 0..<i {
+//            if arr[j] < arr[i] {
+//                result[i] = max(result[i], result[j] + 1)
+//            }
+//        }
+//    }
+//
+//
+//    return result.max()!
+//}
+//
+//print(solution())
+
+// MARK: - 백준 1912번 연속합
+
 func solution() -> Int {
     let n: Int = Int(readLine()!)!
-    var arr: [[Int]] = []
-    var result: [[Int]] = []
-    for _ in 0..<n {
-        arr.append(readLine()!.components(separatedBy: " ").map{Int($0)!})
-    }
-    
-    result.append(arr[0])
-    if n == 1 {
-        return result[0].min()!
-    }
-    
-    for index in 1..<n {
-        var temp: [Int] = []
-        for i in 0..<arr[index].count {
-            if i == 0 {
-                temp.append(result[index-1][0] + arr[index][0])
-            } else if i == arr[index].count - 1{
-                temp.append(result[index-1][i-1] + arr[index][i])
-            } else {
-                temp.append(max(result[index-1][i-1] + arr[index][i], result[index-1][i] + arr[index][i]))
-            }
-            
-        }
+    var arr: [Int] = readLine()!.components(separatedBy: " ").map{Int(String($0))!}
+    var minNum: Int = arr.min()!
+    var result: [Int] = Array(repeating: minNum, count: n)
+    if arr.max()! < 0 {
+        return arr.max()!
+    } else {
         
-        result.append(temp)
+        result[0] = arr[0]
+        for i in 1..<n {
+            result[i] = max(arr[i], result[i-1] + arr[i])
+        }
     }
     
     
-    return result.popLast()!.max()!
+    return result.max()!
+    
 }
 
 print(solution())
