@@ -2029,22 +2029,54 @@ import Foundation
 
 //MARK: - 백준 1149번 RGB거리
 
+//func solution() -> Int {
+//    let n: Int = Int(readLine()!)!
+//    var arr: [[Int]] = []
+//    for _ in 0..<n {
+//        arr.append(Array(readLine()!.components(separatedBy: " ").map{Int($0)!}))
+//    }
+//
+//    var result: [[Int]] = []
+//    result.append(arr[0])
+//    for i in 1..<n {
+//        var temp: [Int] = []
+//        temp.append(min(result[i-1][1], result[i-1][2]) + arr[i][0])
+//        temp.append(min(result[i-1][0], result[i-1][2]) + arr[i][1])
+//        temp.append(min(result[i-1][0], result[i-1][1]) + arr[i][2])
+//        result.append(temp)
+//    }
+//    return result.popLast()!.min()!
+//}
+//print(solution())
+
+// MARK: - 백준 2579번 계단 오르기
+
 func solution() -> Int {
+    
     let n: Int = Int(readLine()!)!
-    var arr: [[Int]] = []
+    var stairs: [Int] = []
     for _ in 0..<n {
-        arr.append(Array(readLine()!.components(separatedBy: " ").map{Int($0)!}))
+        stairs.append(Int(readLine()!)!)
     }
     
-    var result: [[Int]] = []
-    result.append(arr[0])
-    for i in 1..<n {
-        var temp: [Int] = []
-        temp.append(min(result[i-1][1], result[i-1][2]) + arr[i][0])
-        temp.append(min(result[i-1][0], result[i-1][2]) + arr[i][1])
-        temp.append(min(result[i-1][0], result[i-1][1]) + arr[i][2])
-        result.append(temp)
+    var result: [Int] = []
+    
+    if n == 1 {
+        return stairs[0]
+    } else if n == 2 {
+        return stairs[0] + stairs[1]
+    } else if n == 3 {
+        return max(stairs[0] + stairs[2], stairs[1] + stairs[2])
     }
-    return result.popLast()!.min()!
+    else {
+        result.append(stairs[0])
+        result.append(stairs[0] + stairs[1])
+        result.append(max(stairs[0] + stairs[2], stairs[1] + stairs[2]))
+        for i in 3..<n {
+            result.append(max(result[i-2] + stairs[i], result[i-3] + stairs[i-1] + stairs[i]))
+        }
+    }
+    return result.popLast()!
 }
+
 print(solution())
