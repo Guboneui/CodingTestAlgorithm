@@ -1910,56 +1910,81 @@ import Foundation
 
 // MARK: - 백준 1384번 메시지
 
-func solution() {
-    
-    
-    var count: Int = 1
-    while true {
-        let n: Int = Int(readLine()!)!
-        var student: [String] = []
-        var message: [[String]] = []
-        
-        if n == 0 {
-            break
-        } else {
-            var target = 0
-            for i in 0..<n {
-                var temp: [String] = []
-                temp = readLine()!.components(separatedBy: " ").map{String($0)}
-                student.append(temp[0])
-                
-                var tempMessage: [String] = Array(temp[1..<n])
-                message.append(tempMessage)
-                
-            }
-            
-            print("Group \(count)")
-            count += 1
-            
-            var result: [String] = []
-            
-            for i in 0..<message.count {
-                for j in 0..<message[i].count {
-                    if message[i][j] == "N" {
-                       
-                        var index = n + i - 1 - j
-                        index = index % n
-                        print("\(student[index]) was nasty about \(student[i])")
-                        target = 1
+//func solution() {
 
-                    }
-                }
-            }
-            
-            if target == 0 {
-                print("Nobody was nasty")
-            }
-            print("")
-            
-        }
-        
+//    var count: Int = 1
+//    while true {
+//        let n: Int = Int(readLine()!)!
+//        var student: [String] = []
+//        var message: [[String]] = []
+//
+//        if n == 0 {
+//            break
+//        } else {
+//            var target = 0
+//            for i in 0..<n {
+//                var temp: [String] = []
+//                temp = readLine()!.components(separatedBy: " ").map{String($0)}
+//                student.append(temp[0])
+//
+//                var tempMessage: [String] = Array(temp[1..<n])
+//                message.append(tempMessage)
+//
+//            }
+//
+//            print("Group \(count)")
+//            count += 1
+//
+//            var result: [String] = []
+//
+//            for i in 0..<message.count {
+//                for j in 0..<message[i].count {
+//                    if message[i][j] == "N" {
+//
+//                        var index = n + i - 1 - j
+//                        index = index % n
+//                        print("\(student[index]) was nasty about \(student[i])")
+//                        target = 1
+//                    }
+//                }
+//            }
+//
+//            if target == 0 {
+//                print("Nobody was nasty")
+//            }
+//            print("")
+//
+//        }
+//    }
+//}
+//
+//solution()
+
+// MARK: - 백준 10870번 피보나치 수 5
+
+//func solution() -> Int {
+//    var arr: [Int] = [1, 1]
+//    let n: Int = Int(readLine()!)!
+//
+//    if n == 0 {
+//        return 0
+//    } else if n == 1 || n == 2 {
+//        return 1
+//    } else {
+//        for i in 2..<n {
+//            arr.append(arr[i-2] + arr[i-1])
+//        }
+//
+//        return arr.popLast()!
+//    }
+//}
+//
+//print(solution())
+
+func solution(_ n: Int) -> Int {
+    if n <= 1 {
+        return n
     }
-    
+    return solution(n-2) + solution(n-1)
 }
-
-solution()
+print(solution(Int(readLine()!)!))
