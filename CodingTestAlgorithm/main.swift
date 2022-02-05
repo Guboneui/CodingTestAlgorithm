@@ -2051,32 +2051,69 @@ import Foundation
 
 // MARK: - 백준 2579번 계단 오르기
 
+//func solution() -> Int {
+//
+//    let n: Int = Int(readLine()!)!
+//    var stairs: [Int] = []
+//    for _ in 0..<n {
+//        stairs.append(Int(readLine()!)!)
+//    }
+//
+//    var result: [Int] = []
+//
+//    if n == 1 {
+//        return stairs[0]
+//    } else if n == 2 {
+//        return stairs[0] + stairs[1]
+//    } else if n == 3 {
+//        return max(stairs[0] + stairs[2], stairs[1] + stairs[2])
+//    }
+//    else {
+//        result.append(stairs[0])
+//        result.append(stairs[0] + stairs[1])
+//        result.append(max(stairs[0] + stairs[2], stairs[1] + stairs[2]))
+//        for i in 3..<n {
+//            result.append(max(result[i-2] + stairs[i], result[i-3] + stairs[i-1] + stairs[i]))
+//        }
+//    }
+//    return result.popLast()!
+//}
+//
+//print(solution())
+
+// MARK: - 백준 1932번 정수 삼각형
+
 func solution() -> Int {
-    
     let n: Int = Int(readLine()!)!
-    var stairs: [Int] = []
+    var arr: [[Int]] = []
+    var result: [[Int]] = []
     for _ in 0..<n {
-        stairs.append(Int(readLine()!)!)
+        arr.append(readLine()!.components(separatedBy: " ").map{Int($0)!})
     }
     
-    var result: [Int] = []
-    
+    result.append(arr[0])
     if n == 1 {
-        return stairs[0]
-    } else if n == 2 {
-        return stairs[0] + stairs[1]
-    } else if n == 3 {
-        return max(stairs[0] + stairs[2], stairs[1] + stairs[2])
+        return result[0].min()!
     }
-    else {
-        result.append(stairs[0])
-        result.append(stairs[0] + stairs[1])
-        result.append(max(stairs[0] + stairs[2], stairs[1] + stairs[2]))
-        for i in 3..<n {
-            result.append(max(result[i-2] + stairs[i], result[i-3] + stairs[i-1] + stairs[i]))
+    
+    for index in 1..<n {
+        var temp: [Int] = []
+        for i in 0..<arr[index].count {
+            if i == 0 {
+                temp.append(result[index-1][0] + arr[index][0])
+            } else if i == arr[index].count - 1{
+                temp.append(result[index-1][i-1] + arr[index][i])
+            } else {
+                temp.append(max(result[index-1][i-1] + arr[index][i], result[index-1][i] + arr[index][i]))
+            }
+            
         }
+        
+        result.append(temp)
     }
-    return result.popLast()!
+    
+    
+    return result.popLast()!.max()!
 }
 
 print(solution())
