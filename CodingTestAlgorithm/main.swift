@@ -2166,31 +2166,46 @@ import Foundation
 
 // MARK: - 백준 2156번 포도주 시식
 
+//func solution() -> Int {
+//    let n: Int = Int(readLine()!)!
+//    var wine: [Int] = [0]
+//    for _ in 0..<n {
+//        wine.append(Int(readLine()!)!)
+//    }
+//
+//    var result: [Int] = Array(repeating: 0, count: n+1)
+//
+//    if n == 1 {
+//        return wine[1]
+//    } else if n == 2 {
+//        return wine[1] + wine[2]
+//    } else {
+//        result[1] = wine[1]
+//        result[2] = wine[1] + wine[2]
+//
+//        for i in 3...n {
+//            result[i] = max(result[i-1], result[i-2] + wine[i], result[i-3] + wine[i-1] + wine[i])
+//
+//        }
+//        return result[n]
+//    }
+//}
+//
+//print(solution())
+
+// MARK: - 백준 2748번 피보나치 수 2
+
 func solution() -> Int {
     let n: Int = Int(readLine()!)!
-    var wine: [Int] = [0]
-    for _ in 0..<n {
-        wine.append(Int(readLine()!)!)
-    }
-
-    var result: [Int] = Array(repeating: 0, count: n+1)
-    
-    if n == 1 {
-        return wine[1]
-    } else if n == 2 {
-        return wine[1] + wine[2]
+    var fibo: [Int] = [1, 1]
+    if n == 1 || n == 2{
+        return 1
     } else {
-        result[1] = wine[1]
-        result[2] = wine[1] + wine[2]
-        
-        for i in 3...n {
-            result[i] = max(result[i-1], result[i-2] + wine[i], result[i-3] + wine[i-1] + wine[i])
-
+        for i in 2..<n{
+            fibo.append(fibo[i-2] + fibo[i-1])
         }
-        return result[n]
+        return fibo[n-1]
     }
 }
 
 print(solution())
-
-
