@@ -2212,14 +2212,17 @@ import Foundation
 
 // MARK: - 백준 10844번 쉬운 계단 수
 
+import Foundation
+
 func solution() -> Int {
     let n: Int = Int(readLine()!)!
     
-    var arr: [[Int]] = Array(repeating: Array(repeating: 0, count: 10), count: n+1)
+    var arr: [[Int]] = Array(repeating: Array(repeating: 0, count: 10), count: 101)
     arr[1] = [0, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     arr[2] = [1, 1, 2, 2, 2, 2, 2, 2, 2, 1]
     
-    for i in 3...n {
+    
+    for i in stride(from: 3, through: n, by: 1) {
         for j in 0...9 {
             if j == 0 {
                 arr[i][j] = arr[i-1][j+1] % 1000000000
@@ -2229,8 +2232,9 @@ func solution() -> Int {
                 arr[i][j] = (arr[i-1][j-1] + arr[i-1][j+1]) % 1000000000
             }
         }
+        
     }
-    
     return arr[n].reduce(0, +) % 1000000000
+    
 }
 print(solution())
