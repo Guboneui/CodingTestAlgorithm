@@ -2142,24 +2142,55 @@ import Foundation
 
 // MARK: - 백준 1912번 연속합
 
+//func solution() -> Int {
+//    let n: Int = Int(readLine()!)!
+//    var arr: [Int] = readLine()!.components(separatedBy: " ").map{Int(String($0))!}
+//    var minNum: Int = arr.min()!
+//    var result: [Int] = Array(repeating: minNum, count: n)
+//    if arr.max()! < 0 {
+//        return arr.max()!
+//    } else {
+//
+//        result[0] = arr[0]
+//        for i in 1..<n {
+//            result[i] = max(arr[i], result[i-1] + arr[i])
+//        }
+//    }
+//
+//
+//    return result.max()!
+//
+//}
+//
+//print(solution())
+
+// MARK: - 백준 2156번 포도주 시식
+
 func solution() -> Int {
     let n: Int = Int(readLine()!)!
-    var arr: [Int] = readLine()!.components(separatedBy: " ").map{Int(String($0))!}
-    var minNum: Int = arr.min()!
-    var result: [Int] = Array(repeating: minNum, count: n)
-    if arr.max()! < 0 {
-        return arr.max()!
-    } else {
-        
-        result[0] = arr[0]
-        for i in 1..<n {
-            result[i] = max(arr[i], result[i-1] + arr[i])
-        }
+    var wine: [Int] = [0]
+    for _ in 0..<n {
+        wine.append(Int(readLine()!)!)
     }
+
+    var result: [Int] = Array(repeating: 0, count: n+1)
     
-    
-    return result.max()!
-    
+    if n == 1 {
+        return wine[1]
+    } else if n == 2 {
+        return wine[1] + wine[2]
+    } else {
+        result[1] = wine[1]
+        result[2] = wine[1] + wine[2]
+        
+        for i in 3...n {
+            result[i] = max(result[i-1], result[i-2] + wine[i], result[i-3] + wine[i-1] + wine[i])
+
+        }
+        return result[n]
+    }
 }
 
 print(solution())
+
+
