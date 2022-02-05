@@ -1981,10 +1981,28 @@ import Foundation
 //
 //print(solution())
 
-func solution(_ n: Int) -> Int {
-    if n <= 1 {
-        return n
+//func solution(_ n: Int) -> Int {
+//    if n <= 1 {
+//        return n
+//    }
+//    return solution(n-2) + solution(n-1)
+//}
+//print(solution(Int(readLine()!)!))
+
+// MARK: - 백준 9095번 1,2,3 더하기
+
+func solution() {
+    let n = Int(readLine()!)!
+    var arr: [Int] = []
+    var resultArr: [Int] = [0, 1, 2, 4]
+    
+    for i in 4..<12 {
+        resultArr.append(resultArr[i-3] + resultArr[i-2] + resultArr[i-1])
     }
-    return solution(n-2) + solution(n-1)
+
+    for i in 0..<n {
+        print(resultArr[Int(readLine()!)!])
+    }
 }
-print(solution(Int(readLine()!)!))
+
+solution()
