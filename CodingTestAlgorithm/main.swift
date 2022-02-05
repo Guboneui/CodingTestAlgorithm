@@ -1991,18 +1991,38 @@ import Foundation
 
 // MARK: - 백준 9095번 1,2,3 더하기
 
-func solution() {
-    let n = Int(readLine()!)!
-    var arr: [Int] = []
-    var resultArr: [Int] = [0, 1, 2, 4]
-    
-    for i in 4..<12 {
-        resultArr.append(resultArr[i-3] + resultArr[i-2] + resultArr[i-1])
-    }
+//func solution() {
+//    let n = Int(readLine()!)!
+//    var arr: [Int] = []
+//    var resultArr: [Int] = [0, 1, 2, 4]
+//
+//    for i in 4..<12 {
+//        resultArr.append(resultArr[i-3] + resultArr[i-2] + resultArr[i-1])
+//    }
+//
+//    for i in 0..<n {
+//        print(resultArr[Int(readLine()!)!])
+//    }
+//}
+//
+//solution()
 
-    for i in 0..<n {
-        print(resultArr[Int(readLine()!)!])
+// MARK: - 백준 11726번 2xn 타일링
+
+func solution() -> Int {
+    
+    let n: Int = Int(readLine()!)!
+    var arr: [Int] = Array(repeating: 0, count: 1001)
+    
+    arr[1] = 1
+    arr[2] = 2
+    
+    for i in stride(from: 3, through: n, by: 1) {
+        arr[i] = (arr[i-2] + arr[i-1]) % 10007
     }
+    
+    return arr[n]
+    
 }
 
-solution()
+print(solution())
