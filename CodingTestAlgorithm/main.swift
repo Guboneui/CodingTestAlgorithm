@@ -2214,27 +2214,46 @@ import Foundation
 
 import Foundation
 
+//func solution() -> Int {
+//    let n: Int = Int(readLine()!)!
+//
+//    var arr: [[Int]] = Array(repeating: Array(repeating: 0, count: 10), count: 101)
+//    arr[1] = [0, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+//    arr[2] = [1, 1, 2, 2, 2, 2, 2, 2, 2, 1]
+//
+//
+//    for i in stride(from: 3, through: n, by: 1) {
+//        for j in 0...9 {
+//            if j == 0 {
+//                arr[i][j] = arr[i-1][j+1] % 1000000000
+//            } else if j == 9 {
+//                arr[i][j] = arr[i-1][j-1] % 1000000000
+//            } else {
+//                arr[i][j] = (arr[i-1][j-1] + arr[i-1][j+1]) % 1000000000
+//            }
+//        }
+//
+//    }
+//    return arr[n].reduce(0, +) % 1000000000
+//
+//}
+//print(solution())
+
+// MARK: - 백준 2193번 이친수
+
 func solution() -> Int {
     let n: Int = Int(readLine()!)!
     
-    var arr: [[Int]] = Array(repeating: Array(repeating: 0, count: 10), count: 101)
-    arr[1] = [0, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-    arr[2] = [1, 1, 2, 2, 2, 2, 2, 2, 2, 1]
+    var numArr: [Int] = Array(repeating: 0, count: 91)
+    numArr[1] = 1
+    numArr[2] = 1
     
-    
-    for i in stride(from: 3, through: n, by: 1) {
-        for j in 0...9 {
-            if j == 0 {
-                arr[i][j] = arr[i-1][j+1] % 1000000000
-            } else if j == 9 {
-                arr[i][j] = arr[i-1][j-1] % 1000000000
-            } else {
-                arr[i][j] = (arr[i-1][j-1] + arr[i-1][j+1]) % 1000000000
-            }
+    if n > 2 {
+        for i in 3...n {
+            numArr[i] = numArr[i-2] + numArr[i-1]
         }
-        
     }
-    return arr[n].reduce(0, +) % 1000000000
-    
+    return numArr[n]
 }
+
 print(solution())
