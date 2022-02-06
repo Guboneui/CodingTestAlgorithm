@@ -2396,25 +2396,45 @@ import Foundation
 //
 //solution()
 
+//func solution() {
+//    let n: Int = Int(readLine()!)!
+//    for _ in 0..<n {
+//        var text: String = readLine()!
+//        var count = 0
+//        for i in text {
+//            if i == "(" {
+//                count += 1
+//            } else {
+//                count -= 1
+//            }
+//
+//
+//            if count < 0 {
+//                break
+//            }
+//        }
+//        print(count == 0 ? "YES" : "NO")
+//    }
+//}
+//
+//solution()
+
+// MARK: - 백준 10845번 큐
+
 func solution() {
     let n: Int = Int(readLine()!)!
+    var result: [Int] = []
+    
     for _ in 0..<n {
-        var text: String = readLine()!
-        var count = 0
-        for i in text {
-            if i == "(" {
-                count += 1
-            } else {
-                count -= 1
-            }
-            
-            
-            if count < 0 {
-                break
-            }
-        }
-        print(count == 0 ? "YES" : "NO")
+        var temp: [String] = readLine()!.components(separatedBy: " ")
+        if temp[0] == "push" {result.append(Int(temp[1])!)}
+        if temp[0] == "pop" {print(result.count == 0 ? -1 : result.removeFirst())}
+        if temp[0] == "size" {print(result.count)}
+        if temp[0] == "empty" {print(result.count == 0 ? 1 : 0)}
+        if temp[0] == "front" {print(result.count == 0 ? -1 : result[0])}
+        if temp[0] == "back" {print(result.count == 0 ? -1 : result[result.endIndex - 1])}
     }
 }
+
 
 solution()
