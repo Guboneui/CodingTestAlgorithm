@@ -2287,22 +2287,32 @@ import Foundation
 
 // MARK: - 백준 11727번 2×n 타일링 2
     
-func solution() -> Int {
-    let n: Int = Int(readLine()!)!
-    var result: [Int] = Array(repeating: 0, count: 1001)
-    if n == 1 {
-        return 1 % 10007
-    } else if n == 2 {
-        return 3 % 10007
-    } else {
-        result[1] = 1
-        result[2] = 3
-        for i in 3...n {
-            result[i] = (result[i-1] % 10007) + ((result[i-2] * 2) % 10007)
-        }
-        return result[n] % 10007
-    }
+//func solution() -> Int {
+//    let n: Int = Int(readLine()!)!
+//    var result: [Int] = Array(repeating: 0, count: 1001)
+//    if n == 1 {
+//        return 1 % 10007
+//    } else if n == 2 {
+//        return 3 % 10007
+//    } else {
+//        result[1] = 1
+//        result[2] = 3
+//        for i in 3...n {
+//            result[i] = (result[i-1] % 10007) + ((result[i-2] * 2) % 10007)
+//        }
+//        return result[n] % 10007
+//    }
+//}
+//
+//print(solution())
+
+let n = Int(readLine()!)!
+var dp = [Int](repeating: 0, count: n + 1)
+dp[0] = 1
+dp[1] = 1
+
+for i in 2..<n+1 {
+    dp[i] = (dp[i - 1] + dp[i - 2] * 2) % 10007
 }
 
-print(solution())
-
+print(dp[n])
