@@ -2421,20 +2421,35 @@ import Foundation
 
 // MARK: - 백준 10845번 큐
 
+//func solution() {
+//    let n: Int = Int(readLine()!)!
+//    var result: [Int] = []
+//
+//    for _ in 0..<n {
+//        var temp: [String] = readLine()!.components(separatedBy: " ")
+//        if temp[0] == "push" {result.append(Int(temp[1])!)}
+//        if temp[0] == "pop" {print(result.count == 0 ? -1 : result.removeFirst())}
+//        if temp[0] == "size" {print(result.count)}
+//        if temp[0] == "empty" {print(result.count == 0 ? 1 : 0)}
+//        if temp[0] == "front" {print(result.count == 0 ? -1 : result[0])}
+//        if temp[0] == "back" {print(result.count == 0 ? -1 : result[result.endIndex - 1])}
+//    }
+//}
+//
+//solution()
+
+// MARK: - 백준 1920번 수 찾기
+
 func solution() {
-    let n: Int = Int(readLine()!)!
-    var result: [Int] = []
+    let a: Int = Int(readLine()!)!
+    let aArray: Set<Int> = Set(readLine()!.components(separatedBy: " ").map{Int($0)!})
     
-    for _ in 0..<n {
-        var temp: [String] = readLine()!.components(separatedBy: " ")
-        if temp[0] == "push" {result.append(Int(temp[1])!)}
-        if temp[0] == "pop" {print(result.count == 0 ? -1 : result.removeFirst())}
-        if temp[0] == "size" {print(result.count)}
-        if temp[0] == "empty" {print(result.count == 0 ? 1 : 0)}
-        if temp[0] == "front" {print(result.count == 0 ? -1 : result[0])}
-        if temp[0] == "back" {print(result.count == 0 ? -1 : result[result.endIndex - 1])}
+    let b: Int = Int(readLine()!)!
+    let bArray: [Int] = readLine()!.components(separatedBy: " ").map{Int($0)!}
+    
+    for num in bArray {
+        print(aArray.contains(num) ? 1 : 0)
     }
 }
-
 
 solution()
