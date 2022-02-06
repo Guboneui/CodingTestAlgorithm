@@ -2319,55 +2319,102 @@ import Foundation
 
 // MARK: - 백준 10828번 스택
 
+//func solution() {
+//    let n: Int = Int(readLine()!)!
+//    var arr: [String] = []
+//    var stack: [Int] = []
+//    for _ in 0..<n {
+//        arr.append(readLine()!)
+//    }
+//    print(arr)
+//
+//
+//    for i in arr {
+//        if i.contains("push") {
+//            let index = i.index(i.startIndex, offsetBy: 5)
+//            //print("AAA \(String(i[index...]))")
+//            stack.append(Int(i[index...])!)
+//        }
+//
+//        if i == "pop" {
+//            if stack.count == 0 {
+//                print(-1)
+//            } else {
+//                print(stack.popLast()!)
+//            }
+//        }
+//
+//        if i == "size" {
+//            print(stack.count)
+//        }
+//
+//        if i == "empty" {
+//            if stack.count == 0 {
+//                print(1)
+//            } else {
+//                print(0)
+//            }
+//        }
+//
+//        if i == "top" {
+//            if stack.count == 0 {
+//                print(-1)
+//            } else {
+//                print(stack.last!)
+//            }
+//        }
+//
+//
+//
+//    }
+//}
+//
+//solution()
+
+
+// MARK: - 백준 9012번 괄호
+//func solution() {
+//    let n: Int = Int(readLine()!)!
+//    for _ in 0..<n {
+//        var tempString = ""
+//        let tempArray = Array(readLine()!)
+//        for temp in tempArray {
+//            tempString += String(temp)
+//            if tempString.contains("()") {
+//                tempString.removeLast()
+//                tempString.removeLast()
+//            }
+//        }
+//
+//        if tempString.count == 0 {
+//            print("YES")
+//        } else {
+//            print("NO")
+//        }
+//    }
+//}
+//
+//solution()
+
 func solution() {
     let n: Int = Int(readLine()!)!
-    var arr: [String] = []
-    var stack: [Int] = []
     for _ in 0..<n {
-        arr.append(readLine()!)
-    }
-    print(arr)
-    
-    
-    for i in arr {
-        if i.contains("push") {
-            let index = i.index(i.startIndex, offsetBy: 5)
-            //print("AAA \(String(i[index...]))")
-            stack.append(Int(i[index...])!)
-        }
-        
-        if i == "pop" {
-            if stack.count == 0 {
-                print(-1)
+        var text: String = readLine()!
+        var count = 0
+        for i in text {
+            if i == "(" {
+                count += 1
             } else {
-                print(stack.popLast()!)
+                count -= 1
+            }
+            
+            
+            if count < 0 {
+                break
             }
         }
-        
-        if i == "size" {
-            print(stack.count)
-        }
-        
-        if i == "empty" {
-            if stack.count == 0 {
-                print(1)
-            } else {
-                print(0)
-            }
-        }
-        
-        if i == "top" {
-            if stack.count == 0 {
-                print(-1)
-            } else {
-                print(stack.last!)
-            }
-        }
-        
-        
-        
+        print(count == 0 ? "YES" : "NO")
     }
 }
 
 solution()
-
