@@ -2241,19 +2241,46 @@ import Foundation
 
 // MARK: - 백준 2193번 이친수
 
-func solution() -> Int {
+//func solution() -> Int {
+//    let n: Int = Int(readLine()!)!
+//
+//    var numArr: [Int] = Array(repeating: 0, count: 91)
+//    numArr[1] = 1
+//    numArr[2] = 1
+//
+//    if n > 2 {
+//        for i in 3...n {
+//            numArr[i] = numArr[i-2] + numArr[i-1]
+//        }
+//    }
+//    return numArr[n]
+//}
+//
+//print(solution())
+
+// MARK: - 백준 9461번 파도반 수열
+
+func solution() {
     let n: Int = Int(readLine()!)!
+    var arr: [Int] = []
+    for _ in 0..<n {
+        arr.append(Int(readLine()!)!)
+    }
     
-    var numArr: [Int] = Array(repeating: 0, count: 91)
-    numArr[1] = 1
-    numArr[2] = 1
-    
-    if n > 2 {
-        for i in 3...n {
-            numArr[i] = numArr[i-2] + numArr[i-1]
+    for num in arr {
+        
+        if num == 1 || num == 2 {
+            print(1)
+        } else {
+            var resultArr: [Int] = Array(repeating: 0, count: num + 1)
+            resultArr[0] = 0
+            resultArr[1] = 1
+            resultArr[2] = 1
+            for i in 3...num {
+                resultArr[i] = resultArr[i-3] + resultArr[i-2]
+            }
+            print(resultArr[num])
         }
     }
-    return numArr[n]
 }
-
-print(solution())
+solution()
