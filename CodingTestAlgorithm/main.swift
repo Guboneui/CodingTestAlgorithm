@@ -2260,27 +2260,49 @@ import Foundation
 
 // MARK: - 백준 9461번 파도반 수열
 
-func solution() {
-    let n: Int = Int(readLine()!)!
-    var arr: [Int] = []
-    for _ in 0..<n {
-        arr.append(Int(readLine()!)!)
-    }
+//func solution() {
+//    let n: Int = Int(readLine()!)!
+//    var arr: [Int] = []
+//    for _ in 0..<n {
+//        arr.append(Int(readLine()!)!)
+//    }
+//
+//    for num in arr {
+//
+//        if num == 1 || num == 2 {
+//            print(1)
+//        } else {
+//            var resultArr: [Int] = Array(repeating: 0, count: num + 1)
+//            resultArr[0] = 0
+//            resultArr[1] = 1
+//            resultArr[2] = 1
+//            for i in 3...num {
+//                resultArr[i] = resultArr[i-3] + resultArr[i-2]
+//            }
+//            print(resultArr[num])
+//        }
+//    }
+//}
+//solution()
+
+// MARK: - 백준 11727번 2×n 타일링 2
     
-    for num in arr {
-        
-        if num == 1 || num == 2 {
-            print(1)
-        } else {
-            var resultArr: [Int] = Array(repeating: 0, count: num + 1)
-            resultArr[0] = 0
-            resultArr[1] = 1
-            resultArr[2] = 1
-            for i in 3...num {
-                resultArr[i] = resultArr[i-3] + resultArr[i-2]
-            }
-            print(resultArr[num])
+func solution() -> Int {
+    let n: Int = Int(readLine()!)!
+    var result: [Int] = Array(repeating: 0, count: 1001)
+    if n == 1 {
+        return 1 % 10007
+    } else if n == 2 {
+        return 3 % 10007
+    } else {
+        result[1] = 1
+        result[2] = 3
+        for i in 3...n {
+            result[i] = (result[i-1] % 10007) + ((result[i-2] * 2) % 10007)
         }
+        return result[n] % 10007
     }
 }
-solution()
+
+print(solution())
+
