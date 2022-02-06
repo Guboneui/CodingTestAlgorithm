@@ -2306,13 +2306,68 @@ import Foundation
 //
 //print(solution())
 
-let n = Int(readLine()!)!
-var dp = [Int](repeating: 0, count: n + 1)
-dp[0] = 1
-dp[1] = 1
+//let n = Int(readLine()!)!
+//var dp = [Int](repeating: 0, count: n + 1)
+//dp[0] = 1
+//dp[1] = 1
+//
+//for i in 2..<n+1 {
+//    dp[i] = (dp[i - 1] + dp[i - 2] * 2) % 10007
+//}
+//
+//print(dp[n])
 
-for i in 2..<n+1 {
-    dp[i] = (dp[i - 1] + dp[i - 2] * 2) % 10007
+// MARK: - 백준 10828번 스택
+
+func solution() {
+    let n: Int = Int(readLine()!)!
+    var arr: [String] = []
+    var stack: [Int] = []
+    for _ in 0..<n {
+        arr.append(readLine()!)
+    }
+    print(arr)
+    
+    
+    for i in arr {
+        if i.contains("push") {
+            let index = i.index(i.startIndex, offsetBy: 5)
+            //print("AAA \(String(i[index...]))")
+            stack.append(Int(i[index...])!)
+        }
+        
+        if i == "pop" {
+            if stack.count == 0 {
+                print(-1)
+            } else {
+                print(stack.popLast()!)
+            }
+        }
+        
+        if i == "size" {
+            print(stack.count)
+        }
+        
+        if i == "empty" {
+            if stack.count == 0 {
+                print(1)
+            } else {
+                print(0)
+            }
+        }
+        
+        if i == "top" {
+            if stack.count == 0 {
+                print(-1)
+            } else {
+                print(stack.last!)
+            }
+        }
+        
+        
+        
+    }
 }
 
-print(dp[n])
+solution()
+
