@@ -2440,16 +2440,36 @@ import Foundation
 
 // MARK: - 백준 1920번 수 찾기
 
-func solution() {
-    let a: Int = Int(readLine()!)!
-    let aArray: Set<Int> = Set(readLine()!.components(separatedBy: " ").map{Int($0)!})
+//func solution() {
+//    let a: Int = Int(readLine()!)!
+//    let aArray: Set<Int> = Set(readLine()!.components(separatedBy: " ").map{Int($0)!})
+//
+//    let b: Int = Int(readLine()!)!
+//    let bArray: [Int] = readLine()!.components(separatedBy: " ").map{Int($0)!}
+//
+//    for num in bArray {
+//        print(aArray.contains(num) ? 1 : 0)
+//    }
+//}
+//
+//solution()
+
+// MARK: - 백준 10773번 제로
+
+func solution() -> Int {
+    let n: Int = Int(readLine()!)!
+    var arr: [Int] = []
     
-    let b: Int = Int(readLine()!)!
-    let bArray: [Int] = readLine()!.components(separatedBy: " ").map{Int($0)!}
-    
-    for num in bArray {
-        print(aArray.contains(num) ? 1 : 0)
+    for _ in 0..<n {
+        var temp = Int(readLine()!)!
+        if temp != 0 {
+            arr.append(temp)
+        } else {
+            arr.removeLast()
+        }
     }
+    
+    return arr.reduce(0, +)
 }
 
-solution()
+print(solution())
