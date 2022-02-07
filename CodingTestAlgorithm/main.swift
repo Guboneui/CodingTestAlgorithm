@@ -2286,7 +2286,7 @@ import Foundation
 //solution()
 
 // MARK: - 백준 11727번 2×n 타일링 2
-    
+
 //func solution() -> Int {
 //    let n: Int = Int(readLine()!)!
 //    var result: [Int] = Array(repeating: 0, count: 1001)
@@ -2680,30 +2680,87 @@ import Foundation
 
 // MARK: - 백준 10816번 숫자 카드 2
 
-func solution() -> String {
-    let n: Int = Int(readLine()!)!
-    let card: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
-    let m: Int = Int(readLine()!)!
-    let targetCard: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+//func solution() -> String {
+//    let n: Int = Int(readLine()!)!
+//    let card: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+//    let m: Int = Int(readLine()!)!
+//    let targetCard: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+//
+//    var dict: [Int:Int] = [:]
+//
+//    for i in card {
+//        if dict[i] == nil {
+//            dict[i] = 1
+//        } else {
+//            dict[i]! += 1
+//        }
+//    }
+//
+//    var result: [Int] = []
+//
+//    for i in targetCard {
+//        result.append(dict[i] ?? 0)
+//    }
+//
+//    return result.map{String($0)}.joined(separator: " ")
+//}
+//
+//print(solution())
 
-    var dict: [Int:Int] = [:]
+// MARK: - 백준 4949번 균형잡힌 세상
 
-    for i in card {
-        if dict[i] == nil {
-            dict[i] = 1
-        } else {
-            dict[i]! += 1
+func solution() {
+    while true {
+        
+        var contents = readLine()!
+        
+        if contents == "." {
+            return
         }
+        
+        var arr = contents.filter { text in
+            if text == "(" {
+                return true
+            }
+            
+            if text == ")" {
+                return true
+            }
+            
+            if text == "[" {
+                return true
+            }
+            
+            if text == "]" {
+                return true
+            }
+            
+            return false
+        }
+        
+        var result: String = ""
+        for i in arr {
+            result.append(i)
+            while true {
+                if result.contains("()") || result.contains("[]") {
+                    result.removeLast()
+                    result.removeLast()
+                } else {
+                    break
+                }
+            }
+        }
+        
+        if result == "" {
+            print("yes")
+        } else {
+            print("no")
+        }
+        
     }
-
-    var result: [Int] = []
-
-    for i in targetCard {
-        result.append(dict[i] ?? 0)
-    }
-
-    return result.map{String($0)}.joined(separator: " ")
+    
+    
 }
 
-print(solution())
 
+solution()
