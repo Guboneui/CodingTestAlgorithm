@@ -2709,58 +2709,81 @@ import Foundation
 
 // MARK: - 백준 4949번 균형잡힌 세상
 
+//func solution() {
+//    while true {
+//
+//        var contents = readLine()!
+//
+//        if contents == "." {
+//            return
+//        }
+//
+//        var arr = contents.filter { text in
+//            if text == "(" {
+//                return true
+//            }
+//
+//            if text == ")" {
+//                return true
+//            }
+//
+//            if text == "[" {
+//                return true
+//            }
+//
+//            if text == "]" {
+//                return true
+//            }
+//
+//            return false
+//        }
+//
+//        var result: String = ""
+//        for i in arr {
+//            result.append(i)
+//            while true {
+//                if result.contains("()") || result.contains("[]") {
+//                    result.removeLast()
+//                    result.removeLast()
+//                } else {
+//                    break
+//                }
+//            }
+//        }
+//
+//        if result == "" {
+//            print("yes")
+//        } else {
+//            print("no")
+//        }
+//
+//    }
+//
+//
+//}
+//
+//
+//solution()
+
+// MARK: - 백준 1764번 듣보잡
 func solution() {
-    while true {
-        
-        var contents = readLine()!
-        
-        if contents == "." {
-            return
-        }
-        
-        var arr = contents.filter { text in
-            if text == "(" {
-                return true
-            }
-            
-            if text == ")" {
-                return true
-            }
-            
-            if text == "[" {
-                return true
-            }
-            
-            if text == "]" {
-                return true
-            }
-            
-            return false
-        }
-        
-        var result: String = ""
-        for i in arr {
-            result.append(i)
-            while true {
-                if result.contains("()") || result.contains("[]") {
-                    result.removeLast()
-                    result.removeLast()
-                } else {
-                    break
-                }
-            }
-        }
-        
-        if result == "" {
-            print("yes")
-        } else {
-            print("no")
-        }
-        
+    let k = readLine()!.split(separator: " ").map{Int(String($0))!}
+    var n = k[0]
+    var m = k[1]
+    
+    var hear: Set<String> = []
+    var see: Set<String> = []
+    
+    for _ in 0..<n {
+        hear.insert(readLine()!)
+    }
+    for _ in 0..<m {
+        see.insert(readLine()!)
     }
     
-    
+    var result = hear.intersection(see)
+    print(result.count)
+    result.sorted().forEach{print($0)}
 }
-
 
 solution()
