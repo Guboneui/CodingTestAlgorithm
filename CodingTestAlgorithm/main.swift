@@ -2654,26 +2654,56 @@ import Foundation
 
 // MARK: - 백준 10799번 쇠막대기
 
-func solution() -> Int {
-    let arr: [String] = readLine()!.map{String($0)}
-    var pipe: Int = 0
-    var result: Int = 0
-    
-    for i in 0..<arr.count {
-        if arr[i] == "(" {
-            pipe += 1
+//func solution() -> Int {
+//    let arr: [String] = readLine()!.map{String($0)}
+//    var pipe: Int = 0
+//    var result: Int = 0
+//
+//    for i in 0..<arr.count {
+//        if arr[i] == "(" {
+//            pipe += 1
+//        } else {
+//            pipe -= 1
+//            if arr[i-1] == "(" {
+//                result += pipe
+//            } else {
+//                result += 1
+//            }
+//        }
+//    }
+//
+//    return result
+//
+//}
+//
+//print(solution())
+
+// MARK: - 백준 10816번 숫자 카드 2
+
+func solution() -> String {
+    let n: Int = Int(readLine()!)!
+    let card: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+    let m: Int = Int(readLine()!)!
+    let targetCard: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+
+    var dict: [Int:Int] = [:]
+
+    for i in card {
+        if dict[i] == nil {
+            dict[i] = 1
         } else {
-            pipe -= 1
-            if arr[i-1] == "(" {
-                result += pipe
-            } else {
-                result += 1
-            }
+            dict[i]! += 1
         }
     }
-    
-    return result
-    
+
+    var result: [Int] = []
+
+    for i in targetCard {
+        result.append(dict[i] ?? 0)
+    }
+
+    return result.map{String($0)}.joined(separator: " ")
 }
 
 print(solution())
+
