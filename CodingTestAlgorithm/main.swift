@@ -2597,19 +2597,56 @@ import Foundation
 
 // MARK: - 백준 2164번 카드2 / 시간 초과 주의
 
-func solution() -> Int {
-    var n: Int = Int(readLine()!)!
-    var arr: [Int] = Array(1...n)
+//func solution() -> Int {
+//    var n: Int = Int(readLine()!)!
+//    var arr: [Int] = Array(1...n)
+//
+//    var target = 0
+//
+//    while target < n-1 {
+//        target += 2
+//        arr.append(arr[target-1])
+//        n += 1
+//    }
+//
+//    return arr[target]
+//}
+//
+//print(solution())
+
+// MARK: - 백준 1966번 프린터 큐
+
+func solution() {
+    var test: [Int] = readLine()!.components(separatedBy: " ").map{Int(String($0))!}
+    var testArr: [Int] = readLine()!.components(separatedBy: " ").map{Int(String($0))!}
+    var arr: [[Int]] = []
     
-    var target = 0
-    
-    while target < n-1 {
-        target += 2
-        arr.append(arr[target-1])
-        n += 1
+    for (index, value) in testArr.enumerated() {
+        arr.append([index, value])
     }
     
-    return arr[target]
+    
+    var target = test[1]
+    var result: [[Int]] = []
+    
+    while !arr.isEmpty {
+        var first = arr.first
+        var maxValue = arr.max(by: {$0[1]<$1[1]})
+        
+        if maxValue![1] == first![1] {
+            result.append(arr.removeFirst())
+        } else {
+            arr.append(arr.removeFirst())
+        }
+    }
+    
+    if let targetNumber = result.firstIndex(where: {$0[0] == target}) {
+        print(targetNumber + 1)
+    }
+    
 }
 
-print(solution())
+let n: Int = Int(readLine()!)!
+for _ in 0..<n {
+    solution()
+}
