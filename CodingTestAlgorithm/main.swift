@@ -2476,27 +2476,100 @@ import Foundation
 
 // MARK: - 백준 1158번 요세푸스 문제
 
-func solution() -> String {
-    let read = readLine()!.components(separatedBy: " ").map{Int(String($0))!}
-    let n: Int = read[0]
-    let count: Int = read[1]
-    var tempIndex: Int = read[1]
-    
-    var arr: [Int] = Array(1...n)
-   
-    
-    var result: [String] = []
-    
-    while arr.count != 0 {
-        if tempIndex <= arr.count {
-            result.append(String(arr.remove(at: tempIndex - 1)))
-            tempIndex = tempIndex + count - 1
-        } else {
-            tempIndex = tempIndex - arr.count
-        }
-    }
+//func solution() -> String {
+//    let read = readLine()!.components(separatedBy: " ").map{Int(String($0))!}
+//    let n: Int = read[0]
+//    let count: Int = read[1]
+//    var tempIndex: Int = read[1]
+//
+//    var arr: [Int] = Array(1...n)
+//
+//
+//    var result: [String] = []
+//
+//    while arr.count != 0 {
+//        if tempIndex <= arr.count {
+//            result.append(String(arr.remove(at: tempIndex - 1)))
+//            tempIndex = tempIndex + count - 1
+//        } else {
+//            tempIndex = tempIndex - arr.count
+//        }
+//    }
+//
+//    return "<\(result.joined(separator: ", "))>"
+//}
+//
+//print(solution())
 
-    return "<\(result.joined(separator: ", "))>"
-}
+// MARK: - 백준 1874번 스택 수열
 
-print(solution())
+//func solution() {
+//    let n: Int = Int(readLine()!)!
+//    var arr: [Int] = []
+//    for _ in 0..<n {
+//        arr.append(Int(readLine()!)!)
+//    }
+//
+//    var result: [Int] = []
+//    var num = 1
+//
+//    var text: [String] = []
+//
+//    while num <= n {
+//        result.append(num)  // push 했음.
+//        text.append("+")
+//        //print("+")
+//        while true {
+//            if result.last == arr.first{
+//
+//                if arr.count == 0 {
+//                    break
+//                } else {
+//                    arr.removeFirst()
+//                    result.removeLast()
+//                    text.append("-")
+//                    //print("-")
+//                }
+//
+//
+//
+//            } else {
+//                break
+//            }
+//        }
+//
+//        num += 1
+//
+//    }
+//
+//
+//    if arr.isEmpty {
+//        text.forEach{print($0)}
+//    } else {
+//        print("NO")
+//    }
+//
+//}
+//
+//solution()
+
+
+//let n = Int(readLine()!)!
+//var stack:[Int] = [], num = 0, res = ""
+//
+//for _ in 1...n {
+//    let now = Int(readLine()!)!
+//
+//    while num < now {
+//        num+=1
+//        stack.append(num)
+//        res+="+\n"
+//    }
+//
+//    if stack.removeLast() != now {
+//        res = "NO"
+//        break
+//    }
+//    res += "-\n"
+//}
+//print(res)
