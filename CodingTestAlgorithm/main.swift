@@ -2573,3 +2573,24 @@ import Foundation
 //    res += "-\n"
 //}
 //print(res)
+
+
+// MARK: - 백준 10866번 덱
+
+func solution() {
+    let n: Int = Int(readLine()!)!
+    var arr: [Int] = []
+    for _ in 0..<n {
+        let temp: [String] = readLine()!.components(separatedBy: " ")
+        if temp[0] == "push_front" {arr.insert(Int(temp[1])!, at: 0)}
+        if temp[0] == "push_back" {arr.insert(Int(temp[1])!, at: arr.endIndex)}
+        if temp[0] == "pop_front" {print(arr.isEmpty ? -1 : arr.removeFirst())}
+        if temp[0] == "pop_back" {print(arr.isEmpty ? -1 : arr.removeLast())}
+        if temp[0] == "size" {print(arr.count)}
+        if temp[0] == "empty" {print(arr.isEmpty ? 1 : 0)}
+        if temp[0] == "front" {print(arr.isEmpty ? -1 : arr.first!)}
+        if temp[0] == "back" {print(arr.isEmpty ? -1 : arr.last!)}
+    }
+}
+
+solution()
