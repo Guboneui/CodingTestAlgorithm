@@ -2456,20 +2456,47 @@ import Foundation
 
 // MARK: - 백준 10773번 제로
 
-func solution() -> Int {
-    let n: Int = Int(readLine()!)!
-    var arr: [Int] = []
+//func solution() -> Int {
+//    let n: Int = Int(readLine()!)!
+//    var arr: [Int] = []
+//
+//    for _ in 0..<n {
+//        var temp = Int(readLine()!)!
+//        if temp != 0 {
+//            arr.append(temp)
+//        } else {
+//            arr.removeLast()
+//        }
+//    }
+//
+//    return arr.reduce(0, +)
+//}
+//
+//print(solution())
+
+// MARK: - 백준 1158번 요세푸스 문제
+
+func solution() -> String {
+    let read = readLine()!.components(separatedBy: " ").map{Int(String($0))!}
+    let n: Int = read[0]
+    let count: Int = read[1]
+    var tempIndex: Int = read[1]
     
-    for _ in 0..<n {
-        var temp = Int(readLine()!)!
-        if temp != 0 {
-            arr.append(temp)
+    var arr: [Int] = Array(1...n)
+   
+    
+    var result: [String] = []
+    
+    while arr.count != 0 {
+        if tempIndex <= arr.count {
+            result.append(String(arr.remove(at: tempIndex - 1)))
+            tempIndex = tempIndex + count - 1
         } else {
-            arr.removeLast()
+            tempIndex = tempIndex - arr.count
         }
     }
-    
-    return arr.reduce(0, +)
+
+    return "<\(result.joined(separator: ", "))>"
 }
 
 print(solution())
