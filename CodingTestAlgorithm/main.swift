@@ -3040,13 +3040,36 @@ import Foundation
 
 // MARK: - 백준 11718번 그대로 출력하기
 
-func solution() {
-    while true {
-        guard let text = readLine() else {
-            return
-        }
-        print(text)
+//func solution() {
+//    while true {
+//        guard let text = readLine() else {
+//            return
+//        }
+//        print(text)
+//    }
+//}
+//
+//solution()
+
+
+// MARK: - 백준 1924번 2007년
+
+func solution() -> String {
+    let read: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+    var m: Int = read[0]
+    var d: Int = read[1]
+    
+    let month: [Int] = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    let day: [String] = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]
+    
+    
+    let totalDay: Int = (month[0..<m].reduce(0, +) + d) % 7
+    if totalDay == 0 {
+        return "SUN"
+    } else {
+        return day[totalDay - 1]
     }
+    
 }
 
-solution()
+print(solution())
