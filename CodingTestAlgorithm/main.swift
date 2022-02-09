@@ -2846,72 +2846,124 @@ import Foundation
 
 // MARK: - 백준 1260번 DFS와 BFS
 
-let read: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
-let n: Int = read[0]
-let m: Int = read[1]
-let v: Int = read[2]
+//let read: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+//let n: Int = read[0]
+//let m: Int = read[1]
+//let v: Int = read[2]
+//
+//var graph: [[Int]] = Array(repeating: Array<Int>(), count: n + 1)
+//
+//// 인접 노드 표현
+//for _ in 0..<m {
+//    let temp: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+//    let start = temp[0]
+//    let end = temp[1]
+//
+//    graph[start].append(end)
+//    graph[end].append(start)
+//
+//    graph[start].sort()
+//    graph[end].sort()
+//}
+//
+//
+//
+//
+//var dfsVisited: [Bool] = Array(repeating: false, count: n+1)
+//var dfsResult: [Int] = []
+//
+//var bfsVisited: [Bool] = Array(repeating: false, count: n+1)
+//var bfsResult: [Int] = []
+//
+//func DFS(graph: [[Int]], v: Int) {
+//    dfsVisited[v] = true
+//    dfsResult.append(v)
+//    for i in graph[v] {
+//        if dfsVisited[i] == false {
+//            DFS(graph: graph, v: i)
+//        }
+//    }
+//
+//}
+//
+//DFS(graph: graph, v: v)
+//print(dfsResult.map{String($0)}.joined(separator: " "))
+//
+//
+//func BFS(v: Int) {
+//
+//
+//    var queue: [Int] = [v]
+//    bfsVisited[v] = true
+//
+//
+//    while !queue.isEmpty {
+//        let v = queue.removeFirst()
+//        bfsResult.append(v)
+//        for i in graph[v] {
+//            if bfsVisited[i] == false {
+//                queue.append(i)
+//                bfsVisited[i] = true
+//
+//            }
+//        }
+//    }
+//    print(bfsResult.map{String($0)}.joined(separator: " "))
+//}
+//
+//BFS(v: v)
 
-var graph: [[Int]] = Array(repeating: Array<Int>(), count: n + 1)
+// MARK: - 백준 2178번 미로 탐색
 
-// 인접 노드 표현
-for _ in 0..<m {
-    let temp: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
-    let start = temp[0]
-    let end = temp[1]
-    
-    graph[start].append(end)
-    graph[end].append(start)
-    
-    graph[start].sort()
-    graph[end].sort()
-}
-
-
-
-
-var dfsVisited: [Bool] = Array(repeating: false, count: n+1)
-var dfsResult: [Int] = []
-
-var bfsVisited: [Bool] = Array(repeating: false, count: n+1)
-var bfsResult: [Int] = []
-
-func DFS(graph: [[Int]], v: Int) {
-    dfsVisited[v] = true
-    dfsResult.append(v)
-    for i in graph[v] {
-        if dfsVisited[i] == false {
-            DFS(graph: graph, v: i)
-        }
+func solution() {
+    let read: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+    var arr: [[Int]] = []
+    for _ in 0..<read[0] {
+        var temp = readLine()!.map{Int(String($0))!}
+        arr.append(temp)
     }
-
-}
-
-DFS(graph: graph, v: v)
-print(dfsResult.map{String($0)}.joined(separator: " "))
-
-
-func BFS(v: Int) {
+    
+    let dx = [-1, 1, 0, 0]
+    let dy = [0, 0, -1, 1]
     
     
-    var queue: [Int] = [v]
-    bfsVisited[v] = true
-  
-   
-    while !queue.isEmpty {
-        let v = queue.removeFirst()
-        bfsResult.append(v)
-        for i in graph[v] {
-            if bfsVisited[i] == false {
-                queue.append(i)
-                bfsVisited[i] = true
+    var a: Int = 0
+    var b: Int = 0
+    var startIndex: [Int] = [a, b]
+    
+    
+    var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: read[1]), count: read[0])
+    var queue: [[Int]] = [[0, 0]]
+    
+    while queue.count != 0 {
+        let current = queue.removeFirst()
+        if visited[current[0]][current[1]] == false {
+            visited[current[0]][current[1]] = true
+            for i in 0..<4 {
+                let currentX = current[0] + dx[i]
+                let currentY = current[1] + dy[i]
+                
+                if currentX < 0 || currentX >= read[0] || currentY < 0 || currentY >= read[1] {
+                    continue
+                } else {
+                    if arr[currentX][currentY] >= 1 && visited[currentX][currentY] == false {
+                        arr[currentX][currentY] = arr[current[0]][current[1]] + 1
+                        queue.append([currentX, currentY])
+                    }
+                }
+                
                 
             }
         }
+        
     }
-    print(bfsResult.map{String($0)}.joined(separator: " "))
+    
+    print(arr[read[0]-1][read[1]-1])
+    
 }
 
-BFS(v: v)
+solution()
+
 
 
 
