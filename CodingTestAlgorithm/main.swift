@@ -3022,18 +3022,31 @@ import Foundation
 
 // MARK: - 백준 10872번 팩토리얼
 
-func solution() -> Int {
-    let n: Int = Int(readLine()!)!
-    var arr: [Int] = Array(repeating: 1, count: n+1)
-    
-    if n > 0 {
-        for i in 1...n {
-            arr[i] = Array(1...n).reduce(1, *)
+//func solution() -> Int {
+//    let n: Int = Int(readLine()!)!
+//    var arr: [Int] = Array(repeating: 1, count: n+1)
+//
+//    if n > 0 {
+//        for i in 1...n {
+//            arr[i] = Array(1...n).reduce(1, *)
+//        }
+//    }
+//
+//
+//    return arr[n]
+//}
+//
+//print(solution())
+
+// MARK: - 백준 11718번 그대로 출력하기
+
+func solution() {
+    while true {
+        guard let text = readLine() else {
+            return
         }
+        print(text)
     }
-    
-    
-    return arr[n]
 }
 
-print(solution())
+solution()
