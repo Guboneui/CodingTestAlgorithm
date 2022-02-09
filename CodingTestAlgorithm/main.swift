@@ -2915,56 +2915,140 @@ import Foundation
 
 // MARK: - 백준 2178번 미로 탐색
 
-func solution() {
-    let read: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
-    var arr: [[Int]] = []
-    for _ in 0..<read[0] {
-        var temp = readLine()!.map{Int(String($0))!}
-        arr.append(temp)
+//func solution() {
+//    let read: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+//    var arr: [[Int]] = []
+//    for _ in 0..<read[0] {
+//        var temp = readLine()!.map{Int(String($0))!}
+//        arr.append(temp)
+//    }
+//
+//    let dx = [-1, 1, 0, 0]
+//    let dy = [0, 0, -1, 1]
+//
+//
+//    var a: Int = 0
+//    var b: Int = 0
+//    var startIndex: [Int] = [a, b]
+//
+//
+//    var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: read[1]), count: read[0])
+//    var queue: [[Int]] = [[0, 0]]
+//
+//    while queue.count != 0 {
+//        let current = queue.removeFirst()
+//        if visited[current[0]][current[1]] == false {
+//            visited[current[0]][current[1]] = true
+//            for i in 0..<4 {
+//                let currentX = current[0] + dx[i]
+//                let currentY = current[1] + dy[i]
+//
+//                if currentX < 0 || currentX >= read[0] || currentY < 0 || currentY >= read[1] {
+//                    continue
+//                } else {
+//                    if arr[currentX][currentY] >= 1 && visited[currentX][currentY] == false {
+//                        arr[currentX][currentY] = arr[current[0]][current[1]] + 1
+//                        queue.append([currentX, currentY])
+//                    }
+//                }
+//
+//
+//            }
+//        }
+//
+//    }
+//
+//    print(arr[read[0]-1][read[1]-1])
+//
+//}
+//
+//solution()
+
+
+// MARK: - 백준 2667번 단지번호붙이기
+
+
+let n: Int = Int(readLine()!)!
+var apt: [[Int]] = []
+var aptCount = 0
+var block: [Int] = []
+
+
+var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: n), count: n)
+
+
+for _ in 0..<n{
+    let temp: [Int] = readLine()!.map{Int(String($0))!}
+    apt.append(temp)
+}
+
+func dfs(a: Int, b: Int) {
+    if a < 0 || a >= n || b < 0 || b >= n || apt[a][b] == 0 {
+        return
     }
+    aptCount += 1
+    //visited[a][b] = true
+    apt[a][b] = 0
     
-    let dx = [-1, 1, 0, 0]
-    let dy = [0, 0, -1, 1]
-    
-    
-    var a: Int = 0
-    var b: Int = 0
-    var startIndex: [Int] = [a, b]
-    
-    
-    var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: read[1]), count: read[0])
-    var queue: [[Int]] = [[0, 0]]
-    
-    while queue.count != 0 {
-        let current = queue.removeFirst()
-        if visited[current[0]][current[1]] == false {
-            visited[current[0]][current[1]] = true
-            for i in 0..<4 {
-                let currentX = current[0] + dx[i]
-                let currentY = current[1] + dy[i]
-                
-                if currentX < 0 || currentX >= read[0] || currentY < 0 || currentY >= read[1] {
-                    continue
-                } else {
-                    if arr[currentX][currentY] >= 1 && visited[currentX][currentY] == false {
-                        arr[currentX][currentY] = arr[current[0]][current[1]] + 1
-                        queue.append([currentX, currentY])
-                    }
-                }
-                
-                
-            }
-        }
-        
-    }
-    
-    print(arr[read[0]-1][read[1]-1])
+    dfs(a: a+1, b: b)
+    dfs(a: a-1, b: b)
+    dfs(a: a, b: b+1)
+    dfs(a: a, b: b-1)
     
 }
 
-solution()
+for i in 0..<n {
+    for j in 0..<n {
+        if apt[i][j] == 1 {
+            aptCount = 0
+            dfs(a: i, b: j)
+            block.append(aptCount)
+        }
+    }
+}
 
+print(block.count)
+block.sorted().forEach{print($0)}
 
-
-
-
+//
+//var result: [[Int]] = []
+//
+//
+//
+//var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: n), count: n)
+//
+//
+//
+//
+//var group: [Int] = Array(repeating: 0, count: 25)
+//var groupID: Int = 0
+//
+//func dfs(a: Int, b: Int) {
+//    visited[a][b] = true
+//    group[groupID] += 1
+//
+//    for i in 0..<4 {
+//        let nx = a + dx[i] - 1
+//        let ny = b + dy[i] - 1
+//
+//        if nx < 0 || nx > n || ny < 0 || ny > n {
+//            continue
+//        } else {
+//            if apt[nx][ny] == 1 && visited[nx][ny] == false {
+//                dfs(a: nx, b: ny)
+//            }
+//        }
+//    }
+//}
+//
+//for i in 0..<n {
+//    for j in 0..<n {
+//        if apt[i][j] == 1 && visited[i][j] == false {
+//            groupID += 1
+//            dfs(a: i, b: j)
+//        }
+//    }
+//}
+//
+//print(groupID)
+//print(group)
