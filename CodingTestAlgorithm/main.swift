@@ -2788,237 +2788,6 @@ import Foundation
 //
 //solution()
 
-// MARK: - 백준 3190 뱀 {
-//func solution() -> Int {
-//    let n: Int = Int(readLine()!)!
-//    var board: [[Int]] = Array(repeating: Array(repeating: 0, count: n), count: n)
-//    let appleCount: Int = Int(readLine()!)!
-//    for _ in 0..<appleCount {
-//        let temp: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
-//        let first: Int = temp[0] - 1
-//        let second: Int = temp[1] - 1
-//        board[first][second] = 1
-//    }
-//    var a = 0
-//    var b = 0
-//
-//    var changeNum: Int = Int(readLine()!)!
-//    var change: [[String]] = []
-//    for _ in 0..<changeNum {
-//        change.append(readLine()!.split(separator: " ").map{String($0)})
-//    }
-//
-//    let root: [String] = ["right", "bottom", "left", "top"]
-//    var rootIndex = 0
-//    var target = "right"
-//
-//    var start = [a, b]
-//
-//    var arr: [[Int]] = [[0, 0]]
-//
-//    var result = 0
-//    var targetIndex = 0
-//    while true {
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//        if target == "right" {
-//            result += 1
-//            b += 1
-//
-//            if b >= n || b < 0 {
-//                break
-//            }
-//
-//
-//
-//
-//
-//            start = [a, b]
-//
-//            if arr.contains([a, b]) {
-//                break
-//            }
-//
-//
-//
-//
-//            if board[a][b] == 1 {
-//                arr.append(start)
-//                board[a][b] = 0
-//            } else if board[a][b] == 0 {
-//                arr.append(start)
-//                arr.removeFirst()
-//            }
-//
-//
-//            if Int(change[targetIndex][0]) == result {
-//                if change[targetIndex][1] == "D" {
-//                    rootIndex += 1
-//                    if rootIndex >= 4 {
-//                        rootIndex -= 4
-//                    }
-//                    target = root[rootIndex]
-//                } else {
-//                    rootIndex -= 1
-//                    if rootIndex < 0 {
-//                        rootIndex += 4
-//                    }
-//                    target = root[rootIndex]
-//                }
-//            }
-//            targetIndex += 1
-//        }
-//
-//        if target == "bottom" {
-//            result += 1
-//            a += 1
-//
-//            if a >= n || a < 0 {
-//                break
-//            }
-//
-//
-//            start = [a, b]
-//
-//            if arr.contains([a, b]) {
-//                break
-//            }
-//
-//            arr.append(start)
-//
-//            if board[a][b] == 1 {
-//                arr.append(start)
-//                board[a][b] = 0
-//            } else if board[a][b] == 0 {
-//                arr.append(start)
-//                arr.removeFirst()
-//            }
-//
-//
-//
-//            if Int(change[targetIndex][0]) == result {
-//                if change[targetIndex][1] == "D" {
-//                    rootIndex += 1
-//                    if rootIndex >= 4 {
-//                        rootIndex -= 4
-//                    }
-//                    target = root[rootIndex]
-//                } else {
-//                    rootIndex -= 1
-//                    if rootIndex < 0 {
-//                        rootIndex += 4
-//                    }
-//                    target = root[rootIndex]
-//                }
-//            }
-//            targetIndex += 1
-//        }
-//
-//        if target == "left" {
-//            result += 1
-//            b -= 1
-//
-//            if b >= n || b < 0 {
-//                break
-//            }
-//
-//            start = [a, b]
-//
-//            if arr.contains([a, b]) {
-//                break
-//            }
-//
-//            if board[a][b] == 1 {
-//                arr.append(start)
-//                board[a][b] = 0
-//            } else if board[a][b] == 0 {
-//                arr.append(start)
-//                arr.removeFirst()
-//            }
-//
-//
-//
-//            if Int(change[targetIndex][0]) == result {
-//                if change[targetIndex][1] == "D" {
-//                    rootIndex += 1
-//                    if rootIndex >= 4 {
-//                        rootIndex -= 4
-//                    }
-//                    target = root[rootIndex]
-//                } else {
-//                    rootIndex -= 1
-//                    if rootIndex < 0 {
-//                        rootIndex += 4
-//                    }
-//                    target = root[rootIndex]
-//                }
-//            }
-//            targetIndex += 1
-//        }
-//
-//        if target == "top" {
-//            result += 1
-//            a -= 1
-//
-//            if a >= n || a < 0 {
-//                break
-//            }
-//            start = [a, b]
-//
-//            if arr.contains([a, b]) {
-//                break
-//            }
-//
-//            if board[a][b] == 1 {
-//                arr.append(start)
-//                board[a][b] = 0
-//            } else if board[a][b] == 0 {
-//                arr.append(start)
-//                arr.removeFirst()
-//            }
-//
-//
-//
-//            if Int(change[targetIndex][0]) == result {
-//                if change[targetIndex][1] == "D" {
-//                    rootIndex += 1
-//                    if rootIndex >= 4 {
-//                        rootIndex -= 4
-//                    }
-//                    target = root[rootIndex]
-//                } else {
-//                    rootIndex -= 1
-//                    if rootIndex < 0 {
-//                        rootIndex += 4
-//                    }
-//                    target = root[rootIndex]
-//                }
-//            }
-//            targetIndex += 1
-//        }
-//
-//
-//
-//
-//
-//        // 게임이 종료되는 경우
-//        print("current: \([a, b])")
-//
-//    }
-//
-//
-//    print(result)
-//    return 0
-//}
-//
-//print(solution())
 
 // MARK: - 백준 10872번 팩토리얼
 
@@ -3054,22 +2823,96 @@ import Foundation
 
 // MARK: - 백준 1924번 2007년
 
-func solution() -> String {
-    let read: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
-    var m: Int = read[0]
-    var d: Int = read[1]
+//func solution() -> String {
+//    let read: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+//    var m: Int = read[0]
+//    var d: Int = read[1]
+//
+//    let month: [Int] = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+//    let day: [String] = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]
+//
+//
+//    let totalDay: Int = (month[0..<m].reduce(0, +) + d) % 7
+//    if totalDay == 0 {
+//        return "SUN"
+//    } else {
+//        return day[totalDay - 1]
+//    }
+//
+//}
+//
+//print(solution())
+
+
+// MARK: - 백준 1260번 DFS와 BFS
+
+let read: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+let n: Int = read[0]
+let m: Int = read[1]
+let v: Int = read[2]
+
+var graph: [[Int]] = Array(repeating: Array<Int>(), count: n + 1)
+
+// 인접 노드 표현
+for _ in 0..<m {
+    let temp: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+    let start = temp[0]
+    let end = temp[1]
     
-    let month: [Int] = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-    let day: [String] = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]
+    graph[start].append(end)
+    graph[end].append(start)
     
-    
-    let totalDay: Int = (month[0..<m].reduce(0, +) + d) % 7
-    if totalDay == 0 {
-        return "SUN"
-    } else {
-        return day[totalDay - 1]
-    }
-    
+    graph[start].sort()
+    graph[end].sort()
 }
 
-print(solution())
+
+
+
+var dfsVisited: [Bool] = Array(repeating: false, count: n+1)
+var dfsResult: [Int] = []
+
+var bfsVisited: [Bool] = Array(repeating: false, count: n+1)
+var bfsResult: [Int] = []
+
+func DFS(graph: [[Int]], v: Int) {
+    dfsVisited[v] = true
+    dfsResult.append(v)
+    for i in graph[v] {
+        if dfsVisited[i] == false {
+            DFS(graph: graph, v: i)
+        }
+    }
+
+}
+
+DFS(graph: graph, v: v)
+print(dfsResult.map{String($0)}.joined(separator: " "))
+
+
+func BFS(v: Int) {
+    
+    
+    var queue: [Int] = [v]
+    bfsVisited[v] = true
+  
+   
+    while !queue.isEmpty {
+        let v = queue.removeFirst()
+        bfsResult.append(v)
+        for i in graph[v] {
+            if bfsVisited[i] == false {
+                queue.append(i)
+                bfsVisited[i] = true
+                
+            }
+        }
+    }
+    print(bfsResult.map{String($0)}.joined(separator: " "))
+}
+
+BFS(v: v)
+
+
+
+
