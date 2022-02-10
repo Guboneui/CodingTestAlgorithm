@@ -3011,32 +3011,83 @@ import Foundation
 
 // MARK: - 백준 2606번 바이러스
 
-let n: Int = Int(readLine()!)!
-let lineNum: Int = Int(readLine()!)!
-var graph: [[Int]] = Array(repeating: [Int](), count: n+1)
+//let n: Int = Int(readLine()!)!
+//let lineNum: Int = Int(readLine()!)!
+//var graph: [[Int]] = Array(repeating: [Int](), count: n+1)
+//
+//for _ in 0..<lineNum {
+//    let temp: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+//    let a: Int = temp[0]
+//    let b: Int = temp[1]
+//
+//    graph[a].append(b)
+//    graph[b].append(a)
+//
+//    graph[a].sort()
+//    graph[b].sort()
+//}
+//var visited: [Bool] = Array(repeating: false, count: n+1)
+//
+//func solution(v: Int) {
+//    visited[v] = true
+//    for i in graph[v] {
+//        if visited[i] == false {
+//
+//            solution(v: i)
+//        }
+//    }
+//}
+//
+//solution(v: 1)
+//print(visited.filter({$0 == true}).count - 1)
 
-for _ in 0..<lineNum {
-    let temp: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
-    let a: Int = temp[0]
-    let b: Int = temp[1]
-    
-    graph[a].append(b)
-    graph[b].append(a)
-    
-    graph[a].sort()
-    graph[b].sort()
-}
-var visited: [Bool] = Array(repeating: false, count: n+1)
+// MARK: - 백준 1012번 유기농 배추
 
-func solution(v: Int) {
-    visited[v] = true
-    for i in graph[v] {
-        if visited[i] == false {
+let testCases: Int = Int(readLine()!)!
+for _ in 0..<testCases {
+    let read: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+    let m: Int = read[0]
+    let n: Int = read[1]
+    let k: Int = read[2]
+    
+    var graph: [[Int]] = Array(repeating: Array(repeating: 0, count: m), count: n)
+    for _ in 0..<k {
+        let temp = readLine()!.split(separator: " ").map{Int(String($0))!}
+        graph[temp[1]][temp[0]] = 1
+    }
+
+    func dfs(a: Int, b: Int) -> Bool{
+        if a < 0 || a >= n || b < 0 || b >= m{
+            return false
+        }
+        
+        if graph[a][b] == 1 {
+            graph[a][b] = 0
             
-            solution(v: i)
+            dfs(a: a+1, b: b)
+            dfs(a: a-1, b: b)
+            dfs(a: a, b: b+1)
+            dfs(a: a, b: b-1)
+            return true
+        }
+        
+        return false
+        
+        
+    }
+    
+    var result: Int = 0
+        
+    for i in 0..<n {
+        for j in 0..<m {
+            if dfs(a: i, b: j) == true {
+                result += 1
+            }
         }
     }
+    
+    print(result)
+    
 }
 
-solution(v: 1)
-print(visited.filter({$0 == true}).count - 1)
+
