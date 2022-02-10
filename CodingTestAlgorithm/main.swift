@@ -2967,88 +2967,76 @@ import Foundation
 
 // MARK: - 백준 2667번 단지번호붙이기
 
-
-let n: Int = Int(readLine()!)!
-var apt: [[Int]] = []
-var aptCount = 0
-var block: [Int] = []
-
-
-var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: n), count: n)
-
-
-for _ in 0..<n{
-    let temp: [Int] = readLine()!.map{Int(String($0))!}
-    apt.append(temp)
-}
-
-func dfs(a: Int, b: Int) {
-    if a < 0 || a >= n || b < 0 || b >= n || apt[a][b] == 0 {
-        return
-    }
-    aptCount += 1
-    //visited[a][b] = true
-    apt[a][b] = 0
-    
-    dfs(a: a+1, b: b)
-    dfs(a: a-1, b: b)
-    dfs(a: a, b: b+1)
-    dfs(a: a, b: b-1)
-    
-}
-
-for i in 0..<n {
-    for j in 0..<n {
-        if apt[i][j] == 1 {
-            aptCount = 0
-            dfs(a: i, b: j)
-            block.append(aptCount)
-        }
-    }
-}
-
-print(block.count)
-block.sorted().forEach{print($0)}
-
-//
-//var result: [[Int]] = []
-//
+//let n: Int = Int(readLine()!)!
+//var apt: [[Int]] = []
+//var aptCount = 0
+//var block: [Int] = []
 //
 //
 //var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: n), count: n)
 //
 //
-//
-//
-//var group: [Int] = Array(repeating: 0, count: 25)
-//var groupID: Int = 0
+//for _ in 0..<n{
+//    let temp: [Int] = readLine()!.map{Int(String($0))!}
+//    apt.append(temp)
+//}
 //
 //func dfs(a: Int, b: Int) {
-//    visited[a][b] = true
-//    group[groupID] += 1
-//
-//    for i in 0..<4 {
-//        let nx = a + dx[i] - 1
-//        let ny = b + dy[i] - 1
-//
-//        if nx < 0 || nx > n || ny < 0 || ny > n {
-//            continue
-//        } else {
-//            if apt[nx][ny] == 1 && visited[nx][ny] == false {
-//                dfs(a: nx, b: ny)
-//            }
-//        }
+//    if a < 0 || a >= n || b < 0 || b >= n || apt[a][b] == 0 {
+//        return
 //    }
+//    aptCount += 1
+//    //visited[a][b] = true
+//    apt[a][b] = 0
+//
+//    dfs(a: a+1, b: b)
+//    dfs(a: a-1, b: b)
+//    dfs(a: a, b: b+1)
+//    dfs(a: a, b: b-1)
+//
 //}
 //
 //for i in 0..<n {
 //    for j in 0..<n {
-//        if apt[i][j] == 1 && visited[i][j] == false {
-//            groupID += 1
+//        if apt[i][j] == 1 {
+//            aptCount = 0
 //            dfs(a: i, b: j)
+//            block.append(aptCount)
 //        }
 //    }
 //}
 //
-//print(groupID)
-//print(group)
+//print(block.count)
+//block.sorted().forEach{print($0)}
+
+// MARK: - 백준 2606번 바이러스
+
+let n: Int = Int(readLine()!)!
+let lineNum: Int = Int(readLine()!)!
+var graph: [[Int]] = Array(repeating: [Int](), count: n+1)
+
+for _ in 0..<lineNum {
+    let temp: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+    let a: Int = temp[0]
+    let b: Int = temp[1]
+    
+    graph[a].append(b)
+    graph[b].append(a)
+    
+    graph[a].sort()
+    graph[b].sort()
+}
+var visited: [Bool] = Array(repeating: false, count: n+1)
+
+func solution(v: Int) {
+    visited[v] = true
+    for i in graph[v] {
+        if visited[i] == false {
+            
+            solution(v: i)
+        }
+    }
+}
+
+solution(v: 1)
+print(visited.filter({$0 == true}).count - 1)
