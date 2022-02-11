@@ -3153,46 +3153,86 @@ import Foundation
 
 // MARK: - 백준 1697번 숨바꼭질
 
-let location: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
-var subin: Int = location[0]
-let sister: Int = location[1]
-var queue: [Int] = []
-var index: Int = 0
-var visited: [Bool] = Array(repeating: false, count: 100001)
-var depth: [Int] = Array(repeating: 0, count: 100001)
+//let location: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+//var subin: Int = location[0]
+//let sister: Int = location[1]
+//var queue: [Int] = []
+//var index: Int = 0
+//var visited: [Bool] = Array(repeating: false, count: 100001)
+//var depth: [Int] = Array(repeating: 0, count: 100001)
+//
+//
+//func bfs(subin: Int, sister: Int) -> Int {
+//    queue.append(subin)
+//
+//
+//    while !queue.isEmpty {
+//        let temp = queue.removeFirst()
+//        if temp == sister {
+//            break
+//        }
+//
+//        if temp > 0 && !visited[temp - 1]  {
+//            queue.append(temp-1)
+//            visited[temp-1] = true
+//            depth[temp-1] = depth[temp] + 1
+//        }
+//
+//        if temp < 100000 && !visited[temp + 1]  {
+//            queue.append(temp+1)
+//            visited[temp+1] = true
+//            depth[temp+1] = depth[temp] + 1
+//        }
+//
+//        if temp*2 < 100001 && !visited[temp * 2] {
+//            queue.append(temp*2)
+//            visited[temp*2] = true
+//            depth[temp*2] = depth[temp] + 1
+//        }
+//    }
+//
+//
+//
+//    return depth[sister]
+//}
+//print(bfs(subin: subin, sister: sister))
 
+// MARK: - 백준 11724 연결 요소의 개수
 
-func bfs(subin: Int, sister: Int) -> Int {
-    queue.append(subin)
+let read: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+let N: Int = read[0]
+let M: Int = read[1]
+var graph: [[Int]] = Array(repeating: [Int](), count: N+1)
+for _ in 0..<M {
+    let temp: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+    let a: Int = temp[0]
+    let b: Int = temp[1]
     
+    graph[a].append(b)
+    graph[b].append(a)
     
-    while !queue.isEmpty {
-        let temp = queue.removeFirst()
-        if temp == sister {
-            break
-        }
-        
-        if temp > 0 && !visited[temp - 1]  {
-            queue.append(temp-1)
-            visited[temp-1] = true
-            depth[temp-1] = depth[temp] + 1
-        }
-        
-        if temp < 100000 && !visited[temp + 1]  {
-            queue.append(temp+1)
-            visited[temp+1] = true
-            depth[temp+1] = depth[temp] + 1
-        }
-        
-        if temp*2 < 100001 && !visited[temp * 2] {
-            queue.append(temp*2)
-            visited[temp*2] = true
-            depth[temp*2] = depth[temp] + 1
+    graph[a].sort()
+    graph[b].sort()
+}
+
+var visited: [Bool] = Array(repeating: false, count: N+1)
+var result: Int = 0
+
+func dfs(_ v: Int) {
+    visited[v] = true
+    for i in graph[v] {
+        if visited[i] == false {
+            visited[i] = true
+            dfs(i)
         }
     }
-    
-    
-    
-    return depth[sister]
 }
-print(bfs(subin: subin, sister: sister))
+
+for i in 1...N {
+    if visited[i] == false {
+        result += 1
+        dfs(i)
+    }
+}
+
+print(result)
