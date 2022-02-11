@@ -3239,87 +3239,134 @@ import Foundation
 
 // MARK: - 백준 14502번 연구소
 
-let read: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
-let N: Int = read[0]
-let M: Int = read[1]
-var graph: [[Int]] = []
-for _ in 0..<N {
-    graph.append(readLine()!.split(separator: " ").map{Int(String($0))!})
+//let read: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+//let N: Int = read[0]
+//let M: Int = read[1]
+//var graph: [[Int]] = []
+//for _ in 0..<N {
+//    graph.append(readLine()!.split(separator: " ").map{Int(String($0))!})
+//}
+//
+//var safeArea: [(Int, Int)] = []
+//var virusArea: [(Int, Int)] = []
+//var tempGraph = graph
+//for i in 0..<N {
+//    for j in 0..<M {
+//        if graph[i][j] == 0 {
+//            safeArea.append((i, j))
+//        } else if graph[i][j] == 2 {
+//            virusArea.append((i, j))
+//        }
+//    }
+//}
+//
+//
+//var result: Int = 0
+//let dx: [Int] = [1, -1, 0, 0]
+//let dy: [Int] = [0, 0, 1, -1]
+//
+//func bfs(_ v: (Int, Int)) {
+//    var queue = [v]
+//
+//    while !queue.isEmpty {
+//        let k = queue.removeFirst()
+//        for i in 0..<4 {
+//            let nx: Int = k.0 + dx[i]
+//            let ny: Int = k.1 + dy[i]
+//
+//            if nx < 0 || nx >= N || ny < 0 || ny >= M {
+//                continue
+//            }
+//
+//            if tempGraph[nx][ny] == 0 {
+//                tempGraph[nx][ny] = 2
+//                queue.append((nx, ny))
+//            }
+//        }
+//    }
+//}
+//
+//func getSafeArea() -> Int {
+//    var safeAreaCount = 0
+//    for i in 0..<N {
+//        for j in 0..<M {
+//            if tempGraph[i][j] == 0 {
+//                safeAreaCount += 1
+//            }
+//        }
+//    }
+//
+//    return safeAreaCount
+//}
+//
+//
+//for i in 0..<safeArea.count {
+//    for j in (i+1)..<safeArea.count {
+//        for k in (j+1)..<safeArea.count {
+//            tempGraph = graph
+//            let a = safeArea[i]
+//            let b = safeArea[j]
+//            let c = safeArea[k]
+//
+//            tempGraph[a.0][a.1] = 1
+//            tempGraph[b.0][b.1] = 1
+//            tempGraph[c.0][c.1] = 1
+//
+//            for virus in virusArea {
+//                bfs(virus)
+//            }
+//
+//            result = max(result, getSafeArea())
+//
+//        }
+//    }
+//}
+//
+//print(result)
+
+// MARK: - 백준 2667번 단지번호붙이기 (다시 풀기)
+
+let n: Int = Int(readLine()!)!
+var apt: [[Int]] = []
+
+for _ in 0..<n {
+    apt.append(readLine()!.map{Int(String($0))!})
 }
 
-var safeArea: [(Int, Int)] = []
-var virusArea: [(Int, Int)] = []
-var tempGraph = graph
-for i in 0..<N {
-    for j in 0..<M {
-        if graph[i][j] == 0 {
-            safeArea.append((i, j))
-        } else if graph[i][j] == 2 {
-            virusArea.append((i, j))
-        }
-    }
-}
+var group: [Int] = []
+var count = 0
 
-
-var result: Int = 0
 let dx: [Int] = [1, -1, 0, 0]
 let dy: [Int] = [0, 0, 1, -1]
 
-func bfs(_ v: (Int, Int)) {
-    var queue = [v]
-    
-    while !queue.isEmpty {
-        let k = queue.removeFirst()
-        for i in 0..<4 {
-            let nx: Int = k.0 + dx[i]
-            let ny: Int = k.1 + dy[i]
-            
-            if nx < 0 || nx >= N || ny < 0 || ny >= M {
-                continue
-            }
-            
-            if tempGraph[nx][ny] == 0 {
-                tempGraph[nx][ny] = 2
-                queue.append((nx, ny))
-            }
-        }
-    }
-}
-
-func getSafeArea() -> Int {
-    var safeAreaCount = 0
-    for i in 0..<N {
-        for j in 0..<M {
-            if tempGraph[i][j] == 0 {
-                safeAreaCount += 1
-            }
-        }
+func dfs(_ x: Int, _ y: Int) {
+    if x<0 || x>=n || y<0 || y>=n || apt[x][y] == 0 {
+        return
     }
     
-    return safeAreaCount
+    count += 1
+    apt[x][y] = 0
+    
+    for i in 0..<4 {
+        let nx: Int = x + dx[i]
+        let ny: Int = y + dy[i]
+        
+        dfs(nx, ny)
+    }
 }
 
-
-for i in 0..<safeArea.count {
-    for j in (i+1)..<safeArea.count {
-        for k in (j+1)..<safeArea.count {
-            tempGraph = graph
-            let a = safeArea[i]
-            let b = safeArea[j]
-            let c = safeArea[k]
-            
-            tempGraph[a.0][a.1] = 1
-            tempGraph[b.0][b.1] = 1
-            tempGraph[c.0][c.1] = 1
-            
-            for virus in virusArea {
-                bfs(virus)
-            }
-            
-            result = max(result, getSafeArea())
-            
+for i in 0..<n {
+    for j in 0..<n {
+        if apt[i][j] == 1 {
+            count = 0
+            dfs(i, j)
+            group.append(count)
         }
     }
 }
 
-print(result)
+
+print(group.count)
+group.sorted().forEach{print($0)}
+
+
