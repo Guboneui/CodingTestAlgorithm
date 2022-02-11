@@ -3199,39 +3199,126 @@ import Foundation
 
 // MARK: - 백준 11724 연결 요소의 개수
 
+//let read: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+//let N: Int = read[0]
+//let M: Int = read[1]
+//var graph: [[Int]] = Array(repeating: [Int](), count: N+1)
+//for _ in 0..<M {
+//    let temp: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+//    let a: Int = temp[0]
+//    let b: Int = temp[1]
+//
+//    graph[a].append(b)
+//    graph[b].append(a)
+//
+//    graph[a].sort()
+//    graph[b].sort()
+//}
+//
+//var visited: [Bool] = Array(repeating: false, count: N+1)
+//var result: Int = 0
+//
+//func dfs(_ v: Int) {
+//    visited[v] = true
+//    for i in graph[v] {
+//        if visited[i] == false {
+//            visited[i] = true
+//            dfs(i)
+//        }
+//    }
+//}
+//
+//for i in 1...N {
+//    if visited[i] == false {
+//        result += 1
+//        dfs(i)
+//    }
+//}
+//
+//print(result)
+
+// MARK: - 백준 14502번 연구소
+
 let read: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
 let N: Int = read[0]
 let M: Int = read[1]
-var graph: [[Int]] = Array(repeating: [Int](), count: N+1)
-for _ in 0..<M {
-    let temp: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
-    let a: Int = temp[0]
-    let b: Int = temp[1]
-    
-    graph[a].append(b)
-    graph[b].append(a)
-    
-    graph[a].sort()
-    graph[b].sort()
+var graph: [[Int]] = []
+for _ in 0..<N {
+    graph.append(readLine()!.split(separator: " ").map{Int(String($0))!})
 }
 
-var visited: [Bool] = Array(repeating: false, count: N+1)
-var result: Int = 0
-
-func dfs(_ v: Int) {
-    visited[v] = true
-    for i in graph[v] {
-        if visited[i] == false {
-            visited[i] = true
-            dfs(i)
+var safeArea: [(Int, Int)] = []
+var virusArea: [(Int, Int)] = []
+var tempGraph = graph
+for i in 0..<N {
+    for j in 0..<M {
+        if graph[i][j] == 0 {
+            safeArea.append((i, j))
+        } else if graph[i][j] == 2 {
+            virusArea.append((i, j))
         }
     }
 }
 
-for i in 1...N {
-    if visited[i] == false {
-        result += 1
-        dfs(i)
+
+var result: Int = 0
+let dx: [Int] = [1, -1, 0, 0]
+let dy: [Int] = [0, 0, 1, -1]
+
+func bfs(_ v: (Int, Int)) {
+    var queue = [v]
+    
+    while !queue.isEmpty {
+        let k = queue.removeFirst()
+        for i in 0..<4 {
+            let nx: Int = k.0 + dx[i]
+            let ny: Int = k.1 + dy[i]
+            
+            if nx < 0 || nx >= N || ny < 0 || ny >= M {
+                continue
+            }
+            
+            if tempGraph[nx][ny] == 0 {
+                tempGraph[nx][ny] = 2
+                queue.append((nx, ny))
+            }
+        }
+    }
+}
+
+func getSafeArea() -> Int {
+    var safeAreaCount = 0
+    for i in 0..<N {
+        for j in 0..<M {
+            if tempGraph[i][j] == 0 {
+                safeAreaCount += 1
+            }
+        }
+    }
+    
+    return safeAreaCount
+}
+
+
+for i in 0..<safeArea.count {
+    for j in (i+1)..<safeArea.count {
+        for k in (j+1)..<safeArea.count {
+            tempGraph = graph
+            let a = safeArea[i]
+            let b = safeArea[j]
+            let c = safeArea[k]
+            
+            tempGraph[a.0][a.1] = 1
+            tempGraph[b.0][b.1] = 1
+            tempGraph[c.0][c.1] = 1
+            
+            for virus in virusArea {
+                bfs(virus)
+            }
+            
+            result = max(result, getSafeArea())
+            
+        }
     }
 }
 
