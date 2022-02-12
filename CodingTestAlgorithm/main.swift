@@ -3428,18 +3428,41 @@ import Foundation
 
 // MARK: - 백준 11650번 좌표 정렬하기
 
-let n: Int = Int(readLine()!)!
-var board: [(Int,Int)] = []
-for _ in 0..<n {
-    let temp: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
-    board.append((temp[0], temp[1]))
+//let n: Int = Int(readLine()!)!
+//var board: [(Int,Int)] = []
+//for _ in 0..<n {
+//    let temp: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+//    board.append((temp[0], temp[1]))
+//}
+//
+//board.sorted(by: {
+//    if $0.0 == $1.0 {
+//        return $0.1 < $1.1
+//    }
+//    return $0.0 < $1.0
+//}).forEach({print($0.0, $0.1)})
+
+
+// MARK: - 백준 2309번 일곱 난쟁이
+
+var nan: [Int] = []
+for _ in 0..<9 {
+    nan.append(Int(readLine()!)!)
 }
+nan.sort()
+var sum: Int = nan.reduce(0, +)
 
-board.sorted(by: {
-    if $0.0 == $1.0 {
-        return $0.1 < $1.1
+    
+for i in 0..<8 {
+    for j in i+1..<9 {
+        if sum - (nan[i] + nan[j]) == 100 {
+            for index in 0..<9 {
+                if index != i && index != j {
+                    print(nan[index])
+                }
+            }
+            exit(0)
+        }
     }
-    return $0.0 < $1.0
-}).forEach({print($0.0, $0.1)})
-
+}
 
