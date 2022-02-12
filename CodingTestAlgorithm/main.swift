@@ -3382,6 +3382,12 @@ import Foundation
 
 // MARK: - 백준 2751번 수 정렬하기 2
 
-(0..<Int(readLine()!)!).map{ _ in
-    Int(readLine()!)!
-}.sorted().forEach{print($0)}
+//(0..<Int(readLine()!)!).map{ _ in
+//    Int(readLine()!)!
+//}.sorted().forEach{print($0)}
+
+// MARK: - 백준 1427번 소트인사이드
+
+let num: [Int] = readLine()!.map{Int(String($0))!}.sorted(by: >)
+print(num.map{String($0)}.joined(separator: ""))
+
