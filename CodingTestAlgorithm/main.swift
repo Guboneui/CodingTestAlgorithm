@@ -3372,10 +3372,16 @@ import Foundation
 
 // MARK: - 백준 2750번 수 정렬하기
 
-let n: Int = Int(readLine()!)!
-var arr: [Int] = []
-for _ in 0..<n {
-    arr.append(Int(readLine()!)!)
-}
+//let n: Int = Int(readLine()!)!
+//var arr: [Int] = []
+//for _ in 0..<n {
+//    arr.append(Int(readLine()!)!)
+//}
+//
+//arr.sorted().forEach{print($0)}
 
-arr.sorted().forEach{print($0)}
+// MARK: - 백준 2751번 수 정렬하기 2
+
+(0..<Int(readLine()!)!).map{ _ in
+    Int(readLine()!)!
+}.sorted().forEach{print($0)}
