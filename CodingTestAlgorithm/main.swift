@@ -3326,47 +3326,56 @@ import Foundation
 
 // MARK: - 백준 2667번 단지번호붙이기 (다시 풀기)
 
+//let n: Int = Int(readLine()!)!
+//var apt: [[Int]] = []
+//
+//for _ in 0..<n {
+//    apt.append(readLine()!.map{Int(String($0))!})
+//}
+//
+//var group: [Int] = []
+//var count = 0
+//
+//let dx: [Int] = [1, -1, 0, 0]
+//let dy: [Int] = [0, 0, 1, -1]
+//
+//func dfs(_ x: Int, _ y: Int) {
+//    if x<0 || x>=n || y<0 || y>=n || apt[x][y] == 0 {
+//        return
+//    }
+//
+//    count += 1
+//    apt[x][y] = 0
+//
+//    for i in 0..<4 {
+//        let nx: Int = x + dx[i]
+//        let ny: Int = y + dy[i]
+//
+//        dfs(nx, ny)
+//    }
+//}
+//
+//for i in 0..<n {
+//    for j in 0..<n {
+//        if apt[i][j] == 1 {
+//            count = 0
+//            dfs(i, j)
+//            group.append(count)
+//        }
+//    }
+//}
+//
+//
+//print(group.count)
+//group.sorted().forEach{print($0)}
+
+
+// MARK: - 백준 2750번 수 정렬하기
+
 let n: Int = Int(readLine()!)!
-var apt: [[Int]] = []
-
+var arr: [Int] = []
 for _ in 0..<n {
-    apt.append(readLine()!.map{Int(String($0))!})
+    arr.append(Int(readLine()!)!)
 }
 
-var group: [Int] = []
-var count = 0
-
-let dx: [Int] = [1, -1, 0, 0]
-let dy: [Int] = [0, 0, 1, -1]
-
-func dfs(_ x: Int, _ y: Int) {
-    if x<0 || x>=n || y<0 || y>=n || apt[x][y] == 0 {
-        return
-    }
-    
-    count += 1
-    apt[x][y] = 0
-    
-    for i in 0..<4 {
-        let nx: Int = x + dx[i]
-        let ny: Int = y + dy[i]
-        
-        dfs(nx, ny)
-    }
-}
-
-for i in 0..<n {
-    for j in 0..<n {
-        if apt[i][j] == 1 {
-            count = 0
-            dfs(i, j)
-            group.append(count)
-        }
-    }
-}
-
-
-print(group.count)
-group.sorted().forEach{print($0)}
-
-
+arr.sorted().forEach{print($0)}
