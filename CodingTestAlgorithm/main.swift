@@ -3393,16 +3393,35 @@ import Foundation
 
 // MARK: - 백준 1181번 단어 정렬
 
+//let n: Int = Int(readLine()!)!
+//var arr: Set<String> = []
+//for _ in 0..<n {
+//    arr.insert(readLine()!)
+//}
+//
+//arr.sorted { first, second in
+//    if first.count == second.count {
+//        return first < second
+//    } else {
+//        return first.count < second.count
+//    }
+//}.forEach{print($0)}
+
+// MARK: - 백준 10989번 수 정렬하기 3
+
 let n: Int = Int(readLine()!)!
-var arr: Set<String> = []
+var arr: [Int] = Array(repeating: 0, count: 10001)
+
 for _ in 0..<n {
-    arr.insert(readLine()!)
+    arr[Int(readLine()!)!] += 1
 }
 
-arr.sorted { first, second in
-    if first.count == second.count {
-        return first < second
-    } else {
-        return first.count < second.count
+var result: String = ""
+
+for i in 1...10000 {
+    if arr[i] != 0 {
+        result += String(repeating: "\(i)\n", count: arr[i])
     }
-}.forEach{print($0)}
+}
+
+print(result)
