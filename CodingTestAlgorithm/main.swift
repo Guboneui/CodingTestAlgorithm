@@ -3388,6 +3388,21 @@ import Foundation
 
 // MARK: - 백준 1427번 소트인사이드
 
-let num: [Int] = readLine()!.map{Int(String($0))!}.sorted(by: >)
-print(num.map{String($0)}.joined(separator: ""))
+//let num: [Int] = readLine()!.map{Int(String($0))!}.sorted(by: >)
+//print(num.map{String($0)}.joined(separator: ""))
 
+// MARK: - 백준 1181번 단어 정렬
+
+let n: Int = Int(readLine()!)!
+var arr: Set<String> = []
+for _ in 0..<n {
+    arr.insert(readLine()!)
+}
+
+arr.sorted { first, second in
+    if first.count == second.count {
+        return first < second
+    } else {
+        return first.count < second.count
+    }
+}.forEach{print($0)}
