@@ -3409,19 +3409,37 @@ import Foundation
 
 // MARK: - 백준 10989번 수 정렬하기 3
 
+//let n: Int = Int(readLine()!)!
+//var arr: [Int] = Array(repeating: 0, count: 10001)
+//
+//for _ in 0..<n {
+//    arr[Int(readLine()!)!] += 1
+//}
+//
+//var result: String = ""
+//
+//for i in 1...10000 {
+//    if arr[i] != 0 {
+//        result += String(repeating: "\(i)\n", count: arr[i])
+//    }
+//}
+//
+//print(result)
+
+// MARK: - 백준 11650번 좌표 정렬하기
+
 let n: Int = Int(readLine()!)!
-var arr: [Int] = Array(repeating: 0, count: 10001)
-
+var board: [(Int,Int)] = []
 for _ in 0..<n {
-    arr[Int(readLine()!)!] += 1
+    let temp: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+    board.append((temp[0], temp[1]))
 }
 
-var result: String = ""
-
-for i in 1...10000 {
-    if arr[i] != 0 {
-        result += String(repeating: "\(i)\n", count: arr[i])
+board.sorted(by: {
+    if $0.0 == $1.0 {
+        return $0.1 < $1.1
     }
-}
+    return $0.0 < $1.0
+}).forEach({print($0.0, $0.1)})
 
-print(result)
+
