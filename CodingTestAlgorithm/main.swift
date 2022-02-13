@@ -3647,28 +3647,30 @@ import Foundation
 
 // MARK: - 백준 1764번 듣보잡
 
-let read: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
-let n: Int = read[0]
-let m: Int = read[1]
-var dict: [String:Int] = [:]
+//let read: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+//let n: Int = read[0]
+//let m: Int = read[1]
+//var dict: [String:Int] = [:]
+//
+//for _ in 0..<(n+m) {
+//    let temp: String = readLine()!
+//    if dict[temp] == nil {
+//        dict[temp] = 1
+//    } else {
+//        dict[temp]! += 1
+//    }
+//}
+//
+//var result: [String] = []
+//dict.sorted{$0.key < $1.key}.forEach{
+//    if $0.value == 2 {
+//        result.append($0.key)
+//    }
+//}
+//
+//print(result.count)
+//result.forEach({print($0)})
 
-for _ in 0..<(n+m) {
-    let temp: String = readLine()!
-    if dict[temp] == nil {
-        dict[temp] = 1
-    } else {
-        dict[temp]! += 1
-    }
-}
+// MARK: - 백준 2752번 세수정렬
 
-var result: [String] = []
-dict.sorted{$0.key < $1.key}.forEach{
-    if $0.value == 2 {
-        result.append($0.key)
-    }
-}
-
-print(result.count)
-result.forEach({print($0)})
-
-
+print(readLine()!.split(separator: " ").map{Int(String($0))!}.sorted().map{String($0)}.joined(separator: " "))
