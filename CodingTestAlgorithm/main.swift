@@ -3694,19 +3694,42 @@ import Foundation
 
 // MARK: - 백준 K번째 수
 
-let read: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
-var arr: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+//let read: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+//var arr: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+//
+//for i in 0..<arr.count {
+//    var minIndex: Int = i
+//    for j in i+1..<arr.count {
+//        if arr[minIndex] > arr[j] {
+//            minIndex = j
+//        }
+//    }
+//    arr.swapAt(i, minIndex)
+//
+//
+//}
+//
+//print(arr[read[1]-1])
 
-for i in 0..<arr.count {
-    var minIndex: Int = i
-    for j in i+1..<arr.count {
-        if arr[minIndex] > arr[j] {
-            minIndex = j
-        }
-    }
-    arr.swapAt(i, minIndex)
-    
-    
+// MARK: - 백준 10825번 국영수
+let n: Int = Int(readLine()!)!
+var arr: [(String, Int, Int, Int)] = []
+
+for _ in 0..<n {
+    let temp: [String] = readLine()!.split(separator: " ").map{String($0)}
+    arr.append((temp[0], Int(temp[1])!, Int(temp[2])!, Int(temp[3])!))
 }
 
-print(arr[read[1]-1])
+arr.sorted{
+    if $0.1 == $1.1 {
+            if $0.2 == $1.2 {
+                if $0.3 == $1.3 {
+                    return $0.0 < $1.0
+                }
+                return $0.3 > $1.3
+            }
+            return $0.2 < $1.2
+        }
+        return $0.1 > $1.1
+}.forEach{print($0.0)}
+
