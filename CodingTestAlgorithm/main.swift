@@ -3512,44 +3512,69 @@ import Foundation
 
 // MARK: - 백준 2108번 통계학
 
+//let n: Int = Int(readLine()!)!
+//var arr: [Int] = []
+//
+//for _ in 0..<n {
+//    arr.append(Int(readLine()!)!)
+//}
+//arr.sort()
+//
+//var temp: [Int:Int] = [:]
+//
+//print("---")
+//print(Int(round(Double(arr.reduce(0, +)) / Double(n))))
+//print(arr[n / 2])
+//
+//for i in 0..<n {
+//    if temp[arr[i]] == nil {
+//        temp[arr[i]] = 1
+//    } else {
+//        temp[arr[i]]! += 1
+//    }
+//}
+//
+//var dict = temp.sorted{
+//    if $0.value == $1.value {
+//        return $0.key < $0.key
+//    }
+//    return $0.value < $1.value
+//
+//}
+//
+//let maxValue: Int = dict.max(by: {$0.value < $1.value})!.value
+//var k = dict.filter({$0.value == maxValue}).sorted{$0.key < $1.key}
+//
+//if k.count > 1 {
+//    print(k[1].key)
+//} else {
+//    print(k[0].key)
+//}
+//
+//print(arr[n-1] - arr[0])
+//
+
+
+// MARK: - 백준 10816번 숫자 카드 2
+
 let n: Int = Int(readLine()!)!
-var arr: [Int] = []
+let arr: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+let m: Int = Int(readLine()!)!
+let card: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
 
-for _ in 0..<n {
-    arr.append(Int(readLine()!)!)
-}
-arr.sort()
+var dict: [Int:Int] = [:]
 
-var temp: [Int:Int] = [:]
-
-print("---")
-print(Int(round(Double(arr.reduce(0, +)) / Double(n))))
-print(arr[n / 2])
-
-for i in 0..<n {
-    if temp[arr[i]] == nil {
-        temp[arr[i]] = 1
+for value in arr {
+    if dict[value] == nil {
+        dict[value] = 1
     } else {
-        temp[arr[i]]! += 1
+        dict[value]! += 1
     }
 }
 
-var dict = temp.sorted{
-    if $0.value == $1.value {
-        return $0.key < $0.key
-    }
-    return $0.value < $1.value
+var result: [Int] = []
 
+for value in card {
+    result.append(dict[value] ?? 0)
 }
-
-let maxValue: Int = dict.max(by: {$0.value < $1.value})!.value
-var k = dict.filter({$0.value == maxValue}).sorted{$0.key < $1.key}
-
-if k.count > 1 {
-    print(k[1].key)
-} else {
-    print(k[0].key)
-}
-
-print(arr[n-1] - arr[0])
-
+print(result.map{String($0)}.joined(separator: " "))
