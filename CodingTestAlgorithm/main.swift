@@ -3770,5 +3770,40 @@ import Foundation
 
 // MARK: - 백준 11720 숫자의 합
 
+//let n: Int = Int(readLine()!)!
+//print(readLine()!.map{Int(String($0))!}.reduce(0, +))
+
+// MARK: - 백준 8958번 OX퀴즈
 let n: Int = Int(readLine()!)!
-print(readLine()!.map{Int(String($0))!}.reduce(0, +))
+func solution() {
+    let arr: [String] = readLine()!.map{String($0)}
+    var result: Int = 0
+    var temp: [Int] = []
+    var count = 0
+    for i in 0..<arr.count {
+        if arr[i] == "O" {
+            count += 1
+            if i == arr.count - 1 {
+                temp.append(count)
+            }
+        } else {
+            if count != 0 {
+                temp.append(count)
+                count = 0
+            }
+            
+        }
+    }
+    for num in temp {
+        result += Array(1...num).reduce(0, +)
+    }
+    print(result)
+}
+for _ in 0..<n {
+    solution()
+}
+
+let num : Int = Int(readLine()!)!
+for _ in 0..<num {
+    print(readLine()!.split{ $0 == "X"}.map{$0.count*($0.count+1)/2}.reduce(0, +))
+}
