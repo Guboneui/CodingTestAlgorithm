@@ -3676,18 +3676,37 @@ import Foundation
 //print(readLine()!.split(separator: " ").map{Int(String($0))!}.sorted().map{String($0)}.joined(separator: " "))
 
 // MARK: - 백준 18870번 좌표 압축
-let n: Int = Int(readLine()!)!
-let arr: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
-var dict: [Int:Int] = [:]
-var count = 0
+//let n: Int = Int(readLine()!)!
+//let arr: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+//var dict: [Int:Int] = [:]
+//var count = 0
+//
+//for i in arr.sorted() {
+//    if dict[i] == nil {
+//        dict[i] = count
+//        count += 1
+//    }
+//}
+//
+//print(arr.map{String(dict[$0]!)}.joined(separator: " "))
+//
+//print(arr.map{String($0)})
 
-for i in arr.sorted() {
-    if dict[i] == nil {
-        dict[i] = count
-        count += 1
+// MARK: - 백준 K번째 수
+
+let read: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+var arr: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+
+for i in 0..<arr.count {
+    var minIndex: Int = i
+    for j in i+1..<arr.count {
+        if arr[minIndex] > arr[j] {
+            minIndex = j
+        }
     }
+    arr.swapAt(i, minIndex)
+    
+    
 }
 
-print(arr.map{String(dict[$0]!)}.joined(separator: " "))
-
-
+print(arr[read[1]-1])
