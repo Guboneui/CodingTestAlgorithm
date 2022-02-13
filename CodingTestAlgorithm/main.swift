@@ -3673,4 +3673,21 @@ import Foundation
 
 // MARK: - 백준 2752번 세수정렬
 
-print(readLine()!.split(separator: " ").map{Int(String($0))!}.sorted().map{String($0)}.joined(separator: " "))
+//print(readLine()!.split(separator: " ").map{Int(String($0))!}.sorted().map{String($0)}.joined(separator: " "))
+
+// MARK: - 백준 18870번 좌표 압축
+let n: Int = Int(readLine()!)!
+let arr: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+var dict: [Int:Int] = [:]
+var count = 0
+
+for i in arr.sorted() {
+    if dict[i] == nil {
+        dict[i] = count
+        count += 1
+    }
+}
+
+print(arr.map{String(dict[$0]!)}.joined(separator: " "))
+
+
