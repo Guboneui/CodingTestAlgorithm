@@ -3734,9 +3734,38 @@ import Foundation
 //}.forEach{print($0.0)}
 
 // MARK: - 백준 11656번 접미사 배열
-let s: String = readLine()!
-var arr: [String] = []
-for i in 0..<s.count {
-    arr.append(s.map{String($0)}[i..<s.count].joined(separator: ""))
+//let s: String = readLine()!
+//var arr: [String] = []
+//for i in 0..<s.count {
+//    arr.append(s.map{String($0)}[i..<s.count].joined(separator: ""))
+//}
+//arr.sorted{$0 < $1}.forEach{print($0)}
+
+// MARK: - 백준 1946번 신입사원
+
+let test = Int(readLine()!)!
+func solution() {
+    let n: Int = Int(readLine()!)!
+    var people: [[Int]] = []
+    for _ in 0..<n {
+        people.append(readLine()!.split(separator: " ").map{Int(String($0))!})
+    }
+    people.sort{$0[0]<$1[0]}
+    var result: Int = 1
+    
+    var maxValue: Int = people[0][1]
+    
+    for i in 1..<n {
+        if maxValue > people[i][1] {
+            result += 1
+            maxValue = people[i][1]
+        }
+    }
+    print(result)
 }
-arr.sorted{$0 < $1}.forEach{print($0)}
+
+for _ in 0..<test {
+    solution()
+}
+
+
