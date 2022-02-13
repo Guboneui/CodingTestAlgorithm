@@ -3625,22 +3625,50 @@ import Foundation
 
 // MARK: - 백준 2217번 로프
 
-let n: Int = Int(readLine()!)!
-var rope: [Int] = []
-for _ in 0..<n {
-    rope.append(Int(readLine()!)!)
-}
+//let n: Int = Int(readLine()!)!
+//var rope: [Int] = []
+//for _ in 0..<n {
+//    rope.append(Int(readLine()!)!)
+//}
+//
+//rope.sort(by: >)
+//var maxValue: Int = 0
+//
+//for index in 0..<n {
+//    if maxValue < rope[index] * (index + 1) {
+//        maxValue = rope[index] * (index + 1)
+//    } else {
+//        continue
+//    }
+//
+//}
+//
+//print(maxValue)
 
-rope.sort(by: >)
-var maxValue: Int = 0
+// MARK: - 백준 1764번 듣보잡
 
-for index in 0..<n {
-    if maxValue < rope[index] * (index + 1) {
-        maxValue = rope[index] * (index + 1)
+let read: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+let n: Int = read[0]
+let m: Int = read[1]
+var dict: [String:Int] = [:]
+
+for _ in 0..<(n+m) {
+    let temp: String = readLine()!
+    if dict[temp] == nil {
+        dict[temp] = 1
     } else {
-        continue
+        dict[temp]! += 1
     }
-    
 }
 
-print(maxValue)
+var result: [String] = []
+dict.sorted{$0.key < $1.key}.forEach{
+    if $0.value == 2 {
+        result.append($0.key)
+    }
+}
+
+print(result.count)
+result.forEach({print($0)})
+
+
