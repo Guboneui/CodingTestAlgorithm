@@ -3581,44 +3581,66 @@ import Foundation
 
 // MARK: - 백준 10815번 숫자 카드
 
-func solution() {
-    let n: Int = Int(readLine()!)!
-    let sangen: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}.sorted()
-    let m: Int = Int(readLine()!)!
-    let card: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
-    
-    var result: [String] = []
-    
-    for num in card {
-        if binarySearch(left: 0, right: n-1, number: num, array: sangen) {
-            result.append("1")
-        } else {
-            result.append("0")
-        }
+//func solution() {
+//    let n: Int = Int(readLine()!)!
+//    let sangen: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}.sorted()
+//    let m: Int = Int(readLine()!)!
+//    let card: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+//
+//    var result: [String] = []
+//
+//    for num in card {
+//        if binarySearch(left: 0, right: n-1, number: num, array: sangen) {
+//            result.append("1")
+//        } else {
+//            result.append("0")
+//        }
+//    }
+//
+//    print(result.joined(separator: " "))
+//
+//}
+//
+//func binarySearch(left: Int, right: Int, number: Int, array: [Int]) -> Bool {
+//    var start = left
+//    var end = right
+//
+//    while start <= end {
+//        let middle = (start + end) / 2
+//
+//        if array[middle] == number {
+//            return true
+//        }
+//
+//        if array[middle] > number {
+//            end = middle - 1
+//        } else {
+//            start = middle + 1
+//        }
+//    }
+//    return false
+//}
+//
+//solution()
+
+// MARK: - 백준 2217번 로프
+
+let n: Int = Int(readLine()!)!
+var rope: [Int] = []
+for _ in 0..<n {
+    rope.append(Int(readLine()!)!)
+}
+
+rope.sort(by: >)
+var maxValue: Int = 0
+
+for index in 0..<n {
+    if maxValue < rope[index] * (index + 1) {
+        maxValue = rope[index] * (index + 1)
+    } else {
+        continue
     }
-    
-    print(result.joined(separator: " "))
     
 }
 
-func binarySearch(left: Int, right: Int, number: Int, array: [Int]) -> Bool {
-    var start = left
-    var end = right
-    
-    while start <= end {
-        let middle = (start + end) / 2
-        
-        if array[middle] == number {
-            return true
-        }
-        
-        if array[middle] > number {
-            end = middle - 1
-        } else {
-            start = middle + 1
-        }
-    }
-    return false
-}
-
-solution()
+print(maxValue)
