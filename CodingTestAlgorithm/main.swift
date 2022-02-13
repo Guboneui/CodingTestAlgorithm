@@ -3467,16 +3467,46 @@ import Foundation
 //}
 
 // MARK: - 백준 10814번 나이순 정렬
+//let n: Int = Int(readLine()!)!
+//var members: [(Int, Int, String)] = []
+//for index in 0..<n {
+//    let temp: [String] = readLine()!.split(separator: " ").map{String($0)}
+//    members.append((index, Int(temp[0])!, temp[1]))
+//}
+//
+//members.sorted{
+//    if $0.1 == $1.1 {
+//        return $0.0 < $1.0
+//    }
+//    return $0.1 < $1.1
+//}.forEach({print("\($0.1) \($0.2)")})
+
+// MARK: - 백준 11651번 좌표 정렬하기 2
+
+//let n: Int = Int(readLine()!)!
+//var board: [(Int, Int)] = []
+//for _ in 0..<n {
+//    let temp: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+//    board.append((temp[0], temp[1]))
+//}
+//
+//board.sorted{
+//    if $0.1 == $1.1 {
+//        return $0.0 < $1.0
+//    }
+//    return $0.1 < $1.1
+//}.forEach{print("\($0.0) \($0.1)")}
+
+// MARK: - 백준 1026번 보물
+
 let n: Int = Int(readLine()!)!
-var members: [(Int, Int, String)] = []
+var A: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}.sorted()
+var B: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}.sorted(by: >)
+var result: Int = 0
+
 for index in 0..<n {
-    let temp: [String] = readLine()!.split(separator: " ").map{String($0)}
-    members.append((index, Int(temp[0])!, temp[1]))
+    result += A[index] * B[index]
 }
 
-members.sorted{
-    if $0.1 == $1.1 {
-        return $0.0 < $1.0
-    }
-    return $0.1 < $1.1
-}.forEach({print("\($0.1) \($0.2)")})
+print(result)
+
