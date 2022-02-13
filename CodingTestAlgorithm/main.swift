@@ -3712,24 +3712,31 @@ import Foundation
 //print(arr[read[1]-1])
 
 // MARK: - 백준 10825번 국영수
-let n: Int = Int(readLine()!)!
-var arr: [(String, Int, Int, Int)] = []
+//let n: Int = Int(readLine()!)!
+//var arr: [(String, Int, Int, Int)] = []
+//
+//for _ in 0..<n {
+//    let temp: [String] = readLine()!.split(separator: " ").map{String($0)}
+//    arr.append((temp[0], Int(temp[1])!, Int(temp[2])!, Int(temp[3])!))
+//}
+//
+//arr.sorted{
+//    if $0.1 == $1.1 {
+//            if $0.2 == $1.2 {
+//                if $0.3 == $1.3 {
+//                    return $0.0 < $1.0
+//                }
+//                return $0.3 > $1.3
+//            }
+//            return $0.2 < $1.2
+//        }
+//        return $0.1 > $1.1
+//}.forEach{print($0.0)}
 
-for _ in 0..<n {
-    let temp: [String] = readLine()!.split(separator: " ").map{String($0)}
-    arr.append((temp[0], Int(temp[1])!, Int(temp[2])!, Int(temp[3])!))
+// MARK: - 백준 11656번 접미사 배열
+let s: String = readLine()!
+var arr: [String] = []
+for i in 0..<s.count {
+    arr.append(s.map{String($0)}[i..<s.count].joined(separator: ""))
 }
-
-arr.sorted{
-    if $0.1 == $1.1 {
-            if $0.2 == $1.2 {
-                if $0.3 == $1.3 {
-                    return $0.0 < $1.0
-                }
-                return $0.3 > $1.3
-            }
-            return $0.2 < $1.2
-        }
-        return $0.1 > $1.1
-}.forEach{print($0.0)}
-
+arr.sorted{$0 < $1}.forEach{print($0)}
