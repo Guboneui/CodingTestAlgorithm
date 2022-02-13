@@ -3445,24 +3445,38 @@ import Foundation
 
 // MARK: - 백준 2309번 일곱 난쟁이
 
-var nan: [Int] = []
-for _ in 0..<9 {
-    nan.append(Int(readLine()!)!)
-}
-nan.sort()
-var sum: Int = nan.reduce(0, +)
+//var nan: [Int] = []
+//for _ in 0..<9 {
+//    nan.append(Int(readLine()!)!)
+//}
+//nan.sort()
+//var sum: Int = nan.reduce(0, +)
+//
+//
+//for i in 0..<8 {
+//    for j in i+1..<9 {
+//        if sum - (nan[i] + nan[j]) == 100 {
+//            for index in 0..<9 {
+//                if index != i && index != j {
+//                    print(nan[index])
+//                }
+//            }
+//            exit(0)
+//        }
+//    }
+//}
 
-    
-for i in 0..<8 {
-    for j in i+1..<9 {
-        if sum - (nan[i] + nan[j]) == 100 {
-            for index in 0..<9 {
-                if index != i && index != j {
-                    print(nan[index])
-                }
-            }
-            exit(0)
-        }
+// MARK: - 백준 10814번 나이순 정렬
+let n: Int = Int(readLine()!)!
+var members: [(Int, Int, String)] = []
+for index in 0..<n {
+    let temp: [String] = readLine()!.split(separator: " ").map{String($0)}
+    members.append((index, Int(temp[0])!, temp[1]))
+}
+
+members.sorted{
+    if $0.1 == $1.1 {
+        return $0.0 < $1.0
     }
-}
-
+    return $0.1 < $1.1
+}.forEach({print("\($0.1) \($0.2)")})
