@@ -3557,24 +3557,68 @@ import Foundation
 
 // MARK: - 백준 10816번 숫자 카드 2
 
-let n: Int = Int(readLine()!)!
-let arr: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
-let m: Int = Int(readLine()!)!
-let card: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+//let n: Int = Int(readLine()!)!
+//let arr: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+//let m: Int = Int(readLine()!)!
+//let card: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+//
+//var dict: [Int:Int] = [:]
+//
+//for value in arr {
+//    if dict[value] == nil {
+//        dict[value] = 1
+//    } else {
+//        dict[value]! += 1
+//    }
+//}
+//
+//var result: [Int] = []
+//
+//for value in card {
+//    result.append(dict[value] ?? 0)
+//}
+//print(result.map{String($0)}.joined(separator: " "))
 
-var dict: [Int:Int] = [:]
+// MARK: - 백준 10815번 숫자 카드
 
-for value in arr {
-    if dict[value] == nil {
-        dict[value] = 1
-    } else {
-        dict[value]! += 1
+func solution() {
+    let n: Int = Int(readLine()!)!
+    let sangen: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}.sorted()
+    let m: Int = Int(readLine()!)!
+    let card: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+    
+    var result: [String] = []
+    
+    for num in card {
+        if binarySearch(left: 0, right: n-1, number: num, array: sangen) {
+            result.append("1")
+        } else {
+            result.append("0")
+        }
     }
+    
+    print(result.joined(separator: " "))
+    
 }
 
-var result: [Int] = []
-
-for value in card {
-    result.append(dict[value] ?? 0)
+func binarySearch(left: Int, right: Int, number: Int, array: [Int]) -> Bool {
+    var start = left
+    var end = right
+    
+    while start <= end {
+        let middle = (start + end) / 2
+        
+        if array[middle] == number {
+            return true
+        }
+        
+        if array[middle] > number {
+            end = middle - 1
+        } else {
+            start = middle + 1
+        }
+    }
+    return false
 }
-print(result.map{String($0)}.joined(separator: " "))
+
+solution()
