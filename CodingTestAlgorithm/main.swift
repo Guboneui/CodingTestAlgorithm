@@ -3918,9 +3918,20 @@ import Foundation
 //}
 
 // MARK: - 백준 11719번 그대로 출력하기 2
-while true {
-    guard let text = readLine() else {
-        break
-    }
-    print(text)
+//while true {
+//    guard let text = readLine() else {
+//        break
+//    }
+//    print(text)
+//}
+
+// MARK: - 백준 10953번 A+B - 6
+let n: Int = Int(readLine()!)!
+var arr: [[Int]] = []
+for _ in 0..<n {
+    arr.append(readLine()!.split(separator: ",").map{Int(String($0))!})
+}
+
+for i in 0..<arr.count {
+    print(arr[i].reduce(0, +))
 }
