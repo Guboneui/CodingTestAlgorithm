@@ -4039,31 +4039,48 @@ import Foundation
 //print(result)
 
 // MARK: - 백준 1212번 8진수 2진수
+//let octal = readLine()!
+//
+//var answer = ""
+//
+//let arr: [String] = [
+//  "000",
+//  "001",
+//  "010",
+//  "011",
+//  "100",
+//  "101",
+//  "110",
+//  "111"
+//]
+//
+//octal.forEach { answer += arr[Int(String($0))!] }
+//
+//while answer.first == "0" {
+//  answer = String(answer.dropFirst())
+//}
+//
+//if answer.isEmpty {
+//  print(0)
+//} else {
+//  print(answer)
+//}
 
+// MARK: - 백준 10988번 팰린드롬인지 확인하기
 
-let octal = readLine()!
+let str: [String] = readLine()!.map{String($0)}
+var start: Int = 0
+var end: Int = str.count - 1
 
-var answer = ""
-
-let arr: [String] = [
-  "000",
-  "001",
-  "010",
-  "011",
-  "100",
-  "101",
-  "110",
-  "111"
-]
-
-octal.forEach { answer += arr[Int(String($0))!] }
-
-while answer.first == "0" {
-  answer = String(answer.dropFirst())
+var result: Int = 1
+while start <= end {
+    if str[start] == str[end] {
+        start += 1
+        end -= 1
+        
+    } else {
+        result = 0
+        break
+    }
 }
-
-if answer.isEmpty {
-  print(0)
-} else {
-  print(answer)
-}
+print(result)
