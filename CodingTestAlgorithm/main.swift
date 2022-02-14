@@ -3982,47 +3982,58 @@ import Foundation
 
 // MARK: - 백준 5430번 AC
 
-let testCases: Int = Int(readLine()!)!
+//let testCases: Int = Int(readLine()!)!
+//
+//for _ in 0..<testCases {
+//    let function: String = readLine()!
+//    let length: Int = Int(readLine()!)!
+//    let arr = readLine()!.dropFirst().dropLast().split(separator: ",").map{Int(String($0))!}
+//
+//    var head = 0
+//    var tail = length - 1
+//
+//    var isReversed: Bool = false
+//    var isError: Bool = false
+//
+//    for text in function {
+//        if text == "R" {
+//            isReversed.toggle()
+//        } else {
+//            if head > tail {
+//                isError = true
+//                break
+//            }
+//
+//            if isReversed {
+//                tail -= 1
+//            } else {
+//                head += 1
+//            }
+//        }
+//    }
+//
+//    if isError {
+//        print("error")
+//    } else if head > tail {
+//        print("[]")
+//    } else {
+//        var result: String = ""
+//        if isReversed {
+//            result = arr[head...tail].reversed().map { String($0) }.joined(separator: ",")
+//        } else {
+//            result = arr[head...tail].map { String($0) }.joined(separator: ",")
+//        }
+//        print("[\(result)]")
+//    }
+//}
 
-for _ in 0..<testCases {
-    let function: String = readLine()!
-    let length: Int = Int(readLine()!)!
-    let arr = readLine()!.dropFirst().dropLast().split(separator: ",").map{Int(String($0))!}
-    
-    var head = 0
-    var tail = length - 1
-    
-    var isReversed: Bool = false
-    var isError: Bool = false
-    
-    for text in function {
-        if text == "R" {
-            isReversed.toggle()
-        } else {
-            if head > tail {
-                isError = true
-                break
-            }
-            
-            if isReversed {
-                tail -= 1
-            } else {
-                head += 1
-            }
-        }
-    }
-    
-    if isError {
-        print("error")
-    } else if head > tail {
-        print("[]")
-    } else {
-        var result: String = ""
-        if isReversed {
-            result = arr[head...tail].reversed().map { String($0) }.joined(separator: ",")
-        } else {
-            result = arr[head...tail].map { String($0) }.joined(separator: ",")
-        }
-        print("[\(result)]")
-    }
+// MARK: - 백준 2902번 KMP는 왜 KMP일까?
+
+let name: [String] = readLine()!.split(separator: "-").map{String($0)}
+var result: String = ""
+
+for text in name {
+    result += String(text.first!)
 }
+
+print(result)
