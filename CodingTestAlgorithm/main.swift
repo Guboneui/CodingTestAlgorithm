@@ -3865,25 +3865,39 @@ import Foundation
 
 // MARK: - 백준 1316번 그룹 단어 체커
 
-let n: Int = Int(readLine()!)!
-var count: Int = 0
-for _ in 0..<n {
-    let strArr: [String] = readLine()!.map{String($0)}
-    var error: Int = 0
-    for index in 0..<strArr.count-1 {
-        if strArr[index] != strArr[index+1] {
-            var newArr: [String] = []
-            for j in (index+1)..<strArr.count {
-                newArr.append(strArr[j])
-            }
-            if newArr.contains(strArr[index]) {
-                error += 1
-            }
-        }
-    }
-    if error == 0 {
-        count += 1
-    }
+//let n: Int = Int(readLine()!)!
+//var count: Int = 0
+//for _ in 0..<n {
+//    let strArr: [String] = readLine()!.map{String($0)}
+//    var error: Int = 0
+//    for index in 0..<strArr.count-1 {
+//        if strArr[index] != strArr[index+1] {
+//            var newArr: [String] = []
+//            for j in (index+1)..<strArr.count {
+//                newArr.append(strArr[j])
+//            }
+//            if newArr.contains(strArr[index]) {
+//                error += 1
+//            }
+//        }
+//    }
+//    if error == 0 {
+//        count += 1
+//    }
+//}
+//
+//print(count)
+
+// MARK: - 백준 2941번 크로아티아 알파벳
+let croatia: [String] = ["c=", "c-", "dz=", "d-", "lj", "nj", "s=", "z="]
+var str: String = readLine()!
+var result: Int = 0
+
+var idx: Int = 0
+
+for index in 0..<croatia.count {
+    str = str.replacingOccurrences(of: croatia[index], with: "1")
 }
 
-print(count)
+print(str.count)
+
