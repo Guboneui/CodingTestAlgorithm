@@ -3812,15 +3812,33 @@ import Foundation
 // print(readLine()!.split(separator: " ").map{String($0)}.count)
 
 // MARK: - 백준 10809번 알파벳 찾기
-let alphabet = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
+//let alphabet = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
+//
+//let a = readLine()!.map{String($0)}
+//
+//for o in 0...25 {
+//  if a.contains(alphabet[o]) {
+//      print(a.firstIndex(of:alphabet[o])!,terminator:" ")
+//  }else {
+//    print("-1",terminator:" ")
+//  }
+//}
 
-let a = readLine()!.map{String($0)}
-
-for o in 0...25 {
-  if a.contains(alphabet[o]) {
-      print(a.firstIndex(of:alphabet[o])!,terminator:" ")
-  }else {
-    print("-1",terminator:" ")
-  }
+// MARK: - 백준 2675번 문자열 반복
+let testCases: Int = Int(readLine()!)!
+func solution() {
+    let read: [String] = readLine()!.split(separator: " ").map{String($0)}
+    let n: Int = Int(read[0])!
+    let strArr: [String] = read[1].map{String($0)}
+    var result: String = ""
+    for index in 0..<strArr.count {
+        for _ in 0..<n {
+            result += strArr[index]
+        }
+    }
+    print(result)
+}
+for _ in 0..<testCases {
+    solution()
 }
 
