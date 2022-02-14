@@ -3938,13 +3938,44 @@ import Foundation
 
 // MARK: - 백준 10808번 알파벳 개수
 
-var dict: [String:Int] = ["a":0, "b":0, "c":0, "d":0, "e":0, "f":0, "g":0, "h":0, "i":0, "j":0, "k":0, "l":0, "m":0, "n":0, "o":0, "p":0, "q":0, "r":0, "s":0, "t":0, "u":0, "v":0, "w":0, "x":0, "y":0, "z":0]
-let str: String = readLine()!
+//var dict: [String:Int] = ["a":0, "b":0, "c":0, "d":0, "e":0, "f":0, "g":0, "h":0, "i":0, "j":0, "k":0, "l":0, "m":0, "n":0, "o":0, "p":0, "q":0, "r":0, "s":0, "t":0, "u":0, "v":0, "w":0, "x":0, "y":0, "z":0]
+//let str: String = readLine()!
+//
+//for text in str {
+//    dict[String(text)]! += 1
+//}
+//
+//for i in dict.sorted{$0.key < $1.key} {
+//    print(i.value, terminator: " ")
+//}
 
-for text in str {
-    dict[String(text)]! += 1
+// MARK: - 백준 1100번 하얀 칸
+let chess: [[String]] = [
+    ["w", "b", "w", "b", "w", "b", "w", "b"],
+    ["b", "w", "b", "w", "b", "w", "b", "w"],
+    ["w", "b", "w", "b", "w", "b", "w", "b"],
+    ["b", "w", "b", "w", "b", "w", "b", "w"],
+    ["w", "b", "w", "b", "w", "b", "w", "b"],
+    ["b", "w", "b", "w", "b", "w", "b", "w"],
+    ["w", "b", "w", "b", "w", "b", "w", "b"],
+    ["b", "w", "b", "w", "b", "w", "b", "w"]
+]
+
+var result: Int = 0
+
+var board: [[String]] = []
+
+for _ in 0..<8 {
+    board.append(readLine()!.map{String($0)})
 }
 
-for i in dict.sorted{$0.key < $1.key} {
-    print(i.value, terminator: " ")
+
+for i in 0..<8 {
+    for j in 0..<8 {
+        if board[i][j] == "F" && chess[i][j] == "w" {
+            result += 1
+        }
+    }
 }
+
+print(result)
