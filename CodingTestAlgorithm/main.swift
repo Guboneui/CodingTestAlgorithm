@@ -3904,15 +3904,23 @@ import Foundation
 
 // MARK: - 백준 11721번 열 개씩 끊어 출력하기
 
-let str: [String] = readLine()!.map{String($0)}
-let count = str.count / 10
+//let str: [String] = readLine()!.map{String($0)}
+//let count = str.count / 10
+//
+//for i in 0..<count {
+//    print(str[(i*10)...(i+1)*10-1].joined(separator: ""))
+//}
+//
+//let rest: String = str[(10*count)..<str.count].joined(separator: "")
+//
+//if rest != "" {
+//    print(rest)
+//}
 
-for i in 0..<count {
-    print(str[(i*10)...(i+1)*10-1].joined(separator: ""))
-}
-
-let rest: String = str[(10*count)..<str.count].joined(separator: "")
-
-if rest != "" {
-    print(rest)
+// MARK: - 백준 11719번 그대로 출력하기 2
+while true {
+    guard let text = readLine() else {
+        break
+    }
+    print(text)
 }
