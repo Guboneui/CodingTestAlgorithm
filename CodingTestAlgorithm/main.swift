@@ -3950,32 +3950,79 @@ import Foundation
 //}
 
 // MARK: - 백준 1100번 하얀 칸
-let chess: [[String]] = [
-    ["w", "b", "w", "b", "w", "b", "w", "b"],
-    ["b", "w", "b", "w", "b", "w", "b", "w"],
-    ["w", "b", "w", "b", "w", "b", "w", "b"],
-    ["b", "w", "b", "w", "b", "w", "b", "w"],
-    ["w", "b", "w", "b", "w", "b", "w", "b"],
-    ["b", "w", "b", "w", "b", "w", "b", "w"],
-    ["w", "b", "w", "b", "w", "b", "w", "b"],
-    ["b", "w", "b", "w", "b", "w", "b", "w"]
-]
+//let chess: [[String]] = [
+//    ["w", "b", "w", "b", "w", "b", "w", "b"],
+//    ["b", "w", "b", "w", "b", "w", "b", "w"],
+//    ["w", "b", "w", "b", "w", "b", "w", "b"],
+//    ["b", "w", "b", "w", "b", "w", "b", "w"],
+//    ["w", "b", "w", "b", "w", "b", "w", "b"],
+//    ["b", "w", "b", "w", "b", "w", "b", "w"],
+//    ["w", "b", "w", "b", "w", "b", "w", "b"],
+//    ["b", "w", "b", "w", "b", "w", "b", "w"]
+//]
+//
+//var result: Int = 0
+//
+//var board: [[String]] = []
+//
+//for _ in 0..<8 {
+//    board.append(readLine()!.map{String($0)})
+//}
+//
+//
+//for i in 0..<8 {
+//    for j in 0..<8 {
+//        if board[i][j] == "F" && chess[i][j] == "w" {
+//            result += 1
+//        }
+//    }
+//}
+//
+//print(result)
 
-var result: Int = 0
+// MARK: - 백준 5430번 AC
 
-var board: [[String]] = []
+let testCases: Int = Int(readLine()!)!
 
-for _ in 0..<8 {
-    board.append(readLine()!.map{String($0)})
-}
-
-
-for i in 0..<8 {
-    for j in 0..<8 {
-        if board[i][j] == "F" && chess[i][j] == "w" {
-            result += 1
+for _ in 0..<testCases {
+    let function: String = readLine()!
+    let length: Int = Int(readLine()!)!
+    let arr = readLine()!.dropFirst().dropLast().split(separator: ",").map{Int(String($0))!}
+    
+    var head = 0
+    var tail = length - 1
+    
+    var isReversed: Bool = false
+    var isError: Bool = false
+    
+    for text in function {
+        if text == "R" {
+            isReversed.toggle()
+        } else {
+            if head > tail {
+                isError = true
+                break
+            }
+            
+            if isReversed {
+                tail -= 1
+            } else {
+                head += 1
+            }
         }
     }
+    
+    if isError {
+        print("error")
+    } else if head > tail {
+        print("[]")
+    } else {
+        var result: String = ""
+        if isReversed {
+            result = arr[head...tail].reversed().map { String($0) }.joined(separator: ",")
+        } else {
+            result = arr[head...tail].map { String($0) }.joined(separator: ",")
+        }
+        print("[\(result)]")
+    }
 }
-
-print(result)
