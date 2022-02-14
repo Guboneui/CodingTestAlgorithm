@@ -3889,15 +3889,30 @@ import Foundation
 //print(count)
 
 // MARK: - 백준 2941번 크로아티아 알파벳
-let croatia: [String] = ["c=", "c-", "dz=", "d-", "lj", "nj", "s=", "z="]
-var str: String = readLine()!
-var result: Int = 0
+//let croatia: [String] = ["c=", "c-", "dz=", "d-", "lj", "nj", "s=", "z="]
+//var str: String = readLine()!
+//var result: Int = 0
+//
+//var idx: Int = 0
+//
+//for index in 0..<croatia.count {
+//    str = str.replacingOccurrences(of: croatia[index], with: "1")
+//}
+//
+//print(str.count)
 
-var idx: Int = 0
 
-for index in 0..<croatia.count {
-    str = str.replacingOccurrences(of: croatia[index], with: "1")
+// MARK: - 백준 11721번 열 개씩 끊어 출력하기
+
+let str: [String] = readLine()!.map{String($0)}
+let count = str.count / 10
+
+for i in 0..<count {
+    print(str[(i*10)...(i+1)*10-1].joined(separator: ""))
 }
 
-print(str.count)
+let rest: String = str[(10*count)..<str.count].joined(separator: "")
 
+if rest != "" {
+    print(rest)
+}
