@@ -3843,22 +3843,47 @@ import Foundation
 //}
 
 // MARK: - 백준 1157번 단어 공부
-let str: String = readLine()!.uppercased()
-var dict: [String:Int] = [:]
-for text in str {
-    if dict[String(text)] == nil {
-        dict[String(text)] = 1
-    } else {
-        dict[String(text)]! += 1
+//let str: String = readLine()!.uppercased()
+//var dict: [String:Int] = [:]
+//for text in str {
+//    if dict[String(text)] == nil {
+//        dict[String(text)] = 1
+//    } else {
+//        dict[String(text)]! += 1
+//    }
+//}
+//
+//var result: [String] = []
+//
+//for key in dict.keys {
+//    if dict[key] == dict.values.max() {
+//        result.append(key)
+//    }
+//}
+//
+//print(result.count == 1 ? result[0] : "?")
+
+// MARK: - 백준 1316번 그룹 단어 체커
+
+let n: Int = Int(readLine()!)!
+var count: Int = 0
+for _ in 0..<n {
+    let strArr: [String] = readLine()!.map{String($0)}
+    var error: Int = 0
+    for index in 0..<strArr.count-1 {
+        if strArr[index] != strArr[index+1] {
+            var newArr: [String] = []
+            for j in (index+1)..<strArr.count {
+                newArr.append(strArr[j])
+            }
+            if newArr.contains(strArr[index]) {
+                error += 1
+            }
+        }
+    }
+    if error == 0 {
+        count += 1
     }
 }
- 
-var result: [String] = []
 
-for key in dict.keys {
-    if dict[key] == dict.values.max() {
-        result.append(key)
-    }
-}
-
-print(result.count == 1 ? result[0] : "?")
+print(count)
