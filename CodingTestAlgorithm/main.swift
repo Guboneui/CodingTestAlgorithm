@@ -4029,11 +4029,41 @@ import Foundation
 
 // MARK: - 백준 2902번 KMP는 왜 KMP일까?
 
-let name: [String] = readLine()!.split(separator: "-").map{String($0)}
-var result: String = ""
+//let name: [String] = readLine()!.split(separator: "-").map{String($0)}
+//var result: String = ""
+//
+//for text in name {
+//    result += String(text.first!)
+//}
+//
+//print(result)
 
-for text in name {
-    result += String(text.first!)
+// MARK: - 백준 1212번 8진수 2진수
+
+
+let octal = readLine()!
+
+var answer = ""
+
+let arr: [String] = [
+  "000",
+  "001",
+  "010",
+  "011",
+  "100",
+  "101",
+  "110",
+  "111"
+]
+
+octal.forEach { answer += arr[Int(String($0))!] }
+
+while answer.first == "0" {
+  answer = String(answer.dropFirst())
 }
 
-print(result)
+if answer.isEmpty {
+  print(0)
+} else {
+  print(answer)
+}
