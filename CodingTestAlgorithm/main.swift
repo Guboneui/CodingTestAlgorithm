@@ -3825,20 +3825,40 @@ import Foundation
 //}
 
 // MARK: - 백준 2675번 문자열 반복
-let testCases: Int = Int(readLine()!)!
-func solution() {
-    let read: [String] = readLine()!.split(separator: " ").map{String($0)}
-    let n: Int = Int(read[0])!
-    let strArr: [String] = read[1].map{String($0)}
-    var result: String = ""
-    for index in 0..<strArr.count {
-        for _ in 0..<n {
-            result += strArr[index]
-        }
+//let testCases: Int = Int(readLine()!)!
+//func solution() {
+//    let read: [String] = readLine()!.split(separator: " ").map{String($0)}
+//    let n: Int = Int(read[0])!
+//    let strArr: [String] = read[1].map{String($0)}
+//    var result: String = ""
+//    for index in 0..<strArr.count {
+//        for _ in 0..<n {
+//            result += strArr[index]
+//        }
+//    }
+//    print(result)
+//}
+//for _ in 0..<testCases {
+//    solution()
+//}
+
+// MARK: - 백준 1157번 단어 공부
+let str: String = readLine()!.uppercased()
+var dict: [String:Int] = [:]
+for text in str {
+    if dict[String(text)] == nil {
+        dict[String(text)] = 1
+    } else {
+        dict[String(text)]! += 1
     }
-    print(result)
 }
-for _ in 0..<testCases {
-    solution()
+ 
+var result: [String] = []
+
+for key in dict.keys {
+    if dict[key] == dict.values.max() {
+        result.append(key)
+    }
 }
 
+print(result.count == 1 ? result[0] : "?")
