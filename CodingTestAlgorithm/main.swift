@@ -4088,23 +4088,46 @@ import Foundation
 
 // MARK: - 백준 1978번 소수 찾기
 
-let N = Int(readLine()!)!
-var count = 0
-var isPrimeNumber = true
-var arr = readLine()!.split(separator: " ").map{ Int($0)! }
-for i in 0..<arr.count {
-    if arr[i] == 1 {
-        isPrimeNumber = false
-    }else {
-        for j in 2..<arr[i] {
-            if arr[i] % j == 0 {
-                isPrimeNumber = false
-            }
-        }
-    }
-    if isPrimeNumber == true {
-        count += 1
-    }
-    isPrimeNumber = true
+//let N = Int(readLine()!)!
+//var count = 0
+//var isPrimeNumber = true
+//var arr = readLine()!.split(separator: " ").map{ Int($0)! }
+//for i in 0..<arr.count {
+//    if arr[i] == 1 {
+//        isPrimeNumber = false
+//    }else {
+//        for j in 2..<arr[i] {
+//            if arr[i] % j == 0 {
+//                isPrimeNumber = false
+//            }
+//        }
+//    }
+//    if isPrimeNumber == true {
+//        count += 1
+//    }
+//    isPrimeNumber = true
+//}
+//print("\(count)")
+
+// MARK: - 백준 1929번 소수 구하기
+let num: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let n: Int = num[0]
+let m: Int = num[1]
+
+var arr: [Int] = Array(repeating: 0, count: m+1)
+for i in 2...m {
+    arr[i] = i
 }
-print("\(count)")
+
+for j in 2...m {
+    if arr[j] == 0 {continue}
+    for k in stride(from: j+j, through: m, by: j) {
+        arr[k] = 0
+    }
+}
+
+for k in n...m {
+    if arr[k] != 0 {
+        print(arr[k])
+    }
+}
