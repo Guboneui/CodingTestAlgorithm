@@ -4110,24 +4110,56 @@ import Foundation
 //print("\(count)")
 
 // MARK: - 백준 1929번 소수 구하기
-let num: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let n: Int = num[0]
-let m: Int = num[1]
+//let num: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = num[0]
+//let m: Int = num[1]
+//
+//var arr: [Int] = Array(repeating: 0, count: m+1)
+//for i in 2...m {
+//    arr[i] = i
+//}
+//
+//for j in 2...m {
+//    if arr[j] == 0 {continue}
+//    for k in stride(from: j+j, through: m, by: j) {
+//        arr[k] = 0
+//    }
+//}
+//
+//for k in n...m {
+//    if arr[k] != 0 {
+//        print(arr[k])
+//    }
+//}
 
-var arr: [Int] = Array(repeating: 0, count: m+1)
-for i in 2...m {
-    arr[i] = i
-}
+// MARK: - 백준 4948번 베르트랑 공준
 
-for j in 2...m {
-    if arr[j] == 0 {continue}
-    for k in stride(from: j+j, through: m, by: j) {
-        arr[k] = 0
+while true {
+    let n: Int = Int(readLine()!)!
+    if n == 0 {
+        break
     }
-}
-
-for k in n...m {
-    if arr[k] != 0 {
-        print(arr[k])
+    
+    var arr: [Int] = Array(0...n*2)
+    arr[1] = 0
+    
+    
+    for i in 2...n*2 {
+        if arr[i] == 0 {
+            continue
+        }
+        
+        for j in stride(from: i*2, through: n*2, by: i) {
+            arr[j] = 0
+        }
     }
+    
+    var count: Int = 0
+    for i in n+1...n*2 {
+        if arr[i] != 0 {
+            count += 1
+        }
+    }
+    
+    print(count)
 }
