@@ -4068,19 +4068,43 @@ import Foundation
 
 // MARK: - 백준 10988번 팰린드롬인지 확인하기
 
-let str: [String] = readLine()!.map{String($0)}
-var start: Int = 0
-var end: Int = str.count - 1
+//let str: [String] = readLine()!.map{String($0)}
+//var start: Int = 0
+//var end: Int = str.count - 1
+//
+//var result: Int = 1
+//while start <= end {
+//    if str[start] == str[end] {
+//        start += 1
+//        end -= 1
+//
+//    } else {
+//        result = 0
+//        break
+//    }
+//}
+//print(result)
 
-var result: Int = 1
-while start <= end {
-    if str[start] == str[end] {
-        start += 1
-        end -= 1
-        
-    } else {
-        result = 0
-        break
+
+// MARK: - 백준 1978번 소수 찾기
+
+let N = Int(readLine()!)!
+var count = 0
+var isPrimeNumber = true
+var arr = readLine()!.split(separator: " ").map{ Int($0)! }
+for i in 0..<arr.count {
+    if arr[i] == 1 {
+        isPrimeNumber = false
+    }else {
+        for j in 2..<arr[i] {
+            if arr[i] % j == 0 {
+                isPrimeNumber = false
+            }
+        }
     }
+    if isPrimeNumber == true {
+        count += 1
+    }
+    isPrimeNumber = true
 }
-print(result)
+print("\(count)")
