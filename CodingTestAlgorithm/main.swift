@@ -4165,46 +4165,78 @@ import Foundation
 //}
 
 // MARK: - 백준 9020번 골드바흐의 추측
-var arr: [Int] = Array(0...10001)
-arr[1] = 0
-for i in 2...10001 {
-    if arr[i] == 0 {continue}
-    for j in stride(from: i*2, through: 10001, by: i) {
-        arr[j] = 0
+//var arr: [Int] = Array(0...10001)
+//arr[1] = 0
+//for i in 2...10001 {
+//    if arr[i] == 0 {continue}
+//    for j in stride(from: i*2, through: 10001, by: i) {
+//        arr[j] = 0
+//    }
+//}
+//
+//let testCases: Int = Int(readLine()!)!
+//
+//for _ in 0..<testCases {
+//    let n: Int = Int(readLine()!)!
+//    var collection: [(Int, Int)] = []
+//    for i in 1...(n/2) {
+//        collection.append((i,n-i))
+//    }
+//
+//    var temp: [(Int, Int)] = []
+//    for c in collection {
+//        if arr[c.0] != 0 && arr[c.1] != 0 {
+//            temp.append(c)
+//        }
+//    }
+//
+//    if temp.count == 1 {
+//        print("\(temp[0].0) \(temp[0].1)")
+//    } else {
+//        var min: Int = 10000
+//        for i in 0..<temp.count {
+//            if (temp[i].1 - temp[i].0) <= min {
+//                min = temp[i].1 - temp[i].0
+//                if i == temp.count - 1 {
+//                    print("\(temp[i].0) \(temp[i].1)")
+//                    break
+//                }
+//            } else {
+//                print("\(temp[i-1].0) \(temp[i-1].1)")
+//                break
+//            }
+//        }
+//    }
+//}
+
+// MARK: - 백준 6588번 골드바흐의 추측
+
+var aa = Array(repeating: 0, count: 1000001)
+var isGoldBach = false
+for i in 2...1000000{
+    aa[i] = i
+}
+for i in 2...1000000{
+    if aa[i] == 0{continue}
+    for j in stride(from: i + i, through: 1000000, by: i){
+        aa[j] = 0
     }
 }
 
-let testCases: Int = Int(readLine()!)!
-
-for _ in 0..<testCases {
-    let n: Int = Int(readLine()!)!
-    var collection: [(Int, Int)] = []
-    for i in 1...(n/2) {
-        collection.append((i,n-i))
+while true{
+    let n = Int(String(readLine()!))!
+    if n == 0{
+        break
     }
-    
-    var temp: [(Int, Int)] = []
-    for c in collection {
-        if arr[c.0] != 0 && arr[c.1] != 0 {
-            temp.append(c)
+    for i in 3..<((n / 2)+1){
+        if i % 2 == 1 && aa[i] != 0 && aa[n - i] != 0 {
+            print("\(n) = \(i) + \(n - i)")
+            isGoldBach = true
+            break
         }
     }
-    
-    if temp.count == 1 {
-        print("\(temp[0].0) \(temp[0].1)")
-    } else {
-        var min: Int = 10000
-        for i in 0..<temp.count {
-            if (temp[i].1 - temp[i].0) <= min {
-                min = temp[i].1 - temp[i].0
-                if i == temp.count - 1 {
-                    print("\(temp[i].0) \(temp[i].1)")
-                    break
-                }
-            } else {
-                print("\(temp[i-1].0) \(temp[i-1].1)")
-                break
-            }
-        }
+    if !isGoldBach{
+        print("Goldbach's conjecture is wrong.")
     }
+    isGoldBach = false
 }
