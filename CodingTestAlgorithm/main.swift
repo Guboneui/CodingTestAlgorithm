@@ -4297,30 +4297,65 @@ import Foundation
 
 // MARK: - 백준 2805번 나무 자르기
 
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let N: Int = read[0]
-let M: Int = read[1] // 상근이가 가져가려는 나무의 길이
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let N: Int = read[0]
+//let M: Int = read[1] // 상근이가 가져가려는 나무의 길이
+//
+//let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//
+//var start: Int = 0
+//var end: Int = arr.max()!
+//
+//var result: Int = 0
+//while start <= end {
+//    var middle = (start + end) / 2
+//    var sum: Int = 0
+//    for i in arr {
+//        if i > middle {
+//            sum += i - middle
+//        }
+//    }
+//
+//
+//    if sum < M {
+//        end = middle - 1
+//    } else {
+//        result = middle
+//        start = middle + 1
+//    }
+//}
+//
+//print(result)
 
-let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+// MARK: - 백준 1654번 랜선 자르기
+
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+var arr: [Int] = []
+
+let K: Int = read[0] // 배열 크기
+let N: Int = read[1] // 필요한 랜선의 개수
+
+for _ in 0..<K {
+    arr.append(Int(readLine()!)!)
+}
 
 var start: Int = 0
 var end: Int = arr.max()!
-
 var result: Int = 0
 while start <= end {
-    var middle = (start + end) / 2
-    var sum: Int = 0
-    for i in arr {
-        if i > middle {
-            sum += i - middle
-        }
+    let middle: Int = (start + end) / 2
+    var sum = 0
+    for num in arr {
+        sum += num / middle
     }
     
-    
-    if sum < M {
+   
+    if sum < N {
         end = middle - 1
     } else {
-        result = middle
+        if result < middle {
+            result = middle
+        }
         start = middle + 1
     }
 }
