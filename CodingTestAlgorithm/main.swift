@@ -4271,26 +4271,58 @@ import Foundation
 
 // MARK: - 백준 1016번 제곱 ㄴㄴ수
 
-let input = readLine()!.split(separator: " ").map{Int($0)!}
-var values: [Bool] = Array(repeating: true, count: Int(input[1] - input[0]) + 1)
+//let input = readLine()!.split(separator: " ").map{Int($0)!}
+//var values: [Bool] = Array(repeating: true, count: Int(input[1] - input[0]) + 1)
+//
+//if input[1] >= 2 {
+//    for i in 2...input[1] {
+//        if i * i > input[1] {
+//            break
+//        }
+//        if i * i >= input[0] {
+//            values[Int(i * i - input[0])] = false
+//        }
+//        let k = input[0] / (i * i)
+//        for j in k...input[1] {
+//            if i * i * j >= input[0] && i * i * j <= input[1] {
+//                values[Int(i * i * j - input[0])] = false
+//            } else if i * i * j > input[1] {
+//                break
+//            }
+//        }
+//    }
+//}
+//
+//print(values.filter{$0 == true}.count)
 
-if input[1] >= 2 {
-    for i in 2...input[1] {
-        if i * i > input[1] {
-            break
+// MARK: - 백준 2805번 나무 자르기
+
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let N: Int = read[0]
+let M: Int = read[1] // 상근이가 가져가려는 나무의 길이
+
+let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+
+var start: Int = 0
+var end: Int = arr.max()!
+
+var result: Int = 0
+while start <= end {
+    var middle = (start + end) / 2
+    var sum: Int = 0
+    for i in arr {
+        if i > middle {
+            sum += i - middle
         }
-        if i * i >= input[0] {
-            values[Int(i * i - input[0])] = false
-        }
-        let k = input[0] / (i * i)
-        for j in k...input[1] {
-            if i * i * j >= input[0] && i * i * j <= input[1] {
-                values[Int(i * i * j - input[0])] = false
-            } else if i * i * j > input[1] {
-                break
-            }
-        }
+    }
+    
+    
+    if sum < M {
+        end = middle - 1
+    } else {
+        result = middle
+        start = middle + 1
     }
 }
 
-print(values.filter{$0 == true}.count)
+print(result)
