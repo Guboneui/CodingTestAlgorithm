@@ -4329,34 +4329,66 @@ import Foundation
 
 // MARK: - 백준 1654번 랜선 자르기
 
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-var arr: [Int] = []
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//var arr: [Int] = []
+//
+//let K: Int = read[0] // 배열 크기
+//let N: Int = read[1] // 필요한 랜선의 개수
+//
+//for _ in 0..<K {
+//    arr.append(Int(readLine()!)!)
+//}
+//
+//var start: Int = 1
+//var end: Int = arr.max()!
+//var result: Int = 0
+//while start <= end {
+//    let middle: Int = (start + end) / 2
+//    var sum = 0
+//    for num in arr {
+//        sum += num / middle
+//    }
+//
+//
+//    if sum < N {
+//        end = middle - 1
+//    } else {
+//        if result < middle {
+//            result = middle
+//        }
+//        start = middle + 1
+//    }
+//}
+//
+//print(result)
 
-let K: Int = read[0] // 배열 크기
-let N: Int = read[1] // 필요한 랜선의 개수
-
-for _ in 0..<K {
-    arr.append(Int(readLine()!)!)
-}
+// MARK: - 백준 2512번 예산
+let n: Int = Int(readLine()!)!
+let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let maximum: Int = Int(readLine()!)!
 
 var start: Int = 1
 var end: Int = arr.max()!
 var result: Int = 0
+
 while start <= end {
     let middle: Int = (start + end) / 2
-    var sum = 0
+    var temp: Int = 0
     for num in arr {
-        sum += num / middle
+        if num > middle {
+            temp += middle
+        } else {
+            temp += num
+        }
     }
     
-   
-    if sum < N {
+    if temp > maximum {
         end = middle - 1
+        
     } else {
-        if result < middle {
-            result = middle
-        }
+    
         start = middle + 1
+        result = max(result, middle)
     }
 }
 
