@@ -4339,7 +4339,7 @@ for _ in 0..<K {
     arr.append(Int(readLine()!)!)
 }
 
-var start: Int = 0
+var start: Int = 1
 var end: Int = arr.max()!
 var result: Int = 0
 while start <= end {
