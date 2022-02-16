@@ -4395,40 +4395,60 @@ import Foundation
 //print(result)
 
 // MARK: - 백준 12015번 가장 긴 증가하는 부분 수열2
-let N: Int = Int(readLine()!)!
-let list: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-var arr: [Int] = [list[0]]
+//let N: Int = Int(readLine()!)!
+//let list: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//var arr: [Int] = [list[0]]
+//
+//for i in 1..<N {
+//
+//    if arr.last! < list[i] {
+//        arr.append(list[i])
+//    } else {
+//        var start: Int = 0
+//        var end: Int = arr.count - 1
+//
+//        while start <= end {
+//            let middle: Int = (start + end) / 2
+//
+//            if arr[middle] < list[i] {
+//                start = middle + 1
+//
+//            } else {
+//                end = middle - 1
+//            }
+//        }
+//
+//        arr[start] = list[i]
+//    }
+//}
+//
+//print(arr.count)
 
-for i in 1..<N {
+// MARK: - 백준 1300번 K번째 수
+let n: Int = Int(readLine()!)!
+let target: Int = Int(readLine()!)!
+var result: Int = 0
+
+var start: Int = 1
+var end: Int = target
+
+while start <= end {
+    let middle: Int = (start + end) / 2
+    var temp: Int = 0
     
-    if arr.last! < list[i] {
-        arr.append(list[i])
+    for i in 1...n {
+        temp += min(middle/i, n)
+    }
+    
+    if temp >= target {
+        result = middle
+        end = middle - 1
     } else {
-        var start: Int = 0
-        var end: Int = arr.count - 1
-        
-        while start <= end {
-            let middle: Int = (start + end) / 2
-            
-            if arr[middle] < list[i] {
-                start = middle + 1
-               
-            } else {
-                end = middle - 1
-            }
-        }
-        
-        arr[start] = list[i]
+        start = middle + 1
     }
 }
 
-print(arr.count)
-
-
-
-
-
-
+print(result)
 
 
 
