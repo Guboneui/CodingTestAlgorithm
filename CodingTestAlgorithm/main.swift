@@ -4452,39 +4452,64 @@ import Foundation
 
 // MARK: - 백준 2470번 두 용액
 
-let n: Int = Int(readLine()!)!
-let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted()
-var start: Int = 0
-var end: Int = n-1
+//let n: Int = Int(readLine()!)!
+//let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted()
+//var start: Int = 0
+//var end: Int = n-1
+//
+//var result: (Int, Int) = (0, 0)
+//var temp: Int = Int.max
+//while start <= end {
+//    let sum: Int = arr[start] + arr[end]
+//
+//    if sum < 0 {
+//        if abs(sum) < temp {
+//            result.0 = arr[start]
+//            result.1 = arr[end]
+//            temp = abs(sum)
+//        }
+//        start += 1
+//    } else if sum > 0 {
+//        if abs(sum) < temp {
+//            result.0 = arr[start]
+//            result.1 = arr[end]
+//            temp = abs(sum)
+//        }
+//        end -= 1
+//    } else {
+//        result.0 = arr[start]
+//        result.1 = arr[end]
+//        temp = abs(sum)
+//        break
+//    }
+//}
+//
+//print(result.0, result.1)
 
-var result: (Int, Int) = (0, 0)
-var temp: Int = Int.max
+//MARK: - 백준 1072번 게임
+
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let x: Int = read[0]
+let y: Int = read[1]
+
+var result: Int = -1
+var target: Int = Int(y*100/x)
+
+
+var start: Int = 1
+var end: Int = 1000000000
+
 while start <= end {
-    let sum: Int = arr[start] + arr[end]
-
-    if sum < 0 {
-        if abs(sum) < temp {
-            result.0 = arr[start]
-            result.1 = arr[end]
-            temp = abs(sum)
-        }
-        start += 1
-    } else if sum > 0 {
-        if abs(sum) < temp {
-            result.0 = arr[start]
-            result.1 = arr[end]
-            temp = abs(sum)
-        }
-        end -= 1
-    } else {
-        result.0 = arr[start]
-        result.1 = arr[end]
-        temp = abs(sum)
-        break
+    let middle: Int = (start + end) / 2
+    
+    if Int((y+middle)*100/(x+middle)) != target {
+        end = middle - 1
+        result = middle
+        
+    } else  {
+        start = middle + 1
     }
+    
 }
-
-print(result.0, result.1)
-
-
+print(result)
 
