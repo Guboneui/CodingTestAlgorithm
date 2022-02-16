@@ -4425,30 +4425,66 @@ import Foundation
 //print(arr.count)
 
 // MARK: - 백준 1300번 K번째 수
+//let n: Int = Int(readLine()!)!
+//let target: Int = Int(readLine()!)!
+//var result: Int = 0
+//
+//var start: Int = 1
+//var end: Int = target
+//
+//while start <= end {
+//    let middle: Int = (start + end) / 2
+//    var temp: Int = 0
+//
+//    for i in 1...n {
+//        temp += min(middle/i, n)
+//    }
+//
+//    if temp >= target {
+//        result = middle
+//        end = middle - 1
+//    } else {
+//        start = middle + 1
+//    }
+//}
+//
+//print(result)
+
+// MARK: - 백준 2470번 두 용액
+
 let n: Int = Int(readLine()!)!
-let target: Int = Int(readLine()!)!
-var result: Int = 0
+let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted()
+var start: Int = 0
+var end: Int = n-1
 
-var start: Int = 1
-var end: Int = target
-
+var result: (Int, Int) = (0, 0)
+var temp: Int = Int.max
 while start <= end {
-    let middle: Int = (start + end) / 2
-    var temp: Int = 0
-    
-    for i in 1...n {
-        temp += min(middle/i, n)
-    }
-    
-    if temp >= target {
-        result = middle
-        end = middle - 1
+    let sum: Int = arr[start] + arr[end]
+
+    if sum < 0 {
+        if abs(sum) < temp {
+            result.0 = arr[start]
+            result.1 = arr[end]
+            temp = abs(sum)
+        }
+        start += 1
+    } else if sum > 0 {
+        if abs(sum) < temp {
+            result.0 = arr[start]
+            result.1 = arr[end]
+            temp = abs(sum)
+        }
+        end -= 1
     } else {
-        start = middle + 1
+        result.0 = arr[start]
+        result.1 = arr[end]
+        temp = abs(sum)
+        break
     }
 }
 
-print(result)
+print(result.0, result.1)
 
 
 
