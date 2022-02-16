@@ -4242,31 +4242,55 @@ import Foundation
 //}
 
 // MARK: - 백준 2960번 에라토스테네스의 체
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let N: Int = read[0]
-let K: Int = read[1]
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let N: Int = read[0]
+//let K: Int = read[1]
+//
+//var arr: [Int] = Array(repeating: 0, count: N+1)
+//for i in 2...N {
+//    arr[i] = i
+//}
+//
+//var count = 0
+//for i in 2...N {
+//    if arr[i] == 0 {continue}
+//    for j in stride(from: i, through: N, by: i) {
+//        if arr[j] == 0 {
+//            continue
+//        } else {
+//            count += 1
+//            if count == K {
+//                print(j)
+//                break
+//            }
+//            arr[j] = 0
+//        }
+//
+//    }
+//}
 
-var arr: [Int] = Array(repeating: 0, count: N+1)
-for i in 2...N {
-    arr[i] = i
-}
+// MARK: - 백준 1016번 제곱 ㄴㄴ수
 
-var count = 0
-for i in 2...N {
-    if arr[i] == 0 {continue}
-    for j in stride(from: i, through: N, by: i) {
-        if arr[j] == 0 {
-            continue
-        } else {
-            count += 1
-            if count == K {
-                print(j)
+let input = readLine()!.split(separator: " ").map{Int($0)!}
+var values: [Bool] = Array(repeating: true, count: Int(input[1] - input[0]) + 1)
+
+if input[1] >= 2 {
+    for i in 2...input[1] {
+        if i * i > input[1] {
+            break
+        }
+        if i * i >= input[0] {
+            values[Int(i * i - input[0])] = false
+        }
+        let k = input[0] / (i * i)
+        for j in k...input[1] {
+            if i * i * j >= input[0] && i * i * j <= input[1] {
+                values[Int(i * i * j - input[0])] = false
+            } else if i * i * j > input[1] {
                 break
             }
-            arr[j] = 0
         }
-        
     }
 }
 
-
+print(values.filter{$0 == true}.count)
