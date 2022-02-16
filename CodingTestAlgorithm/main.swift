@@ -4363,33 +4363,72 @@ import Foundation
 //print(result)
 
 // MARK: - 백준 2512번 예산
-let n: Int = Int(readLine()!)!
-let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let maximum: Int = Int(readLine()!)!
+//let n: Int = Int(readLine()!)!
+//let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let maximum: Int = Int(readLine()!)!
+//
+//var start: Int = 1
+//var end: Int = arr.max()!
+//var result: Int = 0
+//
+//while start <= end {
+//    let middle: Int = (start + end) / 2
+//    var temp: Int = 0
+//    for num in arr {
+//        if num > middle {
+//            temp += middle
+//        } else {
+//            temp += num
+//        }
+//    }
+//
+//    if temp > maximum {
+//        end = middle - 1
+//
+//    } else {
+//
+//        start = middle + 1
+//        result = max(result, middle)
+//    }
+//}
+//
+//print(result)
 
-var start: Int = 1
-var end: Int = arr.max()!
-var result: Int = 0
+// MARK: - 백준 12015번 가장 긴 증가하는 부분 수열2
+let N: Int = Int(readLine()!)!
+let list: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+var arr: [Int] = [list[0]]
 
-while start <= end {
-    let middle: Int = (start + end) / 2
-    var temp: Int = 0
-    for num in arr {
-        if num > middle {
-            temp += middle
-        } else {
-            temp += num
-        }
-    }
+for i in 1..<N {
     
-    if temp > maximum {
-        end = middle - 1
-        
+    if arr.last! < list[i] {
+        arr.append(list[i])
     } else {
-    
-        start = middle + 1
-        result = max(result, middle)
+        var start: Int = 0
+        var end: Int = arr.count - 1
+        
+        while start <= end {
+            let middle: Int = (start + end) / 2
+            
+            if arr[middle] < list[i] {
+                start = middle + 1
+               
+            } else {
+                end = middle - 1
+            }
+        }
+        
+        arr[start] = list[i]
     }
 }
 
-print(result)
+print(arr.count)
+
+
+
+
+
+
+
+
+
