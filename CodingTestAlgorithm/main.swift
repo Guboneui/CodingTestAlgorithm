@@ -4589,18 +4589,43 @@ import Foundation
 //}
 
 // MARK: - 백준 3036번 링
-let circle: Int = Int(readLine()!)!
-var arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-var main: Int = arr.removeFirst()
+//let circle: Int = Int(readLine()!)!
+//var arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//var main: Int = arr.removeFirst()
+//
+//for num in arr {
+//    var x: Int = main
+//    var y: Int = num
+//    while y > 0 {
+//        let temp: Int = x
+//        x = y
+//        y = temp % y
+//    }
+//
+//    print("\(main/x)/\(num/x)")
+//}
 
-for num in arr {
-    var x: Int = main
-    var y: Int = num
-    while y > 0 {
+// MARK: - 백준 1735번 분수 합
+
+var first: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+var second: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+
+var bunza: Int = first[0]*second[1] + first[1]*second[0]
+var bunmo: Int = first[1] * second[1]
+
+let num: Int = gcd(bunza, bunmo)
+
+print("\(bunza/num) \(bunmo/num)")
+
+func gcd(_ a: Int, _ b: Int) -> Int {
+    var x: Int = max(a, b)
+    var y: Int = min(a, b)
+    
+    while y>0 {
         let temp: Int = x
         x = y
         y = temp % y
     }
     
-    print("\(main/x)/\(num/x)")
+    return x
 }
