@@ -4515,25 +4515,46 @@ import Foundation
 
 // MARK: - 백준 2609번 최대공약수와 최소공배수
 
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-var a: Int = max(read[0], read[1])
-var b: Int = min(read[0], read[1])
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//var a: Int = max(read[0], read[1])
+//var b: Int = min(read[0], read[1])
+//
+//func gcd(_ a: Int, _ b: Int) -> Int {
+//    var x: Int = a
+//    var y: Int = b
+//
+//    while y > 0 {
+//        let temp: Int = x
+//        x = y
+//        y = temp % y
+//    }
+//    return x
+//}
+//print(gcd(a, b))
+//
+//func lcm(_ a: Int, _ b: Int) -> Int {
+//    return a * b / gcd(a, b)
+//}
+//
+//print(lcm(a, b))
 
-func gcd(_ a: Int, _ b: Int) -> Int {
-    var x: Int = a
-    var y: Int = b
+// MARK: - 백준 1934번 최소공배수
+
+let testCases: Int = Int(readLine()!)!
+
+for _ in 0..<testCases {
+    let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    var a: Int = max(read[0], read[1])
+    var b: Int = min(read[0], read[1])
     
-    while y > 0 {
-        let temp: Int = x
-        x = y
-        y = temp % y
+    while b > 0 {
+        let temp: Int = a
+        a = b
+        b = temp % b
     }
-    return x
+    
+    // 최대 공약수 -> a
+    
+    print(read[0]*read[1] / a)
+    
 }
-print(gcd(a, b))
-
-func lcm(_ a: Int, _ b: Int) -> Int {
-    return a * b / gcd(a, b)
-}
-
-print(lcm(a, b))
