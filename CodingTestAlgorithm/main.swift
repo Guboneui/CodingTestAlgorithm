@@ -4607,15 +4607,34 @@ import Foundation
 
 // MARK: - 백준 1735번 분수 합
 
-var first: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-var second: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//var first: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//var second: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//
+//var bunza: Int = first[0]*second[1] + first[1]*second[0]
+//var bunmo: Int = first[1] * second[1]
+//
+//let num: Int = gcd(bunza, bunmo)
+//
+//print("\(bunza/num) \(bunmo/num)")
+//
+//func gcd(_ a: Int, _ b: Int) -> Int {
+//    var x: Int = max(a, b)
+//    var y: Int = min(a, b)
+//
+//    while y>0 {
+//        let temp: Int = x
+//        x = y
+//        y = temp % y
+//    }
+//
+//    return x
+//}
 
-var bunza: Int = first[0]*second[1] + first[1]*second[0]
-var bunmo: Int = first[1] * second[1]
+// MARK: - 백준 1850번 최대 공약수
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let result = gcd(read[0], read[1])
 
-let num: Int = gcd(bunza, bunmo)
-
-print("\(bunza/num) \(bunmo/num)")
+print(String(repeating: "1", count: result))
 
 func gcd(_ a: Int, _ b: Int) -> Int {
     var x: Int = max(a, b)
@@ -4629,3 +4648,5 @@ func gcd(_ a: Int, _ b: Int) -> Int {
     
     return x
 }
+
+
