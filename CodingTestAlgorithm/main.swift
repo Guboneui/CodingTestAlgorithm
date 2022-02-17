@@ -4631,22 +4631,34 @@ import Foundation
 //}
 
 // MARK: - 백준 1850번 최대 공약수
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let result = gcd(read[0], read[1])
+//
+//print(String(repeating: "1", count: result))
+//
+//func gcd(_ a: Int, _ b: Int) -> Int {
+//    var x: Int = max(a, b)
+//    var y: Int = min(a, b)
+//
+//    while y>0 {
+//        let temp: Int = x
+//        x = y
+//        y = temp % y
+//    }
+//
+//    return x
+//}
+
+// MARK: - 백준 13241번 최소공배수
+
 let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let result = gcd(read[0], read[1])
+var a: Int = read[0]
+var b: Int = read[1]
 
-print(String(repeating: "1", count: result))
-
-func gcd(_ a: Int, _ b: Int) -> Int {
-    var x: Int = max(a, b)
-    var y: Int = min(a, b)
-    
-    while y>0 {
-        let temp: Int = x
-        x = y
-        y = temp % y
-    }
-    
-    return x
+while b>0 {
+    let temp: Int = a
+    a = b
+    b = temp % b
 }
 
-
+print(read[0]*read[1]/a)
