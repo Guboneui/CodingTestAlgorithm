@@ -4540,21 +4540,50 @@ import Foundation
 
 // MARK: - 백준 1934번 최소공배수
 
-let testCases: Int = Int(readLine()!)!
+//let testCases: Int = Int(readLine()!)!
+//
+//for _ in 0..<testCases {
+//    let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    var a: Int = max(read[0], read[1])
+//    var b: Int = min(read[0], read[1])
+//
+//    while b > 0 {
+//        let temp: Int = a
+//        a = b
+//        b = temp % b
+//    }
+//
+//    // 최대 공약수 -> a
+//
+//    print(read[0]*read[1] / a)
+//
+//}
 
-for _ in 0..<testCases {
-    let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    var a: Int = max(read[0], read[1])
-    var b: Int = min(read[0], read[1])
-    
-    while b > 0 {
-        let temp: Int = a
-        a = b
-        b = temp % b
+// MARK: - 백준 9613번 GCD 합
+let n: Int = Int(readLine()!)!
+for _ in 0..<n {
+    var read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    read.removeFirst()
+    var result: Int = 0
+    for i in 0..<read.count - 1 {
+        for j in i+1..<read.count {
+            result += gcd(read[i], read[j])
+            
+        }
     }
     
-    // 최대 공약수 -> a
     
-    print(read[0]*read[1] / a)
-    
+    print(result)
+}
+
+
+func gcd(_ a: Int, _ b: Int) -> Int {
+    var x: Int = max(a, b)
+    var y: Int = min(a, b)
+    while y>0 {
+        let temp: Int = x
+        x = y
+        y = temp % y
+    }
+    return x
 }
