@@ -4697,29 +4697,60 @@ import Foundation
 //}
 
 // MARK: - 백준 2436번 공약수
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-var g: Int = read[0]
-var l: Int = read[1]
-var div: Int = l/g
-var a = 1
-var b = div
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//var g: Int = read[0]
+//var l: Int = read[1]
+//var div: Int = l/g
+//var a = 1
+//var b = div
+//
+//for i in 1..<div/2 + 1 {
+//    if div % i == 0 {
+//        var c = i
+//        var d = div / i
+//        if gcd(c, d) != 1 {
+//            continue
+//        }
+//        if a+b > c+d {
+//            a = c
+//            b = d
+//        }
+//    }
+//}
+//
+//print(a*g, b*g)
+//
+//
+//func gcd(_ a: Int, _ b: Int) -> Int{
+//    var x: Int = max(a, b)
+//    var y: Int = min(a, b)
+//    while y>0 {
+//        let temp: Int = x
+//        x = y
+//        y = temp % y
+//    }
+//    return x
+//}
 
-for i in 1..<div/2 + 1 {
-    if div % i == 0 {
-        var c = i
-        var d = div / i
-        if gcd(c, d) != 1 {
-            continue
-        }
-        if a+b > c+d {
-            a = c
-            b = d
-        }
-    }
+// MARK: - 백준 17087번 숨바꼭질 6
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let n: Int = read[0]
+let s: Int = read[1]
+var arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+for i in 0..<arr.count {
+    arr[i] = abs(arr[i]-s)
 }
 
-print(a*g, b*g)
-
+var result = arr[0]
+if arr.count == 1 {
+    print(result)
+} else {
+    
+    for i in 1..<arr.count {
+        result = gcd(result, arr[i])
+    }
+    print(result)
+}
 
 func gcd(_ a: Int, _ b: Int) -> Int{
     var x: Int = max(a, b)
