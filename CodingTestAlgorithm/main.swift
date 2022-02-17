@@ -4678,12 +4678,48 @@ import Foundation
 //print("\(n[0]/a):\(n[1]/a)")
 
 // MARK: - 백준 5347번 LCM
-let testCases: Int = Int(readLine()!)!
+//let testCases: Int = Int(readLine()!)!
+//
+//for _ in 0..<testCases {
+//    let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    print(read[0]*read[1]/gcd(read[0], read[1]))
+//}
+//
+//func gcd(_ a: Int, _ b: Int) -> Int{
+//    var x: Int = max(a, b)
+//    var y: Int = min(a, b)
+//    while y>0 {
+//        let temp: Int = x
+//        x = y
+//        y = temp % y
+//    }
+//    return x
+//}
 
-for _ in 0..<testCases {
-    let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    print(read[0]*read[1]/gcd(read[0], read[1]))
+// MARK: - 백준 2436번 공약수
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+var g: Int = read[0]
+var l: Int = read[1]
+var div: Int = l/g
+var a = 1
+var b = div
+
+for i in 1..<div/2 + 1 {
+    if div % i == 0 {
+        var c = i
+        var d = div / i
+        if gcd(c, d) != 1 {
+            continue
+        }
+        if a+b > c+d {
+            a = c
+            b = d
+        }
+    }
 }
+
+print(a*g, b*g)
+
 
 func gcd(_ a: Int, _ b: Int) -> Int{
     var x: Int = max(a, b)
