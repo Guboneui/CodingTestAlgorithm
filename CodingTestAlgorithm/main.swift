@@ -4560,30 +4560,47 @@ import Foundation
 //}
 
 // MARK: - 백준 9613번 GCD 합
-let n: Int = Int(readLine()!)!
-for _ in 0..<n {
-    var read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    read.removeFirst()
-    var result: Int = 0
-    for i in 0..<read.count - 1 {
-        for j in i+1..<read.count {
-            result += gcd(read[i], read[j])
-            
-        }
-    }
-    
-    
-    print(result)
-}
+//let n: Int = Int(readLine()!)!
+//for _ in 0..<n {
+//    var read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    read.removeFirst()
+//    var result: Int = 0
+//    for i in 0..<read.count - 1 {
+//        for j in i+1..<read.count {
+//            result += gcd(read[i], read[j])
+//
+//        }
+//    }
+//
+//
+//    print(result)
+//}
+//
+//
+//func gcd(_ a: Int, _ b: Int) -> Int {
+//    var x: Int = max(a, b)
+//    var y: Int = min(a, b)
+//    while y>0 {
+//        let temp: Int = x
+//        x = y
+//        y = temp % y
+//    }
+//    return x
+//}
 
+// MARK: - 백준 3036번 링
+let circle: Int = Int(readLine()!)!
+var arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+var main: Int = arr.removeFirst()
 
-func gcd(_ a: Int, _ b: Int) -> Int {
-    var x: Int = max(a, b)
-    var y: Int = min(a, b)
-    while y>0 {
+for num in arr {
+    var x: Int = main
+    var y: Int = num
+    while y > 0 {
         let temp: Int = x
         x = y
         y = temp % y
     }
-    return x
+    
+    print("\(main/x)/\(num/x)")
 }
