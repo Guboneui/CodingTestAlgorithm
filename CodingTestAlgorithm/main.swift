@@ -4488,28 +4488,52 @@ import Foundation
 
 //MARK: - 백준 1072번 게임
 
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let x: Int = read[0]
+//let y: Int = read[1]
+//
+//var result: Int = -1
+//var target: Int = Int(y*100/x)
+//
+//
+//var start: Int = 1
+//var end: Int = 1000000000
+//
+//while start <= end {
+//    let middle: Int = (start + end) / 2
+//
+//    if Int((y+middle)*100/(x+middle)) != target {
+//        end = middle - 1
+//        result = middle
+//
+//    } else  {
+//        start = middle + 1
+//    }
+//
+//}
+//print(result)
+
+// MARK: - 백준 2609번 최대공약수와 최소공배수
+
 let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let x: Int = read[0]
-let y: Int = read[1]
+var a: Int = max(read[0], read[1])
+var b: Int = min(read[0], read[1])
 
-var result: Int = -1
-var target: Int = Int(y*100/x)
-
-
-var start: Int = 1
-var end: Int = 1000000000
-
-while start <= end {
-    let middle: Int = (start + end) / 2
+func gcd(_ a: Int, _ b: Int) -> Int {
+    var x: Int = a
+    var y: Int = b
     
-    if Int((y+middle)*100/(x+middle)) != target {
-        end = middle - 1
-        result = middle
-        
-    } else  {
-        start = middle + 1
+    while y > 0 {
+        let temp: Int = x
+        x = y
+        y = temp % y
     }
-    
+    return x
 }
-print(result)
+print(gcd(a, b))
 
+func lcm(_ a: Int, _ b: Int) -> Int {
+    return a * b / gcd(a, b)
+}
+
+print(lcm(a, b))
