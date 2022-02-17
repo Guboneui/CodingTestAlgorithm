@@ -4651,14 +4651,28 @@ import Foundation
 
 // MARK: - 백준 13241번 최소공배수
 
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-var a: Int = read[0]
-var b: Int = read[1]
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//var a: Int = read[0]
+//var b: Int = read[1]
+//
+//while b>0 {
+//    let temp: Int = a
+//    a = b
+//    b = temp % b
+//}
+//
+//print(read[0]*read[1]/a)
 
+// MARK: - 백준 14490번 백대열
+
+let n: [Int] = readLine()!.split(separator: ":").map{Int($0)!}
+
+var a: Int = max(n[0], n[1])
+var b: Int = min(n[0], n[1])
 while b>0 {
     let temp: Int = a
     a = b
-    b = temp % b
+    b = temp%a
 }
 
-print(read[0]*read[1]/a)
+print("\(n[0]/a):\(n[1]/a)")
