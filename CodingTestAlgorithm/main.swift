@@ -4665,14 +4665,33 @@ import Foundation
 
 // MARK: - 백준 14490번 백대열
 
-let n: [Int] = readLine()!.split(separator: ":").map{Int($0)!}
+//let n: [Int] = readLine()!.split(separator: ":").map{Int($0)!}
+//
+//var a: Int = max(n[0], n[1])
+//var b: Int = min(n[0], n[1])
+//while b>0 {
+//    let temp: Int = a
+//    a = b
+//    b = temp%a
+//}
+//
+//print("\(n[0]/a):\(n[1]/a)")
 
-var a: Int = max(n[0], n[1])
-var b: Int = min(n[0], n[1])
-while b>0 {
-    let temp: Int = a
-    a = b
-    b = temp%a
+// MARK: - 백준 5347번 LCM
+let testCases: Int = Int(readLine()!)!
+
+for _ in 0..<testCases {
+    let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    print(read[0]*read[1]/gcd(read[0], read[1]))
 }
 
-print("\(n[0]/a):\(n[1]/a)")
+func gcd(_ a: Int, _ b: Int) -> Int{
+    var x: Int = max(a, b)
+    var y: Int = min(a, b)
+    while y>0 {
+        let temp: Int = x
+        x = y
+        y = temp % y
+    }
+    return x
+}
