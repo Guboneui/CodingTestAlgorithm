@@ -4764,20 +4764,51 @@ import Foundation
 //}
 
 // MARK: - 백준 2485번 가로수
-let n: Int = Int(readLine()!)!
+//let n: Int = Int(readLine()!)!
+//var arr: [Int] = []
+//for _ in 0..<n {
+//    arr.append(Int(readLine()!)!)
+//}
+//
+//
+//var gcdNum: Int = gcd(arr[1] - arr[0], arr[2] - arr[1])
+//
+//for i in 2..<n-1 {
+//    gcdNum = gcd(gcdNum, arr[i+1] - arr[i])
+//}
+//
+//print((arr[n-1] - arr[0]) / gcdNum - n + 1)
+//
+//
+//func gcd(_ a: Int, _ b: Int) -> Int{
+//    var x: Int = max(a, b)
+//    var y: Int = min(a, b)
+//    while y>0 {
+//        let temp: Int = x
+//        x = y
+//        y = temp % y
+//    }
+//    return x
+//}
+
+
+// MARK: - 백준 2942번 퍼거슨과 사과
+let apple: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let redApple: Int = apple[0]
+let greenApple: Int = apple[1]
+
+let gcdNum: Int = gcd(redApple, greenApple)
+
 var arr: [Int] = []
-for _ in 0..<n {
-    arr.append(Int(readLine()!)!)
+for i in 1...gcdNum {
+    if gcdNum % i == 0 {
+        arr.append(i)
+    }
 }
 
-
-var gcdNum: Int = gcd(arr[1] - arr[0], arr[2] - arr[1])
-
-for i in 2..<n-1 {
-    gcdNum = gcd(gcdNum, arr[i+1] - arr[i])
+for num in arr {
+    print("\(num) \(redApple/num) \(greenApple/num)")
 }
-
-print((arr[n-1] - arr[0]) / gcdNum - n + 1)
 
 
 func gcd(_ a: Int, _ b: Int) -> Int{
