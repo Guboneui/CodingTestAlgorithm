@@ -4733,24 +4733,52 @@ import Foundation
 //}
 
 // MARK: - 백준 17087번 숨바꼭질 6
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let n: Int = read[0]
-let s: Int = read[1]
-var arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-for i in 0..<arr.count {
-    arr[i] = abs(arr[i]-s)
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = read[0]
+//let s: Int = read[1]
+//var arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//for i in 0..<arr.count {
+//    arr[i] = abs(arr[i]-s)
+//}
+//
+//var result = arr[0]
+//if arr.count == 1 {
+//    print(result)
+//} else {
+//
+//    for i in 1..<arr.count {
+//        result = gcd(result, arr[i])
+//    }
+//    print(result)
+//}
+//
+//func gcd(_ a: Int, _ b: Int) -> Int{
+//    var x: Int = max(a, b)
+//    var y: Int = min(a, b)
+//    while y>0 {
+//        let temp: Int = x
+//        x = y
+//        y = temp % y
+//    }
+//    return x
+//}
+
+// MARK: - 백준 2485번 가로수
+let n: Int = Int(readLine()!)!
+var arr: [Int] = []
+for _ in 0..<n {
+    arr.append(Int(readLine()!)!)
 }
 
-var result = arr[0]
-if arr.count == 1 {
-    print(result)
-} else {
-    
-    for i in 1..<arr.count {
-        result = gcd(result, arr[i])
-    }
-    print(result)
+
+var gcdNum: Int = gcd(arr[1] - arr[0], arr[2] - arr[1])
+
+for i in 2..<n-1 {
+    gcdNum = gcd(gcdNum, arr[i+1] - arr[i])
 }
+
+print((arr[n-1] - arr[0]) / gcdNum - n + 1)
+
 
 func gcd(_ a: Int, _ b: Int) -> Int{
     var x: Int = max(a, b)
