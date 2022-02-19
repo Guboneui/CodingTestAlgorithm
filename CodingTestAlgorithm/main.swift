@@ -4793,23 +4793,38 @@ import Foundation
 
 
 // MARK: - 백준 2942번 퍼거슨과 사과
-let apple: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let redApple: Int = apple[0]
-let greenApple: Int = apple[1]
+//let apple: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let redApple: Int = apple[0]
+//let greenApple: Int = apple[1]
+//
+//let gcdNum: Int = gcd(redApple, greenApple)
+//
+//var arr: [Int] = []
+//for i in 1...gcdNum {
+//    if gcdNum % i == 0 {
+//        arr.append(i)
+//    }
+//}
+//
+//for num in arr {
+//    print("\(num) \(redApple/num) \(greenApple/num)")
+//}
+//
+//
+//func gcd(_ a: Int, _ b: Int) -> Int{
+//    var x: Int = max(a, b)
+//    var y: Int = min(a, b)
+//    while y>0 {
+//        let temp: Int = x
+//        x = y
+//        y = temp % y
+//    }
+//    return x
+//}
 
-let gcdNum: Int = gcd(redApple, greenApple)
-
-var arr: [Int] = []
-for i in 1...gcdNum {
-    if gcdNum % i == 0 {
-        arr.append(i)
-    }
-}
-
-for num in arr {
-    print("\(num) \(redApple/num) \(greenApple/num)")
-}
-
+// MARK: - 백준 2168번 타일 위의 대각선
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+print(read[0] + read[1] - gcd(read[0], read[1]))
 
 func gcd(_ a: Int, _ b: Int) -> Int{
     var x: Int = max(a, b)
