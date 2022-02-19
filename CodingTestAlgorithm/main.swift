@@ -4822,11 +4822,43 @@ import Foundation
 //    return x
 //}
 
-// MARK: - 백준 2168번 타일 위의 대각선
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-print(read[0] + read[1] - gcd(read[0], read[1]))
+//// MARK: - 백준 2168번 타일 위의 대각선
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//print(read[0] + read[1] - gcd(read[0], read[1]))
+//
+//func gcd(_ a: Int, _ b: Int) -> Int{
+//    var x: Int = max(a, b)
+//    var y: Int = min(a, b)
+//    while y>0 {
+//        let temp: Int = x
+//        x = y
+//        y = temp % y
+//    }
+//    return x
+//}
 
-func gcd(_ a: Int, _ b: Int) -> Int{
+// MARK: - 백준 9417번 최대 GCD
+
+let testCases: Int = Int(readLine()!)!
+for _ in 0..<testCases {
+    let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    var result: Int = 1
+    
+    for i in 0..<arr.count - 1 {
+        for j in i+1..<arr.count {
+            let temp: Int = gcd(arr[i], arr[j])
+            if temp > result {
+                result = temp
+            }
+        }
+    }
+    print(result)
+    
+    
+}
+
+
+func gcd(_ a: Int, _ b: Int) -> Int {
     var x: Int = max(a, b)
     var y: Int = min(a, b)
     while y>0 {
