@@ -4994,8 +4994,71 @@ import Foundation
 //print(text.split(separator: ",").map{Int(String($0))!}.reduce(0, +))
 
 // MARK: - 백준 12605번 단어순서 뒤집기
-let n: Int = Int(readLine()!)!
-for i in 1...n {
-    var reverse: String = readLine()!.split(separator: " ").map{String($0)}.reversed().joined(separator: " ")
-    print("Case #\(i): \(reverse)")
+//let n: Int = Int(readLine()!)!
+//for i in 1...n {
+//    var reverse: String = readLine()!.split(separator: " ").map{String($0)}.reversed().joined(separator: " ")
+//    print("Case #\(i): \(reverse)")
+//}
+
+
+// MARK: - 다익스트라
+// MARK: - 백준 1753번 최단 경로 -> 시간 초과 오류 but 기본 다익스트라 알고리즘 코드
+
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+/// 정점의 개수
+let V: Int = read[0]
+/// 간성의 개수
+let E: Int = read[1]
+/// 시작점
+let K: Int = Int(readLine()!)!
+
+var graph: [[(Int, Int)]] = Array(repeating: Array<(Int, Int)>(), count: V+1)
+
+for _ in 0..<E {
+    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    graph[temp[0]].append((temp[1], temp[2]))
+}
+
+var visited: [Bool] = Array(repeating: false, count: V+1)
+var distance: [Int] = Array(repeating: Int.max, count: V+1)
+
+func getSmallestNode() -> Int {
+    var minValue: Int = Int.max
+    var index: Int = 0
+    for i in 1..<V+1 {
+        if distance[i] < minValue && visited[i] == false {
+            minValue = distance[i]
+            index = i
+        }
+    }
+    return index
+}
+
+func solution(_ start: Int) {
+    distance[start] = 0
+    visited[start] = true
+    for j in graph[start] {
+        distance[j.0] = j.1
+    }
+    
+    for i in 0..<V-1 {
+        let now = getSmallestNode()
+        visited[now] = true
+        for j in graph[now] {
+            let cost = distance[now] + j.1
+            if cost < distance[j.0] {
+                distance[j.0] = cost
+            }
+        }
+    }
+}
+
+solution(K)
+
+for i in 1..<V+1 {
+    if distance[i] == Int.max {
+        print("INF")
+    } else {
+        print(distance[i])
+    }
 }
