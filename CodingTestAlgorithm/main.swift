@@ -4904,4 +4904,31 @@ import Foundation
 
 //MARK: - 백준 10822번 더하기
 
-print(readLine()!.split(separator: ",").map{Int($0)!}.reduce(0, +))
+//print(readLine()!.split(separator: ",").map{Int($0)!}.reduce(0, +))
+
+// MARK: - 백준 11816번 8진수, 10진수, 16진수
+
+//let num: String = readLine()!
+//
+//if num.contains("0x") {
+//    // 16진수
+//    let index: String.Index = num.index(num.startIndex, offsetBy: 2)
+//    print(Int(String(num[index...]), radix: 16)!)
+//} else if num.first == "0" {
+//    let index: String.Index = num.index(num.startIndex, offsetBy: 1)
+//    print(Int(String(num[index...]), radix: 8)!)
+//} else {
+//    // 10진수
+//    print(num)
+//}
+
+
+var num: String = readLine()!
+if num.hasPrefix("0x") {
+    let result = num.dropFirst(2)
+    print(Int(result, radix: 16)!)
+} else if num.hasPrefix("0") {
+    print(Int(num, radix: 8)!)
+} else {
+    print(num)
+}
