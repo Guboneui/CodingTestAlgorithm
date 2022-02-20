@@ -4962,25 +4962,36 @@ import Foundation
 
 
 
-let s: String = readLine()!
-var happy: Int = 0
-var sad: Int = 0
-for i in 0..<s.count - 2 {
-    var startIndex: String.Index = s.index(s.startIndex, offsetBy: i)
-    var endIndex: String.Index = s.index(s.startIndex, offsetBy: i+2)
-    if s[startIndex...endIndex] == ":-)" {
-        happy += 1
-    } else if s[startIndex...endIndex] == ":-(" {
-        sad += 1
-    }
+//let s: String = readLine()!
+//var happy: Int = 0
+//var sad: Int = 0
+//for i in 0..<s.count - 2 {
+//    var startIndex: String.Index = s.index(s.startIndex, offsetBy: i)
+//    var endIndex: String.Index = s.index(s.startIndex, offsetBy: i+2)
+//    if s[startIndex...endIndex] == ":-)" {
+//        happy += 1
+//    } else if s[startIndex...endIndex] == ":-(" {
+//        sad += 1
+//    }
+//}
+//if happy == 0 && sad == 0 {
+//    print("none")
+//} else if happy == sad {
+//    print("unsure")
+//} else if happy > sad {
+//    print("happy")
+//} else if happy < sad {
+//    print("sad")
+//}
+
+// MARK: - 백준 10823번 더하기 2
+
+
+var text: String = ""
+
+while let str = readLine() {
+    text += str
 }
-if happy == 0 && sad == 0 {
-    print("none")
-} else if happy == sad {
-    print("unsure")
-} else if happy > sad {
-    print("happy")
-} else if happy < sad {
-    print("sad")
-}
+
+print(text.split(separator: ",").map{Int(String($0))!}.reduce(0, +))
 
