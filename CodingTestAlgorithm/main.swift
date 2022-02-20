@@ -4923,12 +4923,38 @@ import Foundation
 //}
 
 
-var num: String = readLine()!
-if num.hasPrefix("0x") {
-    let result = num.dropFirst(2)
-    print(Int(result, radix: 16)!)
-} else if num.hasPrefix("0") {
-    print(Int(num, radix: 8)!)
-} else {
-    print(num)
+//var num: String = readLine()!
+//if num.hasPrefix("0x") {
+//    let result = num.dropFirst(2)
+//    print(Int(result, radix: 16)!)
+//} else if num.hasPrefix("0") {
+//    print(Int(num, radix: 8)!)
+//} else {
+//    print(num)
+//}
+
+// MARK: - 백준 10769번 행복한지 슬픈지
+
+let s: [String] = readLine()!.map{String($0)}
+var happy: Int = 0
+var sad: Int = 0
+
+for i in 0..<s.count-2 {
+    var text: String = s[i...i+2].joined(separator: "")
+    if text == ":-)" {
+        happy += 1
+    } else if text == ":-(" {
+        sad += 1
+    }
+}
+
+
+if happy == 0 && sad == 0 {
+    print("none")
+} else if happy == sad {
+    print("unsure")
+} else if happy > sad {
+    print("happy")
+} else if happy < sad {
+    print("sad")
 }
