@@ -4985,13 +4985,17 @@ import Foundation
 //}
 
 // MARK: - 백준 10823번 더하기 2
+//var text: String = ""
+//
+//while let str = readLine() {
+//    text += str
+//}
+//
+//print(text.split(separator: ",").map{Int(String($0))!}.reduce(0, +))
 
-
-var text: String = ""
-
-while let str = readLine() {
-    text += str
+// MARK: - 백준 12605번 단어순서 뒤집기
+let n: Int = Int(readLine()!)!
+for i in 1...n {
+    var reverse: String = readLine()!.split(separator: " ").map{String($0)}.reversed().joined(separator: " ")
+    print("Case #\(i): \(reverse)")
 }
-
-print(text.split(separator: ",").map{Int(String($0))!}.reduce(0, +))
-
