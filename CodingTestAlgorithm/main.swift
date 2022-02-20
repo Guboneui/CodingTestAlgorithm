@@ -4935,20 +4935,45 @@ import Foundation
 
 // MARK: - 백준 10769번 행복한지 슬픈지
 
-let s: [String] = readLine()!.map{String($0)}
+//let s: [String] = readLine()!.map{String($0)}
+//var happy: Int = 0
+//var sad: Int = 0
+//
+//for i in 0..<s.count-2 {
+//
+//    var text: String = s[i...i+2].joined(separator: "")
+//    if text == ":-)" {
+//        happy += 1
+//    } else if text == ":-(" {
+//        sad += 1
+//    }
+//}
+//
+//
+//if happy == 0 && sad == 0 {
+//    print("none")
+//} else if happy == sad {
+//    print("unsure")
+//} else if happy > sad {
+//    print("happy")
+//} else if happy < sad {
+//    print("sad")
+//}
+
+
+
+let s: String = readLine()!
 var happy: Int = 0
 var sad: Int = 0
-
-for i in 0..<s.count-2 {
-    var text: String = s[i...i+2].joined(separator: "")
-    if text == ":-)" {
+for i in 0..<s.count - 2 {
+    var startIndex: String.Index = s.index(s.startIndex, offsetBy: i)
+    var endIndex: String.Index = s.index(s.startIndex, offsetBy: i+2)
+    if s[startIndex...endIndex] == ":-)" {
         happy += 1
-    } else if text == ":-(" {
+    } else if s[startIndex...endIndex] == ":-(" {
         sad += 1
     }
 }
-
-
 if happy == 0 && sad == 0 {
     print("none")
 } else if happy == sad {
@@ -4958,3 +4983,4 @@ if happy == 0 && sad == 0 {
 } else if happy < sad {
     print("sad")
 }
+
