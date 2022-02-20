@@ -5030,6 +5030,8 @@ import Foundation
 //            minValue = distance[i]
 //            index = i
 //        }
+//        print("index: \(index)")
+//
 //    }
 //    return index
 //}
@@ -5041,8 +5043,11 @@ import Foundation
 //        distance[j.0] = j.1
 //    }
 //
+//    print("K: \(distance)")
+//
 //    for i in 0..<V-1 {
 //        let now = getSmallestNode()
+//        print("now: \(now)")
 //        visited[now] = true
 //        for j in graph[now] {
 //            let cost = distance[now] + j.1
@@ -5181,3 +5186,47 @@ import Foundation
 //        print(distance[i])
 //    }
 //}
+
+
+// MARK: - 백준 1916번 최소비용 구하기
+let n: Int = Int(readLine()!)!  // 노드 개수
+let m: Int = Int(readLine()!)!  // 간선의 개수
+
+var graph: [[(Int, Int)]] = Array(repeating: Array<(Int, Int)>(), count: n+1)
+var visited: [Bool] = Array(repeating: false, count: n+1)
+var distance: [Int] = Array(repeating: Int.max, count: n+1)
+
+for _ in 0..<m {
+    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    graph[temp[0]].append((temp[1], temp[2]))
+}
+
+var result: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+distance[result[0]] = 0
+solution(result[0])
+print(distance[result[1]])
+
+func solution(_ start: Int) {
+    
+    if start == result[1] {
+        return
+    }
+    
+    visited[start] = true
+
+    for j in graph[start] {
+        distance[j.0] = min(distance[j.0], distance[start] + j.1)
+    }
+
+    var min: Int = Int.max
+    var index: Int = -1
+    for i in 1..<distance.count {
+        if visited[i] == false && min > distance[i] {
+            min = distance[i]
+            index = i
+        }
+    }
+    solution(index)
+}
+
+
