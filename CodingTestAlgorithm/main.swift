@@ -5599,26 +5599,52 @@ import Foundation
 //
 
 // MARK: - 백준 4796번 캠핑 - 다시 풀기
-var count: Int = 1
-var result: Int = 0
+//var count: Int = 1
+//var result: Int = 0
+//
+//while true {
+//    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    if temp == [0, 0, 0] { break }
+//
+//    let L: Int = temp[0]
+//    let P: Int = temp[1]
+//    let V: Int = temp[2]
+//
+//    result += V/P*L
+//
+//    if V%P > L {
+//        result += L
+//    } else {
+//        result += V%P
+//    }
+//
+//    print("Case \(count): \(result)")
+//    result = 0
+//    count += 1
+//}
 
-while true {
-    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    if temp == [0, 0, 0] { break }
-    
-    let L: Int = temp[0]
-    let P: Int = temp[1]
-    let V: Int = temp[2]
-    
-    result += V/P*L
-    
-    if V%P > L {
-        result += L
-    } else {
-        result += V%P
+// MARK: - 백준 4673번 셀프 넘버
+var arr: Set<Int> = []
+for i in 1...10000 {
+    arr.insert(solution(i))
+}
+
+func solution(_ n: Int) -> Int {
+    var sum = n
+    var num = n
+    while num > 0 {
+        sum = sum + num % 10
+        num = num / 10
+        
+        if num == 0 {
+            break
+        }
     }
-    
-    print("Case \(count): \(result)")
-    result = 0
-    count += 1
+    return sum
+}
+
+for i in 1...10000 {
+    if arr.contains(i) == false {
+        print(i)
+    }
 }
