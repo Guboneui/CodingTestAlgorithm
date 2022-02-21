@@ -5322,39 +5322,67 @@ import Foundation
 
 // MARK: - 백준 1967번 트리의 지름
 
+//let n: Int = Int(readLine()!)!
+//var graph: [[(Int, Int)]] = Array(repeating: Array<(Int, Int)>(), count: n+1)
+//for _ in 0..<n-1 {
+//    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    graph[temp[0]].append((temp[1], temp[2]))
+//    graph[temp[1]].append((temp[0], temp[2]))
+//}
+//
+//var result: Int = 0
+//var endNode: Int = 0
+//
+//var visited: [Bool] = Array(repeating: false, count: n+1)
+//
+//func dfs(_ v: Int, _ distance: Int) {
+//    if visited[v] == true {
+//        return
+//    }
+//
+//    visited[v] = true
+//    if result < distance {
+//        result = distance
+//        endNode = v
+//    }
+//
+//    for i in graph[v] {
+//        dfs(i.0, distance + i.1)
+//    }
+//}
+//
+//dfs(1, 0)
+//
+//result = 0
+//visited = Array(repeating: false, count: n+1)
+//dfs(endNode, 0)
+//print(result)
+
+// MARK: - 백준 11279번 최대 힙
+
 let n: Int = Int(readLine()!)!
-var graph: [[(Int, Int)]] = Array(repeating: Array<(Int, Int)>(), count: n+1)
-for _ in 0..<n-1 {
-    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    graph[temp[0]].append((temp[1], temp[2]))
-    graph[temp[1]].append((temp[0], temp[2]))
-}
+var arr: [Int] = []
 
-var result: Int = 0
-var endNode: Int = 0
-
-var visited: [Bool] = Array(repeating: false, count: n+1)
-
-func dfs(_ v: Int, _ distance: Int) {
-    if visited[v] == true {
-        return
-    }
+for _ in 0..<n {
+    let temp: Int = Int(readLine()!)!
     
-    visited[v] = true
-    if result < distance {
-        result = distance
-        endNode = v
-    }
-    
-    for i in graph[v] {
-        dfs(i.0, distance + i.1)
+    if temp == 0 {
+        if arr.isEmpty {
+            print(0)
+        } else {
+            var maxValue: Int = 0
+            var maxIndex: Int = 0
+            for i in 0..<arr.count {
+                if maxValue < arr[i] {
+                    maxValue = arr[i]
+                    maxIndex = i
+                }
+            }
+            
+            arr[maxIndex] = 0
+            print(maxValue)
+        }
+    } else {
+        arr.append(temp)
     }
 }
-
-dfs(1, 0)
-
-result = 0
-visited = Array(repeating: false, count: n+1)
-dfs(endNode, 0)
-print(result)
-
