@@ -5291,37 +5291,70 @@ import Foundation
 
 // MARK: - 백준 11725번 트리의 부모 찾기
 
+//let n: Int = Int(readLine()!)!
+//var tree: [[Int]] = Array(repeating: [], count: n+1)
+//var visited: [Bool] = Array(repeating: false, count: n+1)
+//var result: [Int] = Array(repeating: 0, count: n+1)
+//
+//
+//for _ in 0..<n-1 {
+//    let node: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted()
+//    tree[node[0]].append(node[1])
+//    tree[node[1]].append(node[0])
+//}
+//
+//
+//func dfs(_ v: Int) {
+//    visited[v] = true
+//    for i in 0..<tree[v].count {
+//        let k = tree[v][i]
+//        if visited[k] == false {
+//            result[k] = v
+//            dfs(k)
+//        }
+//    }
+//}
+//
+//dfs(1)
+//
+//print(result[2...n].map { String($0) }.joined(separator: "\n"))
+
+
+// MARK: - 백준 1967번 트리의 지름
+
 let n: Int = Int(readLine()!)!
-var tree: [[Int]] = Array(repeating: [], count: n+1)
-var visited: [Bool] = Array(repeating: false, count: n+1)
-var result: [Int] = Array(repeating: 0, count: n+1)
-
-
+var graph: [[(Int, Int)]] = Array(repeating: Array<(Int, Int)>(), count: n+1)
 for _ in 0..<n-1 {
-    let node: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted()
-    tree[node[0]].append(node[1])
-    tree[node[1]].append(node[0])
+    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    graph[temp[0]].append((temp[1], temp[2]))
+    graph[temp[1]].append((temp[0], temp[2]))
 }
 
+var result: Int = 0
+var endNode: Int = 0
 
-func dfs(_ v: Int) {
+var visited: [Bool] = Array(repeating: false, count: n+1)
+
+func dfs(_ v: Int, _ distance: Int) {
+    if visited[v] == true {
+        return
+    }
+    
     visited[v] = true
-    for i in 0..<tree[v].count {
-        let k = tree[v][i]
-        if visited[k] == false {
-            result[k] = v
-            dfs(k)
-        }
+    if result < distance {
+        result = distance
+        endNode = v
+    }
+    
+    for i in graph[v] {
+        dfs(i.0, distance + i.1)
     }
 }
 
-dfs(1)
+dfs(1, 0)
 
-print(result[2...n].map { String($0) }.joined(separator: "\n"))
-
-
-
-
-
-
+result = 0
+visited = Array(repeating: false, count: n+1)
+dfs(endNode, 0)
+print(result)
 
