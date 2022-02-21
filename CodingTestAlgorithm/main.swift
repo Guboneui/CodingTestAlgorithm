@@ -5285,6 +5285,43 @@ import Foundation
 //}
 
 // MARK: - 백준 10867번 중복 빼고 정렬하기
+//let n: Int = Int(readLine()!)!
+//var arr: [Int] = Array(Set(readLine()!.split(separator: " ").map{Int($0)!})).sorted()
+//print(arr.map{String($0)}.joined(separator: " "))
+
+// MARK: - 백준 11725번 트리의 부모 찾기
+
 let n: Int = Int(readLine()!)!
-var arr: [Int] = Array(Set(readLine()!.split(separator: " ").map{Int($0)!})).sorted()
-print(arr.map{String($0)}.joined(separator: " "))
+var tree: [[Int]] = Array(repeating: [], count: n+1)
+var visited: [Bool] = Array(repeating: false, count: n+1)
+var result: [Int] = Array(repeating: 0, count: n+1)
+
+
+for _ in 0..<n-1 {
+    let node: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted()
+    tree[node[0]].append(node[1])
+    tree[node[1]].append(node[0])
+}
+
+
+func dfs(_ v: Int) {
+    visited[v] = true
+    for i in 0..<tree[v].count {
+        let k = tree[v][i]
+        if visited[k] == false {
+            result[k] = v
+            dfs(k)
+        }
+    }
+}
+
+dfs(1)
+
+print(result[2...n].map { String($0) }.joined(separator: "\n"))
+
+
+
+
+
+
+
