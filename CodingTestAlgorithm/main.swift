@@ -5506,94 +5506,119 @@ import Foundation
 //    }
 //}
 
-struct Heap<T> {
-    var heap: [T]
-    var compare: (T, T) -> Bool
-    
-    var root: T? {
-        if heap.isEmpty {
-            return nil
-        } else {
-            return heap[0]
-        }
-    }
-    
-    init(compare: @escaping (T, T) -> Bool) {
-        heap = []
-        self.compare = compare
-    }
-    
-    mutating func add(_ n: T) {
-        heap.append(n)
-        swapUp(heap.count - 1)
-    }
-    
-    mutating func swapUp(_ index: Int) {
-        var now = index
-        while now > 0 {
-            let parent = (now - 1)/2
-            if compare(heap[now], heap[parent]) {
-                heap.swapAt(now, parent)
-                now = parent
-            } else {
-                break
-            }
-        }
-    }
-    
-    mutating func swapDown(_ index: Int) {
-        var now = index
-        var child = index*2 + 1
-        let count = heap.count
-        
-        while child < count {
-            if child + 1 < count {
-                child = compare(heap[child], heap[child+1]) ? child : child + 1
-            }
-            if compare(heap[child], heap[now]) {
-                heap.swapAt(now, child)
-                now = child
-                child = 2*now + 1
-            } else {
-                break
-            }
-        }
-    }
-}
+//struct Heap<T> {
+//    var heap: [T]
+//    var compare: (T, T) -> Bool
+//
+//    var root: T? {
+//        if heap.isEmpty {
+//            return nil
+//        } else {
+//            return heap[0]
+//        }
+//    }
+//
+//    init(compare: @escaping (T, T) -> Bool) {
+//        heap = []
+//        self.compare = compare
+//    }
+//
+//    mutating func add(_ n: T) {
+//        heap.append(n)
+//        swapUp(heap.count - 1)
+//    }
+//
+//    mutating func swapUp(_ index: Int) {
+//        var now = index
+//        while now > 0 {
+//            let parent = (now - 1)/2
+//            if compare(heap[now], heap[parent]) {
+//                heap.swapAt(now, parent)
+//                now = parent
+//            } else {
+//                break
+//            }
+//        }
+//    }
+//
+//    mutating func swapDown(_ index: Int) {
+//        var now = index
+//        var child = index*2 + 1
+//        let count = heap.count
+//
+//        while child < count {
+//            if child + 1 < count {
+//                child = compare(heap[child], heap[child+1]) ? child : child + 1
+//            }
+//            if compare(heap[child], heap[now]) {
+//                heap.swapAt(now, child)
+//                now = child
+//                child = 2*now + 1
+//            } else {
+//                break
+//            }
+//        }
+//    }
+//}
+//
+//var maxHeap: Heap<Int> = Heap(compare: >)
+//var minHeap: Heap<Int> = Heap(compare: <)
+//
+//let n = Int(readLine()!)!
+//var answer = ""
+//
+//for i in 1 ... n {
+//    let input = Int(readLine()!)!
+//
+//    if i % 2 == 0 {
+//        minHeap.add(input)
+//    } else {
+//        maxHeap.add(input)
+//    }
+//
+//    if minHeap.root == nil {
+//        answer += "\(maxHeap.root!)\n"
+//        continue
+//    }
+//
+//    let a = maxHeap.root!
+//    let b = minHeap.root!
+//
+//    if a > b {
+//        minHeap.heap[0] = a
+//        maxHeap.heap[0] = b
+//    }
+//
+//    if i % 2 == 0 { maxHeap.swapDown(0) }
+//    else { minHeap.swapDown(0) }
+//
+//    answer += "\(maxHeap.root!)\n"
+//}
+//
+//print(answer)
+//
 
-var maxHeap: Heap<Int> = Heap(compare: >)
-var minHeap: Heap<Int> = Heap(compare: <)
+// MARK: - 백준 4796번 캠핑 - 다시 풀기
+var count: Int = 1
+var result: Int = 0
 
-let n = Int(readLine()!)!
-var answer = ""
-
-for i in 1 ... n {
-    let input = Int(readLine()!)!
-
-    if i % 2 == 0 {
-        minHeap.add(input)
+while true {
+    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    if temp == [0, 0, 0] { break }
+    
+    let L: Int = temp[0]
+    let P: Int = temp[1]
+    let V: Int = temp[2]
+    
+    result += V/P*L
+    
+    if V%P > L {
+        result += L
     } else {
-        maxHeap.add(input)
+        result += V%P
     }
     
-    if minHeap.root == nil {
-        answer += "\(maxHeap.root!)\n"
-        continue
-    }
-
-    let a = maxHeap.root!
-    let b = minHeap.root!
-
-    if a > b {
-        minHeap.heap[0] = a
-        maxHeap.heap[0] = b
-    }
-
-    if i % 2 == 0 { maxHeap.swapDown(0) }
-    else { minHeap.swapDown(0) }
-
-    answer += "\(maxHeap.root!)\n"
+    print("Case \(count): \(result)")
+    result = 0
+    count += 1
 }
-
-print(answer)
-
