@@ -5189,44 +5189,102 @@ import Foundation
 
 
 // MARK: - 백준 1916번 최소비용 구하기
-let n: Int = Int(readLine()!)!  // 노드 개수
-let m: Int = Int(readLine()!)!  // 간선의 개수
+//let n: Int = Int(readLine()!)!  // 노드 개수
+//let m: Int = Int(readLine()!)!  // 간선의 개수
+//
+//var graph: [[(Int, Int)]] = Array(repeating: Array<(Int, Int)>(), count: n+1)
+//var visited: [Bool] = Array(repeating: false, count: n+1)
+//var distance: [Int] = Array(repeating: Int.max, count: n+1)
+//
+//for _ in 0..<m {
+//    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    graph[temp[0]].append((temp[1], temp[2]))
+//}
+//
+//var result: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//distance[result[0]] = 0
+//solution(result[0])
+//print(distance[result[1]])
+//
+//func solution(_ start: Int) {
+//
+//    if start == result[1] {
+//        return
+//    }
+//
+//    visited[start] = true
+//
+//    for j in graph[start] {
+//        distance[j.0] = min(distance[j.0], distance[start] + j.1)
+//    }
+//
+//    var min: Int = Int.max
+//    var index: Int = -1
+//    for i in 1..<distance.count {
+//        if visited[i] == false && min > distance[i] {
+//            min = distance[i]
+//            index = i
+//        }
+//    }
+//    solution(index)
+//}
+//
 
-var graph: [[(Int, Int)]] = Array(repeating: Array<(Int, Int)>(), count: n+1)
-var visited: [Bool] = Array(repeating: false, count: n+1)
-var distance: [Int] = Array(repeating: Int.max, count: n+1)
+// MARK: - 백준 1238번 파티
+//
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = read[0]
+//let m: Int = read[1]
+//let x: Int = read[2]
+//
+//var result: Int = 0
+//
+//var graph: [[(Int, Int)]] = Array(repeating: Array<(Int, Int)>(), count: n+1)
+//var visited: [Bool] = Array(repeating: false, count: n+1)
+//var distance: [Int] = Array(repeating: 0, count: n+1)
+//
+//for _ in 0..<m {
+//    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    graph[temp[0]].append((temp[1], temp[2]))
+//}
+//
+//
+//for num in 1...n {
+//    solution(num)
+//    if distance[x] > result {
+//        result = distance[x]
+//    }
+//
+//    visited = Array(repeating: false, count: n+1)
+//    distance = Array(repeating: 0, count: n+1)
+//}
+//
+//print(result)
+//
+//
+//func solution(_ start: Int) {
+//    if start == x {
+//        return
+//    }
+//
+//    visited[start] = true
+//
+//    for i in graph[start] {
+//        distance[i.0] = max(distance[i.0], distance[start] + i.1)
+//    }
+//
+//    var max: Int = 0
+//    var index: Int = -1
+//    for i in 1..<distance.count {
+//        if visited[i] == false && distance[i] > max {
+//            max = distance[i]
+//            index = i
+//        }
+//    }
+//    solution(index)
+//}
 
-for _ in 0..<m {
-    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    graph[temp[0]].append((temp[1], temp[2]))
-}
-
-var result: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-distance[result[0]] = 0
-solution(result[0])
-print(distance[result[1]])
-
-func solution(_ start: Int) {
-    
-    if start == result[1] {
-        return
-    }
-    
-    visited[start] = true
-
-    for j in graph[start] {
-        distance[j.0] = min(distance[j.0], distance[start] + j.1)
-    }
-
-    var min: Int = Int.max
-    var index: Int = -1
-    for i in 1..<distance.count {
-        if visited[i] == false && min > distance[i] {
-            min = distance[i]
-            index = i
-        }
-    }
-    solution(index)
-}
-
-
+// MARK: - 백준 10867번 중복 빼고 정렬하기
+let n: Int = Int(readLine()!)!
+var arr: [Int] = Array(Set(readLine()!.split(separator: " ").map{Int($0)!})).sorted()
+print(arr.map{String($0)}.joined(separator: " "))
