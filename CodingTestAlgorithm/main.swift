@@ -5389,86 +5389,120 @@ import Foundation
 
 // MARK: - 백준 11286번 절댓값 힙
 
+//let n: Int = Int(readLine()!)!
+//var heap = Heap()
+//
+//for i in 0..<n {
+//    let temp: Int = Int(readLine()!)!
+//    if temp == 0 {
+//        if heap.isEmpty() {
+//            print(0)
+//        } else {
+//            print(heap.remove()!)
+//        }
+//    } else {
+//        heap.add(temp)
+//    }
+//}
+//
+//
+//
+//struct Heap {
+//    var array: [Int] = []
+//    var compare : (Int, Int) -> Bool = {
+//        if abs($0) == abs($1) {
+//            return $0 > $1
+//        } else {
+//            return abs($0) > abs($1)
+//        }
+//    }
+//
+//    mutating func add(_ a: Int) {
+//        array.append(a)
+//        var index: Int = array.count - 1
+//        while index > 0, compare(array[(index-1)/2], array[index]) {
+//            array.swapAt((index-1)/2, index)
+//            index = (index-1)/2
+//        }
+//    }
+//
+//    mutating func remove() -> Int? {
+//        if array.isEmpty { return nil }
+//        array.swapAt(0, array.count-1)
+//        let returnValue = array.removeLast()
+//        var index: Int = 0
+//
+//        while index<array.count {
+//            let compareIndex = index * 2 + 1
+//            var changed = false
+//            if compareIndex + 1 < array.count {
+//                if compare(array[index], array[compareIndex]) {
+//                    if compare(array[compareIndex], array[compareIndex+1]) {
+//                        array.swapAt(index, compareIndex+1)
+//                        index = compareIndex + 1
+//                        changed = true
+//                    } else {
+//                        array.swapAt(index, compareIndex)
+//                        index = compareIndex
+//                        changed = true
+//                    }
+//                } else if compare(array[index], array[compareIndex+1]) {
+//                    array.swapAt(index, compareIndex+1)
+//                    index = compareIndex+1
+//                    changed = true
+//                }
+//            } else if compareIndex < array.count {
+//                if compare(array[index], array[compareIndex]) {
+//                    array.swapAt(index, compareIndex)
+//                    index = compareIndex
+//                    changed = true
+//                }
+//            } else {
+//                break
+//            }
+//            if changed == false {
+//                break
+//            }
+//        }
+//        return returnValue
+//    }
+//
+//    func isEmpty() -> Bool {
+//        return array.isEmpty
+//    }
+//
+//}
+
+// MARK: - 백준 1655번 가운데를 말해요
+
 let n: Int = Int(readLine()!)!
-var heap = Heap()
-
-for i in 0..<n {
+var arr: [Int] = []
+var result: String = ""
+for _ in 0..<n {
     let temp: Int = Int(readLine()!)!
-    if temp == 0 {
-        if heap.isEmpty() {
-            print(0)
-        } else {
-            print(heap.remove()!)
-        }
+    if arr.count == 0 {
+        arr.append(temp)
     } else {
-        heap.add(temp)
-    }
-}
-
-
-
-struct Heap {
-    var array: [Int] = []
-    var compare : (Int, Int) -> Bool = {
-        if abs($0) == abs($1) {
-            return $0 > $1
-        } else {
-            return abs($0) > abs($1)
-        }
-    }
-    
-    mutating func add(_ a: Int) {
-        array.append(a)
-        var index: Int = array.count - 1
-        while index > 0, compare(array[(index-1)/2], array[index]) {
-            array.swapAt((index-1)/2, index)
-            index = (index-1)/2
-        }
-    }
-    
-    mutating func remove() -> Int? {
-        if array.isEmpty { return nil }
-        array.swapAt(0, array.count-1)
-        let returnValue = array.removeLast()
-        var index: Int = 0
+        arr.append(temp)
+        var baseNum: Int = temp
+        var baseIndex: Int = arr.count - 1
         
-        while index<array.count {
-            let compareIndex = index * 2 + 1
-            var changed = false
-            if compareIndex + 1 < array.count {
-                if compare(array[index], array[compareIndex]) {
-                    if compare(array[compareIndex], array[compareIndex+1]) {
-                        array.swapAt(index, compareIndex+1)
-                        index = compareIndex + 1
-                        changed = true
-                    } else {
-                        array.swapAt(index, compareIndex)
-                        index = compareIndex
-                        changed = true
-                    }
-                } else if compare(array[index], array[compareIndex+1]) {
-                    array.swapAt(index, compareIndex+1)
-                    index = compareIndex+1
-                    changed = true
-                }
-            } else if compareIndex < array.count {
-                if compare(array[index], array[compareIndex]) {
-                    array.swapAt(index, compareIndex)
-                    index = compareIndex
-                    changed = true
-                }
+        for index in stride(from: arr.count - 2, through: 0, by: -1) {
+            if arr[index] > baseNum {
+                arr.swapAt(index, baseIndex)
+                baseIndex = index
             } else {
                 break
             }
-            if changed == false {
-                break
-            }
         }
-        return returnValue
     }
     
-    func isEmpty() -> Bool {
-        return array.isEmpty
+    if arr.count % 2 == 1 {
+        result += "\(arr[arr.count/2])\n"
+        //print(arr[arr.count/2])
+    } else {
+        result += "\(min(arr[arr.count/2 - 1], arr[arr.count/2]))\n"
+        //print(min(arr[arr.count/2 - 1], arr[arr.count/2]))
     }
-    
 }
+
