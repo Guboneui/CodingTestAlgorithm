@@ -5753,5 +5753,38 @@ import Foundation
 
 // MARK: - 백준 1094번 막대기
 
-let n: [String] = String(Int(readLine()!)!, radix: 2).map{String($0)}
-print(n.filter{$0 == "1"}.count)
+//let n: [String] = String(Int(readLine()!)!, radix: 2).map{String($0)}
+//print(n.filter{$0 == "1"}.count)
+
+// MARK: - 백준 1246번 온라인 판매
+
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let N: Int = read[0] // 달걀의 개수
+let M: Int = read[1] // 구매자 수
+var p: [Int] = []
+for _ in 0..<M {
+    p.append(Int(readLine()!)!)
+}
+p.sort(by: >)
+
+var price: Int = 0
+var sum: Int = 0
+
+if N>M {
+    for i in 0..<M {
+        if (i+1) * p[i] > sum {
+            sum = p[i] * (i+1)
+            price = p[i]
+        }
+    }
+} else {
+    for i in 0..<N {
+        if (i+1) * p[i] > sum {
+            sum = p[i] * (i+1)
+            price = p[i]
+        }
+    }
+}
+
+print("\(price) \(sum)")
+
