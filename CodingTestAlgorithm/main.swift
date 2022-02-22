@@ -5624,27 +5624,87 @@ import Foundation
 //}
 
 // MARK: - 백준 4673번 셀프 넘버
-var arr: Set<Int> = []
-for i in 1...10000 {
-    arr.insert(solution(i))
-}
+//var arr: Set<Int> = []
+//for i in 1...10000 {
+//    arr.insert(solution(i))
+//}
+//
+//func solution(_ n: Int) -> Int {
+//    var sum = n
+//    var num = n
+//    while num > 0 {
+//        sum = sum + num % 10
+//        num = num / 10
+//
+//        if num == 0 {
+//            break
+//        }
+//    }
+//    return sum
+//}
+//
+//for i in 1...10000 {
+//    if arr.contains(i) == false {
+//        print(i)
+//    }
+//}
 
-func solution(_ n: Int) -> Int {
-    var sum = n
-    var num = n
-    while num > 0 {
-        sum = sum + num % 10
-        num = num / 10
-        
-        if num == 0 {
-            break
-        }
+// MARK: - 백준 4659번 비밀번호 발음하기
+while true {
+    /// 자음
+    let consonant: [String] = ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z"]
+    /// 모음
+    let diphthong: [String] = ["a", "e", "i", "o", "u"]
+    let password: [String] = readLine()!.map{String($0)}
+    
+    var result: Bool = true
+    
+    if password.joined(separator: "") == "end" {
+        break
     }
-    return sum
-}
-
-for i in 1...10000 {
-    if arr.contains(i) == false {
-        print(i)
+    
+    if password.contains("a") || password.contains("e") || password.contains("i") || password.contains("o") || password.contains("u") {
+        
+        if password.count == 1 {
+            // 여긴 무조건 true
+        } else if password.count == 2 {
+            for i in 0..<password.count-1 {
+                if password[i] == password[i+1] {
+                    if password[i] != "e" && password[i] != "o" {
+                        result = false
+                        break
+                    }
+                }
+            }
+        } else {
+            for i in 0..<password.count-2 {
+                if (consonant.contains(password[i]) && consonant.contains(password[i+1]) && consonant.contains(password[i+2])) || (diphthong.contains(password[i]) && diphthong.contains(password[i+1]) && diphthong.contains(password[i+2])) {
+                    result = false
+                    break
+                }
+            }
+            
+            for i in 0..<password.count-1 {
+                if password[i] == password[i+1] {
+                    if password[i] != "e" && password[i] != "o" {
+                        result = false
+                        break
+                    }
+                }
+            }
+        }
+        
+        
+        
+       
+    } else {
+        result = false
+    }
+    
+    // 최종적으로 결과물은
+    if result == true {
+        print("<\(password.joined(separator: ""))> is acceptable.")
+    } else {
+        print("<\(password.joined(separator: ""))> is not acceptable.")
     }
 }
