@@ -5719,35 +5719,39 @@ import Foundation
 //}
 
 // MARK: - 백준 1059번 좋은 구간
-let n: Int = Int(readLine()!)!
-let arr: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
-let target: Int = Int(readLine()!)!
-var leftArr: [Int] = []
-var rightArr: [Int] = []
-var result: Int = 0
+//let n: Int = Int(readLine()!)!
+//let arr: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+//let target: Int = Int(readLine()!)!
+//var leftArr: [Int] = []
+//var rightArr: [Int] = []
+//var result: Int = 0
+//
+//if arr.contains(target) {
+//    print(result)
+//} else {
+//    for num in arr {
+//        if num < target {
+//            leftArr.append(num)
+//        } else {
+//            rightArr.append(num)
+//        }
+//    }
+//
+//    if leftArr.count == 0 {
+//        leftArr = [0]
+//    }
+//    leftArr.sort()
+//    rightArr.sort()
+//
+//    var start: Int = leftArr.last! + 1
+//    var end: Int = rightArr[0] - 1
+//
+//
+//    result = ((target - start) * (end - target + 1)) + (end - target)
+//    print(result)
+//}
 
-if arr.contains(target) {
-    print(result)
-} else {
-    for num in arr {
-        if num < target {
-            leftArr.append(num)
-        } else {
-            rightArr.append(num)
-        }
-    }
-    
-    if leftArr.count == 0 {
-        leftArr = [0]
-    }
-    leftArr.sort()
-    rightArr.sort()
-    
-    var start: Int = leftArr.last! + 1
-    var end: Int = rightArr[0] - 1
-    
-    
-    result = ((target - start) * (end - target + 1)) + (end - target)
-    print(result)
-}
+// MARK: - 백준 1094번 막대기
 
+let n: [String] = String(Int(readLine()!)!, radix: 2).map{String($0)}
+print(n.filter{$0 == "1"}.count)
