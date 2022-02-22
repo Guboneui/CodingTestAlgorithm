@@ -5790,20 +5790,31 @@ import Foundation
 
 // MARK: - 백준 1251번 단어 나누기
 
-let arr: [String] = readLine()!.map{String($0)}
-var result: String = ""
+//let arr: [String] = readLine()!.map{String($0)}
+//var result: String = ""
+//
+//for i in 0..<arr.count-2 {
+//    for j in i+1..<arr.count-1 {
+//        let a: [String] = arr[0...i].reversed()
+//        let b: [String] = arr[i+1...j].reversed()
+//        let c: [String] = arr[j+1..<arr.count].reversed()
+//        let str: String = (a+b+c).joined(separator: "")
+//
+//        if result == "" || result > str {
+//            result = str
+//        }
+//    }
+//}
+//
+//print(result)
 
-for i in 0..<arr.count-2 {
-    for j in i+1..<arr.count-1 {
-        let a: [String] = arr[0...i].reversed()
-        let b: [String] = arr[i+1...j].reversed()
-        let c: [String] = arr[j+1..<arr.count].reversed()
-        let str: String = (a+b+c).joined(separator: "")
-  
-        if result == "" || result > str {
-            result = str
-        }
+// MARK: - 백준 1292번 쉽게 푸는 문제
+
+let read: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+var arr: [Int] = []
+for i in 1...read[1] {
+    for _ in 0..<i {
+        arr.append(i)
     }
 }
-
-print(result)
+print(arr[read[0]-1...read[1]-1].reduce(0, +))
