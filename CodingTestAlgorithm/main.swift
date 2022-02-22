@@ -5758,33 +5758,52 @@ import Foundation
 
 // MARK: - 백준 1246번 온라인 판매
 
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let N: Int = read[0] // 달걀의 개수
-let M: Int = read[1] // 구매자 수
-var p: [Int] = []
-for _ in 0..<M {
-    p.append(Int(readLine()!)!)
-}
-p.sort(by: >)
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let N: Int = read[0] // 달걀의 개수
+//let M: Int = read[1] // 구매자 수
+//var p: [Int] = []
+//for _ in 0..<M {
+//    p.append(Int(readLine()!)!)
+//}
+//p.sort(by: >)
+//
+//var price: Int = 0
+//var sum: Int = 0
+//
+//if N>M {
+//    for i in 0..<M {
+//        if (i+1) * p[i] > sum {
+//            sum = p[i] * (i+1)
+//            price = p[i]
+//        }
+//    }
+//} else {
+//    for i in 0..<N {
+//        if (i+1) * p[i] > sum {
+//            sum = p[i] * (i+1)
+//            price = p[i]
+//        }
+//    }
+//}
+//
+//print("\(price) \(sum)")
 
-var price: Int = 0
-var sum: Int = 0
+// MARK: - 백준 1251번 단어 나누기
 
-if N>M {
-    for i in 0..<M {
-        if (i+1) * p[i] > sum {
-            sum = p[i] * (i+1)
-            price = p[i]
+let arr: [String] = readLine()!.map{String($0)}
+var result: String = ""
+
+for i in 0..<arr.count-2 {
+    for j in i+1..<arr.count-1 {
+        let a: [String] = arr[0...i].reversed()
+        let b: [String] = arr[i+1...j].reversed()
+        let c: [String] = arr[j+1..<arr.count].reversed()
+        let str: String = (a+b+c).joined(separator: "")
+  
+        if result == "" || result > str {
+            result = str
         }
     }
-} else {
-    for i in 0..<N {
-        if (i+1) * p[i] > sum {
-            sum = p[i] * (i+1)
-            price = p[i]
-        }
-    }
 }
 
-print("\(price) \(sum)")
-
+print(result)
