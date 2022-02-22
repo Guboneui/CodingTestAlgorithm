@@ -5710,10 +5710,44 @@ import Foundation
 //}
 
 // MARK: - 백준 1037번 약수
+//let n: Int = Int(readLine()!)!
+//let arr: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+//if arr.count == 1 {
+//    print(arr[0]*arr[0])
+//} else {
+//    print(arr.max()! * arr.min()!)
+//}
+
+// MARK: - 백준 1059번 좋은 구간
 let n: Int = Int(readLine()!)!
 let arr: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
-if arr.count == 1 {
-    print(arr[0]*arr[0])
+let target: Int = Int(readLine()!)!
+var leftArr: [Int] = []
+var rightArr: [Int] = []
+var result: Int = 0
+
+if arr.contains(target) {
+    print(result)
 } else {
-    print(arr.max()! * arr.min()!)
+    for num in arr {
+        if num < target {
+            leftArr.append(num)
+        } else {
+            rightArr.append(num)
+        }
+    }
+    
+    if leftArr.count == 0 {
+        leftArr = [0]
+    }
+    leftArr.sort()
+    rightArr.sort()
+    
+    var start: Int = leftArr.last! + 1
+    var end: Int = rightArr[0] - 1
+    
+    
+    result = ((target - start) * (end - target + 1)) + (end - target)
+    print(result)
 }
+
