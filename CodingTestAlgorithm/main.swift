@@ -5810,11 +5810,24 @@ import Foundation
 
 // MARK: - 백준 1292번 쉽게 푸는 문제
 
-let read: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
-var arr: [Int] = []
-for i in 1...read[1] {
-    for _ in 0..<i {
-        arr.append(i)
-    }
+//let read: [Int] = readLine()!.split(separator: " ").map{Int(String($0))!}
+//var arr: [Int] = []
+//for i in 1...read[1] {
+//    for _ in 0..<i {
+//        arr.append(i)
+//    }
+//}
+//print(arr[read[0]-1...read[1]-1].reduce(0, +))
+
+// MARK: - 백준 1312번 소수
+
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+var initNum: Int = read[0]
+var result: Double = 0.0
+
+for _ in 0..<read[2] {
+    initNum = initNum % read[1]
+    initNum = initNum * 10
+    result = Double(initNum) / Double(read[1])
 }
-print(arr[read[0]-1...read[1]-1].reduce(0, +))
+print(Int(result))
