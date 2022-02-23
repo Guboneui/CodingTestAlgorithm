@@ -5834,49 +5834,111 @@ import Foundation
 
 // MARK: - 백준 1331번 나이트 투어
 
-var visited = Array(repeating: Array(repeating: false, count: 7), count: 7)
-let dx = [1, 2, 2, 1, -1, -2, -2, -1]
-let dy = [2, 1, -1, -2, 2, 1, -1, -2]
-var startX = 0
-var startY = 0
-var preX = 0
-var preY = 0
-for i in 0..<36{
-    let read = readLine()!.map{String($0)}
-    let x = Int(exactly: Character(read[0]).asciiValue!)! - 65
-    let y = Int(read[1])! - 1
-    if i == 0{
-        startX = x
-        startY = y
-    }
-    if visited[x][y]{
-        break
-    }
-    visited[x][y] = true
-    var isEnded = false
-    for k in 0..<dx.count{
-        let aX = preX + dx[k]
-        let aY = preY + dy[k]
-        if aX == x && aY == y{
-            isEnded = true
-        }
-    }
-    if i != 0 && !isEnded{
-        break
-    }
-    if i == 35{
-        for k in 0..<dx.count{
-            let aX = x + dx[k]
-            let aY = y + dy[k]
-            if aX == startX && aY == startY{
-                print("Valid")
-                exit(0)
-            }
-        }
-    }
-    preX = x
-    preY = y
-}
-print("Invalid")
+//var visited = Array(repeating: Array(repeating: false, count: 7), count: 7)
+//let dx = [1, 2, 2, 1, -1, -2, -2, -1]
+//let dy = [2, 1, -1, -2, 2, 1, -1, -2]
+//var startX = 0
+//var startY = 0
+//var preX = 0
+//var preY = 0
+//for i in 0..<36{
+//    let read = readLine()!.map{String($0)}
+//    let x = Int(exactly: Character(read[0]).asciiValue!)! - 65
+//    let y = Int(read[1])! - 1
+//    if i == 0{
+//        startX = x
+//        startY = y
+//    }
+//    if visited[x][y]{
+//        break
+//    }
+//    visited[x][y] = true
+//    var isEnded = false
+//    for k in 0..<dx.count{
+//        let aX = preX + dx[k]
+//        let aY = preY + dy[k]
+//        if aX == x && aY == y{
+//            isEnded = true
+//        }
+//    }
+//    if i != 0 && !isEnded{
+//        break
+//    }
+//    if i == 35{
+//        for k in 0..<dx.count{
+//            let aX = x + dx[k]
+//            let aY = y + dy[k]
+//            if aX == startX && aY == startY{
+//                print("Valid")
+//                exit(0)
+//            }
+//        }
+//    }
+//    preX = x
+//    preY = y
+//}
+//print("Invalid")
+//
 
+// MARK: - 백준 1340번 연도 진행바
+let calendar: [String] = readLine()!.split(separator: ",").map{String($0)}
+let month: String = calendar[0].split(separator: " ").map{String($0)}[0]
+let date: Int = Int(calendar[0].split(separator: " ").map{String($0)}[1])!
+let year: Int = Int(calendar[1].split(separator: " ").map{String($0)}[0])!
+let hour: Int = Int(calendar[1].split(separator: " ").map{String($0)}[1].split(separator: ":").map{String($0)}[0])!
+let min: Int = Int(calendar[1].split(separator: " ").map{String($0)}[1].split(separator: ":").map{String($0)}[1])!
+
+
+var leapYear: Bool = false
+
+if year%400 == 0 || (year%4 == 0 && year%100 != 0) {
+    leapYear = true
+}
+
+
+// 평년인 경우
+var totalMin: Int = leapYear ? 366*24*60 : 365*24*60
+var result: Int = 0
+
+if month == "January" {
+    result += 0
+    
+} else if month == "February" {
+    result += leapYear ? 31*24*60 : 31*24*60
+    
+} else if month == "March" {
+    result += leapYear ? 60*24*60 : 59*24*60
+    
+} else if month == "April" {
+    result += leapYear ? 91*24*60 : 90*24*60
+    
+} else if month == "May" {
+    result += leapYear ? 121*24*60 : 120*24*60
+    
+} else if month == "June" {
+    result += leapYear ? 152*24*60 : 151*24*60
+    
+} else if month == "July" {
+    result += leapYear ? 182*24*60 : 181*24*60
+    
+} else if month == "August" {
+    result += leapYear ? 213*24*60 : 212*24*60
+    
+} else if month == "September" {
+    result += leapYear ? 244*24*60 : 243*24*60
+    
+} else if month == "October" {
+    result += leapYear ? 274*24*60 : 273*24*60
+    
+} else if month == "November" {
+    result += leapYear ? 305*24*60 : 304*24*60
+    
+} else if month == "December" {
+    result += leapYear ? 335*24*60 : 334*24*60
+    
+}
+    
+result += ((date-1)*24*60) + (hour*60) + min
+
+print(Double(result)/Double(totalMin)*100)
 
