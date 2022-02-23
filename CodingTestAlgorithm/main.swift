@@ -5881,64 +5881,104 @@ import Foundation
 //
 
 // MARK: - 백준 1340번 연도 진행바
-let calendar: [String] = readLine()!.split(separator: ",").map{String($0)}
-let month: String = calendar[0].split(separator: " ").map{String($0)}[0]
-let date: Int = Int(calendar[0].split(separator: " ").map{String($0)}[1])!
-let year: Int = Int(calendar[1].split(separator: " ").map{String($0)}[0])!
-let hour: Int = Int(calendar[1].split(separator: " ").map{String($0)}[1].split(separator: ":").map{String($0)}[0])!
-let min: Int = Int(calendar[1].split(separator: " ").map{String($0)}[1].split(separator: ":").map{String($0)}[1])!
+//let calendar: [String] = readLine()!.split(separator: ",").map{String($0)}
+//let month: String = calendar[0].split(separator: " ").map{String($0)}[0]
+//let date: Int = Int(calendar[0].split(separator: " ").map{String($0)}[1])!
+//let year: Int = Int(calendar[1].split(separator: " ").map{String($0)}[0])!
+//let hour: Int = Int(calendar[1].split(separator: " ").map{String($0)}[1].split(separator: ":").map{String($0)}[0])!
+//let min: Int = Int(calendar[1].split(separator: " ").map{String($0)}[1].split(separator: ":").map{String($0)}[1])!
+//
+//
+//var leapYear: Bool = false
+//
+//if year%400 == 0 || (year%4 == 0 && year%100 != 0) {
+//    leapYear = true
+//}
+//
+//
+//// 평년인 경우
+//var totalMin: Int = leapYear ? 366*24*60 : 365*24*60
+//var result: Int = 0
+//
+//if month == "January" {
+//    result += 0
+//
+//} else if month == "February" {
+//    result += leapYear ? 31*24*60 : 31*24*60
+//
+//} else if month == "March" {
+//    result += leapYear ? 60*24*60 : 59*24*60
+//
+//} else if month == "April" {
+//    result += leapYear ? 91*24*60 : 90*24*60
+//
+//} else if month == "May" {
+//    result += leapYear ? 121*24*60 : 120*24*60
+//
+//} else if month == "June" {
+//    result += leapYear ? 152*24*60 : 151*24*60
+//
+//} else if month == "July" {
+//    result += leapYear ? 182*24*60 : 181*24*60
+//
+//} else if month == "August" {
+//    result += leapYear ? 213*24*60 : 212*24*60
+//
+//} else if month == "September" {
+//    result += leapYear ? 244*24*60 : 243*24*60
+//
+//} else if month == "October" {
+//    result += leapYear ? 274*24*60 : 273*24*60
+//
+//} else if month == "November" {
+//    result += leapYear ? 305*24*60 : 304*24*60
+//
+//} else if month == "December" {
+//    result += leapYear ? 335*24*60 : 334*24*60
+//
+//}
+//
+//result += ((date-1)*24*60) + (hour*60) + min
+//
+//print(Double(result)/Double(totalMin)*100)
+//
 
 
-var leapYear: Bool = false
+// MARK: - 백준 1343번 폴리오미노
 
-if year%400 == 0 || (year%4 == 0 && year%100 != 0) {
-    leapYear = true
+let read: String = readLine()!
+var result: String = ""
+
+var xCount: Int = 0
+
+for text in read {
+    if text == "X" {
+        xCount += 1
+    } else {
+        if xCount != 0 {
+            check()
+        }
+        
+        result += "."
+        xCount = 0
+    }
+}
+
+check()
+print(result)
+
+func check() {
+    if xCount%2 == 0 {
+        result += String(repeating: "AAAA", count: xCount/4)
+        xCount %= 4
+        if xCount - 2 == 0 {
+            result += "BB"
+        }
+    } else {
+        print("-1")
+        exit(0)
+    }
 }
 
 
-// 평년인 경우
-var totalMin: Int = leapYear ? 366*24*60 : 365*24*60
-var result: Int = 0
-
-if month == "January" {
-    result += 0
-    
-} else if month == "February" {
-    result += leapYear ? 31*24*60 : 31*24*60
-    
-} else if month == "March" {
-    result += leapYear ? 60*24*60 : 59*24*60
-    
-} else if month == "April" {
-    result += leapYear ? 91*24*60 : 90*24*60
-    
-} else if month == "May" {
-    result += leapYear ? 121*24*60 : 120*24*60
-    
-} else if month == "June" {
-    result += leapYear ? 152*24*60 : 151*24*60
-    
-} else if month == "July" {
-    result += leapYear ? 182*24*60 : 181*24*60
-    
-} else if month == "August" {
-    result += leapYear ? 213*24*60 : 212*24*60
-    
-} else if month == "September" {
-    result += leapYear ? 244*24*60 : 243*24*60
-    
-} else if month == "October" {
-    result += leapYear ? 274*24*60 : 273*24*60
-    
-} else if month == "November" {
-    result += leapYear ? 305*24*60 : 304*24*60
-    
-} else if month == "December" {
-    result += leapYear ? 335*24*60 : 334*24*60
-    
-}
-    
-result += ((date-1)*24*60) + (hour*60) + min
-
-print(Double(result)/Double(totalMin)*100)
 
