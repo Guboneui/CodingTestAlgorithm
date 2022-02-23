@@ -5987,39 +5987,65 @@ import Foundation
 //print(read.contains("X") ? "-1" : read)
 
 // MARK: - 백준 1380번 귀걸이
-var count: Int = 1
-while true {
-    let n: Int = Int(readLine()!)!
-    
-    if n == 0 {
-        break
+//var count: Int = 1
+//while true {
+//    let n: Int = Int(readLine()!)!
+//
+//    if n == 0 {
+//        break
+//    }
+//
+//    var name: [String] = []
+//    for _ in 0..<n {
+//        name.append(readLine()!)
+//    }
+//
+//    var dict: [String:Int] = [:]
+//
+//    for _ in 0..<n*2-1 {
+//        let temp: [String] = readLine()!.split(separator: " ").map{String($0)}
+//        if dict[temp[0]] == nil {
+//            dict[temp[0]] = 1
+//        } else {
+//            dict[temp[0]]! += 1
+//        }
+//    }
+//
+//    var num: Int = 0
+//
+//    for (key, value) in dict {
+//        if value == 1 {
+//            num = Int(key)!
+//            break
+//        }
+//    }
+//
+//    print("\(count) \(name[num-1])")
+//    count += 1
+//}
+
+// MARK: - 백준 1417번 국회의원 선거
+
+let n: Int = Int(readLine()!)!
+var arr: [Int] = []
+for _ in 0..<n {
+    arr.append(Int(readLine()!)!)
+}
+
+var dasom: Int = arr.removeFirst()
+var count: Int = 0
+
+if arr.count == 0 {
+    print(count)
+} else {
+    while dasom <= arr.max()! {
+        let index = arr.firstIndex(of: arr.max()!)
+        arr[index!] = arr[index!] - 1
+        dasom += 1
+        
+        count += 1
     }
-    
-    var name: [String] = []
-    for _ in 0..<n {
-        name.append(readLine()!)
-    }
-    
-    var dict: [String:Int] = [:]
-    
-    for _ in 0..<n*2-1 {
-        let temp: [String] = readLine()!.split(separator: " ").map{String($0)}
-        if dict[temp[0]] == nil {
-            dict[temp[0]] = 1
-        } else {
-            dict[temp[0]]! += 1
-        }
-    }
-    
-    var num: Int = 0
-    
-    for (key, value) in dict {
-        if value == 1 {
-            num = Int(key)!
-            break
-        }
-    }
-    
-    print("\(count) \(name[num-1])")
-    count += 1
+
+    print(count)
+
 }
