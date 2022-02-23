@@ -6026,26 +6026,55 @@ import Foundation
 
 // MARK: - 백준 1417번 국회의원 선거
 
+//let n: Int = Int(readLine()!)!
+//var arr: [Int] = []
+//for _ in 0..<n {
+//    arr.append(Int(readLine()!)!)
+//}
+//
+//var dasom: Int = arr.removeFirst()
+//var count: Int = 0
+//
+//if arr.count == 0 {
+//    print(count)
+//} else {
+//    while dasom <= arr.max()! {
+//        let index = arr.firstIndex(of: arr.max()!)
+//        arr[index!] = arr[index!] - 1
+//        dasom += 1
+//
+//        count += 1
+//    }
+//
+//    print(count)
+//
+//}
+
+
+// MARK: - 백준 1436번 영화감독 숌
+
 let n: Int = Int(readLine()!)!
-var arr: [Int] = []
-for _ in 0..<n {
-    arr.append(Int(readLine()!)!)
-}
-
-var dasom: Int = arr.removeFirst()
-var count: Int = 0
-
-if arr.count == 0 {
-    print(count)
-} else {
-    while dasom <= arr.max()! {
-        let index = arr.firstIndex(of: arr.max()!)
-        arr[index!] = arr[index!] - 1
-        dasom += 1
+var k: Int = 665
+var result: Int = 0
+while true {
+    k += 1
+    
+    var count: Int = 0
+    for num in String(k) {
+        if num == "6" {
+            count += 1
+        } else {
+            count = 0
+        }
         
-        count += 1
+        if count == 3 {
+            result += 1
+        }
     }
-
-    print(count)
-
+    
+    if result == n {
+        print("\(k)")
+        break
+    }
 }
+
