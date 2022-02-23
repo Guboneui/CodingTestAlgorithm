@@ -5946,39 +5946,44 @@ import Foundation
 
 // MARK: - 백준 1343번 폴리오미노
 
-let read: String = readLine()!
-var result: String = ""
+//let read: String = readLine()!
+//var result: String = ""
+//
+//var xCount: Int = 0
+//
+//for text in read {
+//    if text == "X" {
+//        xCount += 1
+//    } else {
+//        if xCount != 0 {
+//            check()
+//        }
+//
+//        result += "."
+//        xCount = 0
+//    }
+//}
+//
+//check()
+//print(result)
+//
+//func check() {
+//    if xCount%2 == 0 {
+//        result += String(repeating: "AAAA", count: xCount/4)
+//        xCount %= 4
+//        if xCount - 2 == 0 {
+//            result += "BB"
+//        }
+//    } else {
+//        print("-1")
+//        exit(0)
+//    }
+//}
 
-var xCount: Int = 0
-
-for text in read {
-    if text == "X" {
-        xCount += 1
-    } else {
-        if xCount != 0 {
-            check()
-        }
-        
-        result += "."
-        xCount = 0
-    }
-}
-
-check()
-print(result)
-
-func check() {
-    if xCount%2 == 0 {
-        result += String(repeating: "AAAA", count: xCount/4)
-        xCount %= 4
-        if xCount - 2 == 0 {
-            result += "BB"
-        }
-    } else {
-        print("-1")
-        exit(0)
-    }
-}
 
 
+var read: String = readLine()!
 
+read = read.replacingOccurrences(of: "XXXX", with: "AAAA")
+read = read.replacingOccurrences(of: "XX", with: "BB")
+print(read.contains("X") ? "-1" : read)
