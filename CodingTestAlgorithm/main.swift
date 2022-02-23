@@ -6053,28 +6053,41 @@ import Foundation
 
 // MARK: - 백준 1436번 영화감독 숌
 
-let n: Int = Int(readLine()!)!
-var k: Int = 665
-var result: Int = 0
-while true {
-    k += 1
-    
-    var count: Int = 0
-    for num in String(k) {
-        if num == "6" {
-            count += 1
-        } else {
-            count = 0
-        }
-        
-        if count == 3 {
-            result += 1
-        }
-    }
-    
-    if result == n {
-        print("\(k)")
-        break
-    }
+//let n: Int = Int(readLine()!)!
+//var k: Int = 665
+//var result: Int = 0
+//while true {
+//    k += 1
+//
+//    var count: Int = 0
+//    for num in String(k) {
+//        if num == "6" {
+//            count += 1
+//        } else {
+//            count = 0
+//        }
+//
+//        if count == 3 {
+//            result += 1
+//        }
+//    }
+//
+//    if result == n {
+//        print("\(k)")
+//        break
+//    }
+//}
+//
+
+// MARK: - 백준 1475번 방 번호
+let cards: [Int] = readLine()!.map{Int(String($0))!}
+var arr: [Int] = Array(repeating: 0, count: 10)
+
+for card in cards {
+    arr[card] += 1
 }
 
+//print(arr)
+arr[6] = (arr[6] + arr[9] + 1) / 2
+arr[9] -= arr[6]
+print(arr.max()!)
