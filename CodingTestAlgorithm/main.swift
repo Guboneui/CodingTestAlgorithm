@@ -6080,14 +6080,46 @@ import Foundation
 //
 
 // MARK: - 백준 1475번 방 번호
-let cards: [Int] = readLine()!.map{Int(String($0))!}
-var arr: [Int] = Array(repeating: 0, count: 10)
 
-for card in cards {
-    arr[card] += 1
+//let cards: [Int] = readLine()!.map{Int(String($0))!}
+//var arr: [Int] = Array(repeating: 0, count: 10)
+//
+//for card in cards {
+//    arr[card] += 1
+//}
+//
+////print(arr)
+//arr[6] = (arr[6] + arr[9] + 1) / 2
+//arr[9] -= arr[6]
+//print(arr.max()!)
+
+// MARK: - 백준 1476번 날짜 계산
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+var k: Int = 1
+var E: Int = 1
+var S: Int = 1
+var M: Int = 1
+
+while true {
+    if E > 15 {
+        E = 1
+    }
+    
+    if S > 28 {
+        S = 1
+    }
+    
+    if M > 19 {
+        M = 1
+    }
+    
+    if E==read[0] && S==read[1] && M==read[2] {
+        break
+    }
+    k += 1
+    E += 1
+    S += 1
+    M += 1
 }
 
-//print(arr)
-arr[6] = (arr[6] + arr[9] + 1) / 2
-arr[9] -= arr[6]
-print(arr.max()!)
+print(k)
