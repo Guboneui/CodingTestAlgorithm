@@ -6125,27 +6125,87 @@ import Foundation
 //print(k)
 
 // MARK: - 백준 1531번 투명
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-var result: [[Int]] = Array(repeating: Array(repeating: 0, count: 101), count: 101)
-for _ in 0..<read[0] {
-    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    for x in temp[0]...temp[2] {
-        for y in temp[1]...temp[3] {
-            result[x][y] += 1
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//var result: [[Int]] = Array(repeating: Array(repeating: 0, count: 101), count: 101)
+//for _ in 0..<read[0] {
+//    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    for x in temp[0]...temp[2] {
+//        for y in temp[1]...temp[3] {
+//            result[x][y] += 1
+//        }
+//    }
+//}
+//var count = 0
+//
+//for i in 1...100 {
+//    for j in 1...100 {
+//        if result[i][j] > read[1] {
+//            count += 1
+//        }
+//    }
+//}
+//
+//
+//print(count)
+
+
+// MARK: - 백준 4446번 ROT13
+
+while true {
+
+    guard let str: String = readLine() else {
+        exit(0)
+    }
+
+    //3번째
+    let a: [String] = ["a", "i", "y", "e", "o", "u"]
+    let b: [String] = ["A", "I", "Y", "E", "O", "U"]
+
+    //10번째
+    let c: [String] = ["b", "k", "x", "z", "n", "h", "d", "c", "w", "g", "p", "v", "j", "q", "t", "s", "r", "l", "m", "f"]
+    let d: [String] = ["B", "K", "X", "Z", "N", "H", "D", "C", "W", "G", "P", "V", "J", "Q", "T", "S", "R", "L", "M", "F"]
+
+    var result: String = ""
+
+    for text in str {
+        if a.contains(String(text)) {
+            let index: Int = a.firstIndex(of: String(text))! + 3
+            if index >= a.count {
+                result += a[index-a.count]
+            } else {
+                result += a[index]
+            }
+            
+            
+        } else if b.contains(String(text)) {
+            let index: Int = b.firstIndex(of: String(text))! + 3
+            if index >= b.count {
+                result += b[index-b.count]
+            } else {
+                result += b[index]
+            }
+            
+        } else if c.contains(String(text)) {
+            let index: Int = c.firstIndex(of: String(text))! + 10
+            if index >= c.count {
+                result += c[index-c.count]
+            } else {
+                result += c[index]
+            }
+            
+        } else if d.contains(String(text)) {
+            let index: Int = d.firstIndex(of: String(text))! + 10
+            if index >= d.count {
+                result += d[index-d.count]
+            } else {
+                result += d[index]
+            }
+            
+        } else {
+            result += String(text)
         }
     }
+
+    print(result)
+    
 }
-var count = 0
-
-for i in 1...100 {
-    for j in 1...100 {
-        if result[i][j] > read[1] {
-            count += 1
-        }
-    }
-}
-
-
-print(count)
-
-
