@@ -6151,61 +6151,89 @@ import Foundation
 
 // MARK: - 백준 4446번 ROT13
 
+//while true {
+//
+//    guard let str: String = readLine() else {
+//        exit(0)
+//    }
+//
+//    //3번째
+//    let a: [String] = ["a", "i", "y", "e", "o", "u"]
+//    let b: [String] = ["A", "I", "Y", "E", "O", "U"]
+//
+//    //10번째
+//    let c: [String] = ["b", "k", "x", "z", "n", "h", "d", "c", "w", "g", "p", "v", "j", "q", "t", "s", "r", "l", "m", "f"]
+//    let d: [String] = ["B", "K", "X", "Z", "N", "H", "D", "C", "W", "G", "P", "V", "J", "Q", "T", "S", "R", "L", "M", "F"]
+//
+//    var result: String = ""
+//
+//    for text in str {
+//        if a.contains(String(text)) {
+//            let index: Int = a.firstIndex(of: String(text))! + 3
+//            if index >= a.count {
+//                result += a[index-a.count]
+//            } else {
+//                result += a[index]
+//            }
+//
+//
+//        } else if b.contains(String(text)) {
+//            let index: Int = b.firstIndex(of: String(text))! + 3
+//            if index >= b.count {
+//                result += b[index-b.count]
+//            } else {
+//                result += b[index]
+//            }
+//
+//        } else if c.contains(String(text)) {
+//            let index: Int = c.firstIndex(of: String(text))! + 10
+//            if index >= c.count {
+//                result += c[index-c.count]
+//            } else {
+//                result += c[index]
+//            }
+//
+//        } else if d.contains(String(text)) {
+//            let index: Int = d.firstIndex(of: String(text))! + 10
+//            if index >= d.count {
+//                result += d[index-d.count]
+//            } else {
+//                result += d[index]
+//            }
+//
+//        } else {
+//            result += String(text)
+//        }
+//    }
+//
+//    print(result)
+//
+//}
+
+// MARK: - 백준 4383번 점프는 즐거워
+
 while true {
-
-    guard let str: String = readLine() else {
-        exit(0)
-    }
-
-    //3번째
-    let a: [String] = ["a", "i", "y", "e", "o", "u"]
-    let b: [String] = ["A", "I", "Y", "E", "O", "U"]
-
-    //10번째
-    let c: [String] = ["b", "k", "x", "z", "n", "h", "d", "c", "w", "g", "p", "v", "j", "q", "t", "s", "r", "l", "m", "f"]
-    let d: [String] = ["B", "K", "X", "Z", "N", "H", "D", "C", "W", "G", "P", "V", "J", "Q", "T", "S", "R", "L", "M", "F"]
-
-    var result: String = ""
-
-    for text in str {
-        if a.contains(String(text)) {
-            let index: Int = a.firstIndex(of: String(text))! + 3
-            if index >= a.count {
-                result += a[index-a.count]
-            } else {
-                result += a[index]
-            }
-            
-            
-        } else if b.contains(String(text)) {
-            let index: Int = b.firstIndex(of: String(text))! + 3
-            if index >= b.count {
-                result += b[index-b.count]
-            } else {
-                result += b[index]
-            }
-            
-        } else if c.contains(String(text)) {
-            let index: Int = c.firstIndex(of: String(text))! + 10
-            if index >= c.count {
-                result += c[index-c.count]
-            } else {
-                result += c[index]
-            }
-            
-        } else if d.contains(String(text)) {
-            let index: Int = d.firstIndex(of: String(text))! + 10
-            if index >= d.count {
-                result += d[index-d.count]
-            } else {
-                result += d[index]
-            }
-            
-        } else {
-            result += String(text)
-        }
-    }
-
-    print(result)
     
+    guard let read = readLine() else {
+        break
+    }
+    var arr = read.split(separator: " ").map{Int($0)}
+    let n: Int = arr.removeFirst()!
+    var result: [Bool] = Array(repeating: false, count: n)
+    for i in 0..<n-1 {
+        
+        if abs(arr[i+1]!-arr[i]!) > 0 && abs(arr[i+1]!-arr[i]!) < n {
+            result[abs(arr[i+1]!-arr[i]!)] = true
+        }
+        
+        
+    }
+    
+    var k = result[1..<n]
+    
+    if k.contains(false) {
+        print("Not jolly")
+    } else {
+        print("Jolly")
+    }
 }
