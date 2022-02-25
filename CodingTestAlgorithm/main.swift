@@ -6094,32 +6094,58 @@ import Foundation
 //print(arr.max()!)
 
 // MARK: - 백준 1476번 날짜 계산
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-var k: Int = 1
-var E: Int = 1
-var S: Int = 1
-var M: Int = 1
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//var k: Int = 1
+//var E: Int = 1
+//var S: Int = 1
+//var M: Int = 1
+//
+//while true {
+//    if E > 15 {
+//        E = 1
+//    }
+//
+//    if S > 28 {
+//        S = 1
+//    }
+//
+//    if M > 19 {
+//        M = 1
+//    }
+//
+//    if E==read[0] && S==read[1] && M==read[2] {
+//        break
+//    }
+//    k += 1
+//    E += 1
+//    S += 1
+//    M += 1
+//}
+//
+//print(k)
 
-while true {
-    if E > 15 {
-        E = 1
+// MARK: - 백준 1531번 투명
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+var result: [[Int]] = Array(repeating: Array(repeating: 0, count: 101), count: 101)
+for _ in 0..<read[0] {
+    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    for x in temp[0]...temp[2] {
+        for y in temp[1]...temp[3] {
+            result[x][y] += 1
+        }
     }
-    
-    if S > 28 {
-        S = 1
+}
+var count = 0
+
+for i in 1...100 {
+    for j in 1...100 {
+        if result[i][j] > read[1] {
+            count += 1
+        }
     }
-    
-    if M > 19 {
-        M = 1
-    }
-    
-    if E==read[0] && S==read[1] && M==read[2] {
-        break
-    }
-    k += 1
-    E += 1
-    S += 1
-    M += 1
 }
 
-print(k)
+
+print(count)
+
+
