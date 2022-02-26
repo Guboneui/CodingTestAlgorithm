@@ -6212,28 +6212,47 @@ import Foundation
 
 // MARK: - 백준 4383번 점프는 즐거워
 
-while true {
-    
-    guard let read = readLine() else {
-        break
+//while true {
+//
+//    guard let read = readLine() else {
+//        break
+//    }
+//    var arr = read.split(separator: " ").map{Int($0)}
+//    let n: Int = arr.removeFirst()!
+//    var result: [Bool] = Array(repeating: false, count: n)
+//    for i in 0..<n-1 {
+//
+//        if abs(arr[i+1]!-arr[i]!) > 0 && abs(arr[i+1]!-arr[i]!) < n {
+//            result[abs(arr[i+1]!-arr[i]!)] = true
+//        }
+//
+//
+//    }
+//
+//    var k = result[1..<n]
+//
+//    if k.contains(false) {
+//        print("Not jolly")
+//    } else {
+//        print("Jolly")
+//    }
+//}
+
+// MARK: - 백준 2033번 반올림
+var n: Int = Int(readLine()!)!
+var base: Int = 10
+while n > base {
+    if n%base >= base/2 {
+        n += base
     }
-    var arr = read.split(separator: " ").map{Int($0)}
-    let n: Int = arr.removeFirst()!
-    var result: [Bool] = Array(repeating: false, count: n)
-    for i in 0..<n-1 {
-        
-        if abs(arr[i+1]!-arr[i]!) > 0 && abs(arr[i+1]!-arr[i]!) < n {
-            result[abs(arr[i+1]!-arr[i]!)] = true
-        }
-        
-        
-    }
     
-    var k = result[1..<n]
-    
-    if k.contains(false) {
-        print("Not jolly")
-    } else {
-        print("Jolly")
-    }
+    n -= (n%base)
+    base *= 10
 }
+
+print(n)
+
+
+
+
+
