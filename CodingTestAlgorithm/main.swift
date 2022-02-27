@@ -6266,21 +6266,39 @@ import Foundation
 
 // MARK: - 백준 5671번 호텔 방 번호
 
-while true {
-    guard let read = readLine() else {
-        break
-    }
-    
-    var testCases: [Int] = read.split(separator: " ").map{Int($0)!}
-    var result: Int = 0
-    for room in testCases[0]...testCases[1] {
-        let temp: String = String(room)
-        if Array(temp).count == Set(temp).count {
-            result += 1
+//while true {
+//    guard let read = readLine() else {
+//        break
+//    }
+//
+//    var testCases: [Int] = read.split(separator: " ").map{Int($0)!}
+//    var result: Int = 0
+//    for room in testCases[0]...testCases[1] {
+//        let temp: String = String(room)
+//        if Array(temp).count == Set(temp).count {
+//            result += 1
+//        }
+//    }
+//
+//    print(result)
+//
+//}
+
+// MARK: - 백준 5800번 성적 통계
+let n: Int = Int(readLine()!)!
+for num in 1...n {
+    var temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    let size: Int = temp.remove(at: 0)
+    let arr: [Int] = temp.sorted(by: >)
+    var gap: Int = 0
+    for index in 1..<arr.count {
+        if gap < arr[index-1] - arr[index] {
+           gap = arr[index-1] - arr[index]
         }
     }
-
-    print(result)
-
+    
+    print("Class \(num)")
+    print("Max \(arr[0]), Min \(arr[arr.count-1]), Largest gap \(gap)")
+   
+    
 }
-
