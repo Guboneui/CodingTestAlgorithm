@@ -6239,18 +6239,30 @@ import Foundation
 //}
 
 // MARK: - 백준 2033번 반올림
-var n: Int = Int(readLine()!)!
-var base: Int = 10
-while n > base {
-    if n%base >= base/2 {
-        n += base
-    }
-    
-    n -= (n%base)
-    base *= 10
+//var n: Int = Int(readLine()!)!
+//var base: Int = 10
+//while n > base {
+//    if n%base >= base/2 {
+//        n += base
+//    }
+//
+//    n -= (n%base)
+//    base *= 10
+//}
+//
+//print(n)
+
+// MARK: - 백준 5555번 반지
+let str: String = readLine()!
+let n: Int = Int(readLine()!)!
+var arr: [String] = []
+
+for _ in 0..<n {
+    let temp: String = readLine()!
+    arr.append(temp+temp)
 }
 
-print(n)
+print(arr.filter{$0.contains(str)}.count)
 
 
 
