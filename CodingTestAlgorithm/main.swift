@@ -6253,18 +6253,34 @@ import Foundation
 //print(n)
 
 // MARK: - 백준 5555번 반지
-let str: String = readLine()!
-let n: Int = Int(readLine()!)!
-var arr: [String] = []
+//let str: String = readLine()!
+//let n: Int = Int(readLine()!)!
+//var arr: [String] = []
+//
+//for _ in 0..<n {
+//    let temp: String = readLine()!
+//    arr.append(temp+temp)
+//}
+//
+//print(arr.filter{$0.contains(str)}.count)
 
-for _ in 0..<n {
-    let temp: String = readLine()!
-    arr.append(temp+temp)
+// MARK: - 백준 5671번 호텔 방 번호
+
+while true {
+    guard let read = readLine() else {
+        break
+    }
+    
+    var testCases: [Int] = read.split(separator: " ").map{Int($0)!}
+    var result: Int = 0
+    for room in testCases[0]...testCases[1] {
+        let temp: String = String(room)
+        if Array(temp).count == Set(temp).count {
+            result += 1
+        }
+    }
+
+    print(result)
+
 }
-
-print(arr.filter{$0.contains(str)}.count)
-
-
-
-
 
