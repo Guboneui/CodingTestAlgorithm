@@ -6377,151 +6377,177 @@ import Foundation
 
 // MARK: - 백준 1063번 킹
 
-let read: [String] = readLine()!.split(separator: " ").map{String($0)}
-let kingTemp: [String] = read[0].map{String($0)}
-let stoneTemp: [String] = read[1].map{String($0)}
-var count: Int = Int(read[2])!
-let X: [String] = ["A", "B", "C", "D", "E", "F", "G", "H"]
-let Y: [String] = ["1", "2", "3", "4", "5", "6", "7", "8"]
+//let read: [String] = readLine()!.split(separator: " ").map{String($0)}
+//let kingTemp: [String] = read[0].map{String($0)}
+//let stoneTemp: [String] = read[1].map{String($0)}
+//var count: Int = Int(read[2])!
+//let X: [String] = ["A", "B", "C", "D", "E", "F", "G", "H"]
+//let Y: [String] = ["1", "2", "3", "4", "5", "6", "7", "8"]
+//
+//var king: (Int, Int) = (X.firstIndex(of: kingTemp[0])!, Y.firstIndex(of: kingTemp[1])!)
+//var stone: (Int, Int) = (X.firstIndex(of: stoneTemp[0])!, Y.firstIndex(of: stoneTemp[1])!)
+//
+//var root: [String] = []
+//for _ in 0..<count {
+//    root.append(readLine()!)
+//}
+//
+//for move in root {
+//    if move == "R" {
+//        // 한 칸 오른쪽으로 이동
+//        if king.0 + 1 < 8 {
+//
+//            if (king.0+1, king.1) == stone {
+//                if stone.0 + 1 < 8 {
+//                    king.0 += 1
+//                    stone.0 += 1
+//                }
+//            } else {
+//                king.0 += 1
+//            }
+//        }
+//
+//    } else if move == "L" {
+//        // 한 칸 왼쪽으로 이동
+//        if king.0 - 1 >= 0 {
+//
+//            if (king.0-1, king.1) == stone {
+//                if stone.0 - 1 >= 0 {
+//                    king.0 -= 1
+//                    stone.0 -= 1
+//                }
+//            } else {
+//                king.0 -= 1
+//            }
+//        }
+//
+//    } else if move == "B" {
+//        // 한 칸 아래로 이동
+//        if king.1 - 1 >= 0 {
+//
+//            if (king.0, king.1-1) == stone {
+//                if stone.1 - 1 >= 0 {
+//                    king.1 -= 1
+//                    stone.1 -= 1
+//                }
+//            } else {
+//                king.1 -= 1
+//            }
+//        }
+//
+//    } else if move == "T" {
+//        // 한 칸 위로 이동
+//        if king.1 + 1 < 8 {
+//
+//            if (king.0, king.1+1) == stone {
+//                if stone.1 + 1 < 8 {
+//                    king.1 += 1
+//                    stone.1 += 1
+//                }
+//            } else {
+//                king.1 += 1
+//            }
+//        }
+//
+//    } else if move == "RT" {
+//        // 오른쪽 위 대각선으로 이동
+//        if (king.0 + 1 < 8) && king.1 + 1 < 8 {
+//            if (king.0+1, king.1+1) == stone {
+//                if (stone.0 + 1 < 8) && stone.1 + 1 < 8 {
+//                    king.0 += 1
+//                    king.1 += 1
+//                    stone.0 += 1
+//                    stone.1 += 1
+//                }
+//            } else {
+//                king.0 += 1
+//                king.1 += 1
+//            }
+//        }
+//
+//    } else if move == "LT" {
+//        // 왼쪽 위 대각선으로 이동
+//        if (king.0 - 1 >= 0) && king.1 + 1 < 8 {
+//
+//
+//            if (king.0-1, king.1+1) == stone {
+//                if (stone.0 - 1 >= 0) && stone.1 + 1 < 8 {
+//                    king.0 -= 1
+//                    king.1 += 1
+//                    stone.0 -= 1
+//                    stone.1 += 1
+//                }
+//            } else {
+//                king.0 -= 1
+//                king.1 += 1
+//            }
+//        }
+//
+//    } else if move == "RB" {
+//        // 오른쪽 아래 대각선으로 이동
+//        if (king.0 + 1 < 8) && king.1 - 1 >= 0 {
+//
+//
+//            if (king.0+1, king.1-1) == stone {
+//                if (stone.0 + 1 < 8) && stone.1 - 1 >= 0 {
+//                    king.0 += 1
+//                    king.1 -= 1
+//                    stone.0 += 1
+//                    stone.1 -= 1
+//                }
+//            } else {
+//                king.0 += 1
+//                king.1 -= 1
+//            }
+//        }
+//
+//
+//    }  else if move == "LB" {
+//        // 왼쪽 아래 대각선으로 이동
+//        if (king.0 - 1 >= 0) && king.1 - 1 >= 0 {
+//
+//
+//            if (king.0-1, king.1-1) == stone {
+//                if (stone.0 - 1 >= 0) && stone.1 - 1 >= 0 {
+//                    king.0 -= 1
+//                    king.1 -= 1
+//                    stone.0 -= 1
+//                    stone.1 -= 1
+//                }
+//            } else {
+//                king.0 -= 1
+//                king.1 -= 1
+//            }
+//        }
+//
+//    }
+//}
+//
+//print("\(X[king.0])\(Y[king.1])")
+//print("\(X[stone.0])\(Y[stone.1])")
 
-var king: (Int, Int) = (X.firstIndex(of: kingTemp[0])!, Y.firstIndex(of: kingTemp[1])!)
-var stone: (Int, Int) = (X.firstIndex(of: stoneTemp[0])!, Y.firstIndex(of: stoneTemp[1])!)
-
-var root: [String] = []
-for _ in 0..<count {
-    root.append(readLine()!)
+// MARK: - 백준 1235번 학생 번호
+let n: Int = Int(readLine()!)!
+var arr: [[String]] = []
+for _ in 0..<n {
+    let temp: [String] = readLine()!.map{String($0)}.reversed()
+    arr.append(temp)
 }
 
-for move in root {
-    if move == "R" {
-        // 한 칸 오른쪽으로 이동
-        if king.0 + 1 < 8 {
-            
-            if (king.0+1, king.1) == stone {
-                if stone.0 + 1 < 8 {
-                    king.0 += 1
-                    stone.0 += 1
-                }
-            } else {
-                king.0 += 1
-            }
-        }
-        
-    } else if move == "L" {
-        // 한 칸 왼쪽으로 이동
-        if king.0 - 1 >= 0 {
-            
-            if (king.0-1, king.1) == stone {
-                if stone.0 - 1 >= 0 {
-                    king.0 -= 1
-                    stone.0 -= 1
-                }
-            } else {
-                king.0 -= 1
-            }
-        }
-        
-    } else if move == "B" {
-        // 한 칸 아래로 이동
-        if king.1 - 1 >= 0 {
-            
-            if (king.0, king.1-1) == stone {
-                if stone.1 - 1 >= 0 {
-                    king.1 -= 1
-                    stone.1 -= 1
-                }
-            } else {
-                king.1 -= 1
-            }
-        }
-        
-    } else if move == "T" {
-        // 한 칸 위로 이동
-        if king.1 + 1 < 8 {
-            
-            if (king.0, king.1+1) == stone {
-                if stone.1 + 1 < 8 {
-                    king.1 += 1
-                    stone.1 += 1
-                }
-            } else {
-                king.1 += 1
-            }
-        }
-        
-    } else if move == "RT" {
-        // 오른쪽 위 대각선으로 이동
-        if (king.0 + 1 < 8) && king.1 + 1 < 8 {
-            if (king.0+1, king.1+1) == stone {
-                if (stone.0 + 1 < 8) && stone.1 + 1 < 8 {
-                    king.0 += 1
-                    king.1 += 1
-                    stone.0 += 1
-                    stone.1 += 1
-                }
-            } else {
-                king.0 += 1
-                king.1 += 1
-            }
-        }
-        
-    } else if move == "LT" {
-        // 왼쪽 위 대각선으로 이동
-        if (king.0 - 1 >= 0) && king.1 + 1 < 8 {
-            
-            
-            if (king.0-1, king.1+1) == stone {
-                if (stone.0 - 1 >= 0) && stone.1 + 1 < 8 {
-                    king.0 -= 1
-                    king.1 += 1
-                    stone.0 -= 1
-                    stone.1 += 1
-                }
-            } else {
-                king.0 -= 1
-                king.1 += 1
-            }
-        }
-        
-    } else if move == "RB" {
-        // 오른쪽 아래 대각선으로 이동
-        if (king.0 + 1 < 8) && king.1 - 1 >= 0 {
-            
-            
-            if (king.0+1, king.1-1) == stone {
-                if (stone.0 + 1 < 8) && stone.1 - 1 >= 0 {
-                    king.0 += 1
-                    king.1 -= 1
-                    stone.0 += 1
-                    stone.1 -= 1
-                }
-            } else {
-                king.0 += 1
-                king.1 -= 1
-            }
-        }
-        
-        
-    }  else if move == "LB" {
-        // 왼쪽 아래 대각선으로 이동
-        if (king.0 - 1 >= 0) && king.1 - 1 >= 0 {
-           
-            
-            if (king.0-1, king.1-1) == stone {
-                if (stone.0 - 1 >= 0) && stone.1 - 1 >= 0 {
-                    king.0 -= 1
-                    king.1 -= 1
-                    stone.0 -= 1
-                    stone.1 -= 1
-                }
-            } else {
-                king.0 -= 1
-                king.1 -= 1
-            }
-        }
-        
+var result: [String] = []
+for i in 0..<arr[0].count {
+    for str in arr {
+        result.append(str[0...i].joined(separator: ""))
+    }
+    
+    
+    
+    if result.count == Set(result).count {
+        print(result[0].count)
+        break
+    } else {
+        result = []
     }
 }
 
-print("\(X[king.0])\(Y[king.1])")
-print("\(X[stone.0])\(Y[stone.1])")
+
