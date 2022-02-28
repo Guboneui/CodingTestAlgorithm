@@ -6323,24 +6323,58 @@ import Foundation
 
 
 // MARK: - 백준 1120번 문자열
-let read: [String] = readLine()!.split(separator: " ").map{String($0)}
-let A: [String] = read[0].map{String($0)}
-var B: [String] = read[1].map{String($0)}
+//let read: [String] = readLine()!.split(separator: " ").map{String($0)}
+//let A: [String] = read[0].map{String($0)}
+//var B: [String] = read[1].map{String($0)}
+//
+//var result: Int = 51
+//
+//for index in 0...(B.count - A.count) {
+//    let tempB: [String] = Array(B[index..<A.count+index])
+//    var tempResult: Int = 0
+//    for i in 0..<A.count {
+//        if tempB[i] != A[i] {
+//            tempResult += 1
+//        }
+//    }
+//
+//    if result > tempResult {
+//        result = tempResult
+//    }
+//}
+//
+//print(result)
 
-var result: Int = 51
-
-for index in 0...(B.count - A.count) {
-    let tempB: [String] = Array(B[index..<A.count+index])
-    var tempResult: Int = 0
-    for i in 0..<A.count {
-        if tempB[i] != A[i] {
-            tempResult += 1
-        }
+// MARK: - 백준 1049번 기타줄
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let n: Int = read[0]
+let m: Int = read[1]
+var groupPrice: Int = 1001
+var originalPrice: Int = 1001
+for _ in 0..<m {
+    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    if temp[0] < groupPrice {
+        groupPrice = temp[0]
     }
     
-    if result > tempResult {
-        result = tempResult
+    if temp[1] < originalPrice {
+        originalPrice = temp[1]
     }
 }
 
-print(result)
+// 6개 묶음 가격 = groupPrice
+// 개당 가격 = originalPrice
+
+var a: Int
+var b: Int
+var c: Int
+
+a = n*originalPrice
+b = ((n/6)+1)*groupPrice
+c = (n/6 * groupPrice) + (n%6 * originalPrice)
+
+print(min(a, b, c))
+
+
+
+
