@@ -6527,27 +6527,47 @@ import Foundation
 //print("\(X[stone.0])\(Y[stone.1])")
 
 // MARK: - 백준 1235번 학생 번호
+//let n: Int = Int(readLine()!)!
+//var arr: [[String]] = []
+//for _ in 0..<n {
+//    let temp: [String] = readLine()!.map{String($0)}.reversed()
+//    arr.append(temp)
+//}
+//
+//var result: [String] = []
+//for i in 0..<arr[0].count {
+//    for str in arr {
+//        result.append(str[0...i].joined(separator: ""))
+//    }
+//
+//
+//
+//    if result.count == Set(result).count {
+//        print(result[0].count)
+//        break
+//    } else {
+//        result = []
+//    }
+//}
+
+// MARK: - 백준 1302번 베스트셀러
 let n: Int = Int(readLine()!)!
-var arr: [[String]] = []
+var book: [String:Int] = [:]
 for _ in 0..<n {
-    let temp: [String] = readLine()!.map{String($0)}.reversed()
-    arr.append(temp)
+    let temp: String = readLine()!
+    if book[temp] == nil {
+        book[temp] = 1
+    } else {
+        book[temp]! += 1
+    }
 }
 
-var result: [String] = []
-for i in 0..<arr[0].count {
-    for str in arr {
-        result.append(str[0...i].joined(separator: ""))
+print(book.sorted{
+    if $0.value == $1.value {
+        return $0.key < $1.key
     }
     
-    
-    
-    if result.count == Set(result).count {
-        print(result[0].count)
-        break
-    } else {
-        result = []
-    }
-}
+    return $0.value > $1.value
+}[0].key)
 
 
