@@ -6285,20 +6285,38 @@ import Foundation
 //}
 
 // MARK: - 백준 5800번 성적 통계
+//let n: Int = Int(readLine()!)!
+//for num in 1...n {
+//    var temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    let size: Int = temp.remove(at: 0)
+//    let arr: [Int] = temp.sorted(by: >)
+//    var gap: Int = 0
+//    for index in 1..<arr.count {
+//        if gap < arr[index-1] - arr[index] {
+//           gap = arr[index-1] - arr[index]
+//        }
+//    }
+//
+//    print("Class \(num)")
+//    print("Max \(arr[0]), Min \(arr[arr.count-1]), Largest gap \(gap)")
+//
+//
+//}
+
+// MARK: - 백준 1065번 한수
 let n: Int = Int(readLine()!)!
+var result: Int = 0
+
 for num in 1...n {
-    var temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    let size: Int = temp.remove(at: 0)
-    let arr: [Int] = temp.sorted(by: >)
-    var gap: Int = 0
-    for index in 1..<arr.count {
-        if gap < arr[index-1] - arr[index] {
-           gap = arr[index-1] - arr[index]
+    if num < 100 {
+        result += 1
+    } else if num >= 100 && num < 1000 {
+        let temp: String = String(num)
+        let arr: [Int] = temp.map{Int(String($0))!}
+        if arr[1] - arr[0] == arr[2] - arr[1] {
+            result += 1
         }
     }
-    
-    print("Class \(num)")
-    print("Max \(arr[0]), Min \(arr[arr.count-1]), Largest gap \(gap)")
-   
-    
 }
+
+print(result)
