@@ -6304,18 +6304,42 @@ import Foundation
 //}
 
 // MARK: - 백준 1065번 한수
-let n: Int = Int(readLine()!)!
-var result: Int = 0
+//let n: Int = Int(readLine()!)!
+//var result: Int = 0
+//
+//for num in 1...n {
+//    if num < 100 {
+//        result += 1
+//    } else if num >= 100 && num < 1000 {
+//        let temp: String = String(num)
+//        let arr: [Int] = temp.map{Int(String($0))!}
+//        if arr[1] - arr[0] == arr[2] - arr[1] {
+//            result += 1
+//        }
+//    }
+//}
+//
+//print(result)
 
-for num in 1...n {
-    if num < 100 {
-        result += 1
-    } else if num >= 100 && num < 1000 {
-        let temp: String = String(num)
-        let arr: [Int] = temp.map{Int(String($0))!}
-        if arr[1] - arr[0] == arr[2] - arr[1] {
-            result += 1
+
+// MARK: - 백준 1120번 문자열
+let read: [String] = readLine()!.split(separator: " ").map{String($0)}
+let A: [String] = read[0].map{String($0)}
+var B: [String] = read[1].map{String($0)}
+
+var result: Int = 51
+
+for index in 0...(B.count - A.count) {
+    let tempB: [String] = Array(B[index..<A.count+index])
+    var tempResult: Int = 0
+    for i in 0..<A.count {
+        if tempB[i] != A[i] {
+            tempResult += 1
         }
+    }
+    
+    if result > tempResult {
+        result = tempResult
     }
 }
 
