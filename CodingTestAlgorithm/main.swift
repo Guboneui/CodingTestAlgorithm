@@ -6599,9 +6599,28 @@ import Foundation
 
 // MARK: - 백준 1676번 팩토리얼 0의 개수
 
-let n: Int = Int(readLine()!)!
-print(n/5 + n/25 + n/125)
+//let n: Int = Int(readLine()!)!
+//print(n/5 + n/25 + n/125)
 
+// MARK: - 백준 1620번 나는야 포켓몬 마스터 이다솜
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let n: Int = read[0]
+let m: Int = read[1]
+var str: [String:Int] = [:]
+var num: [Int:String] = [:]
+for i in 1...n {
+    let pocketmon: String = readLine()!
+    str[pocketmon] = i
+    num[i] = pocketmon
+}
 
+for _ in 0..<m {
+    let temp = readLine()!
+    if let i = Int(temp) {
+        print(num[i]!)
+    } else {
+        print(str[temp]!)
+    }
+}
 
 
