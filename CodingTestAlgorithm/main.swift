@@ -6758,12 +6758,74 @@ import Foundation
 
 // MARK: - 백준 8394번 악수
 
-let n: Int = Int(readLine()!)!
-var result: [Int] = [0, 1]
-for _ in 1..<n {
-    var temp = [0, 0]
-    temp[0] = result[1]
-    temp[1] = (result[0] + result[1]) % 10
-    result = temp
+//let n: Int = Int(readLine()!)!
+//var result: [Int] = [0, 1]
+//for _ in 1..<n {
+//    var temp = [0, 0]
+//    temp[0] = result[1]
+//    temp[1] = (result[0] + result[1]) % 10
+//    result = temp
+//}
+//print((result[0] + result[1])%10)
+
+
+// MARK: - 백준 1485번 정사각형
+//let testCases: Int = Int(readLine()!)!
+//for _ in 0..<testCases {
+//    var point: [(Int, Int)] = []
+//    for _ in 0..<4 {
+//        let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//        point.append((temp[0], temp[1]))
+//    }
+//
+//    var result: [Double:Int] = [:]
+//
+//    for main in 0..<point.count-1 {
+//        for sub in main+1..<point.count {
+//            let line: Double = sqrt(Double((point[sub].0 - point[main].0)*(point[sub].0 - point[main].0)) + Double((point[sub].1 - point[main].1)*(point[sub].1 - point[main].1)))
+//            if result[line] == nil {
+//                result[line] = 1
+//            } else {
+//                result[line]! += 1
+//            }
+//        }
+//    }
+//
+//    if result.count == 2 && result.values.reduce(0, +) == 6 {
+//        print(1)
+//    } else {
+//        print(0)
+//    }
+//
+//
+//}
+
+// MARK: - 백준 9656번 돌 게임2
+//print(Int(readLine()!)!%2 == 0 ? "SK" : "CY")
+
+// MARK: - 백준 2331번 반복수열
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let n: Int = read[0]
+let p: Int = read[1]
+var arr: [Int] = [n]
+var result: Int = 0
+
+while true {
+    let temp: [Int] = String(arr.last!).map{Int(String($0))!}
+    var tempNum: Int = 0
+    for i in temp {
+        tempNum += Int(pow(Double(i), Double(p)))
+    }
+    
+    if arr.contains(tempNum) {
+        result = arr.firstIndex(of: tempNum)!
+        break
+    }
+    
+    arr.append(tempNum)
 }
-print((result[0] + result[1])%10)
+
+
+print(arr[0..<result].count)
+
+
