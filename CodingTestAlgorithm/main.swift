@@ -6670,21 +6670,49 @@ import Foundation
 //print(result)
 
 // MARK: - 백준 10546번 배부른 마라토너
-let n: Int = Int(readLine()!)!
-var dict: [String:Int] = [:]
-for _ in 0..<n {
-    let temp: String = readLine()!
-    if dict[temp] == nil {
-        dict[temp] = 1
-    } else {
-        dict[temp]! += 1
+//let n: Int = Int(readLine()!)!
+//var dict: [String:Int] = [:]
+//for _ in 0..<n {
+//    let temp: String = readLine()!
+//    if dict[temp] == nil {
+//        dict[temp] = 1
+//    } else {
+//        dict[temp]! += 1
+//    }
+//}
+//
+//for _ in 0..<n-1 {
+//    let temp:String = readLine()!
+//    dict[temp]! -= 1
+//}
+//
+//print(dict.filter{$0.value != 0}[0].key)
+
+// MARK: - 백준 3048번 개미
+
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+var firstGroup = Array(Array(readLine()!).map{(String($0), 2)}.reversed())
+var secondGroup = Array(readLine()!).map{(String($0), 1)}
+let time: Int = Int(readLine()!)!
+var mainGroup = firstGroup + secondGroup
+
+for _ in 0..<time {
+    var temp: [Int] = []
+    for i in 0...mainGroup.count-2 {
+        if mainGroup[i].1 > mainGroup[i+1].1 {
+            temp.append(i)
+        }
+    }
+    
+    if temp.isEmpty == false {
+        for i in temp {
+            mainGroup.swapAt(i, i+1)
+            print(mainGroup)
+        }
     }
 }
 
-for _ in 0..<n-1 {
-    let temp:String = readLine()!
-    dict[temp]! -= 1
+
+for str in mainGroup {
+    print(str.0, terminator: "")
 }
-
-print(dict.filter{$0.value != 0}[0].key)
-
