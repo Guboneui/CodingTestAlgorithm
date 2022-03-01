@@ -6736,22 +6736,34 @@ import Foundation
 //print(result)
 
 // MARK: - 백준 9536번 여우는 어떻게 울지?
-let testCases: Int = Int(readLine()!)!
-for _ in 0..<testCases {
-    var fox: [String] = readLine()!.split(separator: " ").map{String($0)}
-    while true {
-        let animal: String = readLine()!
-        if animal == "what does the fox say?" {
-            break
-        }
-        
-        let animalSay: String = animal.split(separator: " ").map{String($0)}[2]
-        
-        while fox.contains(animalSay) {
-            
-            fox[fox.firstIndex(of: animalSay)!] = ""
-            
-        }
-    }
-    print(fox.filter{$0 != ""}.joined(separator: " "))
+//let testCases: Int = Int(readLine()!)!
+//for _ in 0..<testCases {
+//    var fox: [String] = readLine()!.split(separator: " ").map{String($0)}
+//    while true {
+//        let animal: String = readLine()!
+//        if animal == "what does the fox say?" {
+//            break
+//        }
+//
+//        let animalSay: String = animal.split(separator: " ").map{String($0)}[2]
+//
+//        while fox.contains(animalSay) {
+//
+//            fox[fox.firstIndex(of: animalSay)!] = ""
+//
+//        }
+//    }
+//    print(fox.filter{$0 != ""}.joined(separator: " "))
+//}
+
+// MARK: - 백준 8394번 악수
+
+let n: Int = Int(readLine()!)!
+var result: [Int] = [0, 1]
+for _ in 1..<n {
+    var temp = [0, 0]
+    temp[0] = result[1]
+    temp[1] = (result[0] + result[1]) % 10
+    result = temp
 }
+print((result[0] + result[1])%10)
