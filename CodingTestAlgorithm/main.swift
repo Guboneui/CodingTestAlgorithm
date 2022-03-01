@@ -6804,28 +6804,41 @@ import Foundation
 //print(Int(readLine()!)!%2 == 0 ? "SK" : "CY")
 
 // MARK: - 백준 2331번 반복수열
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = read[0]
+//let p: Int = read[1]
+//var arr: [Int] = [n]
+//var result: Int = 0
+//
+//while true {
+//    let temp: [Int] = String(arr.last!).map{Int(String($0))!}
+//    var tempNum: Int = 0
+//    for i in temp {
+//        tempNum += Int(pow(Double(i), Double(p)))
+//    }
+//
+//    if arr.contains(tempNum) {
+//        result = arr.firstIndex(of: tempNum)!
+//        break
+//    }
+//
+//    arr.append(tempNum)
+//}
+//
+//
+//print(arr[0..<result].count)
+
+// MARK: - 백준 17219번 비밀번호 찾기
 let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let n: Int = read[0]
-let p: Int = read[1]
-var arr: [Int] = [n]
-var result: Int = 0
-
-while true {
-    let temp: [Int] = String(arr.last!).map{Int(String($0))!}
-    var tempNum: Int = 0
-    for i in temp {
-        tempNum += Int(pow(Double(i), Double(p)))
+var dict: [String:String] = [:]
+for _ in 0..<read[0] {
+    let temp: [String] = readLine()!.split(separator: " ").map{String($0)}
+    if dict[temp[0]] == nil {
+        dict[temp[0]] = temp[1]
     }
-    
-    if arr.contains(tempNum) {
-        result = arr.firstIndex(of: tempNum)!
-        break
-    }
-    
-    arr.append(tempNum)
 }
+var result: String = ""
 
-
-print(arr[0..<result].count)
-
-
+for _ in 0..<read[1] {
+    print(dict[readLine()!]!)
+}
