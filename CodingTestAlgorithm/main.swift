@@ -6690,29 +6690,47 @@ import Foundation
 
 // MARK: - 백준 3048번 개미
 
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-var firstGroup = Array(Array(readLine()!).map{(String($0), 2)}.reversed())
-var secondGroup = Array(readLine()!).map{(String($0), 1)}
-let time: Int = Int(readLine()!)!
-var mainGroup = firstGroup + secondGroup
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//var firstGroup = Array(Array(readLine()!).map{(String($0), 2)}.reversed())
+//var secondGroup = Array(readLine()!).map{(String($0), 1)}
+//let time: Int = Int(readLine()!)!
+//var mainGroup = firstGroup + secondGroup
+//
+//for _ in 0..<time {
+//    var temp: [Int] = []
+//    for i in 0...mainGroup.count-2 {
+//        if mainGroup[i].1 > mainGroup[i+1].1 {
+//            temp.append(i)
+//        }
+//    }
+//
+//    if temp.isEmpty == false {
+//        for i in temp {
+//            mainGroup.swapAt(i, i+1)
+//            print(mainGroup)
+//        }
+//    }
+//}
+//
+//
+//for str in mainGroup {
+//    print(str.0, terminator: "")
+//}
 
-for _ in 0..<time {
-    var temp: [Int] = []
-    for i in 0...mainGroup.count-2 {
-        if mainGroup[i].1 > mainGroup[i+1].1 {
-            temp.append(i)
-        }
-    }
-    
-    if temp.isEmpty == false {
-        for i in temp {
-            mainGroup.swapAt(i, i+1)
-            print(mainGroup)
-        }
-    }
+// MARK: - 백준 14469번 소가 길을 건너간 이유3
+let n: Int = Int(readLine()!)!
+var arr: [(Int, Int)] = []
+for _ in 0..<n {
+    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    arr.append((temp[0], temp[1]))
 }
 
-
-for str in mainGroup {
-    print(str.0, terminator: "")
+arr = arr.sorted{$0.0 < $1.0}
+var result: Int = 0
+for tuple in arr {
+    if result < tuple.0 {
+        result = tuple.0
+    }
+    result += tuple.1
 }
+print(result)
