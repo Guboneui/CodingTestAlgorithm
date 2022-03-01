@@ -6624,22 +6624,47 @@ import Foundation
 //}
 
 // MARK: - 백준 11652번 카드
-let n: Int = Int(readLine()!)!
-var dict: [Int:Int] = [:]
+//let n: Int = Int(readLine()!)!
+//var dict: [Int:Int] = [:]
+//
+//for _ in 0..<n {
+//    let temp: Int = Int(readLine()!)!
+//    if dict[temp] == nil {
+//        dict[temp] = 1
+//    } else {
+//        dict[temp]! += 1
+//    }
+//}
+//
+//
+//print(dict.sorted{
+//    if $0.value == $1.value {
+//        return $0.key < $1.key
+//    }
+//    return $0.value > $1.value
+//}[0].key)
 
+// MARK: - 백준 3986번 좋은 단어
+
+let n: Int = Int(readLine()!)!
+var result: Int = 0
 for _ in 0..<n {
-    let temp: Int = Int(readLine()!)!
-    if dict[temp] == nil {
-        dict[temp] = 1
-    } else {
-        dict[temp]! += 1
+    let temp: [String] = readLine()!.map{String($0)}
+    var stack: [String] = []
+    for str in temp {
+        if stack.count == 0 {
+            stack.append(str)
+        } else {
+            if stack[stack.count-1] == str {
+                stack.popLast()
+            } else {
+                stack.append(str)
+            }
+        }
+    }
+    if stack.count == 0 {
+        result += 1
     }
 }
 
-
-print(dict.sorted{
-    if $0.value == $1.value {
-        return $0.key < $1.key
-    }
-    return $0.value > $1.value
-}[0].key)
+print(result)
