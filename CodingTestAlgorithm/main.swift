@@ -6551,23 +6551,50 @@ import Foundation
 //}
 
 // MARK: - 백준 1302번 베스트셀러
-let n: Int = Int(readLine()!)!
-var book: [String:Int] = [:]
-for _ in 0..<n {
-    let temp: String = readLine()!
-    if book[temp] == nil {
-        book[temp] = 1
-    } else {
-        book[temp]! += 1
-    }
-}
+//let n: Int = Int(readLine()!)!
+//var book: [String:Int] = [:]
+//for _ in 0..<n {
+//    let temp: String = readLine()!
+//    if book[temp] == nil {
+//        book[temp] = 1
+//    } else {
+//        book[temp]! += 1
+//    }
+//}
+//
+//print(book.sorted{
+//    if $0.value == $1.value {
+//        return $0.key < $1.key
+//    }
+//
+//    return $0.value > $1.value
+//}[0].key)
 
-print(book.sorted{
-    if $0.value == $1.value {
-        return $0.key < $1.key
-    }
-    
-    return $0.value > $1.value
-}[0].key)
+// MARK: - 백준 1543번 문서 검색
+//var file: [String] = readLine()!.map{String($0)}
+//let target: [String] = readLine()!.map{String($0)}
+//var result: Int = 0
+//
+//print(file)
+//print(target)
+//
+//
+//for index in 0...file.count - target.count {
+//
+//    if Array(file[index..<index+target.count]) == target {
+//        result += 1
+//        for i in index..<index+target.count {
+//            file[i] = "0"
+//        }
+//    }
+//}
+//
+//print(result)
+
+
+let input = readLine().map{String($0)}
+let input2 = readLine()!
+
+print(input!.replacingOccurrences(of: input2, with: "!").filter{$0 == "!"}.count)
 
 
