@@ -6592,9 +6592,16 @@ import Foundation
 //print(result)
 
 
-let input = readLine().map{String($0)}
-let input2 = readLine()!
+//let input = readLine().map{String($0)}
+//let input2 = readLine()!
+//
+//print(input!.replacingOccurrences(of: input2, with: "!").filter{$0 == "!"}.count)
 
-print(input!.replacingOccurrences(of: input2, with: "!").filter{$0 == "!"}.count)
+// MARK: - 백준 1676번 팩토리얼 0의 개수
+
+let n: Int = Int(readLine()!)!
+print(n/5 + n/25 + n/125)
+
+
 
 
