@@ -6603,24 +6603,43 @@ import Foundation
 //print(n/5 + n/25 + n/125)
 
 // MARK: - 백준 1620번 나는야 포켓몬 마스터 이다솜
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let n: Int = read[0]
-let m: Int = read[1]
-var str: [String:Int] = [:]
-var num: [Int:String] = [:]
-for i in 1...n {
-    let pocketmon: String = readLine()!
-    str[pocketmon] = i
-    num[i] = pocketmon
-}
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = read[0]
+//let m: Int = read[1]
+//var str: [String:Int] = [:]
+//var num: [Int:String] = [:]
+//for i in 1...n {
+//    let pocketmon: String = readLine()!
+//    str[pocketmon] = i
+//    num[i] = pocketmon
+//}
+//
+//for _ in 0..<m {
+//    let temp = readLine()!
+//    if let i = Int(temp) {
+//        print(num[i]!)
+//    } else {
+//        print(str[temp]!)
+//    }
+//}
 
-for _ in 0..<m {
-    let temp = readLine()!
-    if let i = Int(temp) {
-        print(num[i]!)
+// MARK: - 백준 11652번 카드
+let n: Int = Int(readLine()!)!
+var dict: [Int:Int] = [:]
+
+for _ in 0..<n {
+    let temp: Int = Int(readLine()!)!
+    if dict[temp] == nil {
+        dict[temp] = 1
     } else {
-        print(str[temp]!)
+        dict[temp]! += 1
     }
 }
 
 
+print(dict.sorted{
+    if $0.value == $1.value {
+        return $0.key < $1.key
+    }
+    return $0.value > $1.value
+}[0].key)
