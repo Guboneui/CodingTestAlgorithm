@@ -6829,16 +6829,33 @@ import Foundation
 //print(arr[0..<result].count)
 
 // MARK: - 백준 17219번 비밀번호 찾기
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-var dict: [String:String] = [:]
-for _ in 0..<read[0] {
-    let temp: [String] = readLine()!.split(separator: " ").map{String($0)}
-    if dict[temp[0]] == nil {
-        dict[temp[0]] = temp[1]
-    }
-}
-var result: String = ""
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//var dict: [String:String] = [:]
+//for _ in 0..<read[0] {
+//    let temp: [String] = readLine()!.split(separator: " ").map{String($0)}
+//    if dict[temp[0]] == nil {
+//        dict[temp[0]] = temp[1]
+//    }
+//}
+//var result: String = ""
+//
+//for _ in 0..<read[1] {
+//    print(dict[readLine()!]!)
+//}
 
-for _ in 0..<read[1] {
-    print(dict[readLine()!]!)
+// MARK: - 백준 1783번 병든 나이트
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let n: Int = read[0]
+let m: Int = read[1]
+
+if n == 1 {
+    print(1)
+} else if n == 2 {
+    print(min((m+1)/2, 4))
+} else {
+    if m <= 6 {
+        print(min(m, 4))
+    } else {
+        print(m-2)
+    }
 }
