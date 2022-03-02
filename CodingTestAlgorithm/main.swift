@@ -6981,36 +6981,53 @@ import Foundation
 //print(result == true ? "Nice" : "Sad")
 
 // MARK: - 백준 10837번 동전 게임
-let coin: Int = Int(readLine()!)!
-let testCases: Int = Int(readLine()!)!
-for _ in 0..<testCases {
-    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    let m: Int = temp[0]
-    let n: Int = temp[1]
-    
-    if m==n {
-        print(1)
-        continue
-    }
-    
-    let k = coin - max(m, n)
-    let diff = abs(m-n)
-    
-    if m>n {
-        if diff - k <= 2 {
-            print(1)
-            continue
-        }
-        print(0)
-        continue
-    }
-    
-    
-    if diff - k <= 1 {
-        print(1)
-        continue
-    }
-    print(0)
-    
-    
+//let coin: Int = Int(readLine()!)!
+//let testCases: Int = Int(readLine()!)!
+//for _ in 0..<testCases {
+//    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    let m: Int = temp[0]
+//    let n: Int = temp[1]
+//
+//    if m==n {
+//        print(1)
+//        continue
+//    }
+//
+//    let k = coin - max(m, n)
+//    let diff = abs(m-n)
+//
+//    if m>n {
+//        if diff - k <= 2 {
+//            print(1)
+//            continue
+//        }
+//        print(0)
+//        continue
+//    }
+//
+//
+//    if diff - k <= 1 {
+//        print(1)
+//        continue
+//    }
+//    print(0)
+//
+//
+//}
+
+// MARK: - 백준 2847번 게임을 만든 동준이
+let n: Int = Int(readLine()!)!
+var arr: [Int] = []
+for _ in 0..<n {
+    let score: Int = Int(readLine()!)!
+    arr.append(score)
 }
+var result: Int = 0
+for i in (0..<arr.count-1).reversed() {
+    if arr[i+1] <= arr[i] {
+        result += arr[i]-arr[i+1]+1
+        arr[i] = arr[i+1]-1
+    }
+}
+
+print(result)
