@@ -6942,40 +6942,75 @@ import Foundation
 //}
 
 // MARK: - 백준 12789번 도키도키 간식드리미
-let n: Int = Int(readLine()!)!
-var line: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.reversed()
-var stack: [Int] = []
-var target: Int = 1
-var result: Bool = false
+//let n: Int = Int(readLine()!)!
+//var line: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.reversed()
+//var stack: [Int] = []
+//var target: Int = 1
+//var result: Bool = false
+//
+//while (line.count + stack.count) != 0 {
+//    if line.count != 0 {
+//        if line.last! != target {
+//            if stack.count != 0 && stack.last == target {
+//                stack.popLast()
+//                target += 1
+//
+//            } else {
+//                stack.append(line.popLast()!)
+//            }
+//        } else {
+//            line.popLast()
+//            target += 1
+//        }
+//    } else {
+//        if stack.last == target {
+//            stack.popLast()
+//            target += 1
+//            if stack.count == 0 {
+//
+//                result = true
+//                break
+//            }
+//        } else {break}
+//    }
+//    if line.count == 0 && stack.count == 0 {
+//        result = true
+//    }
+//}
+//
+//print(result == true ? "Nice" : "Sad")
 
-while (line.count + stack.count) != 0 {
-    if line.count != 0 {
-        if line.last! != target {
-            if stack.count != 0 && stack.last == target {
-                stack.popLast()
-                target += 1
-                
-            } else {
-                stack.append(line.popLast()!)
-            }
-        } else {
-            line.popLast()
-            target += 1
+// MARK: - 백준 10837번 동전 게임
+let coin: Int = Int(readLine()!)!
+let testCases: Int = Int(readLine()!)!
+for _ in 0..<testCases {
+    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    let m: Int = temp[0]
+    let n: Int = temp[1]
+    
+    if m==n {
+        print(1)
+        continue
+    }
+    
+    let k = coin - max(m, n)
+    let diff = abs(m-n)
+    
+    if m>n {
+        if diff - k <= 2 {
+            print(1)
+            continue
         }
-    } else {
-        if stack.last == target {
-            stack.popLast()
-            target += 1
-            if stack.count == 0 {
-                
-                result = true
-                break
-            }
-        } else {break}
+        print(0)
+        continue
     }
-    if line.count == 0 && stack.count == 0 {
-        result = true
+    
+    
+    if diff - k <= 1 {
+        print(1)
+        continue
     }
+    print(0)
+    
+    
 }
-
-print(result == true ? "Nice" : "Sad")
