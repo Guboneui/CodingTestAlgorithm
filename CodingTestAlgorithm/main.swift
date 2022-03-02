@@ -6844,18 +6844,31 @@ import Foundation
 //}
 
 // MARK: - 백준 1783번 병든 나이트
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let n: Int = read[0]
-let m: Int = read[1]
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = read[0]
+//let m: Int = read[1]
+//
+//if n == 1 {
+//    print(1)
+//} else if n == 2 {
+//    print(min((m+1)/2, 4))
+//} else {
+//    if m <= 6 {
+//        print(min(m, 4))
+//    } else {
+//        print(m-2)
+//    }
+//}
 
-if n == 1 {
-    print(1)
-} else if n == 2 {
-    print(min((m+1)/2, 4))
-} else {
-    if m <= 6 {
-        print(min(m, 4))
-    } else {
-        print(m-2)
+// MARK: - 백준 15624번 피보나치 수 7
+let input = Int(String(readLine()!))!
+var dp: [Int] = Array(repeating: 0, count: input+1)
+if input >= 1 {
+    dp[1] = 1
+}
+if input >= 2 {
+    for i in 2...input {
+        dp[i] = (dp[i-1] + dp[i-2]) % 1000000007
     }
 }
+print(dp[input])
