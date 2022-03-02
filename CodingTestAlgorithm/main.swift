@@ -7016,18 +7016,40 @@ import Foundation
 //}
 
 // MARK: - 백준 2847번 게임을 만든 동준이
-let n: Int = Int(readLine()!)!
-var arr: [Int] = []
-for _ in 0..<n {
-    let score: Int = Int(readLine()!)!
-    arr.append(score)
-}
-var result: Int = 0
-for i in (0..<arr.count-1).reversed() {
-    if arr[i+1] <= arr[i] {
-        result += arr[i]-arr[i+1]+1
-        arr[i] = arr[i+1]-1
+//let n: Int = Int(readLine()!)!
+//var arr: [Int] = []
+//for _ in 0..<n {
+//    let score: Int = Int(readLine()!)!
+//    arr.append(score)
+//}
+//var result: Int = 0
+//for i in (0..<arr.count-1).reversed() {
+//    if arr[i+1] <= arr[i] {
+//        result += arr[i]-arr[i+1]+1
+//        arr[i] = arr[i+1]-1
+//    }
+//}
+//
+//print(result)
+
+
+// MARK: - 백준 17626번 Four Squares
+let n = Int(readLine()!)!
+var dp = Array(repeating: 0, count: n+1)
+dp[1] = 1
+
+if n == 1 {
+    print(1)
+} else {
+    for i in 2...n {
+        var minValue = Int.max
+        var j = 1
+        while (j*j) <= i {
+            minValue = min(minValue, dp[i-j*j])
+            j += 1
+        }
+        dp[i] = minValue + 1
     }
+    print(dp[n])
 }
 
-print(result)
