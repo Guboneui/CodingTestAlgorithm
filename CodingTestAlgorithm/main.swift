@@ -6898,46 +6898,84 @@ import Foundation
 //}
 
 // MARK: - 백준 11502번 세 개의 소수 문제
-var arr: [Int] = Array(repeating: 0, count: 1001)
-for i in 2...1000 {
-    arr[i] = i
-}
-for i in 2...1000 {
-    if arr[i] == 0 {continue}
-    for j in stride(from: i*2, through: 1000, by: i) {
-        if arr[j] == 0 {
-            continue
-        } else {
-            arr[j] = 0
-        }
-    }
-}
+//var arr: [Int] = Array(repeating: 0, count: 1001)
+//for i in 2...1000 {
+//    arr[i] = i
+//}
+//for i in 2...1000 {
+//    if arr[i] == 0 {continue}
+//    for j in stride(from: i*2, through: 1000, by: i) {
+//        if arr[j] == 0 {
+//            continue
+//        } else {
+//            arr[j] = 0
+//        }
+//    }
+//}
+//
+//var num: [Int] = arr.filter{$0 != 0}
+//
+//let testCases: Int = Int(readLine()!)!
+//for _ in 0..<testCases {
+//    let target: Int = Int(readLine()!)!
+//    var result: Bool = false
+//    for i in 0..<num.count {
+//        for j in i..<num.count {
+//            for k in j..<num.count {
+//                if num[i] + num[j] + num[k] == target {
+//                    print("\(num[i]) \(num[j]) \(num[k])")
+//                    result = true
+//                    break
+//                }
+//            }
+//            if result == true {
+//                break
+//            }
+//        }
+//        if result == true {
+//            break
+//        }
+//    }
+//    if result == false {
+//        print(0)
+//    }
+//}
 
-var num: [Int] = arr.filter{$0 != 0}
+// MARK: - 백준 12789번 도키도키 간식드리미
+let n: Int = Int(readLine()!)!
+var line: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.reversed()
+var stack: [Int] = []
+var target: Int = 1
+var result: Bool = false
 
-let testCases: Int = Int(readLine()!)!
-for _ in 0..<testCases {
-    let target: Int = Int(readLine()!)!
-    var result: Bool = false
-    for i in 0..<num.count {
-        for j in i..<num.count {
-            for k in j..<num.count {
-                if num[i] + num[j] + num[k] == target {
-                    print("\(num[i]) \(num[j]) \(num[k])")
-                    result = true
-                    break
-                }
+while (line.count + stack.count) != 0 {
+    if line.count != 0 {
+        if line.last! != target {
+            if stack.count != 0 && stack.last == target {
+                stack.popLast()
+                target += 1
+                
+            } else {
+                stack.append(line.popLast()!)
             }
-            if result == true {
+        } else {
+            line.popLast()
+            target += 1
+        }
+    } else {
+        if stack.last == target {
+            stack.popLast()
+            target += 1
+            if stack.count == 0 {
+                
+                result = true
                 break
             }
-        }
-        if result == true {
-            break
-        }
+        } else {break}
     }
-    if result == false {
-        print(0)
+    if line.count == 0 && stack.count == 0 {
+        result = true
     }
 }
 
+print(result == true ? "Nice" : "Sad")
