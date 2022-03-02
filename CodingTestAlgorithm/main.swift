@@ -6861,16 +6861,38 @@ import Foundation
 //}2.524304986000061
 
 // MARK: - 백준 15624번 피보나치 수 7
-//let startTime = CFAbsoluteTimeGetCurrent()
-let input = Int(String(readLine()!))!
-var dp: [Int] = Array(repeating: 0, count: input+1)
-if input >= 1 {
-    dp[1] = 1
-}
-if input >= 2 {
-    for i in 2...input {
-        dp[i] = (dp[i-1] + dp[i-2]) % 1000000007
+////let startTime = CFAbsoluteTimeGetCurrent()
+//let input = Int(String(readLine()!))!
+//var dp: [Int] = Array(repeating: 0, count: input+1)
+//if input >= 1 {
+//    dp[1] = 1
+//}
+//if input >= 2 {
+//    for i in 2...input {
+//        dp[i] = (dp[i-1] + dp[i-2]) % 1000000007
+//    }
+//}
+//print(dp[input])
+////print("경과 시간: \(CFAbsoluteTimeGetCurrent() - startTime)")
+
+// MARK: - 백준 13413번 오셀로 재배치
+let testCases: Int = Int(readLine()!)!
+for _ in 0..<testCases {
+    let length: Int = Int(readLine()!)!
+    let current: [String] = readLine()!.map{String($0)}
+    let target: [String] = readLine()!.map{String($0)}
+    var blackCount: Int = 0
+    var whiteCount: Int = 0
+    
+    for i in 0..<length {
+        if current[i] != target[i] {
+            if current[i] == "B" {
+                blackCount += 1
+            } else {
+                whiteCount += 1
+            }
+        }
     }
+    
+    print(blackCount > whiteCount ? blackCount : whiteCount)
 }
-print(dp[input])
-//print("경과 시간: \(CFAbsoluteTimeGetCurrent() - startTime)")
