@@ -6858,9 +6858,10 @@ import Foundation
 //    } else {
 //        print(m-2)
 //    }
-//}
+//}2.524304986000061
 
 // MARK: - 백준 15624번 피보나치 수 7
+//let startTime = CFAbsoluteTimeGetCurrent()
 let input = Int(String(readLine()!))!
 var dp: [Int] = Array(repeating: 0, count: input+1)
 if input >= 1 {
@@ -6872,3 +6873,4 @@ if input >= 2 {
     }
 }
 print(dp[input])
+//print("경과 시간: \(CFAbsoluteTimeGetCurrent() - startTime)")
