@@ -6876,23 +6876,68 @@ import Foundation
 ////print("경과 시간: \(CFAbsoluteTimeGetCurrent() - startTime)")
 
 // MARK: - 백준 13413번 오셀로 재배치
-let testCases: Int = Int(readLine()!)!
-for _ in 0..<testCases {
-    let length: Int = Int(readLine()!)!
-    let current: [String] = readLine()!.map{String($0)}
-    let target: [String] = readLine()!.map{String($0)}
-    var blackCount: Int = 0
-    var whiteCount: Int = 0
-    
-    for i in 0..<length {
-        if current[i] != target[i] {
-            if current[i] == "B" {
-                blackCount += 1
-            } else {
-                whiteCount += 1
-            }
+//let testCases: Int = Int(readLine()!)!
+//for _ in 0..<testCases {
+//    let length: Int = Int(readLine()!)!
+//    let current: [String] = readLine()!.map{String($0)}
+//    let target: [String] = readLine()!.map{String($0)}
+//    var blackCount: Int = 0
+//    var whiteCount: Int = 0
+//
+//    for i in 0..<length {
+//        if current[i] != target[i] {
+//            if current[i] == "B" {
+//                blackCount += 1
+//            } else {
+//                whiteCount += 1
+//            }
+//        }
+//    }
+//
+//    print(blackCount > whiteCount ? blackCount : whiteCount)
+//}
+
+// MARK: - 백준 11502번 세 개의 소수 문제
+var arr: [Int] = Array(repeating: 0, count: 1001)
+for i in 2...1000 {
+    arr[i] = i
+}
+for i in 2...1000 {
+    if arr[i] == 0 {continue}
+    for j in stride(from: i*2, through: 1000, by: i) {
+        if arr[j] == 0 {
+            continue
+        } else {
+            arr[j] = 0
         }
     }
-    
-    print(blackCount > whiteCount ? blackCount : whiteCount)
 }
+
+var num: [Int] = arr.filter{$0 != 0}
+
+let testCases: Int = Int(readLine()!)!
+for _ in 0..<testCases {
+    let target: Int = Int(readLine()!)!
+    var result: Bool = false
+    for i in 0..<num.count {
+        for j in i..<num.count {
+            for k in j..<num.count {
+                if num[i] + num[j] + num[k] == target {
+                    print("\(num[i]) \(num[j]) \(num[k])")
+                    result = true
+                    break
+                }
+            }
+            if result == true {
+                break
+            }
+        }
+        if result == true {
+            break
+        }
+    }
+    if result == false {
+        print(0)
+    }
+}
+
