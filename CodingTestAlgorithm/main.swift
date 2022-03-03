@@ -7082,16 +7082,52 @@ import Foundation
 //}
 
 // MARK: - 백준 13900번 순서쌍의 곱의 합
-let n: Int = Int(readLine()!)!
-var arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-var result: Int = 0
-var newArr: [Int] = [arr[0]]
-for i in 1..<n {
-    newArr.append(newArr[i-1] + arr[i])
-}
+//let n: Int = Int(readLine()!)!
+//var arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//var result: Int = 0
+//var newArr: [Int] = [arr[0]]
+//for i in 1..<n {
+//    newArr.append(newArr[i-1] + arr[i])
+//}
+//
+//for i in 0..<n-1 {
+//    result += arr[i] * (newArr[n-1]-newArr[i])
+//}
+//
+//print(result)
 
-for i in 0..<n-1 {
-    result += arr[i] * (newArr[n-1]-newArr[i])
+// MARK: - 백준 1755번 숫자놀이
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let number: [String] = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
+var arr: [String] = []
+for num in read[0]...read[1] {
+    let temp: [String] = String(num).map{String($0)}
+    var tempStr: String = ""
+    for str in temp {
+        tempStr += "\(number[Int(str)!]) "
+    }
+    arr.append(tempStr)
 }
-
-print(result)
+arr.sort()
+var result: [String] = []
+for num in arr {
+    let temp: [String] = num.split(separator: " ").map{String($0)}
+    var tempStr: String = ""
+    for i in temp {
+        tempStr += String(number.firstIndex(of: i)!)
+    }
+    result.append(tempStr)
+}
+var temp: String = ""
+var count: Int = 0
+for i in result {
+    temp += "\(i) "
+    count += 1
+    if count % 10 == 0 {
+        print(temp)
+        temp = ""
+    }
+    if count == read[1] - read[0] + 1 {
+        print(temp)
+    }
+}
