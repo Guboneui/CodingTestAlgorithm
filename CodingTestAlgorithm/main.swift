@@ -7055,16 +7055,28 @@ import Foundation
 
 // MARK: - 백준 2670번 연속부분최대곱
 
-let n: Int = Int(readLine()!)!
-var arr: [Double] = []
-for _ in 0..<n {
-    arr.append(Double(readLine()!)!)
-}
+//let n: Int = Int(readLine()!)!
+//var arr: [Double] = []
+//for _ in 0..<n {
+//    arr.append(Double(readLine()!)!)
+//}
+//
+//for i in 1..<arr.count {
+//    if arr[i] < arr[i] * arr[i-1] {
+//        arr[i] = arr[i] * arr[i-1]
+//    }
+//}
+//let ans = String(format: "%.3f", (arr.max()! * 1000).rounded() / 1000)
+//print(ans)
 
-for i in 1..<arr.count {
-    if arr[i] < arr[i] * arr[i-1] {
-        arr[i] = arr[i] * arr[i-1]
-    }
+// MARK: - 백준 1822번 차집합
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+var A: Set<Int> = Set(readLine()!.split(separator: " ").map{Int($0)!})
+var B: Set<Int> = Set(readLine()!.split(separator: " ").map{Int($0)!})
+
+if A.subtracting(B).count == 0 {
+    print(0)
+} else {
+    print(A.subtracting(B).count)
+    print(A.subtracting(B).sorted(by: <).map{String($0)}.joined(separator: " "))
 }
-let ans = String(format: "%.3f", (arr.max()! * 1000).rounded() / 1000)
-print(ans)
