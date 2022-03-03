@@ -7070,13 +7070,28 @@ import Foundation
 //print(ans)
 
 // MARK: - 백준 1822번 차집합
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-var A: Set<Int> = Set(readLine()!.split(separator: " ").map{Int($0)!})
-var B: Set<Int> = Set(readLine()!.split(separator: " ").map{Int($0)!})
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//var A: Set<Int> = Set(readLine()!.split(separator: " ").map{Int($0)!})
+//var B: Set<Int> = Set(readLine()!.split(separator: " ").map{Int($0)!})
+//
+//if A.subtracting(B).count == 0 {
+//    print(0)
+//} else {
+//    print(A.subtracting(B).count)
+//    print(A.subtracting(B).sorted(by: <).map{String($0)}.joined(separator: " "))
+//}
 
-if A.subtracting(B).count == 0 {
-    print(0)
-} else {
-    print(A.subtracting(B).count)
-    print(A.subtracting(B).sorted(by: <).map{String($0)}.joined(separator: " "))
+// MARK: - 백준 13900번 순서쌍의 곱의 합
+let n: Int = Int(readLine()!)!
+var arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+var result: Int = 0
+var newArr: [Int] = [arr[0]]
+for i in 1..<n {
+    newArr.append(newArr[i-1] + arr[i])
 }
+
+for i in 0..<n-1 {
+    result += arr[i] * (newArr[n-1]-newArr[i])
+}
+
+print(result)
