@@ -7034,22 +7034,37 @@ import Foundation
 
 
 // MARK: - 백준 17626번 Four Squares
-let n = Int(readLine()!)!
-var dp = Array(repeating: 0, count: n+1)
-dp[1] = 1
+//let n = Int(readLine()!)!
+//var dp = Array(repeating: 0, count: n+1)
+//dp[1] = 1
+//
+//if n == 1 {
+//    print(1)
+//} else {
+//    for i in 2...n {
+//        var minValue = Int.max
+//        var j = 1
+//        while (j*j) <= i {
+//            minValue = min(minValue, dp[i-j*j])
+//            j += 1
+//        }
+//        dp[i] = minValue + 1
+//    }
+//    print(dp[n])
+//}
 
-if n == 1 {
-    print(1)
-} else {
-    for i in 2...n {
-        var minValue = Int.max
-        var j = 1
-        while (j*j) <= i {
-            minValue = min(minValue, dp[i-j*j])
-            j += 1
-        }
-        dp[i] = minValue + 1
-    }
-    print(dp[n])
+// MARK: - 백준 2670번 연속부분최대곱
+
+let n: Int = Int(readLine()!)!
+var arr: [Double] = []
+for _ in 0..<n {
+    arr.append(Double(readLine()!)!)
 }
 
+for i in 1..<arr.count {
+    if arr[i] < arr[i] * arr[i-1] {
+        arr[i] = arr[i] * arr[i-1]
+    }
+}
+let ans = String(format: "%.3f", (arr.max()! * 1000).rounded() / 1000)
+print(ans)
