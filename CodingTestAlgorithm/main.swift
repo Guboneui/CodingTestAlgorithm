@@ -7097,37 +7097,53 @@ import Foundation
 //print(result)
 
 // MARK: - 백준 1755번 숫자놀이
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let number: [String] = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
-var arr: [String] = []
-for num in read[0]...read[1] {
-    let temp: [String] = String(num).map{String($0)}
-    var tempStr: String = ""
-    for str in temp {
-        tempStr += "\(number[Int(str)!]) "
-    }
-    arr.append(tempStr)
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let number: [String] = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
+//var arr: [String] = []
+//for num in read[0]...read[1] {
+//    let temp: [String] = String(num).map{String($0)}
+//    var tempStr: String = ""
+//    for str in temp {
+//        tempStr += "\(number[Int(str)!]) "
+//    }
+//    arr.append(tempStr)
+//}
+//arr.sort()
+//var result: [String] = []
+//for num in arr {
+//    let temp: [String] = num.split(separator: " ").map{String($0)}
+//    var tempStr: String = ""
+//    for i in temp {
+//        tempStr += String(number.firstIndex(of: i)!)
+//    }
+//    result.append(tempStr)
+//}
+//var temp: String = ""
+//var count: Int = 0
+//for i in result {
+//    temp += "\(i) "
+//    count += 1
+//    if count % 10 == 0 {
+//        print(temp)
+//        temp = ""
+//    }
+//    if count == read[1] - read[0] + 1 {
+//        print(temp)
+//    }
+//}
+
+// MARK: - 백준 11508번 2+1 세일
+let n: Int = Int(readLine()!)!
+var arr: [Int] = []
+for _ in 0..<n {
+    arr.append(Int(readLine()!)!)
 }
-arr.sort()
-var result: [String] = []
-for num in arr {
-    let temp: [String] = num.split(separator: " ").map{String($0)}
-    var tempStr: String = ""
-    for i in temp {
-        tempStr += String(number.firstIndex(of: i)!)
-    }
-    result.append(tempStr)
-}
-var temp: String = ""
-var count: Int = 0
-for i in result {
-    temp += "\(i) "
-    count += 1
-    if count % 10 == 0 {
-        print(temp)
-        temp = ""
-    }
-    if count == read[1] - read[0] + 1 {
-        print(temp)
+
+arr.sort(by: >)
+for i in 0..<n {
+    if i%3 == 2 {
+        arr[i] = 0
     }
 }
+
+print(arr.reduce(0, +))
