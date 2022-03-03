@@ -7133,17 +7133,36 @@ import Foundation
 //}
 
 // MARK: - 백준 11508번 2+1 세일
+//let n: Int = Int(readLine()!)!
+//var arr: [Int] = []
+//for _ in 0..<n {
+//    arr.append(Int(readLine()!)!)
+//}
+//
+//arr.sort(by: >)
+//for i in 0..<n {
+//    if i%3 == 2 {
+//        arr[i] = 0
+//    }
+//}
+//
+//print(arr.reduce(0, +))
+
+// MARK: - 백준 13699번 점화식
 let n: Int = Int(readLine()!)!
-var arr: [Int] = []
-for _ in 0..<n {
-    arr.append(Int(readLine()!)!)
-}
+var arr: [Int] = Array(repeating: 0, count: n+1)
+arr[0] = 1
 
-arr.sort(by: >)
-for i in 0..<n {
-    if i%3 == 2 {
-        arr[i] = 0
+func solution(num: Int) -> Int {
+    if arr[num] != 0 {
+        return arr[num]
     }
+    
+    var k = 0
+    for i in 0..<num {
+        k += solution(num: i) * solution(num: num - 1 - i)
+    }
+    arr[num] = k
+    return k
 }
-
-print(arr.reduce(0, +))
+print(solution(num: n))
