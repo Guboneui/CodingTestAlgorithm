@@ -7359,23 +7359,51 @@ import Foundation
 //}
 
 // MARK: - 백준 1448번 삼각형 만들기
-let n: Int = Int(readLine()!)!
-var arr: [Int] = []
-for _ in 0..<n {
-    arr.append(Int(readLine()!)!)
-}
-arr.sort(by: >)
-var result: Int = 0
+//let n: Int = Int(readLine()!)!
+//var arr: [Int] = []
+//for _ in 0..<n {
+//    arr.append(Int(readLine()!)!)
+//}
+//arr.sort(by: >)
+//var result: Int = 0
+//
+//for i in 0..<n-2 {
+//    if arr[i+1] + arr[i+2] - arr[i] > 0 {
+//        result = arr[i+1] + arr[i+2] + arr[i]
+//        break
+//    }
+//}
+//
+//if result == 0 {
+//    print(-1)
+//} else {
+//    print(result)
+//}
 
-for i in 0..<n-2 {
-    if arr[i+1] + arr[i+2] - arr[i] > 0 {
-        result = arr[i+1] + arr[i+2] + arr[i]
-        break
+// MARK: - 백준 2910번 빈도 정렬
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let n: Int = read[0]
+let c: Int = read[1]
+
+let arrInit: [String] = readLine()!.split(separator: " ").map{String($0)}
+var dict: [String:Int] = [:]
+for text in arrInit {
+    if dict[text] == nil {
+        dict[text] = 1
+    } else {
+        dict[text]! += 1
     }
 }
 
-if result == 0 {
-    print(-1)
-} else {
-    print(result)
+var newDict = dict.sorted{
+    if $0.value == $1.value {
+        return arrInit.firstIndex(of: $0.key)! < arrInit.firstIndex(of: $1.key)!
+    }
+    return $0.value > $1.value
+}
+
+for data in newDict {
+    for _ in 0..<data.value {
+        print(data.key, terminator: " ")
+    }
 }
