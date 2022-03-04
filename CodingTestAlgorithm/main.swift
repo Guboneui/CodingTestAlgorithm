@@ -7214,20 +7214,31 @@ import Foundation
 //dfs([])
 
 // MARK: - 백준 15649번 N과 M (1)
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let n: Int = read[0]
-let m: Int = read[1]
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = read[0]
+//let m: Int = read[1]
+//
+//func solution(_ arr: [Int]) {
+//    if arr.count == m {
+//        arr.forEach{print($0, terminator: " ")}
+//        print()
+//        return
+//    }
+//
+//    for i in 1...n where !arr.contains(i){
+//        solution(arr+[i])
+//    }
+//}
+//
+//solution([])
 
-func solution(_ arr: [Int]) {
-    if arr.count == m {
-        arr.forEach{print($0, terminator: " ")}
-        print()
-        return
-    }
-    
-    for i in 1...n where !arr.contains(i){
-        solution(arr+[i])
+// MARK: - 백준 11478번 서로 다른 부분 문자열의 개수
+let str: [String] = readLine()!.map{String($0)}
+var arr: Set<[String]> = []
+for i in 0..<str.count {
+    for j in i..<str.count {
+        arr.insert(Array(str[i...j]))
     }
 }
 
-solution([])
+print(arr.count)
