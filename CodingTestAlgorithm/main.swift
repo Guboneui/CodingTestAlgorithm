@@ -7278,28 +7278,82 @@ import Foundation
 //}
 
 // MARK: - 백준 2659번 십자카드 문제
-var arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//var arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//
+//func solution(_ k: [Int]) -> Int {
+//    var tempArr: [Int] = k + k[0...2]
+//    var clockNumber: [Int] = []
+//    for i in 0..<4 {
+//        clockNumber.append(Int(tempArr[i...i+3].map{String($0)}.joined(separator: ""))!)
+//    }
+//    let mainClockNumber: Int = clockNumber.min()!
+//    return mainClockNumber
+//}
+//
+//var startNumber: Int = 1111
+//var result: Int = 0
+//while startNumber <= solution(arr) {
+//    let temp: [Int] = String(startNumber).map{Int(String($0))!}
+//    if startNumber == solution(temp) {
+//        result += 1
+//    }
+//    startNumber += 1
+//
+//}
+//
+//print(result)
 
-func solution(_ k: [Int]) -> Int {
-    var tempArr: [Int] = k + k[0...2]
-    var clockNumber: [Int] = []
-    for i in 0..<4 {
-        clockNumber.append(Int(tempArr[i...i+3].map{String($0)}.joined(separator: ""))!)
+// MARK: - 백준 13414번 수강신청
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let target: Int = read[0]
+//let num: Int = read[1]
+//var arr: [String] = []
+//var dict: [String:Int] = [:]
+//for _ in 0..<num {
+//    let studentNum: String = readLine()!
+//    arr.append(studentNum)
+//    if dict[studentNum] == nil {
+//        dict[studentNum] = 1
+//    } else {
+//        dict[studentNum]! += 1
+//    }
+//}
+//
+//var result: [String] = []
+//for i in arr {
+//    if dict[i] == 1 {
+//        result.append(i)
+//    } else if dict[i]! > 1{
+//        dict[i]! -= 1
+//    }
+//}
+//
+//for i in 0..<target {
+//    print(result[i])
+//}
+
+
+let inp = readLine()!.split(separator : " ").map{Int(String($0))!}
+let N = inp[0]
+let M = inp[1]
+var dict = [String:Int]()
+var last = 0
+for _ in 0..<M {
+    let s = readLine()!
+    if dict[s] == nil {
+        dict[s] = last
+    }else {
+        dict[s] = last
     }
-    let mainClockNumber: Int = clockNumber.min()!
-    return mainClockNumber
+    last += 1
 }
 
-var startNumber: Int = 1111
-var result: Int = 0
-while startNumber <= solution(arr) {
-    let temp: [Int] = String(startNumber).map{Int(String($0))!}
-    if startNumber == solution(temp) {
-        result += 1
+var count = 1
+for (val,_) in dict.sorted{$0.value < $1.value} {
+    if count > N {
+        break
+    }else {
+        print(val)
+        count += 1
     }
-    startNumber += 1
-    
 }
-
-print(result)
-
