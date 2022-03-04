@@ -7244,35 +7244,62 @@ import Foundation
 //print(arr.count)
 
 // MARK: - 백준 16165번 걸그룹 마스터 준석이
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let n: Int = read[0]
-let m: Int = read[1]
-var group: [String] = []
-var member: [[String]] = []
-for _ in 0..<n {
-    let groupName: String = readLine()!
-    let groupCount: Int = Int(readLine()!)!
-    var temp: [String] = []
-    for _ in 0..<groupCount {
-        temp.append(readLine()!)
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = read[0]
+//let m: Int = read[1]
+//var group: [String] = []
+//var member: [[String]] = []
+//for _ in 0..<n {
+//    let groupName: String = readLine()!
+//    let groupCount: Int = Int(readLine()!)!
+//    var temp: [String] = []
+//    for _ in 0..<groupCount {
+//        temp.append(readLine()!)
+//    }
+//    temp.sort(by: <)
+//    group.append(groupName)
+//    member.append(temp)
+//}
+//
+//for _ in 0..<m {
+//    let question: String = readLine()!
+//    let category: String = readLine()!
+//    if category == "0" {
+//        let index: Int = group.firstIndex(of: question)!
+//        member[index].forEach{print($0)}
+//    } else {
+//        for i in 0..<member.count {
+//            if member[i].contains(question) {
+//                print(group[i])
+//                break
+//            }
+//        }
+//    }
+//}
+
+// MARK: - 백준 2659번 십자카드 문제
+var arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+
+func solution(_ k: [Int]) -> Int {
+    var tempArr: [Int] = k + k[0...2]
+    var clockNumber: [Int] = []
+    for i in 0..<4 {
+        clockNumber.append(Int(tempArr[i...i+3].map{String($0)}.joined(separator: ""))!)
     }
-    temp.sort(by: <)
-    group.append(groupName)
-    member.append(temp)
+    let mainClockNumber: Int = clockNumber.min()!
+    return mainClockNumber
 }
 
-for _ in 0..<m {
-    let question: String = readLine()!
-    let category: String = readLine()!
-    if category == "0" {
-        let index: Int = group.firstIndex(of: question)!
-        member[index].forEach{print($0)}
-    } else {
-        for i in 0..<member.count {
-            if member[i].contains(question) {
-                print(group[i])
-                break
-            }
-        }
+var startNumber: Int = 1111
+var result: Int = 0
+while startNumber <= solution(arr) {
+    let temp: [Int] = String(startNumber).map{Int(String($0))!}
+    if startNumber == solution(temp) {
+        result += 1
     }
+    startNumber += 1
+    
 }
+
+print(result)
+
