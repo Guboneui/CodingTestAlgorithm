@@ -7475,22 +7475,33 @@ import Foundation
 //
 //print(set.count)
 
-let roma: [Int] = [1, 5, 10, 50]
-var visited: [Bool] = Array(repeating: false, count: 1001)
-var result: Int = 0
-func dfs(_ target: Int, _ start: Int, _ sum: Int) {
-    if target == 0 {
-        if visited[sum] == false {
-            visited[sum] = true
-            result += 1
-        }
-        return
-    }
-    
-    for i in start..<4 {
-        dfs(target-1, i, sum+roma[i])
-    }
-}
+//let roma: [Int] = [1, 5, 10, 50]
+//var visited: [Bool] = Array(repeating: false, count: 1001)
+//var result: Int = 0
+//func dfs(_ target: Int, _ start: Int, _ sum: Int) {
+//    if target == 0 {
+//        if visited[sum] == false {
+//            visited[sum] = true
+//            result += 1
+//        }
+//        return
+//    }
+//
+//    for i in start..<4 {
+//        dfs(target-1, i, sum+roma[i])
+//    }
+//}
+//
+//dfs(Int(readLine()!)!, 0, 0)
+//print(result)
 
-dfs(Int(readLine()!)!, 0, 0)
-print(result)
+
+// MARK: - 백준 14495번 피보나치 비스무리한 수열
+let n: Int = Int(readLine()!)!
+func solution(num: Int) -> Int {
+    if num <= 3 {
+        return 1
+    }
+    return solution(num: num-3) + solution(num: num-1)
+}
+print(solution(num: n))
