@@ -7434,29 +7434,63 @@ import Foundation
 
 
 // MARK: - 백준 2548번 대표 자연수
-let n: Int = Int(readLine()!)!
-let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted(by: <)
-var target: Int = 0
-var result: Int = Int.max
+//let n: Int = Int(readLine()!)!
+//let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted(by: <)
+//var target: Int = 0
+//var result: Int = Int.max
+//
+//for i in 0..<arr.count {
+//    var k = arr[i]
+//    var temp: Int = 0
+//    for i in arr {
+//        temp += abs(i-k)
+//    }
+//
+//    if temp < result {
+//        result = temp
+//        target = k
+//    } else if temp == result {
+//        if k < target {
+//            target = k
+//        }
+//    }
+//
+//
+//}
+//
+//print(target)
 
-for i in 0..<arr.count {
-    var k = arr[i]
-    var temp: Int = 0
-    for i in arr {
-        temp += abs(i-k)
-    }
-    
-    if temp < result {
-        result = temp
-        target = k
-    } else if temp == result {
-        if k < target {
-            target = k
+// MARK: - 백준 16992번 로마 숫자 만들기
+//let n: Int = Int(readLine()!)!
+//var set: Set<Int> = []
+//for i in 0..<n+1 {
+//    for j in 0..<n+1-i {
+//        for k in 0..<n+1-i-j {
+//            let t = n-i-j-k
+//            let temp = i+5*j+10*k+50*t
+//            set.insert(temp)
+//        }
+//    }
+//}
+//
+//print(set.count)
+
+let roma: [Int] = [1, 5, 10, 50]
+var visited: [Bool] = Array(repeating: false, count: 1001)
+var result: Int = 0
+func dfs(_ target: Int, _ start: Int, _ sum: Int) {
+    if target == 0 {
+        if visited[sum] == false {
+            visited[sum] = true
+            result += 1
         }
+        return
     }
-
     
+    for i in start..<4 {
+        dfs(target-1, i, sum+roma[i])
+    }
 }
 
-print(target)
-
+dfs(Int(readLine()!)!, 0, 0)
+print(result)
