@@ -7233,12 +7233,46 @@ import Foundation
 //solution([])
 
 // MARK: - 백준 11478번 서로 다른 부분 문자열의 개수
-let str: [String] = readLine()!.map{String($0)}
-var arr: Set<[String]> = []
-for i in 0..<str.count {
-    for j in i..<str.count {
-        arr.insert(Array(str[i...j]))
+//let str: [String] = readLine()!.map{String($0)}
+//var arr: Set<[String]> = []
+//for i in 0..<str.count {
+//    for j in i..<str.count {
+//        arr.insert(Array(str[i...j]))
+//    }
+//}
+//
+//print(arr.count)
+
+// MARK: - 백준 16165번 걸그룹 마스터 준석이
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let n: Int = read[0]
+let m: Int = read[1]
+var group: [String] = []
+var member: [[String]] = []
+for _ in 0..<n {
+    let groupName: String = readLine()!
+    let groupCount: Int = Int(readLine()!)!
+    var temp: [String] = []
+    for _ in 0..<groupCount {
+        temp.append(readLine()!)
     }
+    temp.sort(by: <)
+    group.append(groupName)
+    member.append(temp)
 }
 
-print(arr.count)
+for _ in 0..<m {
+    let question: String = readLine()!
+    let category: String = readLine()!
+    if category == "0" {
+        let index: Int = group.firstIndex(of: question)!
+        member[index].forEach{print($0)}
+    } else {
+        for i in 0..<member.count {
+            if member[i].contains(question) {
+                print(group[i])
+                break
+            }
+        }
+    }
+}
