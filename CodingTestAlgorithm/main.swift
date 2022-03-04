@@ -7149,20 +7149,66 @@ import Foundation
 //print(arr.reduce(0, +))
 
 // MARK: - 백준 13699번 점화식
-let n: Int = Int(readLine()!)!
-var arr: [Int] = Array(repeating: 0, count: n+1)
-arr[0] = 1
+//let n: Int = Int(readLine()!)!
+//var arr: [Int] = Array(repeating: 0, count: n+1)
+//arr[0] = 1
+//
+//func solution(num: Int) -> Int {
+//    if arr[num] != 0 {
+//        return arr[num]
+//    }
+//
+//    var k = 0
+//    for i in 0..<num {
+//        k += solution(num: i) * solution(num: num - 1 - i)
+//    }
+//    arr[num] = k
+//    return k
+//}
+//print(solution(num: n))
 
-func solution(num: Int) -> Int {
-    if arr[num] != 0 {
-        return arr[num]
+// MARK: - 백준 15650번 N과 M(2)
+let read: [String] = readLine()!.split(separator: " ").map{String($0)}
+let n: Int = Int(read[0])!
+let m: Int = Int(read[1])!
+let baseArr: [Int] = Array(1...n)
+////print(baseArr)
+//
+//func combi(_ nums: [Int], _ targetNum: Int) -> [[Int]] {
+//    var result = [[Int]]()
+//
+//    func combination(_ index: Int, _ nowCombi: [Int]) {
+//        if nowCombi.count == targetNum {
+//            result.append(nowCombi)
+//            return
+//        }
+//        for i in index..<nums.count {
+//            combination(i + 1, nowCombi + [nums[i]])
+//        }
+//    }
+//
+//    combination(0, [])
+//
+//    return result
+//}
+//let result = combi(baseArr, m).sorted{
+//    return $0[0] < $1[0]
+//}
+//for i in result {
+//    print(i.map{String($0)}.joined(separator: " "))
+//}
+
+func dfs(_ k: [Int]) {
+    if k.count == m {
+        k.forEach{print($0, terminator: " ")}
+        print()
+        return
     }
     
-    var k = 0
-    for i in 0..<num {
-        k += solution(num: i) * solution(num: num - 1 - i)
+    for i in 1...n where k.last ?? 0 < i {
+        print("k: \(k)")
+        dfs(k+[i])
     }
-    arr[num] = k
-    return k
 }
-print(solution(num: n))
+
+dfs([])
