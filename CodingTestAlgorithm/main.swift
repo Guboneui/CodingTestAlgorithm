@@ -7410,25 +7410,53 @@ import Foundation
 
 // MARK: - 백준 6591번 이항 쇼다운
 
-while true {
-    let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    if read == [0, 0] {
-        break
+//while true {
+//    let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    if read == [0, 0] {
+//        break
+//    }
+//
+//    var a: Int = read[0]
+//    var b: Int = read[1]
+//
+//    if b>a-b {
+//        b = a-b
+//    }
+//
+//    var result: Int = 1
+//    for i in 1...b {
+//        result = result*a/i
+//        a -= 1
+//    }
+//
+//    print(result)
+//}
+
+
+// MARK: - 백준 2548번 대표 자연수
+let n: Int = Int(readLine()!)!
+let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted(by: <)
+var target: Int = 0
+var result: Int = Int.max
+
+for i in 0..<arr.count {
+    var k = arr[i]
+    var temp: Int = 0
+    for i in arr {
+        temp += abs(i-k)
     }
     
-    var a: Int = read[0]
-    var b: Int = read[1]
-    
-    if b>a-b {
-        b = a-b
+    if temp < result {
+        result = temp
+        target = k
+    } else if temp == result {
+        if k < target {
+            target = k
+        }
     }
+
     
-    var result: Int = 1
-    for i in 1...b {
-        result = result*a/i
-        a -= 1
-    }
-    
-    print(result)
 }
+
+print(target)
 
