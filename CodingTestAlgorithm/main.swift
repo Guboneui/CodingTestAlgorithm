@@ -7381,29 +7381,54 @@ import Foundation
 //}
 
 // MARK: - 백준 2910번 빈도 정렬
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let n: Int = read[0]
-let c: Int = read[1]
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = read[0]
+//let c: Int = read[1]
+//
+//let arrInit: [String] = readLine()!.split(separator: " ").map{String($0)}
+//var dict: [String:Int] = [:]
+//for text in arrInit {
+//    if dict[text] == nil {
+//        dict[text] = 1
+//    } else {
+//        dict[text]! += 1
+//    }
+//}
+//
+//var newDict = dict.sorted{
+//    if $0.value == $1.value {
+//        return arrInit.firstIndex(of: $0.key)! < arrInit.firstIndex(of: $1.key)!
+//    }
+//    return $0.value > $1.value
+//}
+//
+//for data in newDict {
+//    for _ in 0..<data.value {
+//        print(data.key, terminator: " ")
+//    }
+//}
 
-let arrInit: [String] = readLine()!.split(separator: " ").map{String($0)}
-var dict: [String:Int] = [:]
-for text in arrInit {
-    if dict[text] == nil {
-        dict[text] = 1
-    } else {
-        dict[text]! += 1
+// MARK: - 백준 6591번 이항 쇼다운
+
+while true {
+    let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    if read == [0, 0] {
+        break
     }
+    
+    var a: Int = read[0]
+    var b: Int = read[1]
+    
+    if b>a-b {
+        b = a-b
+    }
+    
+    var result: Int = 1
+    for i in 1...b {
+        result = result*a/i
+        a -= 1
+    }
+    
+    print(result)
 }
 
-var newDict = dict.sorted{
-    if $0.value == $1.value {
-        return arrInit.firstIndex(of: $0.key)! < arrInit.firstIndex(of: $1.key)!
-    }
-    return $0.value > $1.value
-}
-
-for data in newDict {
-    for _ in 0..<data.value {
-        print(data.key, terminator: " ")
-    }
-}
