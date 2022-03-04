@@ -7168,10 +7168,10 @@ import Foundation
 //print(solution(num: n))
 
 // MARK: - 백준 15650번 N과 M(2)
-let read: [String] = readLine()!.split(separator: " ").map{String($0)}
-let n: Int = Int(read[0])!
-let m: Int = Int(read[1])!
-let baseArr: [Int] = Array(1...n)
+//let read: [String] = readLine()!.split(separator: " ").map{String($0)}
+//let n: Int = Int(read[0])!
+//let m: Int = Int(read[1])!
+//let baseArr: [Int] = Array(1...n)
 ////print(baseArr)
 //
 //func combi(_ nums: [Int], _ targetNum: Int) -> [[Int]] {
@@ -7198,17 +7198,36 @@ let baseArr: [Int] = Array(1...n)
 //    print(i.map{String($0)}.joined(separator: " "))
 //}
 
-func dfs(_ k: [Int]) {
-    if k.count == m {
-        k.forEach{print($0, terminator: " ")}
+//func dfs(_ k: [Int]) {
+//    if k.count == m {
+//        k.forEach{print($0, terminator: " ")}
+//        print()
+//        return
+//    }
+//
+//    for i in 1...n where k.last ?? 0 < i {
+//        print("k: \(k)")
+//        dfs(k+[i])
+//    }
+//}
+//
+//dfs([])
+
+// MARK: - 백준 15649번 N과 M (1)
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let n: Int = read[0]
+let m: Int = read[1]
+
+func solution(_ arr: [Int]) {
+    if arr.count == m {
+        arr.forEach{print($0, terminator: " ")}
         print()
         return
     }
     
-    for i in 1...n where k.last ?? 0 < i {
-        print("k: \(k)")
-        dfs(k+[i])
+    for i in 1...n where !arr.contains(i){
+        solution(arr+[i])
     }
 }
 
-dfs([])
+solution([])
