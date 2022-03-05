@@ -7600,15 +7600,35 @@ import Foundation
 //print(result)
 
 // MARK: - 백준 10211번 Maximum Subarray
-let testCases: Int = Int(readLine()!)!
-for _ in 0..<testCases {
-    let n: Int = Int(readLine()!)!
-    let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    var dp: [Int] = Array(repeating: 0, count: n)
-    dp[0] = arr[0]
-    for i in 1..<n {
-        dp[i] = max(dp[i-1]+arr[i], arr[i])
-    }
+//let testCases: Int = Int(readLine()!)!
+//for _ in 0..<testCases {
+//    let n: Int = Int(readLine()!)!
+//    let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    var dp: [Int] = Array(repeating: 0, count: n)
+//    dp[0] = arr[0]
+//    for i in 1..<n {
+//        dp[i] = max(dp[i-1]+arr[i], arr[i])
+//    }
+//
+//    print(dp.max()!)
+//}
+
+// MARK: - 백준 4375번 1
+while let n = readLine() {
+
+    var count = 0
+    var next = 1
     
-    print(dp.max()!)
+    while true {
+        count += 1
+        if next % Int(n)! == 0 {
+            print("\(count)")
+            break
+        }else {
+            next = ((next * 10) + 1)
+            next %= Int(n)!
+        }
+        
+    }
 }
+
