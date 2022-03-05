@@ -7643,16 +7643,40 @@ import Foundation
 
 
 // MARK: - 백준 11441번 합 구하기
-let length: Int = Int(readLine()!)!
-let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let testCases: Int = Int(readLine()!)!
-var dp: [Int] = Array(repeating: 0, count: length+1)
-for i in 1...length {
-    dp[i] = arr[i-1] + dp[i-1]
+//let length: Int = Int(readLine()!)!
+//let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let testCases: Int = Int(readLine()!)!
+//var dp: [Int] = Array(repeating: 0, count: length+1)
+//for i in 1...length {
+//    dp[i] = arr[i-1] + dp[i-1]
+//}
+//
+//
+//for _ in 0..<testCases {
+//    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    print(dp[temp[1]] - dp[temp[0]-1])
+//}
+
+// MARK: - 백준 14425번 문자열 집합
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let n: Int = read[0]
+let m: Int = read[1]
+
+var dict: [String:Int] = [:]
+for _ in 0..<n {
+    let temp: String = readLine()!
+    if dict[temp] == nil {
+        dict[temp] = 1
+    } else {
+        dict[temp]! += 1
+    }
 }
 
-
-for _ in 0..<testCases {
-    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    print(dp[temp[1]] - dp[temp[0]-1])
+var result: Int = 0
+for _ in 0..<m {
+    let temp: String = readLine()!
+    if dict[temp] != nil {
+        result += 1
+    }
 }
+print(result)
