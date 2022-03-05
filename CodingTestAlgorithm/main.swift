@@ -7549,34 +7549,52 @@ import Foundation
 
 // MARK: - 백준 7795번 먹을 것인가 먹힐 것인가
 
-let testCases: Int = Int(readLine()!)!
+//let testCases: Int = Int(readLine()!)!
+//
+//func solution(arr: [Int], target: Int) -> Int {
+//    var start: Int = 0
+//    var end: Int = arr.count - 1
+//    var result: Int = -1
+//    while start<=end {
+//        var mid: Int = (start+end) / 2
+//        if arr[mid] < target {
+//            result = mid
+//            start = mid + 1
+//        } else {
+//            end = mid - 1
+//        }
+//    }
+//    return result
+//}
+//
+//
+//for _ in 0..<testCases {
+//    let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    let a: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted(by: <)
+//    let b: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted(by: <)
+//
+//    var count: Int = 0
+//    for num in a {
+//        count += solution(arr: b, target: num) + 1
+//    }
+//    print(count)
+//
+//}
 
-func solution(arr: [Int], target: Int) -> Int {
-    var start: Int = 0
-    var end: Int = arr.count - 1
-    var result: Int = -1
-    while start<=end {
-        var mid: Int = (start+end) / 2
-        if arr[mid] < target {
-            result = mid
-            start = mid + 1
-        } else {
-            end = mid - 1
-        }
+// MARK: - 백준 2012번 등수 매기기
+let n: Int = Int(readLine()!)!
+var arr: [Int] = []
+for _ in 0..<n {
+    arr.append(Int(readLine()!)!)
+}
+arr.sort(by: <)
+arr.insert(0, at: 0)
+var result: Int = 0
+
+for i in 1...n {
+    if arr[i] != i {
+        result += abs(arr[i]-i)
     }
-    return result
 }
 
-
-for _ in 0..<testCases {
-    let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    let a: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted(by: <)
-    let b: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted(by: <)
-    
-    var count: Int = 0
-    for num in a {
-        count += solution(arr: b, target: num) + 1
-    }
-    print(count)
-    
-}
+print(result)
