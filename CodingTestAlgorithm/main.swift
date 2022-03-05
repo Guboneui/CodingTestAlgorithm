@@ -7507,41 +7507,76 @@ import Foundation
 //print(solution(num: n))
 
 // MARK: - 백준 2312번 수 복원하기
-let testCases: Int = Int(readLine()!)!
-for _ in 0..<testCases {
-    var target: Int = Int(readLine()!)!
-    var arr: [Int] = Array(0...target)
-    arr[1] = 0
-    for i in 2...target {
-        if arr[i] == 0 {
-            continue
-        }
-        for j in stride(from: i*2, through: target, by: i) {
-            arr[j] = 0
-        }
-    }
-    
-    let primeNumber: [Int] = arr.filter{$0 != 0}
-    
-    var result: [Int:Int] = [:]
-    var index: Int = 0
-    
-    while target != 1 {
-        if target % primeNumber[index] == 0 {
-            if result[primeNumber[index]] == nil {
-                result[primeNumber[index]] = 1
-            } else {
-                result[primeNumber[index]]! += 1
-            }
-            
-            target = target / primeNumber[index]
-            
-        } else {
-            index += 1
-        }
-    }
+//let testCases: Int = Int(readLine()!)!
+//for _ in 0..<testCases {
+//    var target: Int = Int(readLine()!)!
+//    var arr: [Int] = Array(0...target)
+//    arr[1] = 0
+//    for i in 2...target {
+//        if arr[i] == 0 {
+//            continue
+//        }
+//        for j in stride(from: i*2, through: target, by: i) {
+//            arr[j] = 0
+//        }
+//    }
+//
+//    let primeNumber: [Int] = arr.filter{$0 != 0}
+//
+//    var result: [Int:Int] = [:]
+//    var index: Int = 0
+//
+//    while target != 1 {
+//        if target % primeNumber[index] == 0 {
+//            if result[primeNumber[index]] == nil {
+//                result[primeNumber[index]] = 1
+//            } else {
+//                result[primeNumber[index]]! += 1
+//            }
+//
+//            target = target / primeNumber[index]
+//
+//        } else {
+//            index += 1
+//        }
+//    }
+//
+//    for (key, value) in result.sorted{$0.key < $1.key} {
+//        print("\(key) \(value)")
+//    }
+//}
 
-    for (key, value) in result.sorted{$0.key < $1.key} {
-        print("\(key) \(value)")
+
+// MARK: - 백준 7795번 먹을 것인가 먹힐 것인가
+
+let testCases: Int = Int(readLine()!)!
+
+func solution(arr: [Int], target: Int) -> Int {
+    var start: Int = 0
+    var end: Int = arr.count - 1
+    var result: Int = -1
+    while start<=end {
+        var mid: Int = (start+end) / 2
+        if arr[mid] < target {
+            result = mid
+            start = mid + 1
+        } else {
+            end = mid - 1
+        }
     }
+    return result
+}
+
+
+for _ in 0..<testCases {
+    let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    let a: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted(by: <)
+    let b: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted(by: <)
+    
+    var count: Int = 0
+    for num in a {
+        count += solution(arr: b, target: num) + 1
+    }
+    print(count)
+    
 }
