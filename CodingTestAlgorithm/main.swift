@@ -7497,11 +7497,51 @@ import Foundation
 
 
 // MARK: - 백준 14495번 피보나치 비스무리한 수열
-let n: Int = Int(readLine()!)!
-func solution(num: Int) -> Int {
-    if num <= 3 {
-        return 1
+//let n: Int = Int(readLine()!)!
+//func solution(num: Int) -> Int {
+//    if num <= 3 {
+//        return 1
+//    }
+//    return solution(num: num-3) + solution(num: num-1)
+//}
+//print(solution(num: n))
+
+// MARK: - 백준 2312번 수 복원하기
+let testCases: Int = Int(readLine()!)!
+for _ in 0..<testCases {
+    var target: Int = Int(readLine()!)!
+    var arr: [Int] = Array(0...target)
+    arr[1] = 0
+    for i in 2...target {
+        if arr[i] == 0 {
+            continue
+        }
+        for j in stride(from: i*2, through: target, by: i) {
+            arr[j] = 0
+        }
     }
-    return solution(num: num-3) + solution(num: num-1)
+    
+    let primeNumber: [Int] = arr.filter{$0 != 0}
+    
+    var result: [Int:Int] = [:]
+    var index: Int = 0
+    
+    while target != 1 {
+        if target % primeNumber[index] == 0 {
+            if result[primeNumber[index]] == nil {
+                result[primeNumber[index]] = 1
+            } else {
+                result[primeNumber[index]]! += 1
+            }
+            
+            target = target / primeNumber[index]
+            
+        } else {
+            index += 1
+        }
+    }
+
+    for (key, value) in result.sorted{$0.key < $1.key} {
+        print("\(key) \(value)")
+    }
 }
-print(solution(num: n))
