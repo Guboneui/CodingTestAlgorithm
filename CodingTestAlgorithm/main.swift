@@ -7658,25 +7658,39 @@ import Foundation
 //}
 
 // MARK: - 백준 14425번 문자열 집합
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let n: Int = read[0]
-let m: Int = read[1]
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = read[0]
+//let m: Int = read[1]
+//
+//var dict: [String:Int] = [:]
+//for _ in 0..<n {
+//    let temp: String = readLine()!
+//    if dict[temp] == nil {
+//        dict[temp] = 1
+//    } else {
+//        dict[temp]! += 1
+//    }
+//}
+//
+//var result: Int = 0
+//for _ in 0..<m {
+//    let temp: String = readLine()!
+//    if dict[temp] != nil {
+//        result += 1
+//    }
+//}
+//print(result)
 
-var dict: [String:Int] = [:]
-for _ in 0..<n {
-    let temp: String = readLine()!
-    if dict[temp] == nil {
-        dict[temp] = 1
-    } else {
-        dict[temp]! += 1
-    }
-}
+// MARK: - 백준 9507번 Generations of Tribbles
+let testCases: Int = Int(readLine()!)!
 
-var result: Int = 0
-for _ in 0..<m {
-    let temp: String = readLine()!
-    if dict[temp] != nil {
-        result += 1
+for _ in 0..<testCases {
+    let num: Int = Int(readLine()!)!
+    var arr: [Int] = [1, 1, 2, 4]
+    if num > 3 {
+        for i in 4...num {
+            arr.append(arr[i-1] + arr[i-2] + arr[i-3] + arr[i-4])
+        }
     }
+    print(arr[num])
 }
-print(result)
