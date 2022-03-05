@@ -7614,21 +7614,31 @@ import Foundation
 //}
 
 // MARK: - 백준 4375번 1
-while let n = readLine() {
+//while let n = readLine() {
+//
+//    var count = 0
+//    var next = 1
+//
+//    while true {
+//        count += 1
+//        if next % Int(n)! == 0 {
+//            print("\(count)")
+//            break
+//        }else {
+//            next = ((next * 10) + 1)
+//            next %= Int(n)!
+//        }
+//
+//    }
+//}
 
-    var count = 0
-    var next = 1
-    
-    while true {
-        count += 1
-        if next % Int(n)! == 0 {
-            print("\(count)")
-            break
-        }else {
-            next = ((next * 10) + 1)
-            next %= Int(n)!
-        }
-        
-    }
-}
+
+// MARK: - 백준 1269번 대칭 차집합
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+var a: Set<Int> = Set(readLine()!.split(separator: " ").map{Int($0)!})
+var b: Set<Int> = Set(readLine()!.split(separator: " ").map{Int($0)!})
+var aa = a.subtracting(b)
+var bb = b.subtracting(a)
+print(aa.union(bb).count)
+
 
