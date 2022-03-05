@@ -7582,19 +7582,33 @@ import Foundation
 //}
 
 // MARK: - 백준 2012번 등수 매기기
-let n: Int = Int(readLine()!)!
-var arr: [Int] = []
-for _ in 0..<n {
-    arr.append(Int(readLine()!)!)
-}
-arr.sort(by: <)
-arr.insert(0, at: 0)
-var result: Int = 0
+//let n: Int = Int(readLine()!)!
+//var arr: [Int] = []
+//for _ in 0..<n {
+//    arr.append(Int(readLine()!)!)
+//}
+//arr.sort(by: <)
+//arr.insert(0, at: 0)
+//var result: Int = 0
+//
+//for i in 1...n {
+//    if arr[i] != i {
+//        result += abs(arr[i]-i)
+//    }
+//}
+//
+//print(result)
 
-for i in 1...n {
-    if arr[i] != i {
-        result += abs(arr[i]-i)
+// MARK: - 백준 10211번 Maximum Subarray
+let testCases: Int = Int(readLine()!)!
+for _ in 0..<testCases {
+    let n: Int = Int(readLine()!)!
+    let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    var dp: [Int] = Array(repeating: 0, count: n)
+    dp[0] = arr[0]
+    for i in 1..<n {
+        dp[i] = max(dp[i-1]+arr[i], arr[i])
     }
+    
+    print(dp.max()!)
 }
-
-print(result)
