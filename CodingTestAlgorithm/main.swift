@@ -7634,11 +7634,25 @@ import Foundation
 
 
 // MARK: - 백준 1269번 대칭 차집합
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-var a: Set<Int> = Set(readLine()!.split(separator: " ").map{Int($0)!})
-var b: Set<Int> = Set(readLine()!.split(separator: " ").map{Int($0)!})
-var aa = a.subtracting(b)
-var bb = b.subtracting(a)
-print(aa.union(bb).count)
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//var a: Set<Int> = Set(readLine()!.split(separator: " ").map{Int($0)!})
+//var b: Set<Int> = Set(readLine()!.split(separator: " ").map{Int($0)!})
+//var aa = a.subtracting(b)
+//var bb = b.subtracting(a)
+//print(aa.union(bb).count)
 
 
+// MARK: - 백준 11441번 합 구하기
+let length: Int = Int(readLine()!)!
+let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let testCases: Int = Int(readLine()!)!
+var dp: [Int] = Array(repeating: 0, count: length+1)
+for i in 1...length {
+    dp[i] = arr[i-1] + dp[i-1]
+}
+
+
+for _ in 0..<testCases {
+    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    print(dp[temp[1]] - dp[temp[0]-1])
+}
