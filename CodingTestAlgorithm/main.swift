@@ -7682,15 +7682,26 @@ import Foundation
 //print(result)
 
 // MARK: - 백준 9507번 Generations of Tribbles
-let testCases: Int = Int(readLine()!)!
+//let testCases: Int = Int(readLine()!)!
+//
+//for _ in 0..<testCases {
+//    let num: Int = Int(readLine()!)!
+//    var arr: [Int] = [1, 1, 2, 4]
+//    if num > 3 {
+//        for i in 4...num {
+//            arr.append(arr[i-1] + arr[i-2] + arr[i-3] + arr[i-4])
+//        }
+//    }
+//    print(arr[num])
+//}
 
-for _ in 0..<testCases {
-    let num: Int = Int(readLine()!)!
-    var arr: [Int] = [1, 1, 2, 4]
-    if num > 3 {
-        for i in 4...num {
-            arr.append(arr[i-1] + arr[i-2] + arr[i-3] + arr[i-4])
-        }
-    }
-    print(arr[num])
+// MARK: - 백준 1748번 수 이어 쓰기 1
+let n = Int(readLine()!)!
+var result = 0
+var start = 1
+
+while (start <= n) {
+  result += n - start + 1
+  start *= 10
 }
+print(result)
