@@ -7696,12 +7696,20 @@ import Foundation
 //}
 
 // MARK: - 백준 1748번 수 이어 쓰기 1
-let n = Int(readLine()!)!
-var result = 0
-var start = 1
+//let n = Int(readLine()!)!
+//var result = 0
+//var start = 1
+//
+//while (start <= n) {
+//  result += n - start + 1
+//  start *= 10
+//}
+//print(result)
 
-while (start <= n) {
-  result += n - start + 1
-  start *= 10
+// MARK: - 백준 9657번 돌 게임 3
+let n: Int = Int(readLine()!)!
+if n%7 == 2 || n%7 == 0 {
+    print("CY")
+} else {
+    print("SK")
 }
-print(result)
