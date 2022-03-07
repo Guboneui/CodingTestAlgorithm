@@ -7715,18 +7715,44 @@ import Foundation
 //}
 
 // MARK: - 백준 15651번 N과 M (3)
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = read[0]
+//let m: Int = read[1]
+//let k: [String] = Array(1...n).map{String($0)}
+//func solution(_ arr: [String]) {
+//    if arr.count == m {
+//        print(arr.joined(separator: " "))
+//        return
+//    }
+//
+//    for i in k {
+//        solution(arr+[i])
+//    }
+//}
+//
+//solution([])
+
+// MARK: - 백준 15652번 N과 M (4)
 let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
 let n: Int = read[0]
 let m: Int = read[1]
-let k: [String] = Array(1...n).map{String($0)}
-func solution(_ arr: [String]) {
+
+func solution(_ arr: [Int]) {
     if arr.count == m {
-        print(arr.joined(separator: " "))
+        arr.forEach{print($0, terminator: " ")}
+        print()
         return
     }
     
-    for i in k {
-        solution(arr+[i])
+    if arr.isEmpty {
+        for i in 1...n {
+            solution(arr + [i])
+        }
+        
+    } else {
+        for i in 1...n where arr.last! <= i {
+            solution(arr + [i])
+        }
     }
 }
 
