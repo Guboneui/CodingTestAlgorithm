@@ -7863,27 +7863,52 @@ import Foundation
 //solution([])
 
 // MARK: - 백준 15654번 N과 M (5)
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = read[0]
+//let m: Int = read[1]
+//let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted()
+//var visited: [Bool] = Array(repeating: false, count: n)
+//func solution(_ k: [Int]) {
+//    if k.count == m {
+//        k.forEach{print($0, terminator: " ")}
+//        print()
+//        return
+//    }
+//
+//    for i in 0..<n {
+//        if visited[i] == false {
+//            visited[i] = true
+//            solution(k + [arr[i]])
+//            visited[i] = false
+//        }
+//    }
+//}
+//
+//solution([])
+
+// MARK: 백준 15655번 N과 M (6)
 let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
 let n: Int = read[0]
 let m: Int = read[1]
-let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted()
+var inputArr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted()
 var visited: [Bool] = Array(repeating: false, count: n)
-func solution(_ k: [Int]) {
-    if k.count == m {
-        k.forEach{print($0, terminator: " ")}
+
+func solution(_ arr: [Int]) {
+    if arr.count == m {
+        arr.forEach{print($0, terminator: " ")}
         print()
         return
     }
     
     for i in 0..<n {
-        if visited[i] == false {
-            visited[i] = true
-            solution(k + [arr[i]])
-            visited[i] = false
+        if arr.last ?? 0 < inputArr[i] {
+            if visited[i] == false {
+                visited[i] = true
+                solution(arr + [inputArr[i]])
+                visited[i] = false
+            }
         }
     }
 }
 
 solution([])
-
-
