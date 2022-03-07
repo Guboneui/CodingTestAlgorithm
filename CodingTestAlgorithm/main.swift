@@ -7887,28 +7887,47 @@ import Foundation
 //solution([])
 
 // MARK: 백준 15655번 N과 M (6)
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = read[0]
+//let m: Int = read[1]
+//var inputArr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted()
+//var visited: [Bool] = Array(repeating: false, count: n)
+//
+//func solution(_ arr: [Int]) {
+//    if arr.count == m {
+//        arr.forEach{print($0, terminator: " ")}
+//        print()
+//        return
+//    }
+//
+//    for i in 0..<n {
+//        if arr.last ?? 0 < inputArr[i] {
+//            if visited[i] == false {
+//                visited[i] = true
+//                solution(arr + [inputArr[i]])
+//                visited[i] = false
+//            }
+//        }
+//    }
+//}
+//
+//solution([])
+
+// MARK: - 백준 15656번 N과 M (7)
 let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
 let n: Int = read[0]
 let m: Int = read[1]
 var inputArr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted()
-var visited: [Bool] = Array(repeating: false, count: n)
 
-func solution(_ arr: [Int]) {
-    if arr.count == m {
-        arr.forEach{print($0, terminator: " ")}
-        print()
+func solution(_ depth: Int, _ str: String) {
+    if depth == m {
+        print(str)
         return
     }
     
     for i in 0..<n {
-        if arr.last ?? 0 < inputArr[i] {
-            if visited[i] == false {
-                visited[i] = true
-                solution(arr + [inputArr[i]])
-                visited[i] = false
-            }
-        }
+        solution(depth + 1, str + "\(inputArr[i]) ")
     }
 }
 
-solution([])
+solution(0, "")
