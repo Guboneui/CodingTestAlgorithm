@@ -8013,22 +8013,46 @@ import Foundation
 //solution([])
 
 // MARK: - 백준 15664번 N과 M (11)
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = read[0]
+//let m: Int = read[1]
+//let inputArr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted()
+//var tempDict: [[String]:Int] = [:]
+//var visited: [Bool] = Array(repeating: false, count: n)
+//var result: String = ""
+//func solution(_ arr: [String]) {
+//    if arr.count == m {
+//        if tempDict[arr] == nil {
+//            tempDict[arr] = 1
+//            result += "\(arr.joined(separator: " "))" + "\n"
+//        }
+//        return
+//    }
+//    for i in 0..<n {
+//        solution(arr + [String(inputArr[i])])
+//    }
+//}
+//
+//solution([])
+//print(result)
+
+// MARK: - 백준 15664번 N과 M (12)
 let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
 let n: Int = read[0]
 let m: Int = read[1]
-let inputArr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted()
 var tempDict: [[String]:Int] = [:]
-var visited: [Bool] = Array(repeating: false, count: n)
+var inputArr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted()
 var result: String = ""
+
 func solution(_ arr: [String]) {
     if arr.count == m {
         if tempDict[arr] == nil {
             tempDict[arr] = 1
-            result += "\(arr.joined(separator: " "))" + "\n"
+            result += arr.joined(separator: " ") + "\n"
         }
         return
     }
-    for i in 0..<n {
+    for i in 0..<n where Int(arr.last ?? "0")! <= inputArr[i] {
         solution(arr + [String(inputArr[i])])
     }
 }
