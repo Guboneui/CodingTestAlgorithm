@@ -7707,9 +7707,27 @@ import Foundation
 //print(result)
 
 // MARK: - 백준 9657번 돌 게임 3
-let n: Int = Int(readLine()!)!
-if n%7 == 2 || n%7 == 0 {
-    print("CY")
-} else {
-    print("SK")
+//let n: Int = Int(readLine()!)!
+//if n%7 == 2 || n%7 == 0 {
+//    print("CY")
+//} else {
+//    print("SK")
+//}
+
+// MARK: - 백준 15651번 N과 M (3)
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let n: Int = read[0]
+let m: Int = read[1]
+let k: [String] = Array(1...n).map{String($0)}
+func solution(_ arr: [String]) {
+    if arr.count == m {
+        print(arr.joined(separator: " "))
+        return
+    }
+    
+    for i in k {
+        solution(arr+[i])
+    }
 }
+
+solution([])
