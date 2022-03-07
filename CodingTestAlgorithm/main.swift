@@ -7804,21 +7804,41 @@ import Foundation
 
 // MARK: - 백준 15650번 N과 M (2)
 
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = read[0]
+//let m: Int = read[1]
+//
+//var visited: [Bool] = Array(repeating: false, count: n+1)
+//
+//func solution(_ arr: [Int]) {
+//    if arr.count == m {
+//        arr.forEach{print($0, terminator: " ")}
+//        print()
+//        return
+//    }
+//
+//    for i in 1...n where arr.last ?? 0 < 1{
+//        solution(arr + [i])
+//    }
+//}
+//
+//solution([])
+
+
+// MARK: - 백준 15651번 N과 M (3)
+
 let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
 let n: Int = read[0]
 let m: Int = read[1]
 
-var visited: [Bool] = Array(repeating: false, count: n+1)
-
-func solution(_ arr: [Int]) {
+func solution(_ arr: [String]) {
     if arr.count == m {
-        arr.forEach{print($0, terminator: " ")}
-        print()
+        print(arr.joined(separator: " "))
         return
     }
-
-    for i in 1...n where arr.last ?? 0 < 1{
-        solution(arr + [i])
+    
+    for i in 1...n {
+        solution(arr + [String(i)])
     }
 }
 
