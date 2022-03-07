@@ -7914,20 +7914,42 @@ import Foundation
 //solution([])
 
 // MARK: - 백준 15656번 N과 M (7)
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = read[0]
+//let m: Int = read[1]
+//var inputArr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted()
+//
+//func solution(_ depth: Int, _ str: String) {
+//    if depth == m {
+//        print(str)
+//        return
+//    }
+//
+//    for i in 0..<n {
+//        solution(depth + 1, str + "\(inputArr[i]) ")
+//    }
+//}
+//
+//solution(0, "")
+
+// MARK: - 백준 15656번 N과 M (8)
 let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
 let n: Int = read[0]
 let m: Int = read[1]
+var visited: [Bool] = Array(repeating: false, count: n)
 var inputArr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted()
-
-func solution(_ depth: Int, _ str: String) {
-    if depth == m {
-        print(str)
+func solution(_ arr: [Int]) {
+    if arr.count == m {
+        arr.forEach{print($0, terminator: " ")}
+        print()
         return
     }
     
     for i in 0..<n {
-        solution(depth + 1, str + "\(inputArr[i]) ")
+        if arr.last ?? 0 <= inputArr[i] {
+            solution(arr + [inputArr[i]])
+        }
     }
 }
 
-solution(0, "")
+solution([])
