@@ -7845,19 +7845,45 @@ import Foundation
 //solution([])
 
 // MARK: - 백준 15652번 N과 M (4)
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = read[0]
+//let m: Int = read[1]
+//
+//func solution(_ arr: [String]) {
+//    if arr.count == m {
+//        print(arr.joined(separator: " "))
+//        return
+//    }
+//
+//    for i in 1...n where Int(arr.last ?? "0")! <= i{
+//        solution(arr + [String(i)])
+//    }
+//}
+//
+//solution([])
+
+// MARK: - 백준 15654번 N과 M (5)
 let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
 let n: Int = read[0]
 let m: Int = read[1]
-
-func solution(_ arr: [String]) {
-    if arr.count == m {
-        print(arr.joined(separator: " "))
+let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted()
+var visited: [Bool] = Array(repeating: false, count: n)
+func solution(_ k: [Int]) {
+    if k.count == m {
+        k.forEach{print($0, terminator: " ")}
+        print()
         return
     }
     
-    for i in 1...n where Int(arr.last ?? "0")! <= i{
-        solution(arr + [String(i)])
+    for i in 0..<n {
+        if visited[i] == false {
+            visited[i] = true
+            solution(k + [arr[i]])
+            visited[i] = false
+        }
     }
 }
 
 solution([])
+
+
