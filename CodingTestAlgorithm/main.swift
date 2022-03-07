@@ -7827,6 +7827,24 @@ import Foundation
 
 // MARK: - 백준 15651번 N과 M (3)
 
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = read[0]
+//let m: Int = read[1]
+//
+//func solution(_ arr: [String]) {
+//    if arr.count == m {
+//        print(arr.joined(separator: " "))
+//        return
+//    }
+//
+//    for i in 1...n {
+//        solution(arr + [String(i)])
+//    }
+//}
+//
+//solution([])
+
+// MARK: - 백준 15652번 N과 M (4)
 let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
 let n: Int = read[0]
 let m: Int = read[1]
@@ -7837,7 +7855,7 @@ func solution(_ arr: [String]) {
         return
     }
     
-    for i in 1...n {
+    for i in 1...n where Int(arr.last ?? "0")! <= i{
         solution(arr + [String(i)])
     }
 }
