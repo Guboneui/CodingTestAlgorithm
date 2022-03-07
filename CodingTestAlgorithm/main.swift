@@ -7759,17 +7759,48 @@ import Foundation
 //solution([])
 
 // MARK: - 백준1699번 제곱수의 합
-let n = Int(readLine()!)!
-var dp: [Int] = Array(repeating: 0,count: n+1)
-for i in stride(from: 1,through: n,by: 1){
-    dp[i] = i
+//let n = Int(readLine()!)!
+//var dp: [Int] = Array(repeating: 0,count: n+1)
+//for i in stride(from: 1,through: n,by: 1){
+//    dp[i] = i
+//
+//    for j in stride(from: 1, through: i, by: 1) {
+//        if j * j > i {
+//            break
+//        }
+//        dp[i] = min(dp[i], dp[i - j * j] + 1)
+//
+//    }
+//}
+//print(dp[n])
+
+// MARK: - 백트래킹 N과 M 연속 풀기
+
+// MARK: - 백준 15649번 N과 M (1)
+
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let n: Int = read[0]
+let m: Int = read[1]
+
+var visited: [Bool] = Array(repeating: false, count: n+1)
+
+func solution(_ arr: [Int]) {
+    if arr.count == m {
+        arr.forEach{print($0, terminator: " ")}
+        print()
+        return
+    }
     
-    for j in stride(from: 1, through: i, by: 1) {
-        if j * j > i {
-            break
+    for i in 1...n {
+        if visited[i] == false {
+            visited[i] = true
+            solution(arr + [i])
+            visited[i] = false
         }
-        dp[i] = min(dp[i], dp[i - j * j] + 1)
-        
     }
 }
-print(dp[n])
+
+solution([])
+
+
+
