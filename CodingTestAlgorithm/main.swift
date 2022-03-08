@@ -8061,35 +8061,104 @@ import Foundation
 //print(result)
 
 // MARK: - 백준 9663번 N-Queen
-let n: Int = Int(readLine()!)!
-var result: Int = 0
-var chess: [[Int]] = Array(repeating: Array(0..<n), count: n)
-var visited: [Int] = Array(repeating: -1, count: n)
+//let n: Int = Int(readLine()!)!
+//var result: Int = 0
+//var chess: [[Int]] = Array(repeating: Array(0..<n), count: n)
+//var visited: [Int] = Array(repeating: -1, count: n)
+//
+//func check(_ x: Int, _ y: Int) -> Bool {
+//    for i in 0..<x {
+//        if y == visited[i] || (abs(x-i) == abs(y-visited[i])) {
+//            return false
+//        }
+//    }
+//    return true
+//}
+//
+//func solution(_ line: Int) {
+//    if line == n {
+//        result += 1
+//        return
+//    }
+//
+//    for i in 0..<n {
+//        if check(line, i) {
+//            visited[line] = i
+//            solution(line+1)
+//            visited[line] = -1
+//        }
+//    }
+//}
+//
+//solution(0)
+//print(result)
 
-func check(_ x: Int, _ y: Int) -> Bool {
-    for i in 0..<x {
-        if y == visited[i] || (abs(x-i) == abs(y-visited[i])) {
-            return false
+// MARK: - 백준 14888번 연산자 끼워넣기
+let n = Int(String(readLine()!))!
+let arr = readLine()!.split(separator: " ").map{Int(String($0))!}
+let operandArr = readLine()!.split(separator: " ").map{Int(String($0))!}
+var resultArr = [Character]()
+var visited = Array(repeating: false, count: n + 1)
+var maxResult = -999999999
+var minResult = Int.max
+
+var temp = [Character]()
+var operArr = operandArr
+for i in 0..<4{
+    while operArr[i] >= 1 {
+        if i == 0{
+            temp.append("+")
+            operArr[i] -= 1
+        }else if i == 1{
+            temp.append("-")
+            operArr[i] -= 1
+        }else if i == 2{
+            temp.append("*")
+            operArr[i] -= 1
+        }else if i == 3{
+            temp.append("/")
+            operArr[i] -= 1
         }
     }
-    return true
 }
 
-func solution(_ line: Int) {
-    if line == n {
-        result += 1
+
+func dfs(_ depth: Int){
+    var p = 1
+    var result = arr[0]
+    if depth == temp.count{
+        for i in resultArr{
+            if i == "+"{
+                result += arr[p]
+                p = p + 1
+            }else if i == "-"{
+                result -= arr[p]
+                p = p + 1
+            }else if i == "*"{
+                result *= arr[p]
+                p = p + 1
+            }else if i == "/"{
+                result /= arr[p]
+                p = p + 1
+            }
+        }
+
+        maxResult = max(result, maxResult)
+        minResult = min(result, minResult)
         return
     }
-    
-    for i in 0..<n {
-        if check(line, i) {
-            visited[line] = i
-            solution(line+1)
-            visited[line] = -1
+    for i in 0..<temp.count{
+        if !visited[i] {
+            visited[i] = true
+            resultArr.append(temp[i])
+            dfs(depth + 1)
+            visited[i] = false
+            resultArr.removeLast()
         }
     }
-}
 
-solution(0)
-print(result)
+}
+dfs(0)
+print(maxResult)
+print(minResult)
 
