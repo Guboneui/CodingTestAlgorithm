@@ -8037,25 +8037,59 @@ import Foundation
 //print(result)
 
 // MARK: - 백준 15664번 N과 M (12)
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let n: Int = read[0]
-let m: Int = read[1]
-var tempDict: [[String]:Int] = [:]
-var inputArr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted()
-var result: String = ""
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = read[0]
+//let m: Int = read[1]
+//var tempDict: [[String]:Int] = [:]
+//var inputArr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted()
+//var result: String = ""
+//
+//func solution(_ arr: [String]) {
+//    if arr.count == m {
+//        if tempDict[arr] == nil {
+//            tempDict[arr] = 1
+//            result += arr.joined(separator: " ") + "\n"
+//        }
+//        return
+//    }
+//    for i in 0..<n where Int(arr.last ?? "0")! <= inputArr[i] {
+//        solution(arr + [String(inputArr[i])])
+//    }
+//}
+//
+//solution([])
+//print(result)
 
-func solution(_ arr: [String]) {
-    if arr.count == m {
-        if tempDict[arr] == nil {
-            tempDict[arr] = 1
-            result += arr.joined(separator: " ") + "\n"
+// MARK: - 백준 9663번 N-Queen
+let n: Int = Int(readLine()!)!
+var result: Int = 0
+var chess: [[Int]] = Array(repeating: Array(0..<n), count: n)
+var visited: [Int] = Array(repeating: -1, count: n)
+
+func check(_ x: Int, _ y: Int) -> Bool {
+    for i in 0..<x {
+        if y == visited[i] || (abs(x-i) == abs(y-visited[i])) {
+            return false
         }
+    }
+    return true
+}
+
+func solution(_ line: Int) {
+    if line == n {
+        result += 1
         return
     }
-    for i in 0..<n where Int(arr.last ?? "0")! <= inputArr[i] {
-        solution(arr + [String(inputArr[i])])
+    
+    for i in 0..<n {
+        if check(line, i) {
+            visited[line] = i
+            solution(line+1)
+            visited[line] = -1
+        }
     }
 }
 
-solution([])
+solution(0)
 print(result)
+
