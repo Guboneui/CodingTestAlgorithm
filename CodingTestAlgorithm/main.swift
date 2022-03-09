@@ -8095,76 +8095,111 @@ import Foundation
 
 // MARK: - 백준 14888번 연산자 끼워넣기
 
-let n: Int = Int(readLine()!)!
-let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-var operandArr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-var maxResult: Int = Int.min
-var minResult: Int = Int.max
-var cal: [String] = []
-for i in 0..<4 {
-    while operandArr[i] >= 1 {
-        if i == 0 {
-            cal.append("+")
-            operandArr[i] -= 1
-        } else if i == 1 {
-            cal.append("-")
-            operandArr[i] -= 1
-        } else if i == 2 {
-            cal.append("*")
-            operandArr[i] -= 1
-        } else if i == 3 {
-            cal.append("/")
-            operandArr[i] -= 1
-        }
+//let n: Int = Int(readLine()!)!
+//let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//var operandArr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//var maxResult: Int = Int.min
+//var minResult: Int = Int.max
+//var cal: [String] = []
+//for i in 0..<4 {
+//    while operandArr[i] >= 1 {
+//        if i == 0 {
+//            cal.append("+")
+//            operandArr[i] -= 1
+//        } else if i == 1 {
+//            cal.append("-")
+//            operandArr[i] -= 1
+//        } else if i == 2 {
+//            cal.append("*")
+//            operandArr[i] -= 1
+//        } else if i == 3 {
+//            cal.append("/")
+//            operandArr[i] -= 1
+//        }
+//    }
+//}
+//
+//var visited: [Bool] = Array(repeating: false, count: cal.count)
+//var result: [String] = []
+//
+//func solution(_ depth: Int) {
+//    var index: Int = 1
+//    var tempNum: Int = arr[0]
+//    if depth == cal.count {
+//        for i in result {
+//            if i == "+" {
+//                tempNum += arr[index]
+//                index += 1
+//            } else if i == "-" {
+//                tempNum -= arr[index]
+//                index += 1
+//
+//            } else if i == "*" {
+//                tempNum *= arr[index]
+//                index += 1
+//
+//            } else if i == "/" {
+//                tempNum /= arr[index]
+//                index += 1
+//
+//            }
+//        }
+//
+//        maxResult = max(tempNum, maxResult)
+//        minResult = min(tempNum, minResult)
+//
+//
+//        return
+//    }
+//
+//    for i in 0..<visited.count {
+//        if visited[i] == false {
+//            visited[i] = true
+//            result.append(cal[i])
+//            solution(depth+1)
+//            visited[i] = false
+//            result.removeLast()
+//        }
+//    }
+//
+//}
+//solution(0)
+//print(maxResult)
+//print(minResult)
+
+
+// MARK: - 백준 6603번 로또
+while true {
+    var arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    
+    if arr == [0] {
+        break
     }
-}
-
-var visited: [Bool] = Array(repeating: false, count: cal.count)
-var result: [String] = []
-
-func solution(_ depth: Int) {
-    var index: Int = 1
-    var tempNum: Int = arr[0]
-    if depth == cal.count {
-        for i in result {
-            if i == "+" {
-                tempNum += arr[index]
-                index += 1
-            } else if i == "-" {
-                tempNum -= arr[index]
-                index += 1
-                
-            } else if i == "*" {
-                tempNum *= arr[index]
-                index += 1
-                
-            } else if i == "/" {
-                tempNum /= arr[index]
-                index += 1
-                
+    
+    let n: Int = arr.removeFirst()
+    var visited: [Bool] = Array(repeating: false, count: n)
+    
+    
+    
+    func solution(input: [Int]) {
+        if input.count == 6 {
+            input.forEach{print($0, terminator: " ")}
+            print()
+            return
+        }
+        
+        for i in 0..<arr.count where input.last ?? 0 < arr[i] {
+            if visited[i] == false {
+                visited[i] = true
+                solution(input: input + [arr[i]])
+                visited[i] = false
             }
         }
-        
-        maxResult = max(tempNum, maxResult)
-        minResult = min(tempNum, minResult)
-        
-        
-        return
     }
     
-    for i in 0..<visited.count {
-        if visited[i] == false {
-            visited[i] = true
-            result.append(cal[i])
-            solution(depth+1)
-            visited[i] = false
-            result.removeLast()
-        }
-    }
+    solution(input: [])
+    print()
     
 }
-solution(0)
-print(maxResult)
-print(minResult)
 
 
