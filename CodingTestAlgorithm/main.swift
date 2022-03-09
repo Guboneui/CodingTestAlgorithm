@@ -8094,71 +8094,77 @@ import Foundation
 //print(result)
 
 // MARK: - 백준 14888번 연산자 끼워넣기
-let n = Int(String(readLine()!))!
-let arr = readLine()!.split(separator: " ").map{Int(String($0))!}
-let operandArr = readLine()!.split(separator: " ").map{Int(String($0))!}
-var resultArr = [Character]()
-var visited = Array(repeating: false, count: n + 1)
-var maxResult = -999999999
-var minResult = Int.max
 
-var temp = [Character]()
-var operArr = operandArr
-for i in 0..<4{
-    while operArr[i] >= 1 {
-        if i == 0{
-            temp.append("+")
-            operArr[i] -= 1
-        }else if i == 1{
-            temp.append("-")
-            operArr[i] -= 1
-        }else if i == 2{
-            temp.append("*")
-            operArr[i] -= 1
-        }else if i == 3{
-            temp.append("/")
-            operArr[i] -= 1
+let n: Int = Int(readLine()!)!
+let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+var operandArr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+var maxResult: Int = Int.min
+var minResult: Int = Int.max
+var cal: [String] = []
+for i in 0..<4 {
+    while operandArr[i] >= 1 {
+        if i == 0 {
+            cal.append("+")
+            operandArr[i] -= 1
+        } else if i == 1 {
+            cal.append("-")
+            operandArr[i] -= 1
+        } else if i == 2 {
+            cal.append("*")
+            operandArr[i] -= 1
+        } else if i == 3 {
+            cal.append("/")
+            operandArr[i] -= 1
         }
     }
 }
 
+var visited: [Bool] = Array(repeating: false, count: cal.count)
+var result: [String] = []
 
-func dfs(_ depth: Int){
-    var p = 1
-    var result = arr[0]
-    if depth == temp.count{
-        for i in resultArr{
-            if i == "+"{
-                result += arr[p]
-                p = p + 1
-            }else if i == "-"{
-                result -= arr[p]
-                p = p + 1
-            }else if i == "*"{
-                result *= arr[p]
-                p = p + 1
-            }else if i == "/"{
-                result /= arr[p]
-                p = p + 1
+func solution(_ depth: Int) {
+    var index: Int = 1
+    var tempNum: Int = arr[0]
+    if depth == cal.count {
+        for i in result {
+            if i == "+" {
+                tempNum += arr[index]
+                index += 1
+            } else if i == "-" {
+                tempNum -= arr[index]
+                index += 1
+                
+            } else if i == "*" {
+                tempNum *= arr[index]
+                index += 1
+                
+            } else if i == "/" {
+                tempNum /= arr[index]
+                index += 1
+                
             }
         }
-
-        maxResult = max(result, maxResult)
-        minResult = min(result, minResult)
+        
+        maxResult = max(tempNum, maxResult)
+        minResult = min(tempNum, minResult)
+        
+        
         return
     }
-    for i in 0..<temp.count{
-        if !visited[i] {
+    
+    for i in 0..<visited.count {
+        if visited[i] == false {
             visited[i] = true
-            resultArr.append(temp[i])
-            dfs(depth + 1)
+            result.append(cal[i])
+            solution(depth+1)
             visited[i] = false
-            resultArr.removeLast()
+            result.removeLast()
         }
     }
-
+    
 }
-dfs(0)
+solution(0)
 print(maxResult)
 print(minResult)
+
 
