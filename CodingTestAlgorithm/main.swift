@@ -8169,35 +8169,70 @@ import Foundation
 
 
 // MARK: - 백준 6603번 로또
+//while true {
+//    var arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//
+//    if arr == [0] {
+//        break
+//    }
+//
+//    let n: Int = arr.removeFirst()
+//    var visited: [Bool] = Array(repeating: false, count: n)
+//
+//
+//
+//    func solution(input: [Int]) {
+//        if input.count == 6 {
+//            input.forEach{print($0, terminator: " ")}
+//            print()
+//            return
+//        }
+//
+//        for i in 0..<arr.count where input.last ?? 0 < arr[i] {
+//            if visited[i] == false {
+//                visited[i] = true
+//                solution(input: input + [arr[i]])
+//                visited[i] = false
+//            }
+//        }
+//    }
+//
+//    solution(input: [])
+//    print()
+//
+//}
+
+
 while true {
     var arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    
+
     if arr == [0] {
         break
     }
-    
     let n: Int = arr.removeFirst()
     var visited: [Bool] = Array(repeating: false, count: n)
+    var result: [Int] = []
     
-    
-    
-    func solution(input: [Int]) {
-        if input.count == 6 {
-            input.forEach{print($0, terminator: " ")}
+    func solution(_ depth: Int, _ start: Int) {
+        if depth == 6 {
+            result.forEach{print($0, terminator: " ")}
             print()
             return
         }
         
-        for i in 0..<arr.count where input.last ?? 0 < arr[i] {
+        for i in start..<arr.count {
             if visited[i] == false {
                 visited[i] = true
-                solution(input: input + [arr[i]])
+                result.append(arr[i])
+                solution(depth+1, i)
+                result.removeLast()
                 visited[i] = false
+                
             }
         }
     }
     
-    solution(input: [])
+    solution(0, 0)
     print()
     
 }
