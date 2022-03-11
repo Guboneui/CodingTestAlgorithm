@@ -8360,28 +8360,50 @@ import Foundation
 //print(count)
 
 // MARK: - 백준 10819번 차이를 최대로
+//let n: Int = Int(readLine()!)!
+//let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//var visited: [Bool] = Array(repeating: false, count: n)
+//var sum: Int = 0
+//func solution(_ depth: [Int]) {
+//    if depth.count == n {
+//        var temp: Int = 0
+//        for i in 0..<n-1 {
+//            temp += abs(depth[i] - depth[i+1])
+//        }
+//        sum = max(sum, temp)
+//    }
+//
+//    for i in 0..<n {
+//        if visited[i] == false {
+//            visited[i] = true
+//            solution(depth + [arr[i]])
+//            visited[i] = false
+//        }
+//    }
+//}
+//
+//
+//solution([])
+//print(sum)
+
+// MARK: - 백준 10974번 모든 순열
 let n: Int = Int(readLine()!)!
-let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let numArr: [Int] = Array(1...n)
 var visited: [Bool] = Array(repeating: false, count: n)
-var sum: Int = 0
-func solution(_ depth: [Int]) {
-    if depth.count == n {
-        var temp: Int = 0
-        for i in 0..<n-1 {
-            temp += abs(depth[i] - depth[i+1])
-        }
-        sum = max(sum, temp)
+
+func solution(_ arr: [Int]) {
+    if arr.count == n {
+        print(arr.map{String($0)}.joined(separator: " "))
     }
     
     for i in 0..<n {
         if visited[i] == false {
             visited[i] = true
-            solution(depth + [arr[i]])
+            solution(arr + [numArr[i]])
             visited[i] = false
         }
+        
     }
 }
 
-
 solution([])
-print(sum)
