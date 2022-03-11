@@ -8203,38 +8203,68 @@ import Foundation
 //}
 
 
-while true {
-    var arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//while true {
+//    var arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//
+//    if arr == [0] {
+//        break
+//    }
+//    let n: Int = arr.removeFirst()
+//    var visited: [Bool] = Array(repeating: false, count: n)
+//    var result: [Int] = []
+//
+//    func solution(_ depth: Int, _ start: Int) {
+//        if depth == 6 {
+//            result.forEach{print($0, terminator: " ")}
+//            print()
+//            return
+//        }
+//
+//        for i in start..<arr.count {
+//            if visited[i] == false {
+//                visited[i] = true
+//                result.append(arr[i])
+//                solution(depth+1, i)
+//                result.removeLast()
+//                visited[i] = false
+//
+//            }
+//        }
+//    }
+//
+//    solution(0, 0)
+//    print()
+//
+//}
+//
+//
 
-    if arr == [0] {
-        break
-    }
-    let n: Int = arr.removeFirst()
-    var visited: [Bool] = Array(repeating: false, count: n)
-    var result: [Int] = []
-    
-    func solution(_ depth: Int, _ start: Int) {
-        if depth == 6 {
-            result.forEach{print($0, terminator: " ")}
-            print()
-            return
-        }
-        
-        for i in start..<arr.count {
-            if visited[i] == false {
-                visited[i] = true
-                result.append(arr[i])
-                solution(depth+1, i)
-                result.removeLast()
-                visited[i] = false
-                
-            }
-        }
+// MARK: - 백준 1182번 부분수열의 합
+
+let ns = readLine()!.split(separator: " ").map{Int(String($0))!}
+let n = ns[0]
+let s = ns[1]
+
+let arr = readLine()!.split(separator: " ").map{Int(String($0))!}
+var visited = Array(repeating: false, count: 21)
+
+var cnt = 0
+var sum = 0
+func dfs(_ depth: Int, _ start: Int){
+    if sum == s && depth >= 1{
+        cnt += 1
     }
     
-    solution(0, 0)
-    print()
-    
+    for i in start..<n{
+        if !visited[i]{
+            visited[i] = true
+            sum += arr[i]
+            dfs(depth + 1, i)
+            visited[i] = false
+            sum -= arr[i]
+        }
+    }
 }
 
-
+dfs(0, 0)
+print(cnt)
