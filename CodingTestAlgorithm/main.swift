@@ -8312,49 +8312,76 @@ import Foundation
 //solution(0, 0, "")
 
 // MARK: - 백준 1987번 알파벳
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let r: Int = read[0]
-let c: Int = read[1]
-var arr: [[String]] = []
-for i in 0..<r {
-    let temp: [String] = readLine()!.map{String($0)}
-    arr.append(temp)
-}
-let dx: [Int] = [1, -1, 0, 0]
-let dy: [Int] = [0, 0, 1, -1]
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let r: Int = read[0]
+//let c: Int = read[1]
+//var arr: [[String]] = []
+//for i in 0..<r {
+//    let temp: [String] = readLine()!.map{String($0)}
+//    arr.append(temp)
+//}
+//let dx: [Int] = [1, -1, 0, 0]
+//let dy: [Int] = [0, 0, 1, -1]
+//
+//var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: c), count: r)
+//var dict: [String:Int] = [arr[0][0]:1]
+//var result: [String] = [arr[0][0]]
+//var count: Int = Int.min
+//func solution(_ x: Int, _ y: Int) {
+//    count = max(count, result.count)
+//
+//    for i in 0..<4 {
+//        let nx: Int = x + dx[i]
+//        let ny: Int = y + dy[i]
+//
+//        if nx < 0 || nx >= r || ny < 0 || ny >= c {
+//            continue
+//        } else {
+//            if visited[nx][ny] == false {
+//
+//                if !result.contains(arr[nx][ny]) {
+//                    visited[nx][ny] = true
+//                    result.append(arr[nx][ny])
+//                    solution(nx, ny)
+//                    result.removeLast()
+//                    visited[nx][ny] = false
+//
+//                }
+//
+//
+//            }
+//        }
+//    }
+//
+//
+//}
+//
+//solution(0, 0)
+//print(count)
 
-var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: c), count: r)
-var dict: [String:Int] = [arr[0][0]:1]
-var result: [String] = [arr[0][0]]
-var count: Int = Int.min
-func solution(_ x: Int, _ y: Int) {
-    count = max(count, result.count)
-    
-    for i in 0..<4 {
-        let nx: Int = x + dx[i]
-        let ny: Int = y + dy[i]
-        
-        if nx < 0 || nx >= r || ny < 0 || ny >= c {
-            continue
-        } else {
-            if visited[nx][ny] == false {
-                
-                if !result.contains(arr[nx][ny]) {
-                    visited[nx][ny] = true
-                    result.append(arr[nx][ny])
-                    solution(nx, ny)
-                    result.removeLast()
-                    visited[nx][ny] = false
-                    
-                }
-                
-                
-            }
+// MARK: - 백준 10819번 차이를 최대로
+let n: Int = Int(readLine()!)!
+let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+var visited: [Bool] = Array(repeating: false, count: n)
+var sum: Int = 0
+func solution(_ depth: [Int]) {
+    if depth.count == n {
+        var temp: Int = 0
+        for i in 0..<n-1 {
+            temp += abs(depth[i] - depth[i+1])
         }
+        sum = max(sum, temp)
     }
     
-    
+    for i in 0..<n {
+        if visited[i] == false {
+            visited[i] = true
+            solution(depth + [arr[i]])
+            visited[i] = false
+        }
+    }
 }
 
-solution(0, 0)
-print(count)
+
+solution([])
+print(sum)
