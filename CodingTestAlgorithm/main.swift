@@ -8241,30 +8241,33 @@ import Foundation
 
 // MARK: - 백준 1182번 부분수열의 합
 
-let ns = readLine()!.split(separator: " ").map{Int(String($0))!}
-let n = ns[0]
-let s = ns[1]
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let n: Int = read[0]
+let target: Int = read[1]
+let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+var sum: Int = 0
+var visited: [Bool] = Array(repeating: false, count: n)
+var count: Int = 0
 
-let arr = readLine()!.split(separator: " ").map{Int(String($0))!}
-var visited = Array(repeating: false, count: 21)
-
-var cnt = 0
-var sum = 0
-func dfs(_ depth: Int, _ start: Int){
-    if sum == s && depth >= 1{
-        cnt += 1
+func solution(_ depth: Int, _ start: Int) {
+    
+    if  depth > 0 && sum == target {
+        count += 1
+        return
     }
     
-    for i in start..<n{
-        if !visited[i]{
+    
+    for i in start..<n {
+        if visited[i] == false {
             visited[i] = true
             sum += arr[i]
-            dfs(depth + 1, i)
-            visited[i] = false
+            solution(depth+1, i)
             sum -= arr[i]
+            visited[i] = false
+            
         }
     }
 }
 
-dfs(0, 0)
-print(cnt)
+solution(0, 0)
+print(count)
