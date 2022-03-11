@@ -8274,40 +8274,87 @@ import Foundation
 
 // MARK: - 백준 1759번 암호 만들기
 
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let target: Int = read[0]
-let n: Int = read[1]
-let arr: [String] = readLine()!.split(separator: " ").map{String($0)}.sorted()
-let vowel: [String] = ["a", "e", "i", "o", "u"]
-var visited: [Bool] = Array(repeating: false, count: n)
-var a: Int = 0
-var b: Int = 0
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let target: Int = read[0]
+//let n: Int = read[1]
+//let arr: [String] = readLine()!.split(separator: " ").map{String($0)}.sorted()
+//let vowel: [String] = ["a", "e", "i", "o", "u"]
+//var visited: [Bool] = Array(repeating: false, count: n)
+//var a: Int = 0
+//var b: Int = 0
+//
+//func solution(_ depth: Int, _ start: Int, _ str: String) {
+//    if depth == target && a >= 1 && b >= 2 {
+//        print(str)
+//        return
+//    }
+//
+//    for i in start..<n {
+//        if !visited[i] {
+//            visited[i] = true
+//            if vowel.contains(arr[i]) {
+//                a += 1
+//            } else {
+//                b += 1
+//            }
+//            solution(depth+1, i, str+arr[i])
+//            if vowel.contains(arr[i]) {
+//                a -= 1
+//            } else {
+//                b -= 1
+//            }
+//
+//            visited[i] = false
+//        }
+//    }
+//}
+//
+//solution(0, 0, "")
 
-func solution(_ depth: Int, _ start: Int, _ str: String) {
-    if depth == target && a >= 1 && b >= 2 {
-        print(str)
-        return
-    }
+// MARK: - 백준 1987번 알파벳
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let r: Int = read[0]
+let c: Int = read[1]
+var arr: [[String]] = []
+for i in 0..<r {
+    let temp: [String] = readLine()!.map{String($0)}
+    arr.append(temp)
+}
+let dx: [Int] = [1, -1, 0, 0]
+let dy: [Int] = [0, 0, 1, -1]
+
+var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: c), count: r)
+var dict: [String:Int] = [arr[0][0]:1]
+var result: [String] = [arr[0][0]]
+var count: Int = Int.min
+func solution(_ x: Int, _ y: Int) {
+    count = max(count, result.count)
     
-    for i in start..<n {
-        if !visited[i] {
-            visited[i] = true
-            if vowel.contains(arr[i]) {
-                a += 1
-            } else {
-                b += 1
+    for i in 0..<4 {
+        let nx: Int = x + dx[i]
+        let ny: Int = y + dy[i]
+        
+        if nx < 0 || nx >= r || ny < 0 || ny >= c {
+            continue
+        } else {
+            if visited[nx][ny] == false {
+                
+                if !result.contains(arr[nx][ny]) {
+                    visited[nx][ny] = true
+                    result.append(arr[nx][ny])
+                    solution(nx, ny)
+                    result.removeLast()
+                    visited[nx][ny] = false
+                    
+                }
+                
+                
             }
-            solution(depth+1, i, str+arr[i])
-            if vowel.contains(arr[i]) {
-                a -= 1
-            } else {
-                b -= 1
-            }
-            
-            visited[i] = false
         }
     }
+    
+    
 }
 
-solution(0, 0, "")
-
+solution(0, 0)
+print(count)
