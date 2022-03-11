@@ -8241,33 +8241,73 @@ import Foundation
 
 // MARK: - 백준 1182번 부분수열의 합
 
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let n: Int = read[0]
-let target: Int = read[1]
-let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-var sum: Int = 0
-var visited: [Bool] = Array(repeating: false, count: n)
-var count: Int = 0
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = read[0]
+//let target: Int = read[1]
+//let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//var sum: Int = 0
+//var visited: [Bool] = Array(repeating: false, count: n)
+//var count: Int = 0
+//
+//func solution(_ depth: Int, _ start: Int) {
+//
+//    if  depth > 0 && sum == target {
+//        count += 1
+//        return
+//    }
+//
+//
+//    for i in start..<n {
+//        if visited[i] == false {
+//            visited[i] = true
+//            sum += arr[i]
+//            solution(depth+1, i)
+//            sum -= arr[i]
+//            visited[i] = false
+//
+//        }
+//    }
+//}
+//
+//solution(0, 0)
+//print(count)
 
-func solution(_ depth: Int, _ start: Int) {
-    
-    if  depth > 0 && sum == target {
-        count += 1
+// MARK: - 백준 1759번 암호 만들기
+
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let target: Int = read[0]
+let n: Int = read[1]
+let arr: [String] = readLine()!.split(separator: " ").map{String($0)}.sorted()
+let vowel: [String] = ["a", "e", "i", "o", "u"]
+var visited: [Bool] = Array(repeating: false, count: n)
+var a: Int = 0
+var b: Int = 0
+
+func solution(_ depth: Int, _ start: Int, _ str: String) {
+    if depth == target && a >= 1 && b >= 2 {
+        print(str)
         return
     }
     
-    
     for i in start..<n {
-        if visited[i] == false {
+        if !visited[i] {
             visited[i] = true
-            sum += arr[i]
-            solution(depth+1, i)
-            sum -= arr[i]
-            visited[i] = false
+            if vowel.contains(arr[i]) {
+                a += 1
+            } else {
+                b += 1
+            }
+            solution(depth+1, i, str+arr[i])
+            if vowel.contains(arr[i]) {
+                a -= 1
+            } else {
+                b -= 1
+            }
             
+            visited[i] = false
         }
     }
 }
 
-solution(0, 0)
-print(count)
+solution(0, 0, "")
+
