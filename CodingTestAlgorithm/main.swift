@@ -8387,23 +8387,67 @@ import Foundation
 //print(sum)
 
 // MARK: - 백준 10974번 모든 순열
-let n: Int = Int(readLine()!)!
-let numArr: [Int] = Array(1...n)
-var visited: [Bool] = Array(repeating: false, count: n)
+//let n: Int = Int(readLine()!)!
+//let numArr: [Int] = Array(1...n)
+//var visited: [Bool] = Array(repeating: false, count: n)
+//
+//func solution(_ arr: [Int]) {
+//    if arr.count == n {
+//        print(arr.map{String($0)}.joined(separator: " "))
+//    }
+//
+//    for i in 0..<n {
+//        if visited[i] == false {
+//            visited[i] = true
+//            solution(arr + [numArr[i]])
+//            visited[i] = false
+//        }
+//
+//    }
+//}
+//
+//solution([])
 
-func solution(_ arr: [Int]) {
-    if arr.count == n {
-        print(arr.map{String($0)}.joined(separator: " "))
-    }
-    
-    for i in 0..<n {
-        if visited[i] == false {
-            visited[i] = true
-            solution(arr + [numArr[i]])
-            visited[i] = false
+// MARK: - 백준 2529번 부등호
+let n: Int = Int(readLine()!)!
+let arr: [String] = readLine()!.split(separator: " ").map{String($0)}
+var maxResult: String = String(Int.min)
+var minResult: String = String(Int.max)
+var visited: [Bool] = Array(repeating: false, count: 10)
+func solution(_ target: [String]) {
+    if target.count == n+1 {
+        for i in 0..<arr.count {
+            if target[i] > target[i+1] && arr[i] == ">" {
+                continue
+            } else if target[i] < target[i+1] && arr[i] == "<" {
+                continue
+            } else {
+                return
+            }
+            
+            
         }
         
+        if Int(maxResult)! < Int(target.joined(separator: ""))! {
+            maxResult = target.joined(separator: "")
+        }
+        
+        if Int(minResult)! > Int(target.joined(separator: ""))! {
+            minResult = target.joined(separator: "")
+        }
+        
+        
+    }
+    
+    for i in 0...9 {
+        if visited[i] == false {
+            visited[i] = true
+            solution(target + [String(i)])
+            visited[i] = false
+        }
     }
 }
 
 solution([])
+print(maxResult)
+print(minResult)
