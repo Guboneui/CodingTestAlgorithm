@@ -8409,45 +8409,85 @@ import Foundation
 //solution([])
 
 // MARK: - 백준 2529번 부등호
+//let n: Int = Int(readLine()!)!
+//let arr: [String] = readLine()!.split(separator: " ").map{String($0)}
+//var maxResult: String = String(Int.min)
+//var minResult: String = String(Int.max)
+//var visited: [Bool] = Array(repeating: false, count: 10)
+//func solution(_ target: [String]) {
+//    if target.count == n+1 {
+//        for i in 0..<arr.count {
+//            if target[i] > target[i+1] && arr[i] == ">" {
+//                continue
+//            } else if target[i] < target[i+1] && arr[i] == "<" {
+//                continue
+//            } else {
+//                return
+//            }
+//
+//
+//        }
+//
+//        if Int(maxResult)! < Int(target.joined(separator: ""))! {
+//            maxResult = target.joined(separator: "")
+//        }
+//
+//        if Int(minResult)! > Int(target.joined(separator: ""))! {
+//            minResult = target.joined(separator: "")
+//        }
+//
+//
+//    }
+//
+//    for i in 0...9 {
+//        if visited[i] == false {
+//            visited[i] = true
+//            solution(target + [String(i)])
+//            visited[i] = false
+//        }
+//    }
+//}
+//
+//solution([])
+//print(maxResult)
+//print(minResult)
+
+
 let n: Int = Int(readLine()!)!
 let arr: [String] = readLine()!.split(separator: " ").map{String($0)}
-var maxResult: String = String(Int.min)
-var minResult: String = String(Int.max)
 var visited: [Bool] = Array(repeating: false, count: 10)
-func solution(_ target: [String]) {
-    if target.count == n+1 {
-        for i in 0..<arr.count {
-            if target[i] > target[i+1] && arr[i] == ">" {
-                continue
-            } else if target[i] < target[i+1] && arr[i] == "<" {
-                continue
-            } else {
-                return
-            }
-            
-            
-        }
-        
-        if Int(maxResult)! < Int(target.joined(separator: ""))! {
-            maxResult = target.joined(separator: "")
-        }
-        
-        if Int(minResult)! > Int(target.joined(separator: ""))! {
-            minResult = target.joined(separator: "")
-        }
-        
-        
+var result: [String] = []
+
+func solution(_ depth: Int, _ lastNum: Int, _ str: String) {
+    if depth == n {
+        result.append(str)
+        return
     }
     
     for i in 0...9 {
         if visited[i] == false {
-            visited[i] = true
-            solution(target + [String(i)])
-            visited[i] = false
+            if arr[depth] == "<" {
+                if lastNum < i {
+                    visited[i] = true
+                    solution(depth+1, i, str + "\(i)")
+                    visited[i] = false
+                }
+            } else {
+                if lastNum > i {
+                    visited[i] = true
+                    solution(depth+1, i, str + "\(i)")
+                    visited[i] = false
+                }
+            }
         }
     }
 }
 
-solution([])
-print(maxResult)
-print(minResult)
+for i in 0...9 {
+    visited[i] = true
+    solution(0, i, "\(i)")
+    visited[i] = false
+}
+
+print(result.last!)
+print(result[0])
