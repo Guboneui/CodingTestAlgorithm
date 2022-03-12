@@ -8532,31 +8532,50 @@ import Foundation
 
 
 // MARK: - 백준 2491번 수열
-let n: Int = Int(readLine()!)!
+//let n: Int = Int(readLine()!)!
+//let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//
+//var maxResult: Int = 1
+//var minResult: Int = 1
+//var result: Int = 1
+//
+//func solution() {
+//    for i in 0..<n-1 {
+//        if arr[i] <= arr[i+1] {
+//            maxResult += 1
+//        } else {
+//            maxResult = 1
+//        }
+//
+//        if arr[i] >= arr[i+1] {
+//            minResult += 1
+//        } else {
+//            minResult = 1
+//        }
+//
+//        result = max(result, max(maxResult, minResult))
+//    }
+//}
+//
+//solution()
+//print(result)
+
+// MARK: - 백준 2003번 수들의 합2
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let n: Int = read[0]
+let m: Int = read[1]
 let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
 
-var maxResult: Int = 1
-var minResult: Int = 1
-var result: Int = 1
-
-func solution() {
-    for i in 0..<n-1 {
-        if arr[i] <= arr[i+1] {
-            maxResult += 1
-        } else {
-            maxResult = 1
+var result: Int = 0
+for i in 0..<n {
+    var temp: Int = 0
+    for j in i..<n {
+        temp += arr[j]
+        if temp == m {
+            result += 1
+            break
         }
-        
-        if arr[i] >= arr[i+1] {
-            minResult += 1
-        } else {
-            minResult = 1
-        }
-        
-        result = max(result, max(maxResult, minResult))
     }
 }
 
-solution()
 print(result)
-
