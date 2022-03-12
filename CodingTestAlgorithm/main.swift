@@ -8516,16 +8516,47 @@ import Foundation
 //print(result/2)
 
 // MARK: - 백준 2559번 수열
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let n: Int = read[0]
-let k: Int = read[1]
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = read[0]
+//let k: Int = read[1]
+//let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//
+//var sum: Int = arr[0..<k].reduce(0, +)
+//var maxResult: Int = sum
+//
+//for i in k..<n {
+//    sum += -arr[i-k] + arr[i]
+//    maxResult = max(maxResult, sum)
+//}
+//print(maxResult)
+
+
+// MARK: - 백준 2491번 수열
+let n: Int = Int(readLine()!)!
 let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
 
-var sum: Int = arr[0..<k].reduce(0, +)
-var maxResult: Int = sum
+var maxResult: Int = 1
+var minResult: Int = 1
+var result: Int = 1
 
-for i in k..<n {
-    sum += -arr[i-k] + arr[i]
-    maxResult = max(maxResult, sum)
+func solution() {
+    for i in 0..<n-1 {
+        if arr[i] <= arr[i+1] {
+            maxResult += 1
+        } else {
+            maxResult = 1
+        }
+        
+        if arr[i] >= arr[i+1] {
+            minResult += 1
+        } else {
+            minResult = 1
+        }
+        
+        result = max(result, max(maxResult, minResult))
+    }
 }
-print(maxResult)
+
+solution()
+print(result)
+
