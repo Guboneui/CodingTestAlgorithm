@@ -8561,21 +8561,40 @@ import Foundation
 //print(result)
 
 // MARK: - 백준 2003번 수들의 합2
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let n: Int = read[0]
-let m: Int = read[1]
-let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = read[0]
+//let m: Int = read[1]
+//let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//
+//var result: Int = 0
+//for i in 0..<n {
+//    var temp: Int = 0
+//    for j in i..<n {
+//        temp += arr[j]
+//        if temp == m {
+//            result += 1
+//            break
+//        }
+//    }
+//}
+//
+//print(result)
 
-var result: Int = 0
-for i in 0..<n {
-    var temp: Int = 0
-    for j in i..<n {
-        temp += arr[j]
-        if temp == m {
-            result += 1
-            break
-        }
-    }
+// MARK: - 백준 11659번 구간 합 구하기 4
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+var arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+for i in 1..<read[0] {
+    arr[i] = arr[i-1] + arr[i]
 }
 
-print(result)
+for _ in 0..<read[1] {
+    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    let a: Int = temp[0] - 1
+    let b: Int = temp[1] - 1
+    
+    if a == 0 {
+        print(arr[b])
+    } else {
+        print(arr[b] - arr[a-1])
+    }
+}
