@@ -8493,24 +8493,39 @@ import Foundation
 //print(result[0])
 
 // MARK: - 백준 3273번 두 수의 합
-let n: Int = Int(readLine()!)!
+//let n: Int = Int(readLine()!)!
+//let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let target: Int = Int(readLine()!)!
+//var dict: [Int:Int] = [:]
+//for i in arr {
+//    if dict[i] == nil {
+//        dict[i] = 1
+//    }
+//}
+//
+//var result: Int = 0
+//
+//for i in arr {
+//    if dict[target-i] != nil {
+//        result += 1
+//    }
+//}
+//
+//
+//
+//print(result/2)
+
+// MARK: - 백준 2559번 수열
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let n: Int = read[0]
+let k: Int = read[1]
 let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let target: Int = Int(readLine()!)!
-var dict: [Int:Int] = [:]
-for i in arr {
-    if dict[i] == nil {
-        dict[i] = 1
-    }
+
+var sum: Int = arr[0..<k].reduce(0, +)
+var maxResult: Int = sum
+
+for i in k..<n {
+    sum += -arr[i-k] + arr[i]
+    maxResult = max(maxResult, sum)
 }
-
-var result: Int = 0
-
-for i in arr {
-    if dict[target-i] != nil {
-        result += 1
-    }
-}
-
-
-
-print(result/2)
+print(maxResult)
