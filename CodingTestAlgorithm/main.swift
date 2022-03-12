@@ -8453,41 +8453,64 @@ import Foundation
 //print(minResult)
 
 
+//let n: Int = Int(readLine()!)!
+//let arr: [String] = readLine()!.split(separator: " ").map{String($0)}
+//var visited: [Bool] = Array(repeating: false, count: 10)
+//var result: [String] = []
+//
+//func solution(_ depth: Int, _ lastNum: Int, _ str: String) {
+//    if depth == n {
+//        result.append(str)
+//        return
+//    }
+//
+//    for i in 0...9 {
+//        if visited[i] == false {
+//            if arr[depth] == "<" {
+//                if lastNum < i {
+//                    visited[i] = true
+//                    solution(depth+1, i, str + "\(i)")
+//                    visited[i] = false
+//                }
+//            } else {
+//                if lastNum > i {
+//                    visited[i] = true
+//                    solution(depth+1, i, str + "\(i)")
+//                    visited[i] = false
+//                }
+//            }
+//        }
+//    }
+//}
+//
+//for i in 0...9 {
+//    visited[i] = true
+//    solution(0, i, "\(i)")
+//    visited[i] = false
+//}
+//
+//print(result.last!)
+//print(result[0])
+
+// MARK: - 백준 3273번 두 수의 합
 let n: Int = Int(readLine()!)!
-let arr: [String] = readLine()!.split(separator: " ").map{String($0)}
-var visited: [Bool] = Array(repeating: false, count: 10)
-var result: [String] = []
-
-func solution(_ depth: Int, _ lastNum: Int, _ str: String) {
-    if depth == n {
-        result.append(str)
-        return
-    }
-    
-    for i in 0...9 {
-        if visited[i] == false {
-            if arr[depth] == "<" {
-                if lastNum < i {
-                    visited[i] = true
-                    solution(depth+1, i, str + "\(i)")
-                    visited[i] = false
-                }
-            } else {
-                if lastNum > i {
-                    visited[i] = true
-                    solution(depth+1, i, str + "\(i)")
-                    visited[i] = false
-                }
-            }
-        }
+let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let target: Int = Int(readLine()!)!
+var dict: [Int:Int] = [:]
+for i in arr {
+    if dict[i] == nil {
+        dict[i] = 1
     }
 }
 
-for i in 0...9 {
-    visited[i] = true
-    solution(0, i, "\(i)")
-    visited[i] = false
+var result: Int = 0
+
+for i in arr {
+    if dict[target-i] != nil {
+        result += 1
+    }
 }
 
-print(result.last!)
-print(result[0])
+
+
+print(result/2)
