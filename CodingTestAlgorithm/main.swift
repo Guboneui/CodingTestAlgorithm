@@ -8623,27 +8623,61 @@ import Foundation
 
 // MARK: - 백준 10972번 다음 순열
 
-let n: Int = Int(readLine()!)!
-var arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = Int(readLine()!)!
+//var arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//
+//if Array(1...n).reversed() == arr {
+//    print("-1")
+//} else {
+//    var index: Int = 0
+//    for i in 0..<n {
+//        if i+1 < n && arr[i] < arr[i+1] {
+//            index = i
+//        }
+//    }
+//
+//    var mainIndex: Int = 0
+//    for j in index..<n {
+//        if arr[index] < arr[j] {
+//            mainIndex = j
+//        }
+//    }
+//
+//    arr.swapAt(index, mainIndex)
+//    arr = arr[...index] + arr[(index+1)...].sorted()
+//    print(arr.map{String($0)}.joined(separator: " "))
+//}
 
-if Array(1...n).reversed() == arr {
-    print("-1")
+// MARK: - 백준 2407번 조합
+
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let n: Int = read[0]
+let m: Int = read[1]
+
+var maxValue: UInt64 = 1000000000000000000
+var left: [[UInt64]] = Array(repeating: [UInt64](repeating: 0, count: n+1), count: n+1)
+var right: [[UInt64]] = Array(repeating: [UInt64](repeating: 0, count: n+1), count: n+1)
+
+right[1][0] = 1
+right[1][1] = 1
+
+for i in 2...n {
+    right[i][0] = 1
+    right[i][i] = 1
+    
+    for j in 1..<i {
+        right[i][j] = right[i-1][j-1] + right[i-1][j]
+        left[i][j] = left[i-1][j-1] + left[i-1][j]
+        
+        if right[i][j] >= maxValue {
+            right[i][j] -= maxValue
+            left[i][j] += 1
+        }
+    }
+}
+
+if left[n][m] > 0 {
+    print("\(left[n][m])\(right[n][m])")
 } else {
-    var index: Int = 0
-    for i in 0..<n {
-        if i+1 < n && arr[i] < arr[i+1] {
-            index = i
-        }
-    }
-    
-    var mainIndex: Int = 0
-    for j in index..<n {
-        if arr[index] < arr[j] {
-            mainIndex = j
-        }
-    }
-    
-    arr.swapAt(index, mainIndex)
-    arr = arr[...index] + arr[(index+1)...].sorted()
-    print(arr.map{String($0)}.joined(separator: " "))
+    print("\(right[n][m])")
 }
