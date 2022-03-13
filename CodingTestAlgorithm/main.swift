@@ -8600,24 +8600,50 @@ import Foundation
 //}
 
 // MARK: - 백준 9375번 패션완 신해빈
-let testCases: Int = Int(readLine()!)!
-for _ in 0..<testCases {
-    let clothes: Int = Int(readLine()!)!
-    var dict: [String:Int] = [:]
-    for _ in 0..<clothes {
-        let temp: [String] = readLine()!.split(separator: " ").map{String($0)}
-        if dict[temp[1]] == nil {
-            dict[temp[1]] = 1
-        } else {
-            dict[temp[1]]! += 1
+//let testCases: Int = Int(readLine()!)!
+//for _ in 0..<testCases {
+//    let clothes: Int = Int(readLine()!)!
+//    var dict: [String:Int] = [:]
+//    for _ in 0..<clothes {
+//        let temp: [String] = readLine()!.split(separator: " ").map{String($0)}
+//        if dict[temp[1]] == nil {
+//            dict[temp[1]] = 1
+//        } else {
+//            dict[temp[1]]! += 1
+//        }
+//    }
+//
+//    var result: Int = 1
+//    for (_, value) in dict {
+//        result = result*(value+1)
+//    }
+//    print(result-1)
+//
+//}
+
+// MARK: - 백준 10972번 다음 순열
+
+let n: Int = Int(readLine()!)!
+var arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+
+if Array(1...n).reversed() == arr {
+    print("-1")
+} else {
+    var index: Int = 0
+    for i in 0..<n {
+        if i+1 < n && arr[i] < arr[i+1] {
+            index = i
         }
     }
     
-    var result: Int = 1
-    for (_, value) in dict {
-        result = result*(value+1)
+    var mainIndex: Int = 0
+    for j in index..<n {
+        if arr[index] < arr[j] {
+            mainIndex = j
+        }
     }
-    print(result-1)
     
+    arr.swapAt(index, mainIndex)
+    arr = arr[...index] + arr[(index+1)...].sorted()
+    print(arr.map{String($0)}.joined(separator: " "))
 }
-
