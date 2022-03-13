@@ -8581,20 +8581,43 @@ import Foundation
 //print(result)
 
 // MARK: - 백준 11659번 구간 합 구하기 4
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-var arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-for i in 1..<read[0] {
-    arr[i] = arr[i-1] + arr[i]
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//var arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//for i in 1..<read[0] {
+//    arr[i] = arr[i-1] + arr[i]
+//}
+//
+//for _ in 0..<read[1] {
+//    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    let a: Int = temp[0] - 1
+//    let b: Int = temp[1] - 1
+//
+//    if a == 0 {
+//        print(arr[b])
+//    } else {
+//        print(arr[b] - arr[a-1])
+//    }
+//}
+
+// MARK: - 백준 9375번 패션완 신해빈
+let testCases: Int = Int(readLine()!)!
+for _ in 0..<testCases {
+    let clothes: Int = Int(readLine()!)!
+    var dict: [String:Int] = [:]
+    for _ in 0..<clothes {
+        let temp: [String] = readLine()!.split(separator: " ").map{String($0)}
+        if dict[temp[1]] == nil {
+            dict[temp[1]] = 1
+        } else {
+            dict[temp[1]]! += 1
+        }
+    }
+    
+    var result: Int = 1
+    for (_, value) in dict {
+        result = result*(value+1)
+    }
+    print(result-1)
+    
 }
 
-for _ in 0..<read[1] {
-    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    let a: Int = temp[0] - 1
-    let b: Int = temp[1] - 1
-    
-    if a == 0 {
-        print(arr[b])
-    } else {
-        print(arr[b] - arr[a-1])
-    }
-}
