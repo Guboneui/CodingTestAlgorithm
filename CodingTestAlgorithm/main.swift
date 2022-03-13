@@ -8650,34 +8650,60 @@ import Foundation
 
 // MARK: - 백준 2407번 조합
 
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let n: Int = read[0]
-let m: Int = read[1]
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = read[0]
+//let m: Int = read[1]
+//
+//var maxValue: UInt64 = 1000000000000000000
+//var left: [[UInt64]] = Array(repeating: [UInt64](repeating: 0, count: n+1), count: n+1)
+//var right: [[UInt64]] = Array(repeating: [UInt64](repeating: 0, count: n+1), count: n+1)
+//
+//right[1][0] = 1
+//right[1][1] = 1
+//
+//for i in 2...n {
+//    right[i][0] = 1
+//    right[i][i] = 1
+//
+//    for j in 1..<i {
+//        right[i][j] = right[i-1][j-1] + right[i-1][j]
+//        left[i][j] = left[i-1][j-1] + left[i-1][j]
+//
+//        if right[i][j] >= maxValue {
+//            right[i][j] -= maxValue
+//            left[i][j] += 1
+//        }
+//    }
+//}
+//
+//if left[n][m] > 0 {
+//    print("\(left[n][m])\(right[n][m])")
+//} else {
+//    print("\(right[n][m])")
+//}
 
-var maxValue: UInt64 = 1000000000000000000
-var left: [[UInt64]] = Array(repeating: [UInt64](repeating: 0, count: n+1), count: n+1)
-var right: [[UInt64]] = Array(repeating: [UInt64](repeating: 0, count: n+1), count: n+1)
+// MARK: - 백준 15965번 K번째 소수
+let limits = 10000000
 
-right[1][0] = 1
-right[1][1] = 1
+let N = Int(readLine()!)!
 
-for i in 2...n {
-    right[i][0] = 1
-    right[i][i] = 1
-    
-    for j in 1..<i {
-        right[i][j] = right[i-1][j-1] + right[i-1][j]
-        left[i][j] = left[i-1][j-1] + left[i-1][j]
-        
-        if right[i][j] >= maxValue {
-            right[i][j] -= maxValue
-            left[i][j] += 1
-        }
+let maxNum = 9000000
+var arr: [Bool] = Array(repeating: false, count: maxNum+1)
+let limit: Int = Int(sqrt(Double(maxNum)))
+arr[0] = true
+arr[1] = true
+
+for i in 2...limit {
+    guard !arr[i] else { continue }
+    for j in stride(from: i*i, through: maxNum, by: i) {
+        arr[j] = true
     }
 }
 
-if left[n][m] > 0 {
-    print("\(left[n][m])\(right[n][m])")
-} else {
-    print("\(right[n][m])")
+var primeArr: [Int] = []
+for i in 0..<arr.count {
+    guard !arr[i] else { continue }
+    primeArr.append(i)
 }
+
+print(primeArr[N-1])
