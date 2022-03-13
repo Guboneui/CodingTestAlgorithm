@@ -8683,27 +8683,36 @@ import Foundation
 //}
 
 // MARK: - 백준 15965번 K번째 소수
-let limits = 10000000
+//let limits = 10000000
+//
+//let N = Int(readLine()!)!
+//
+//let maxNum = 9000000
+//var arr: [Bool] = Array(repeating: false, count: maxNum+1)
+//let limit: Int = Int(sqrt(Double(maxNum)))
+//arr[0] = true
+//arr[1] = true
+//
+//for i in 2...limit {
+//    guard !arr[i] else { continue }
+//    for j in stride(from: i*i, through: maxNum, by: i) {
+//        arr[j] = true
+//    }
+//}
+//
+//var primeArr: [Int] = []
+//for i in 0..<arr.count {
+//    guard !arr[i] else { continue }
+//    primeArr.append(i)
+//}
+//
+//print(primeArr[N-1])
 
-let N = Int(readLine()!)!
+// MARK: - 백준 17427번 약수의 합 2
 
-let maxNum = 9000000
-var arr: [Bool] = Array(repeating: false, count: maxNum+1)
-let limit: Int = Int(sqrt(Double(maxNum)))
-arr[0] = true
-arr[1] = true
-
-for i in 2...limit {
-    guard !arr[i] else { continue }
-    for j in stride(from: i*i, through: maxNum, by: i) {
-        arr[j] = true
-    }
+let n: Int = Int(readLine()!)!
+var sum: Int = 0
+for i in 1...n {
+    sum += n/i*i
 }
-
-var primeArr: [Int] = []
-for i in 0..<arr.count {
-    guard !arr[i] else { continue }
-    primeArr.append(i)
-}
-
-print(primeArr[N-1])
+print(sum)
