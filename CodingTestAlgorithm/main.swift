@@ -8799,65 +8799,113 @@ import Foundation
 //print(solution([1, 1, 1, 1, 1], 3))
 
 // MARK: - 프로그래머스 2단계 소수 찾기
-func solution(_ numbers:String) -> Int {
-    var result: Int = 0
-    var arr: [String] = numbers.map{String($0)}.sorted(by: >)
-    var maxValue: Int = Int(arr.joined(separator: ""))!
-    var target: [Int:Int] = makePrimeNumber(maxValue)
+//func solution(_ numbers:String) -> Int {
+//    var result: Int = 0
+//    var arr: [String] = numbers.map{String($0)}.sorted(by: >)
+//    var maxValue: Int = Int(arr.joined(separator: ""))!
+//    var target: [Int:Int] = makePrimeNumber(maxValue)
+//
+//    var tempResult: [String] = []
+//    var visited: [Bool] = Array(repeating: false, count: arr.count)
+//    var resultSet: Set<Int> = []
+//    func dfs(_ target: Int) {
+//
+//        if tempResult.count == target {
+//            resultSet.insert(Int(tempResult.joined(separator: ""))!)
+//        }
+//
+//        for i in 0..<arr.count {
+//            if visited[i] == false {
+//                visited[i] = true
+//                tempResult.append(arr[i])
+//                dfs(target)
+//                tempResult.removeLast()
+//                visited[i] = false
+//            }
+//        }
+//    }
+//
+//    for i in 1...arr.count {
+//        dfs(i)
+//    }
+//    for i in resultSet {
+//        if target[i] == 1 {
+//            result += 1
+//        }
+//    }
+//
+//
+//    return result
+//}
+//print(solution("011"))
+//
+//
+//func makePrimeNumber(_ num: Int) -> [Int:Int] {
+//    var arr: [Int] = Array(0...num)
+//    arr[1] = 0
+//
+//    for i in 2...num {
+//        if arr[i] == 0 {continue}
+//        for j in stride(from: i*2, through: num, by: i) {
+//            arr[j] = 0
+//        }
+//    }
+//
+//    let temp: [Int] = arr.filter{$0 != 0}
+//    var returnValue: [Int:Int] = [:]
+//    for i in temp {
+//        if returnValue[i] == nil {
+//            returnValue[i] = 1
+//        }
+//    }
+//
+//    return returnValue
+//}
+
+// MARK: - 백준 1012번 유기농 배추
+let testCases: Int = Int(readLine()!)!
+for _ in 0..<testCases {
+    let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    let m: Int = read[0]
+    let n: Int = read[1]
+    let line: Int = read[2]
     
-    var tempResult: [String] = []
-    var visited: [Bool] = Array(repeating: false, count: arr.count)
-    var resultSet: Set<Int> = []
-    func dfs(_ target: Int) {
-        
-        if tempResult.count == target {
-            resultSet.insert(Int(tempResult.joined(separator: ""))!)
+    var graph: [[Int]] = Array(repeating: Array(repeating: 0, count: m), count: n)
+    for _ in 0..<line {
+        let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+        graph[temp[1]][temp[0]] = 1
+    }
+    
+    
+    let dx: [Int] = [1, -1, 0, 0]
+    let dy: [Int] = [0, 0, 1, -1]
+    
+    func dfs(_ x: Int, _ y: Int) -> Bool {
+        if x<0 || x>=n || y<0 || y>=m {
+            return false
         }
         
-        for i in 0..<arr.count {
-            if visited[i] == false {
-                visited[i] = true
-                tempResult.append(arr[i])
-                dfs(target)
-                tempResult.removeLast()
-                visited[i] = false
+        if graph[x][y] == 1 {
+            graph[x][y] = 0
+            for i in 0..<4 {
+                let nx: Int = x + dx[i]
+                let ny: Int = y + dy[i]
+                dfs(nx, ny)
+            }
+            return true
+        }
+        return false
+    }
+    
+    var result: Int = 0
+    
+    for i in 0..<n {
+        for j in 0..<m {
+            if dfs(i, j) {
+                result += 1
             }
         }
     }
     
-    for i in 1...arr.count {
-        dfs(i)
-    }
-    for i in resultSet {
-        if target[i] == 1 {
-            result += 1
-        }
-    }
-    
-    
-    return result
-}
-print(solution("011"))
-
-
-func makePrimeNumber(_ num: Int) -> [Int:Int] {
-    var arr: [Int] = Array(0...num)
-    arr[1] = 0
-
-    for i in 2...num {
-        if arr[i] == 0 {continue}
-        for j in stride(from: i*2, through: num, by: i) {
-            arr[j] = 0
-        }
-    }
-    
-    let temp: [Int] = arr.filter{$0 != 0}
-    var returnValue: [Int:Int] = [:]
-    for i in temp {
-        if returnValue[i] == nil {
-            returnValue[i] = 1
-        }
-    }
-    
-    return returnValue
+    print(result)
 }
