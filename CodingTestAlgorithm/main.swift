@@ -8777,23 +8777,87 @@ import Foundation
 
 // MARK: - 프로그래머스 2단계 타겟 넘버
 
-var result: Int = 0
-func solution(_ numbers: [Int], _ target: Int) -> Int {
-    dfs(numbers, target, 0, 0)
+//var result: Int = 0
+//func solution(_ numbers: [Int], _ target: Int) -> Int {
+//    dfs(numbers, target, 0, 0)
+//
+//    return result
+//}
+//
+//func dfs(_ numbers: [Int], _ target: Int, _ sum: Int, _ depth: Int) {
+//    if depth == numbers.count {
+//        if sum == target {
+//            result += 1
+//        }
+//        return
+//    }
+//
+//    dfs(numbers, target, sum + numbers[depth], depth + 1)
+//    dfs(numbers, target, sum - numbers[depth], depth + 1)
+//}
+//
+//print(solution([1, 1, 1, 1, 1], 3))
+
+// MARK: - 프로그래머스 2단계 소수 찾기
+func solution(_ numbers:String) -> Int {
+    var result: Int = 0
+    var arr: [String] = numbers.map{String($0)}.sorted(by: >)
+    var maxValue: Int = Int(arr.joined(separator: ""))!
+    var target: [Int:Int] = makePrimeNumber(maxValue)
+    
+    var tempResult: [String] = []
+    var visited: [Bool] = Array(repeating: false, count: arr.count)
+    var resultSet: Set<Int> = []
+    func dfs(_ target: Int) {
+        
+        if tempResult.count == target {
+            resultSet.insert(Int(tempResult.joined(separator: ""))!)
+        }
+        
+        for i in 0..<arr.count {
+            if visited[i] == false {
+                visited[i] = true
+                tempResult.append(arr[i])
+                dfs(target)
+                tempResult.removeLast()
+                visited[i] = false
+            }
+        }
+    }
+    
+    for i in 1...arr.count {
+        dfs(i)
+    }
+    for i in resultSet {
+        if target[i] == 1 {
+            result += 1
+        }
+    }
+    
     
     return result
 }
+print(solution("011"))
 
-func dfs(_ numbers: [Int], _ target: Int, _ sum: Int, _ depth: Int) {
-    if depth == numbers.count {
-        if sum == target {
-            result += 1
+
+func makePrimeNumber(_ num: Int) -> [Int:Int] {
+    var arr: [Int] = Array(0...num)
+    arr[1] = 0
+
+    for i in 2...num {
+        if arr[i] == 0 {continue}
+        for j in stride(from: i*2, through: num, by: i) {
+            arr[j] = 0
         }
-        return
     }
     
-    dfs(numbers, target, sum + numbers[depth], depth + 1)
-    dfs(numbers, target, sum - numbers[depth], depth + 1)
+    let temp: [Int] = arr.filter{$0 != 0}
+    var returnValue: [Int:Int] = [:]
+    for i in temp {
+        if returnValue[i] == nil {
+            returnValue[i] = 1
+        }
+    }
+    
+    return returnValue
 }
-
-print(solution([1, 1, 1, 1, 1], 3))
