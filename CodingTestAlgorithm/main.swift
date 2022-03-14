@@ -8863,49 +8863,67 @@ import Foundation
 //}
 
 // MARK: - 백준 1012번 유기농 배추
-let testCases: Int = Int(readLine()!)!
-for _ in 0..<testCases {
-    let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    let m: Int = read[0]
-    let n: Int = read[1]
-    let line: Int = read[2]
-    
-    var graph: [[Int]] = Array(repeating: Array(repeating: 0, count: m), count: n)
-    for _ in 0..<line {
-        let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-        graph[temp[1]][temp[0]] = 1
-    }
-    
-    
-    let dx: [Int] = [1, -1, 0, 0]
-    let dy: [Int] = [0, 0, 1, -1]
-    
-    func dfs(_ x: Int, _ y: Int) -> Bool {
-        if x<0 || x>=n || y<0 || y>=m {
-            return false
+//let testCases: Int = Int(readLine()!)!
+//for _ in 0..<testCases {
+//    let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    let m: Int = read[0]
+//    let n: Int = read[1]
+//    let line: Int = read[2]
+//
+//    var graph: [[Int]] = Array(repeating: Array(repeating: 0, count: m), count: n)
+//    for _ in 0..<line {
+//        let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//        graph[temp[1]][temp[0]] = 1
+//    }
+//
+//
+//    let dx: [Int] = [1, -1, 0, 0]
+//    let dy: [Int] = [0, 0, 1, -1]
+//
+//    func dfs(_ x: Int, _ y: Int) -> Bool {
+//        if x<0 || x>=n || y<0 || y>=m {
+//            return false
+//        }
+//
+//        if graph[x][y] == 1 {
+//            graph[x][y] = 0
+//            for i in 0..<4 {
+//                let nx: Int = x + dx[i]
+//                let ny: Int = y + dy[i]
+//                dfs(nx, ny)
+//            }
+//            return true
+//        }
+//        return false
+//    }
+//
+//    var result: Int = 0
+//
+//    for i in 0..<n {
+//        for j in 0..<m {
+//            if dfs(i, j) {
+//                result += 1
+//            }
+//        }
+//    }
+//
+//    print(result)
+//}
+
+// MARK: - 백준 11053번 가장 긴 증가하는 부분 순열
+let n: Int = Int(readLine()!)!
+let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+var result: [Int] = Array(repeating: 1, count: n)
+
+for i in 1..<n {
+    for j in 0..<i {
+        if arr[j] < arr[i] {
+            result[i] = max(result[i], result[j] + 1)
         }
-        
-        if graph[x][y] == 1 {
-            graph[x][y] = 0
-            for i in 0..<4 {
-                let nx: Int = x + dx[i]
-                let ny: Int = y + dy[i]
-                dfs(nx, ny)
-            }
-            return true
-        }
-        return false
     }
-    
-    var result: Int = 0
-    
-    for i in 0..<n {
-        for j in 0..<m {
-            if dfs(i, j) {
-                result += 1
-            }
-        }
-    }
-    
-    print(result)
 }
+
+print(result.max()!)
+
+
+
