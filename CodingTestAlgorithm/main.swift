@@ -8718,59 +8718,82 @@ import Foundation
 //print(sum)
 
 // MARK: - 백준 1260번 DFS와 BFS
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let n: Int = read[0]
-let m: Int = read[1]
-let startNum: Int = read[2]
-var graph: [[Int]] = Array(repeating: [Int](), count: n+1)
-for _ in 0..<m {
-    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    let a: Int = temp[0]
-    let b: Int = temp[1]
-    graph[a].append(b)
-    graph[b].append(a)
-    graph[a].sort()
-    graph[b].sort()
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = read[0]
+//let m: Int = read[1]
+//let startNum: Int = read[2]
+//var graph: [[Int]] = Array(repeating: [Int](), count: n+1)
+//for _ in 0..<m {
+//    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    let a: Int = temp[0]
+//    let b: Int = temp[1]
+//    graph[a].append(b)
+//    graph[b].append(a)
+//    graph[a].sort()
+//    graph[b].sort()
+//}
+//
+//var dfsVisited: [Bool] = Array(repeating: false, count: n+1)
+//var dfsResult: [Int] = []
+//
+//func dfs(_ arr: [[Int]], _ startNode: Int) {
+//    dfsVisited[startNode] = true
+//    dfsResult.append(startNode)
+//
+//    for i in arr[startNode] {
+//        if !dfsVisited[i] {
+//            dfs(arr, i)
+//        }
+//    }
+//}
+//
+//dfs(graph, startNum)
+//dfsResult.forEach{print($0, terminator: " ")}
+//print()
+//
+//var bfsVisited: [Bool] = Array(repeating: false, count: n+1)
+//var bfsResult: [Int] = []
+//
+//func bfs(_ startNum: Int) {
+//    var queue: [Int] = [startNum]
+//    bfsVisited[startNum] = true
+//
+//    while queue.isEmpty == false {
+//        let v = queue.removeFirst()
+//        bfsResult.append(v)
+//        for i in graph[v] {
+//            if bfsVisited[i] == false {
+//                queue.append(i)
+//                bfsVisited[i] = true
+//            }
+//        }
+//    }
+//
+//    bfsResult.forEach{print($0, terminator: " ")}
+//}
+//
+//
+//bfs(startNum)
+
+// MARK: - 프로그래머스 2단계 타겟 넘버
+
+var result: Int = 0
+func solution(_ numbers: [Int], _ target: Int) -> Int {
+    dfs(numbers, target, 0, 0)
+    
+    return result
 }
 
-var dfsVisited: [Bool] = Array(repeating: false, count: n+1)
-var dfsResult: [Int] = []
-
-func dfs(_ arr: [[Int]], _ startNode: Int) {
-    dfsVisited[startNode] = true
-    dfsResult.append(startNode)
-    
-    for i in arr[startNode] {
-        if !dfsVisited[i] {
-            dfs(arr, i)
+func dfs(_ numbers: [Int], _ target: Int, _ sum: Int, _ depth: Int) {
+    if depth == numbers.count {
+        if sum == target {
+            result += 1
         }
-    }
-}
-
-dfs(graph, startNum)
-dfsResult.forEach{print($0, terminator: " ")}
-print()
-
-var bfsVisited: [Bool] = Array(repeating: false, count: n+1)
-var bfsResult: [Int] = []
-
-func bfs(_ startNum: Int) {
-    var queue: [Int] = [startNum]
-    bfsVisited[startNum] = true
-    
-    while queue.isEmpty == false {
-        let v = queue.removeFirst()
-        bfsResult.append(v)
-        for i in graph[v] {
-            if bfsVisited[i] == false {
-                queue.append(i)
-                bfsVisited[i] = true
-            }
-        }
+        return
     }
     
-    bfsResult.forEach{print($0, terminator: " ")}
+    dfs(numbers, target, sum + numbers[depth], depth + 1)
+    dfs(numbers, target, sum - numbers[depth], depth + 1)
 }
 
-
-bfs(startNum)
+print(solution([1, 1, 1, 1, 1], 3))
