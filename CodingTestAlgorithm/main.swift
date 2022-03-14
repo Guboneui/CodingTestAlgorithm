@@ -8710,9 +8710,67 @@ import Foundation
 
 // MARK: - 백준 17427번 약수의 합 2
 
-let n: Int = Int(readLine()!)!
-var sum: Int = 0
-for i in 1...n {
-    sum += n/i*i
+//let n: Int = Int(readLine()!)!
+//var sum: Int = 0
+//for i in 1...n {
+//    sum += n/i*i
+//}
+//print(sum)
+
+// MARK: - 백준 1260번 DFS와 BFS
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let n: Int = read[0]
+let m: Int = read[1]
+let startNum: Int = read[2]
+var graph: [[Int]] = Array(repeating: [Int](), count: n+1)
+for _ in 0..<m {
+    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    let a: Int = temp[0]
+    let b: Int = temp[1]
+    graph[a].append(b)
+    graph[b].append(a)
+    graph[a].sort()
+    graph[b].sort()
 }
-print(sum)
+
+var dfsVisited: [Bool] = Array(repeating: false, count: n+1)
+var dfsResult: [Int] = []
+
+func dfs(_ arr: [[Int]], _ startNode: Int) {
+    dfsVisited[startNode] = true
+    dfsResult.append(startNode)
+    
+    for i in arr[startNode] {
+        if !dfsVisited[i] {
+            dfs(arr, i)
+        }
+    }
+}
+
+dfs(graph, startNum)
+dfsResult.forEach{print($0, terminator: " ")}
+print()
+
+var bfsVisited: [Bool] = Array(repeating: false, count: n+1)
+var bfsResult: [Int] = []
+
+func bfs(_ startNum: Int) {
+    var queue: [Int] = [startNum]
+    bfsVisited[startNum] = true
+    
+    while queue.isEmpty == false {
+        let v = queue.removeFirst()
+        bfsResult.append(v)
+        for i in graph[v] {
+            if bfsVisited[i] == false {
+                queue.append(i)
+                bfsVisited[i] = true
+            }
+        }
+    }
+    
+    bfsResult.forEach{print($0, terminator: " ")}
+}
+
+
+bfs(startNum)
