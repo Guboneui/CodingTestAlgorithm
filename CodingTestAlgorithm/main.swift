@@ -8911,19 +8911,43 @@ import Foundation
 //}
 
 // MARK: - 백준 11053번 가장 긴 증가하는 부분 순열
-let n: Int = Int(readLine()!)!
-let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-var result: [Int] = Array(repeating: 1, count: n)
+//let n: Int = Int(readLine()!)!
+//let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//var result: [Int] = Array(repeating: 1, count: n)
+//
+//for i in 1..<n {
+//    for j in 0..<i {
+//        if arr[j] < arr[i] {
+//            result[i] = max(result[i], result[j] + 1)
+//        }
+//    }
+//}
+//
+//print(result.max()!)
 
-for i in 1..<n {
-    for j in 0..<i {
-        if arr[j] < arr[i] {
-            result[i] = max(result[i], result[j] + 1)
-        }
-    }
+
+// MARK: - 백준 1057번 토너먼트
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let n: Int = read[0]
+var firstTarget: Int = read[1]
+var secondTarget: Int = read[2]
+
+var result: Int = 0
+
+var target: Int = 1
+
+while firstTarget != secondTarget {
+    firstTarget -= firstTarget / 2
+    secondTarget -= secondTarget / 2
+    
+    result += 1
 }
 
-print(result.max()!)
+print(result)
+
+
+
+
 
 
 
