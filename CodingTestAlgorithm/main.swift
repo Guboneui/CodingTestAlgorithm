@@ -8927,26 +8927,49 @@ import Foundation
 
 
 // MARK: - 백준 1057번 토너먼트
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let n: Int = read[0]
-var firstTarget: Int = read[1]
-var secondTarget: Int = read[2]
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = read[0]
+//var firstTarget: Int = read[1]
+//var secondTarget: Int = read[2]
+//
+//var result: Int = 0
+//
+//var target: Int = 1
+//
+//while firstTarget != secondTarget {
+//    firstTarget -= firstTarget / 2
+//    secondTarget -= secondTarget / 2
+//
+//    result += 1
+//}
+//
+//print(result)
+
+// MARK: - 백준 1931번 회의실 배정
+let n: Int = Int(readLine()!)!
+var arr: [(Int,Int)] = []
+for _ in 0..<n {
+    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    arr.append((temp[0], temp[1]))
+}
+
+arr.sort{
+    if $0.1 == $1.1 {
+        return $0.0 < $1.0
+    }
+    return $0.1 < $1.1
+}
 
 var result: Int = 0
-
-var target: Int = 1
-
-while firstTarget != secondTarget {
-    firstTarget -= firstTarget / 2
-    secondTarget -= secondTarget / 2
-    
-    result += 1
+var temp: Int = 0
+for i in arr {
+    if i.0 >= temp {
+        temp = i.1
+        result += 1
+    }
 }
 
 print(result)
-
-
-
 
 
 
