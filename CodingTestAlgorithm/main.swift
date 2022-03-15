@@ -8973,19 +8973,36 @@ import Foundation
 
 // MARK: - 백준 1912번 연속합
 
-let n: Int = Int(readLine()!)!
-let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-var result: [Int] = Array(repeating: arr.min()!, count: n)
+//let n: Int = Int(readLine()!)!
+//let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//var result: [Int] = Array(repeating: arr.min()!, count: n)
+//
+//if arr.max()! < 0 {
+//    print(arr.max()!)
+//} else {
+//    result[0] = arr[0]
+//    for i in 1..<n {
+//        result[i] = max(arr[i], arr[i] + result[i-1])
+//    }
+//
+//    print(result.max()!)
+//}
 
-if arr.max()! < 0 {
-    print(arr.max()!)
-} else {
-    result[0] = arr[0]
-    for i in 1..<n {
-        result[i] = max(arr[i], arr[i] + result[i-1])
+// MARK: - 백준 4948번 베르트랑 공준
+
+while true {
+    let n: Int = Int(readLine()!)!
+    if n == 0 {
+        break
+    }
+    var arr: [Int] = Array(0...(n*2))
+    arr[1] = 0
+    for i in 2...n*2 {
+        if arr[i] == 0 {continue}
+        for j in stride(from: i*2, through: n*2, by: i) {
+            arr[j] = 0
+        }
     }
     
-    print(result.max()!)
+    print(arr.filter{$0 != 0 && $0 > n && $0 <= 2*n}.count)
 }
-
-
