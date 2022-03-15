@@ -8990,19 +8990,61 @@ import Foundation
 
 // MARK: - 백준 4948번 베르트랑 공준
 
-while true {
-    let n: Int = Int(readLine()!)!
-    if n == 0 {
-        break
-    }
-    var arr: [Int] = Array(0...(n*2))
-    arr[1] = 0
-    for i in 2...n*2 {
-        if arr[i] == 0 {continue}
-        for j in stride(from: i*2, through: n*2, by: i) {
-            arr[j] = 0
-        }
-    }
+//while true {
+//    let n: Int = Int(readLine()!)!
+//    if n == 0 {
+//        break
+//    }
+//    var arr: [Int] = Array(0...(n*2))
+//    arr[1] = 0
+//    for i in 2...n*2 {
+//        if arr[i] == 0 {continue}
+//        for j in stride(from: i*2, through: n*2, by: i) {
+//            arr[j] = 0
+//        }
+//    }
+//
+//    print(arr.filter{$0 != 0 && $0 > n && $0 <= 2*n}.count)
+//}
+
+// MARK: - 백준 11724번 연결 요소의 개수
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let node: Int = read[0]
+let cases: Int = read[1]
+var graph: [[Int]] = Array(repeating: [Int](), count: node+1)
+var visited: [Bool] = Array(repeating: false, count: node+1)
+for _ in 0..<cases {
+    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    let a: Int = temp[0]
+    let b: Int = temp[1]
     
-    print(arr.filter{$0 != 0 && $0 > n && $0 <= 2*n}.count)
+    graph[a].append(b)
+    graph[b].append(a)
+    
+    graph[a].sort()
+    graph[b].sort()
 }
+
+var result: Int = 0
+
+func dfs(_ v: Int) {
+    visited[v] = true
+    
+    for i in graph[v] {
+        if visited[i] == false {
+            visited[i] = true
+            dfs(i)
+            
+        }
+        
+    }
+}
+
+for i in 1...node {
+    if visited[i] == false {
+        result += 1
+        dfs(i)
+    }
+}
+
+print(result)
