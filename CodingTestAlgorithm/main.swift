@@ -8946,31 +8946,46 @@ import Foundation
 //print(result)
 
 // MARK: - 백준 1931번 회의실 배정
+//let n: Int = Int(readLine()!)!
+//var arr: [(Int,Int)] = []
+//for _ in 0..<n {
+//    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    arr.append((temp[0], temp[1]))
+//}
+//
+//arr.sort{
+//    if $0.1 == $1.1 {
+//        return $0.0 < $1.0
+//    }
+//    return $0.1 < $1.1
+//}
+//
+//var result: Int = 0
+//var temp: Int = 0
+//for i in arr {
+//    if i.0 >= temp {
+//        temp = i.1
+//        result += 1
+//    }
+//}
+//
+//print(result)
+
+// MARK: - 백준 1912번 연속합
+
 let n: Int = Int(readLine()!)!
-var arr: [(Int,Int)] = []
-for _ in 0..<n {
-    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    arr.append((temp[0], temp[1]))
-}
+let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+var result: [Int] = Array(repeating: arr.min()!, count: n)
 
-arr.sort{
-    if $0.1 == $1.1 {
-        return $0.0 < $1.0
+if arr.max()! < 0 {
+    print(arr.max()!)
+} else {
+    result[0] = arr[0]
+    for i in 1..<n {
+        result[i] = max(arr[i], arr[i] + result[i-1])
     }
-    return $0.1 < $1.1
+    
+    print(result.max()!)
 }
-
-var result: Int = 0
-var temp: Int = 0
-for i in arr {
-    if i.0 >= temp {
-        temp = i.1
-        result += 1
-    }
-}
-
-print(result)
-
-
 
 
