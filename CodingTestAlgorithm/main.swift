@@ -9008,43 +9008,56 @@ import Foundation
 //}
 
 // MARK: - 백준 11724번 연결 요소의 개수
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let node: Int = read[0]
-let cases: Int = read[1]
-var graph: [[Int]] = Array(repeating: [Int](), count: node+1)
-var visited: [Bool] = Array(repeating: false, count: node+1)
-for _ in 0..<cases {
-    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    let a: Int = temp[0]
-    let b: Int = temp[1]
-    
-    graph[a].append(b)
-    graph[b].append(a)
-    
-    graph[a].sort()
-    graph[b].sort()
-}
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let node: Int = read[0]
+//let cases: Int = read[1]
+//var graph: [[Int]] = Array(repeating: [Int](), count: node+1)
+//var visited: [Bool] = Array(repeating: false, count: node+1)
+//for _ in 0..<cases {
+//    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    let a: Int = temp[0]
+//    let b: Int = temp[1]
+//
+//    graph[a].append(b)
+//    graph[b].append(a)
+//
+//    graph[a].sort()
+//    graph[b].sort()
+//}
+//
+//var result: Int = 0
+//
+//func dfs(_ v: Int) {
+//    visited[v] = true
+//
+//    for i in graph[v] {
+//        if visited[i] == false {
+//            visited[i] = true
+//            dfs(i)
+//
+//        }
+//
+//    }
+//}
+//
+//for i in 1...node {
+//    if visited[i] == false {
+//        result += 1
+//        dfs(i)
+//    }
+//}
+//
+//print(result)
 
-var result: Int = 0
-
-func dfs(_ v: Int) {
-    visited[v] = true
-    
-    for i in graph[v] {
-        if visited[i] == false {
-            visited[i] = true
-            dfs(i)
-            
-        }
-        
+// MARK: - 백준 1541번 잃어버린 괄호
+let arr: [String] = readLine()!.split(separator: "-").map{String($0)}
+var result: [Int] = []
+for str in arr {
+    if str.contains("+") {
+        result.append(str.split(separator: "+").map{Int($0)!}.reduce(0, +))
+    } else {
+        result.append(Int(str)!)
     }
 }
 
-for i in 1...node {
-    if visited[i] == false {
-        result += 1
-        dfs(i)
-    }
-}
-
-print(result)
+print(result.reduce(result[0]*2, -))
