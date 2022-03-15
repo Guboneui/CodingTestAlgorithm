@@ -9063,46 +9063,100 @@ import Foundation
 //print(result.reduce(result[0]*2, -))
 
 // MARK: - 백준 14889번 스타트와 링크
-let n: Int = Int(readLine()!)!
-var arr: [[Int]] = []
-var visited: [Bool] = Array(repeating: false, count: n)
-var result: Int = Int.max
-var resultArr: [Int] = []
-var startTeam: Int = 0
-var linkTeam: Int = 0
+//let n: Int = Int(readLine()!)!
+//var arr: [[Int]] = []
+//var visited: [Bool] = Array(repeating: false, count: n)
+//var result: Int = Int.max
+//var resultArr: [Int] = []
+//var startTeam: Int = 0
+//var linkTeam: Int = 0
+//
+//for _ in 0..<n {
+//    arr.append(readLine()!.split(separator: " ").map{Int($0)!})
+//}
+//
+//func dfs(_ depth: Int, _ start: Int) {
+//    if depth == n/2 {
+//        // 팀 나누기 성공
+//        startTeam = 0
+//        linkTeam = 0
+//        for i in 0..<n {
+//            for j in 0..<n {
+//                if visited[i] == false && visited[j] == false {
+//                    startTeam += arr[i][j]
+//                }
+//                if visited[i] == true && visited[j] == true {
+//                    linkTeam += arr[i][j]
+//                }
+//            }
+//        }
+//        result = min(result, abs(startTeam-linkTeam))
+//        return
+//
+//    }
+//
+//    for i in start..<n {
+//        if visited[i] == false {
+//            visited[i] = true
+//            dfs(depth+1, i)
+//            visited[i] = false
+//        }
+//    }
+//}
+//
+//dfs(0, 0)
+//print(result)
 
-for _ in 0..<n {
-    arr.append(readLine()!.split(separator: " ").map{Int($0)!})
-}
-
-func dfs(_ depth: Int, _ start: Int) {
-    if depth == n/2 {
-        // 팀 나누기 성공
-        startTeam = 0
-        linkTeam = 0
-        for i in 0..<n {
-            for j in 0..<n {
-                if visited[i] == false && visited[j] == false {
-                    startTeam += arr[i][j]
-                }
-                if visited[i] == true && visited[j] == true {
-                    linkTeam += arr[i][j]
+// MARK: - 백준 4963번 섬의 개수
+while true {
+    let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    if read == [0, 0] {
+        break
+    }
+    
+    let w: Int = read[0]
+    let h: Int = read[1]
+    
+    var graph: [[Int]] = []
+    
+    for _ in 0..<h {
+        let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+        graph.append(temp)
+    }
+    
+    var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: w), count: h)
+    
+    let dx: [Int] = [1, -1, 0, 0, 1, 1, -1, -1]
+    let dy: [Int] = [0, 0, 1, -1, 1, -1, -1, 1]
+    
+    var island: Int = 0
+    
+    func dfs(_ x: Int, _ y: Int) {
+        for i in 0..<8 {
+            let nx: Int = x + dx[i]
+            let ny: Int = y + dy[i]
+            
+            if nx<0 || nx>=w || ny<0 || ny>=h {
+                continue
+            } else {
+                if visited[ny][nx] == false && graph[ny][nx] == 1 {
+                    visited[ny][nx] = true
+                    dfs(nx, ny)
                 }
             }
         }
-        result = min(result, abs(startTeam-linkTeam))
-        return
-        
     }
     
-    for i in start..<n {
-        if visited[i] == false {
-            visited[i] = true
-            dfs(depth+1, i)
-            visited[i] = false
+    for i in 0..<h {
+        for j in 0..<w {
+            if graph[i][j] == 1 && visited[i][j] == false{
+                visited[i][j] = true
+                dfs(j, i)
+                island += 1
+            }
         }
     }
+    
+    print(island)
+    
 }
-
-dfs(0, 0)
-print(result)
