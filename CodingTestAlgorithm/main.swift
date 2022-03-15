@@ -9050,14 +9050,59 @@ import Foundation
 //print(result)
 
 // MARK: - 백준 1541번 잃어버린 괄호
-let arr: [String] = readLine()!.split(separator: "-").map{String($0)}
-var result: [Int] = []
-for str in arr {
-    if str.contains("+") {
-        result.append(str.split(separator: "+").map{Int($0)!}.reduce(0, +))
-    } else {
-        result.append(Int(str)!)
+//let arr: [String] = readLine()!.split(separator: "-").map{String($0)}
+//var result: [Int] = []
+//for str in arr {
+//    if str.contains("+") {
+//        result.append(str.split(separator: "+").map{Int($0)!}.reduce(0, +))
+//    } else {
+//        result.append(Int(str)!)
+//    }
+//}
+//
+//print(result.reduce(result[0]*2, -))
+
+// MARK: - 백준 14889번 스타트와 링크
+let n: Int = Int(readLine()!)!
+var arr: [[Int]] = []
+var visited: [Bool] = Array(repeating: false, count: n)
+var result: Int = Int.max
+var resultArr: [Int] = []
+var startTeam: Int = 0
+var linkTeam: Int = 0
+
+for _ in 0..<n {
+    arr.append(readLine()!.split(separator: " ").map{Int($0)!})
+}
+
+func dfs(_ depth: Int, _ start: Int) {
+    if depth == n/2 {
+        // 팀 나누기 성공
+        startTeam = 0
+        linkTeam = 0
+        for i in 0..<n {
+            for j in 0..<n {
+                if visited[i] == false && visited[j] == false {
+                    startTeam += arr[i][j]
+                }
+                if visited[i] == true && visited[j] == true {
+                    linkTeam += arr[i][j]
+                }
+            }
+        }
+        result = min(result, abs(startTeam-linkTeam))
+        return
+        
+    }
+    
+    for i in start..<n {
+        if visited[i] == false {
+            visited[i] = true
+            dfs(depth+1, i)
+            visited[i] = false
+        }
     }
 }
 
-print(result.reduce(result[0]*2, -))
+dfs(0, 0)
+print(result)
