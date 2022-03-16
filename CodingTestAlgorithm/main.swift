@@ -9276,45 +9276,61 @@ import Foundation
 //}
 
 // MARK: - 백준 7562번 나이트의 이동
-let testCases: Int = Int(readLine()!)!
-for _ in 0..<testCases {
-    let length: Int = Int(readLine()!)!
-    var visited: [[Int]] = Array(repeating: Array(repeating: -1, count: length), count: length)
-    let tempA: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    let start: (Int,Int) = (tempA[0], tempA[1])
-    let tempB: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    let target: (Int,Int) = (tempB[0], tempB[1])
-    
-    let dx: [Int] = [1, 2, 2, 1, -1, -2, -2, -1]
-    let dy: [Int] = [2, 1, -1, -2, -2, -1, 1, 2]
-    
-    var queue: [(Int,Int)] = []
-    
-    visited[start.0][start.1] = 0
-    queue.append((start.0, start.1))
-    
-    var index: Int = 0
-    
-    while queue.count > index {
-        let temp: (Int, Int) = queue[index]
-        for i in 0..<dx.count {
-            let nx: Int = temp.0 + dx[i]
-            let ny: Int = temp.1 + dy[i]
-            let next: (Int, Int) = (nx, ny)
-            
-            if nx<0 || nx>=length || ny<0 || ny>=length {
-                continue
-            } else {
-                if visited[next.0][next.1] == -1 {
-                    queue.append(next)
-                    visited[next.0][next.1] = visited[temp.0][temp.1] + 1
-                }
-            }
-            
-        }
-        index += 1
-    }
-    
-    print(visited[target.0][target.1])
+//let testCases: Int = Int(readLine()!)!
+//for _ in 0..<testCases {
+//    let length: Int = Int(readLine()!)!
+//    var visited: [[Int]] = Array(repeating: Array(repeating: -1, count: length), count: length)
+//    let tempA: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    let start: (Int,Int) = (tempA[0], tempA[1])
+//    let tempB: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    let target: (Int,Int) = (tempB[0], tempB[1])
+//
+//    let dx: [Int] = [1, 2, 2, 1, -1, -2, -2, -1]
+//    let dy: [Int] = [2, 1, -1, -2, -2, -1, 1, 2]
+//
+//    var queue: [(Int,Int)] = []
+//
+//    visited[start.0][start.1] = 0
+//    queue.append((start.0, start.1))
+//
+//    var index: Int = 0
+//
+//    while queue.count > index {
+//        let temp: (Int, Int) = queue[index]
+//        for i in 0..<dx.count {
+//            let nx: Int = temp.0 + dx[i]
+//            let ny: Int = temp.1 + dy[i]
+//            let next: (Int, Int) = (nx, ny)
+//
+//            if nx<0 || nx>=length || ny<0 || ny>=length {
+//                continue
+//            } else {
+//                if visited[next.0][next.1] == -1 {
+//                    queue.append(next)
+//                    visited[next.0][next.1] = visited[temp.0][temp.1] + 1
+//                }
+//            }
+//
+//        }
+//        index += 1
+//    }
+//
+//    print(visited[target.0][target.1])
+//
+//}
 
+// MARK: - 백준 11055번 가장 큰 증가 부분 수열
+
+let n: Int = Int(readLine()!)!
+let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+var dp: [Int] = Array(repeating: 0, count: n+1)
+
+for i in 1...n{
+    dp[i] = arr[i-1]
+    for j in 1...i {
+        if arr[i-1] > arr[j-1] {
+            dp[i] = max(dp[j] + arr[i-1], dp[i])
+        }
+    }
 }
+print(dp.max()!)
