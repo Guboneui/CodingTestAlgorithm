@@ -9221,29 +9221,56 @@ import Foundation
 //}
 
 // MARK: - 백준 1182번 부분수열의 합
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let n: Int = read[0]
-let target: Int = read[1]
-let inputArr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = read[0]
+//let target: Int = read[1]
+//let inputArr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//
+//var visited: [Bool] = Array(repeating: false, count: n)
+//var sum: Int = 0
+//var result: Int = 0
+//func solution(_ arr: [Int], _ start: Int) {
+//    if !arr.isEmpty && sum == target {
+//        result += 1
+//    }
+//
+//    for i in start..<n {
+//        if visited[i] == false {
+//            visited[i] = true
+//            sum += inputArr[i]
+//            solution(arr+[inputArr[i]], i)
+//            sum -= inputArr[i]
+//            visited[i] = false
+//        }
+//    }
+//}
+//
+//solution([], 0)
+//print(result)
 
-var visited: [Bool] = Array(repeating: false, count: n)
-var sum: Int = 0
-var result: Int = 0
-func solution(_ arr: [Int], _ start: Int) {
-    if !arr.isEmpty && sum == target {
-        result += 1
-    }
-    
-    for i in start..<n {
-        if visited[i] == false {
-            visited[i] = true
-            sum += inputArr[i]
-            solution(arr+[inputArr[i]], i)
-            sum -= inputArr[i]
-            visited[i] = false
+// MARK: - 백준 11279번 최대 힙
+
+let n: Int = Int(readLine()!)!
+var arr: [Int] = []
+
+for _ in 0..<n {
+    let temp: Int = Int(readLine()!)!
+    if temp == 0 {
+        if arr.isEmpty {
+            print(0)
+        } else {
+            var minValue: Int = Int.min
+            var index: Int = 0
+            
+            for i in 0..<arr.count {
+                if minValue < arr[i] {
+                    minValue = arr[i]
+                    index = i
+                }
+            }
+            print(arr.remove(at: index))
         }
+    } else {
+        arr.append(temp)
     }
 }
-
-solution([], 0)
-print(result)
