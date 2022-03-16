@@ -9364,16 +9364,44 @@ import Foundation
 //print(result)
 
 // MARK: - 백준 11722번 가장 긴 감소하는 부분 수열
+//let n: Int = Int(readLine()!)!
+//let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//var dp: [Int] = Array(repeating: 1, count: n)
+//
+//for i in 1..<n {
+//    for j in 0..<i {
+//        if arr[j] > arr[i] {
+//            dp[i] = max(dp[i], dp[j]+1)
+//        }
+//    }
+//}
+//
+//print(dp.max()!)
+
+// MARK: - 백준 12015번 가장 긴 증가하는 부분 수열 2
 let n: Int = Int(readLine()!)!
 let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-var dp: [Int] = Array(repeating: 1, count: n)
+var result: [Int] = [arr[0]]
 
 for i in 1..<n {
-    for j in 0..<i {
-        if arr[j] > arr[i] {
-            dp[i] = max(dp[i], dp[j]+1)
+    if arr[i] > result.last! {
+        result.append(arr[i])
+    } else {
+        var start: Int = 0
+        var end: Int = result.count-1
+        
+        while start <= end {
+            let mid: Int = (start+end) / 2
+            
+            if result[mid] < arr[i] {
+                start = mid + 1
+            } else {
+                end = mid - 1
+            }
         }
+        
+        result[start] = arr[i]
     }
-}
 
-print(dp.max()!)
+}
+print(result.count)
