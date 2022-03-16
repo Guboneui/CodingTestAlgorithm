@@ -9163,36 +9163,87 @@ import Foundation
 
 // MARK: - 백준 6603번 로또
 
-while true {
-    var read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    if read == [0] {
-        break
-    }
-    let n: Int = read.remove(at: 0)
-    
-    var result: [Int] = []
-    var visited: [Bool] = Array(repeating: false, count: n)
-    
-    func solution(_ depth: Int, _ start: Int) {
-        if depth == 6 {
-            print(result.map{String($0)}.joined(separator: " "))
-        }
+//while true {
+//    var read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    if read == [0] {
+//        break
+//    }
+//    let n: Int = read.remove(at: 0)
+//
+//    var result: [Int] = []
+//    var visited: [Bool] = Array(repeating: false, count: n)
+//
+//    func solution(_ depth: Int, _ start: Int) {
+//        if depth == 6 {
+//            print(result.map{String($0)}.joined(separator: " "))
+//        }
+//
+//        for i in start..<n {
+//            if visited[i] == false {
+//                visited[i] = true
+//                result.append(read[i])
+//                solution(depth+1, i)
+//                result.removeLast()
+//                visited[i] = false
+//            }
+//        }
+//    }
+//
+//    solution(0, 0)
+//
+//    print()
+//}
 
-        for i in start..<n {
-            if visited[i] == false {
-                visited[i] = true
-                result.append(read[i])
-                solution(depth+1, i)
-                result.removeLast()
-                visited[i] = false
-            }
-        }
+
+// MARK: - 백준 1927번 최소 힙
+//let n: Int = Int(readLine()!)!
+//var arr: [Int] = []
+//for _ in 0..<n {
+//    let temp: Int = Int(readLine()!)!
+//    if temp == 0 {
+//        if arr.isEmpty {
+//            print(0)
+//        } else {
+//            var min: Int = Int.max
+//            var index: Int = 0
+//            for i in 0..<arr.count {
+//                if min > arr[i] {
+//                    min = arr[i]
+//                    index = i
+//                }
+//            }
+//
+//            print(arr.remove(at: index))
+//        }
+//    } else {
+//        arr.append(temp)
+//    }
+//}
+
+// MARK: - 백준 1182번 부분수열의 합
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let n: Int = read[0]
+let target: Int = read[1]
+let inputArr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+
+var visited: [Bool] = Array(repeating: false, count: n)
+var sum: Int = 0
+var result: Int = 0
+func solution(_ arr: [Int], _ start: Int) {
+    if !arr.isEmpty && sum == target {
+        result += 1
     }
     
-    solution(0, 0)
-    
-    print()
+    for i in start..<n {
+        if visited[i] == false {
+            visited[i] = true
+            sum += inputArr[i]
+            solution(arr+[inputArr[i]], i)
+            sum -= inputArr[i]
+            visited[i] = false
+        }
+    }
 }
 
-
-
+solution([], 0)
+print(result)
