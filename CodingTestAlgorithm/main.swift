@@ -9250,27 +9250,71 @@ import Foundation
 
 // MARK: - 백준 11279번 최대 힙
 
-let n: Int = Int(readLine()!)!
-var arr: [Int] = []
+//let n: Int = Int(readLine()!)!
+//var arr: [Int] = []
+//
+//for _ in 0..<n {
+//    let temp: Int = Int(readLine()!)!
+//    if temp == 0 {
+//        if arr.isEmpty {
+//            print(0)
+//        } else {
+//            var minValue: Int = Int.min
+//            var index: Int = 0
+//
+//            for i in 0..<arr.count {
+//                if minValue < arr[i] {
+//                    minValue = arr[i]
+//                    index = i
+//                }
+//            }
+//            print(arr.remove(at: index))
+//        }
+//    } else {
+//        arr.append(temp)
+//    }
+//}
 
-for _ in 0..<n {
-    let temp: Int = Int(readLine()!)!
-    if temp == 0 {
-        if arr.isEmpty {
-            print(0)
-        } else {
-            var minValue: Int = Int.min
-            var index: Int = 0
+// MARK: - 백준 7562번 나이트의 이동
+let testCases: Int = Int(readLine()!)!
+for _ in 0..<testCases {
+    let length: Int = Int(readLine()!)!
+    var visited: [[Int]] = Array(repeating: Array(repeating: -1, count: length), count: length)
+    let tempA: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    let start: (Int,Int) = (tempA[0], tempA[1])
+    let tempB: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    let target: (Int,Int) = (tempB[0], tempB[1])
+    
+    let dx: [Int] = [1, 2, 2, 1, -1, -2, -2, -1]
+    let dy: [Int] = [2, 1, -1, -2, -2, -1, 1, 2]
+    
+    var queue: [(Int,Int)] = []
+    
+    visited[start.0][start.1] = 0
+    queue.append((start.0, start.1))
+    
+    var index: Int = 0
+    
+    while queue.count > index {
+        let temp: (Int, Int) = queue[index]
+        for i in 0..<dx.count {
+            let nx: Int = temp.0 + dx[i]
+            let ny: Int = temp.1 + dy[i]
+            let next: (Int, Int) = (nx, ny)
             
-            for i in 0..<arr.count {
-                if minValue < arr[i] {
-                    minValue = arr[i]
-                    index = i
+            if nx<0 || nx>=length || ny<0 || ny>=length {
+                continue
+            } else {
+                if visited[next.0][next.1] == -1 {
+                    queue.append(next)
+                    visited[next.0][next.1] = visited[temp.0][temp.1] + 1
                 }
             }
-            print(arr.remove(at: index))
+            
         }
-    } else {
-        arr.append(temp)
+        index += 1
     }
+    
+    print(visited[target.0][target.1])
+
 }
