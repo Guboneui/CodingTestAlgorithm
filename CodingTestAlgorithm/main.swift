@@ -9108,55 +9108,91 @@ import Foundation
 //print(result)
 
 // MARK: - 백준 4963번 섬의 개수
+//while true {
+//    let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    if read == [0, 0] {
+//        break
+//    }
+//
+//    let w: Int = read[0]
+//    let h: Int = read[1]
+//
+//    var graph: [[Int]] = []
+//
+//    for _ in 0..<h {
+//        let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//        graph.append(temp)
+//    }
+//
+//    var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: w), count: h)
+//
+//    let dx: [Int] = [1, -1, 0, 0, 1, 1, -1, -1]
+//    let dy: [Int] = [0, 0, 1, -1, 1, -1, -1, 1]
+//
+//    var island: Int = 0
+//
+//    func dfs(_ x: Int, _ y: Int) {
+//        for i in 0..<8 {
+//            let nx: Int = x + dx[i]
+//            let ny: Int = y + dy[i]
+//
+//            if nx<0 || nx>=w || ny<0 || ny>=h {
+//                continue
+//            } else {
+//                if visited[ny][nx] == false && graph[ny][nx] == 1 {
+//                    visited[ny][nx] = true
+//                    dfs(nx, ny)
+//                }
+//            }
+//        }
+//    }
+//
+//    for i in 0..<h {
+//        for j in 0..<w {
+//            if graph[i][j] == 1 && visited[i][j] == false{
+//                visited[i][j] = true
+//                dfs(j, i)
+//                island += 1
+//            }
+//        }
+//    }
+//
+//    print(island)
+//
+//}
+
+// MARK: - 백준 6603번 로또
+
 while true {
-    let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    if read == [0, 0] {
+    var read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    if read == [0] {
         break
     }
+    let n: Int = read.remove(at: 0)
     
-    let w: Int = read[0]
-    let h: Int = read[1]
+    var result: [Int] = []
+    var visited: [Bool] = Array(repeating: false, count: n)
     
-    var graph: [[Int]] = []
-    
-    for _ in 0..<h {
-        let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-        graph.append(temp)
-    }
-    
-    var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: w), count: h)
-    
-    let dx: [Int] = [1, -1, 0, 0, 1, 1, -1, -1]
-    let dy: [Int] = [0, 0, 1, -1, 1, -1, -1, 1]
-    
-    var island: Int = 0
-    
-    func dfs(_ x: Int, _ y: Int) {
-        for i in 0..<8 {
-            let nx: Int = x + dx[i]
-            let ny: Int = y + dy[i]
-            
-            if nx<0 || nx>=w || ny<0 || ny>=h {
-                continue
-            } else {
-                if visited[ny][nx] == false && graph[ny][nx] == 1 {
-                    visited[ny][nx] = true
-                    dfs(nx, ny)
-                }
+    func solution(_ depth: Int, _ start: Int) {
+        if depth == 6 {
+            print(result.map{String($0)}.joined(separator: " "))
+        }
+
+        for i in start..<n {
+            if visited[i] == false {
+                visited[i] = true
+                result.append(read[i])
+                solution(depth+1, i)
+                result.removeLast()
+                visited[i] = false
             }
         }
     }
     
-    for i in 0..<h {
-        for j in 0..<w {
-            if graph[i][j] == 1 && visited[i][j] == false{
-                visited[i][j] = true
-                dfs(j, i)
-                island += 1
-            }
-        }
-    }
+    solution(0, 0)
     
-    print(island)
-    
+    print()
 }
+
+
+
