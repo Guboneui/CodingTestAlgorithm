@@ -9321,16 +9321,44 @@ import Foundation
 
 // MARK: - 백준 11055번 가장 큰 증가 부분 수열
 
+//let n: Int = Int(readLine()!)!
+//let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//var dp: [Int] = Array(repeating: 0, count: n+1)
+//
+//for i in 1...n{
+//    dp[i] = arr[i-1]
+//    for j in 1...i {
+//        if arr[i-1] > arr[j-1] {
+//            dp[i] = max(dp[j] + arr[i-1], dp[i])
+//        }
+//    }
+//}
+//print(dp.max()!)
+
+// MARK: - 백준 11054번 가장 긴 바이토닉 부분 수열
 let n: Int = Int(readLine()!)!
 let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-var dp: [Int] = Array(repeating: 0, count: n+1)
+var plusDP: [Int] = Array(repeating: 1, count: n)
+var minusDP: [Int] = Array(repeating: 1, count: n)
 
-for i in 1...n{
-    dp[i] = arr[i-1]
-    for j in 1...i {
-        if arr[i-1] > arr[j-1] {
-            dp[i] = max(dp[j] + arr[i-1], dp[i])
+for i in 1..<n {
+    for j in 0..<i {
+        if arr[j] < arr[i] {
+            plusDP[i] = max(plusDP[j]+1, plusDP[i])
         }
     }
 }
-print(dp.max()!)
+
+for i in stride(from: n-1, through: 0, by: -1) {
+    for j in stride(from: n-1, through: i, by: -1) {
+        if arr[i] > arr[j] {
+            minusDP[i] = max(minusDP[j]+1, minusDP[i])
+        }
+    }
+}
+
+var result: Int = 0
+for i in 0..<plusDP.count {
+    result = max(result, plusDP[i]+minusDP[i]-1)
+}
+print(result)
