@@ -9379,29 +9379,67 @@ import Foundation
 //print(dp.max()!)
 
 // MARK: - 백준 12015번 가장 긴 증가하는 부분 수열 2
-let n: Int = Int(readLine()!)!
-let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-var result: [Int] = [arr[0]]
+//let n: Int = Int(readLine()!)!
+//let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//var result: [Int] = [arr[0]]
+//
+//for i in 1..<n {
+//    if arr[i] > result.last! {
+//        result.append(arr[i])
+//    } else {
+//        var start: Int = 0
+//        var end: Int = result.count-1
+//
+//        while start <= end {
+//            let mid: Int = (start+end) / 2
+//
+//            if result[mid] < arr[i] {
+//                start = mid + 1
+//            } else {
+//                end = mid - 1
+//            }
+//        }
+//
+//        result[start] = arr[i]
+//    }
+//
+//}
+//print(result.count)
 
-for i in 1..<n {
-    if arr[i] > result.last! {
-        result.append(arr[i])
-    } else {
-        var start: Int = 0
-        var end: Int = result.count-1
-        
-        while start <= end {
-            let mid: Int = (start+end) / 2
-            
-            if result[mid] < arr[i] {
-                start = mid + 1
-            } else {
-                end = mid - 1
+// MARK: - 백준 1780번 종이의 개수
+let n: Int = Int(readLine()!)!
+var graph: [[Int]] = []
+for _ in 0..<n {
+    graph.append(readLine()!.split(separator: " ").map{Int($0)!})
+}
+var result: [Int] = Array(repeating: 0, count: 3)
+
+func solution(_ row: Int, _ col: Int, _ arr: [[Int]], _ size: Int) {
+    if check(row, col, arr, size) { return }
+    else {
+        let newSize: Int = size/3
+        for i in 0..<3 {
+            for j in 0..<3 {
+                solution(row+(newSize*i), col+(newSize*j), arr, newSize)
             }
         }
-        
-        result[start] = arr[i]
     }
-
 }
-print(result.count)
+
+func check(_ row: Int, _ col: Int, _ arr: [[Int]], _ size: Int) -> Bool {
+    let k = arr[row][col]
+    for i in row..<row+size {
+        for j in col..<col+size {
+            if graph[i][j] != k {
+                return false
+            }
+        }
+    }
+    result[k+1] += 1
+    return true
+}
+
+solution(0, 0, graph, n)
+result.forEach({
+    print($0)
+})
