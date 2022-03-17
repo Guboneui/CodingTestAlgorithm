@@ -9407,39 +9407,73 @@ import Foundation
 //print(result.count)
 
 // MARK: - 백준 1780번 종이의 개수
+//let n: Int = Int(readLine()!)!
+//var graph: [[Int]] = []
+//for _ in 0..<n {
+//    graph.append(readLine()!.split(separator: " ").map{Int($0)!})
+//}
+//var result: [Int] = Array(repeating: 0, count: 3)
+//
+//func solution(_ row: Int, _ col: Int, _ arr: [[Int]], _ size: Int) {
+//    if check(row, col, arr, size) { return }
+//    else {
+//        let newSize: Int = size/3
+//        for i in 0..<3 {
+//            for j in 0..<3 {
+//                solution(row+(newSize*i), col+(newSize*j), arr, newSize)
+//            }
+//        }
+//    }
+//}
+//
+//func check(_ row: Int, _ col: Int, _ arr: [[Int]], _ size: Int) -> Bool {
+//    let k = arr[row][col]
+//    for i in row..<row+size {
+//        for j in col..<col+size {
+//            if graph[i][j] != k {
+//                return false
+//            }
+//        }
+//    }
+//    result[k+1] += 1
+//    return true
+//}
+//
+//solution(0, 0, graph, n)
+//result.forEach({
+//    print($0)
+//})
+
+// MARK: - 백준 트리의 부모 찾기
 let n: Int = Int(readLine()!)!
-var graph: [[Int]] = []
-for _ in 0..<n {
-    graph.append(readLine()!.split(separator: " ").map{Int($0)!})
+var arr: [[Int]] = Array(repeating: [Int](), count: n+1)
+var visited: [Bool] = Array(repeating: false, count: n+1)
+var result: [Int] = Array(repeating: 0, count: n+1)
+for _ in 0..<n-1 {
+    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    let a: Int = temp[0]
+    let b: Int = temp[1]
+    
+    arr[a].append(b)
+    arr[b].append(a)
+    
+    arr[a].sort()
+    arr[b].sort()
 }
-var result: [Int] = Array(repeating: 0, count: 3)
 
-func solution(_ row: Int, _ col: Int, _ arr: [[Int]], _ size: Int) {
-    if check(row, col, arr, size) { return }
-    else {
-        let newSize: Int = size/3
-        for i in 0..<3 {
-            for j in 0..<3 {
-                solution(row+(newSize*i), col+(newSize*j), arr, newSize)
-            }
+
+func dfs(_ v: Int) {
+   
+    for i in arr[v] {
+        if visited[i] == false {
+            visited[i] = true
+            result[i] = v
+            dfs(i)
         }
     }
 }
 
-func check(_ row: Int, _ col: Int, _ arr: [[Int]], _ size: Int) -> Bool {
-    let k = arr[row][col]
-    for i in row..<row+size {
-        for j in col..<col+size {
-            if graph[i][j] != k {
-                return false
-            }
-        }
-    }
-    result[k+1] += 1
-    return true
+dfs(1)
+for i in 2...n {
+    print(result[i])
 }
-
-solution(0, 0, graph, n)
-result.forEach({
-    print($0)
-})
