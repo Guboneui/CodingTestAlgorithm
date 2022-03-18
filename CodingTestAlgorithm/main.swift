@@ -9445,35 +9445,125 @@ import Foundation
 //})
 
 // MARK: - 백준 트리의 부모 찾기
+//let n: Int = Int(readLine()!)!
+//var arr: [[Int]] = Array(repeating: [Int](), count: n+1)
+//var visited: [Bool] = Array(repeating: false, count: n+1)
+//var result: [Int] = Array(repeating: 0, count: n+1)
+//for _ in 0..<n-1 {
+//    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    let a: Int = temp[0]
+//    let b: Int = temp[1]
+//
+//    arr[a].append(b)
+//    arr[b].append(a)
+//
+//    arr[a].sort()
+//    arr[b].sort()
+//}
+//
+//
+//func dfs(_ v: Int) {
+//
+//    for i in arr[v] {
+//        if visited[i] == false {
+//            visited[i] = true
+//            result[i] = v
+//            dfs(i)
+//        }
+//    }
+//}
+//
+//dfs(1)
+//for i in 2...n {
+//    print(result[i])
+//}
+
+
+//let height: [Int] = [140, 21, 21, 32]
+//let width: [Int] = [2, 1, 3, 7]
+//
+//var dict: [Int:Int] = [:]
+//for i in 0..<height.count {
+//    dict[i] = height[i]
+//}
+//print(dict)
+//var temp: [Int] = []
+//for i in 0..<height.count {
+//    let k = dict.filter{$0.value >= height[i]}
+//    print("자신보다 크거나 같은 높이 필터링: \(k)")
+//
+//
+//    var totalWidth: Int = 0
+//    k.forEach {
+//        totalWidth += width[$0.key]
+//    }
+//    temp.append(height[i]*totalWidth)
+//
+//}
+//
+//print(temp.max()!)
+
+// MARK: - 백준 2644번 촌수계산
+
 let n: Int = Int(readLine()!)!
-var arr: [[Int]] = Array(repeating: [Int](), count: n+1)
-var visited: [Bool] = Array(repeating: false, count: n+1)
-var result: [Int] = Array(repeating: 0, count: n+1)
-for _ in 0..<n-1 {
+let target: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let node: Int = Int(readLine()!)!
+
+var graph: [[Int]] = Array(repeating: [Int](), count: n+1)
+
+for _ in 0..<node {
     let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    let a: Int = temp[0]
-    let b: Int = temp[1]
-    
-    arr[a].append(b)
-    arr[b].append(a)
-    
-    arr[a].sort()
-    arr[b].sort()
+    graph[temp[0]].append(temp[1])
+    graph[temp[1]].append(temp[0])
 }
 
+var stack: [(Int, Int)] = [(target[0], 0)]
+var visited: [Bool] = Array(repeating: false, count: n+1)
+visited[target[0]] = true
 
-func dfs(_ v: Int) {
-   
-    for i in arr[v] {
-        if visited[i] == false {
-            visited[i] = true
-            result[i] = v
-            dfs(i)
-        }
+var result = -1
+while !stack.isEmpty {
+    let k = stack.removeLast()
+    if k.0 == target[1] {
+        result = k.1
+        break
+    }
+    for i in graph[k.0] {
+        if visited[i] == true {continue }
+        visited[i] = true
+        stack.append((i, k.1 + 1))
     }
 }
 
-dfs(1)
-for i in 2...n {
-    print(result[i])
-}
+print(result)
+//var graph: [Int: [[Int]]] = [:]
+//for i in 1...n {
+//    graph[i] = []
+//}
+//for _ in 0..<node {
+//    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    graph[temp[0]]!.append([temp[0], temp[1]])
+//    graph[temp[1]]!.append([temp[1], temp[0]])
+//}
+//
+//var visited: [Int] = Array(repeating: Int.max, count: n+1)
+//visited[target[0]] = 0
+//var stack = graph[target[0]]!
+//
+//while !stack.isEmpty {
+//    let k = stack.popLast()!
+//    if visited[k[1]] > visited[k[0]] + 1 {
+//        stack += graph[k[1]]!
+//        visited[k[1]] = visited[k[0]] + 1
+//    }
+//}
+//
+//if visited[target[1]] == Int.max {
+//    print(-1)
+//} else {
+//    print(visited[target[1]])
+//}
+//
+
+
+
