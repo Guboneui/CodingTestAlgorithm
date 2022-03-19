@@ -9616,37 +9616,20 @@ var arr: [[Int]] = []
 for _ in 0..<n {
     arr.append(readLine()!.split(separator: " ").map{Int($0)!})
 }
-var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: n), count: n)
-var result: Int = 0
-func solution(_ x: Int, _ y: Int) {
-    if arr[x][y] == 0 {
-        result += 1
-        return
-    }
-    
-    let dx: [Int] = [arr[x][y], 0]
-    let dy: [Int] = [0, arr[x][y]]
-    
-    for i in 0..<dx.count {
-        let nx: Int = x + dx[i]
-        let ny: Int = y + dy[i]
-        
-       
-        
-        if nx<0 || nx>=n || ny<0 || ny>=n {
-            continue
-        } else {
-            if visited[nx][ny] == false {
-                visited[nx][ny] = true
-                solution(nx, ny)
-                visited[nx][ny] = false
+var visited: [[Int]] = Array(repeating: Array(repeating: 0, count: n), count: n)
+visited[0][0] = 1
+
+for y in 0..<n {
+    for x in 0..<n {
+        if visited[y][x] != 0 {
+            if x + arr[y][x] < n && arr[y][x] != 0 {
+                visited[y][x + arr[y][x]] += visited[y][x]
             }
-            
+            if y + arr[y][x] < n && arr[y][x] != 0 {
+                visited[y + arr[y][x]][x] += visited[y][x]
+            }
         }
-        
     }
-    
 }
 
-solution(0, 0)
-print(result)
+print(visited[n-1][n-1])
