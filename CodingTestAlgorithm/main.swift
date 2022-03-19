@@ -9504,38 +9504,38 @@ import Foundation
 //print(temp.max()!)
 
 // MARK: - 백준 2644번 촌수계산
-
-let n: Int = Int(readLine()!)!
-let target: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let node: Int = Int(readLine()!)!
-
-var graph: [[Int]] = Array(repeating: [Int](), count: n+1)
-
-for _ in 0..<node {
-    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    graph[temp[0]].append(temp[1])
-    graph[temp[1]].append(temp[0])
-}
-
-var stack: [(Int, Int)] = [(target[0], 0)]
-var visited: [Bool] = Array(repeating: false, count: n+1)
-visited[target[0]] = true
-
-var result = -1
-while !stack.isEmpty {
-    let k = stack.removeLast()
-    if k.0 == target[1] {
-        result = k.1
-        break
-    }
-    for i in graph[k.0] {
-        if visited[i] == true {continue }
-        visited[i] = true
-        stack.append((i, k.1 + 1))
-    }
-}
-
-print(result)
+//
+//let n: Int = Int(readLine()!)!
+//let target: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let node: Int = Int(readLine()!)!
+//
+//var graph: [[Int]] = Array(repeating: [Int](), count: n+1)
+//
+//for _ in 0..<node {
+//    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    graph[temp[0]].append(temp[1])
+//    graph[temp[1]].append(temp[0])
+//}
+//
+//var stack: [(Int, Int)] = [(target[0], 0)]
+//var visited: [Bool] = Array(repeating: false, count: n+1)
+//visited[target[0]] = true
+//
+//var result = -1
+//while !stack.isEmpty {
+//    let k = stack.removeLast()
+//    if k.0 == target[1] {
+//        result = k.1
+//        break
+//    }
+//    for i in graph[k.0] {
+//        if visited[i] == true {continue }
+//        visited[i] = true
+//        stack.append((i, k.1 + 1))
+//    }
+//}
+//
+//print(result)
 //var graph: [Int: [[Int]]] = [:]
 //for i in 1...n {
 //    graph[i] = []
@@ -9567,3 +9567,48 @@ print(result)
 
 
 
+// MARK: - 백준 10819번 차이를 최대로
+let n = Int(String(readLine()!))!
+var arr = readLine()!.split(separator: " ").map{Int(String($0))!}
+arr.sort()
+var sum = 1
+
+func factorial(_ n: Int){
+    if n == 0 {
+        return
+    }
+    sum *= n
+    factorial(n - 1)
+    
+}
+
+factorial(n)
+
+var resultSum = 0
+
+for _ in 0..<sum {
+    var nowSum = 0
+    for i in 0..<arr.count {
+        if i + 1 < arr.count {
+            nowSum += abs(arr[i] - arr[i + 1])
+        }
+    }
+    resultSum = max(resultSum, nowSum)
+    var index = 0
+    for i in 0..<n{
+        if i + 1 < n, arr[i] < arr[i + 1]{
+            index = i
+        }
+    }
+    
+    var biggerIndex = 0
+    for j in 0..<n {
+        if arr[index] < arr[j] {
+            biggerIndex = j
+        }
+    }
+    arr.swapAt(index, biggerIndex)
+    arr = arr[0...index] + arr[(index + 1)..<arr.count].sorted()
+    
+}
+print(resultSum)
