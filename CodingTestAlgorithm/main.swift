@@ -9568,47 +9568,31 @@ import Foundation
 
 
 // MARK: - 백준 10819번 차이를 최대로
-let n = Int(String(readLine()!))!
-var arr = readLine()!.split(separator: " ").map{Int(String($0))!}
-arr.sort()
-var sum = 1
+let n: Int = Int(readLine()!)!
+let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+var result: Int = 0
 
-func factorial(_ n: Int){
-    if n == 0 {
-        return
+var temp: [Int] = []
+var visited: [Bool] = Array(repeating: false, count: n)
+func solution(_ depth: Int) {
+    if depth == n {
+        var sum: Int = 0
+        for i in 1..<n {
+            sum += abs(temp[i-1] - temp[i])
+        }
+        result = max(result, sum)
     }
-    sum *= n
-    factorial(n - 1)
     
+    for i in 0..<n {
+        if visited[i] == false {
+            visited[i] = true
+            temp.append(arr[i])
+            solution(depth + 1)
+            temp.removeLast()
+            visited[i] = false
+        }
+    }
 }
 
-factorial(n)
-
-var resultSum = 0
-
-for _ in 0..<sum {
-    var nowSum = 0
-    for i in 0..<arr.count {
-        if i + 1 < arr.count {
-            nowSum += abs(arr[i] - arr[i + 1])
-        }
-    }
-    resultSum = max(resultSum, nowSum)
-    var index = 0
-    for i in 0..<n{
-        if i + 1 < n, arr[i] < arr[i + 1]{
-            index = i
-        }
-    }
-    
-    var biggerIndex = 0
-    for j in 0..<n {
-        if arr[index] < arr[j] {
-            biggerIndex = j
-        }
-    }
-    arr.swapAt(index, biggerIndex)
-    arr = arr[0...index] + arr[(index + 1)..<arr.count].sorted()
-    
-}
-print(resultSum)
+solution(0)
+print(result)
