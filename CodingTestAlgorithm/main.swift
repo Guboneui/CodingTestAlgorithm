@@ -9598,14 +9598,55 @@ import Foundation
 //print(result)
 
 // MARK: - 백준 18870번 좌표 압축
+//let n: Int = Int(readLine()!)!
+//let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let sortedArr: [Int] = Array(Set(arr).sorted(by: <))
+//var dict: [Int:Int] = [:]
+//for i in 0..<sortedArr.count {
+//    dict[sortedArr[i]] = i
+//}
+//
+//for i in arr {
+//    print(dict[i]!, terminator: " ")
+//}
+
+// MARK: - 백준 1890번 점프
 let n: Int = Int(readLine()!)!
-let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let sortedArr: [Int] = Array(Set(arr).sorted(by: <))
-var dict: [Int:Int] = [:]
-for i in 0..<sortedArr.count {
-    dict[sortedArr[i]] = i
+var arr: [[Int]] = []
+for _ in 0..<n {
+    arr.append(readLine()!.split(separator: " ").map{Int($0)!})
+}
+var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: n), count: n)
+var result: Int = 0
+func solution(_ x: Int, _ y: Int) {
+    if arr[x][y] == 0 {
+        result += 1
+        return
+    }
+    
+    let dx: [Int] = [arr[x][y], 0]
+    let dy: [Int] = [0, arr[x][y]]
+    
+    for i in 0..<dx.count {
+        let nx: Int = x + dx[i]
+        let ny: Int = y + dy[i]
+        
+       
+        
+        if nx<0 || nx>=n || ny<0 || ny>=n {
+            continue
+        } else {
+            if visited[nx][ny] == false {
+                visited[nx][ny] = true
+                solution(nx, ny)
+                visited[nx][ny] = false
+            }
+            
+        }
+        
+    }
+    
 }
 
-for i in arr {
-    print(dict[i]!, terminator: " ")
-}
+solution(0, 0)
+print(result)
