@@ -9568,31 +9568,44 @@ import Foundation
 
 
 // MARK: - 백준 10819번 차이를 최대로
+//let n: Int = Int(readLine()!)!
+//let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//var result: Int = 0
+//
+//var temp: [Int] = []
+//var visited: [Bool] = Array(repeating: false, count: n)
+//func solution(_ depth: Int) {
+//    if depth == n {
+//        var sum: Int = 0
+//        for i in 1..<n {
+//            sum += abs(temp[i-1] - temp[i])
+//        }
+//        result = max(result, sum)
+//    }
+//
+//    for i in 0..<n {
+//        if visited[i] == false {
+//            visited[i] = true
+//            temp.append(arr[i])
+//            solution(depth + 1)
+//            temp.removeLast()
+//            visited[i] = false
+//        }
+//    }
+//}
+//
+//solution(0)
+//print(result)
+
+// MARK: - 백준 18870번 좌표 압축
 let n: Int = Int(readLine()!)!
 let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-var result: Int = 0
-
-var temp: [Int] = []
-var visited: [Bool] = Array(repeating: false, count: n)
-func solution(_ depth: Int) {
-    if depth == n {
-        var sum: Int = 0
-        for i in 1..<n {
-            sum += abs(temp[i-1] - temp[i])
-        }
-        result = max(result, sum)
-    }
-    
-    for i in 0..<n {
-        if visited[i] == false {
-            visited[i] = true
-            temp.append(arr[i])
-            solution(depth + 1)
-            temp.removeLast()
-            visited[i] = false
-        }
-    }
+let sortedArr: [Int] = Array(Set(arr).sorted(by: <))
+var dict: [Int:Int] = [:]
+for i in 0..<sortedArr.count {
+    dict[sortedArr[i]] = i
 }
 
-solution(0)
-print(result)
+for i in arr {
+    print(dict[i]!, terminator: " ")
+}
