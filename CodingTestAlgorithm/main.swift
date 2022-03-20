@@ -9789,31 +9789,74 @@ import Foundation
 //solution(0, 0)
 
 // MARK: - 백준 10451번 순열 사이클
-let testCases: Int = Int(readLine()!)!
+//let testCases: Int = Int(readLine()!)!
+//
+//for _ in 0..<testCases {
+//    let length: Int = Int(readLine()!)!
+//    let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    var dict: [Int:Int] = [:]
+//    for i in 0..<length {
+//        dict[i+1] = arr[i]
+//    }
+//    var visited: [Bool] = Array(repeating: false, count: length+1)
+//    var result: Int = 0
+//
+//    func solution(_ key: Int) {
+//        if visited[key] == false {
+//            visited[key] = true
+//            solution(dict[key]!)
+//        }
+//    }
+//
+//    for i in 1...length {
+//        if visited[i] == false {
+//            solution(i)
+//            result += 1
+//        }
+//    }
+//
+//    print(result)
+//}
 
-for _ in 0..<testCases {
-    let length: Int = Int(readLine()!)!
-    let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    var dict: [Int:Int] = [:]
-    for i in 0..<length {
-        dict[i+1] = arr[i]
-    }
-    var visited: [Bool] = Array(repeating: false, count: length+1)
-    var result: Int = 0
-    
-    func solution(_ key: Int) {
-        if visited[key] == false {
-            visited[key] = true
-            solution(dict[key]!)
-        }
-    }
-    
-    for i in 1...length {
-        if visited[i] == false {
-            solution(i)
-            result += 1
-        }
-    }
-    
-    print(result)
-}
+// MARK: - 백준 2529번 부등호
+//let n: Int = Int(readLine()!)!
+//let arr: [String] = readLine()!.split(separator: " ").map{String($0)}
+//
+//var visited: [Bool] = Array(repeating: false, count: 10)
+//var result: [String] = []
+//func solution(_ depth: Int, _ lastNumber: Int, _ str: String) {
+//    if depth == n {
+//        result.append(str)
+//        return
+//    }
+//
+//    for i in 0...9 {
+//        if visited[i] == false {
+//            if arr[depth] == "<" {
+//                if lastNumber < i {
+//                    visited[i] = true
+//                    solution(depth+1, i, str+"\(i)")
+//                    visited[i] = false
+//                }
+//            } else {
+//                if lastNumber > i {
+//                    visited[i] = true
+//                    solution(depth+1, i, str+"\(i)")
+//                    visited[i] = false
+//                }
+//            }
+//        }
+//    }
+//}
+//
+//for i in 0...9 {
+//    visited[i] = true
+//    solution(0, i, "\(i)")
+//    visited[i] = false
+//}
+//
+//print(result.last!)
+//print(result[0])
+
+
+
