@@ -9611,25 +9611,63 @@ import Foundation
 //}
 
 // MARK: - 백준 1890번 점프
-let n: Int = Int(readLine()!)!
-var arr: [[Int]] = []
-for _ in 0..<n {
-    arr.append(readLine()!.split(separator: " ").map{Int($0)!})
-}
-var visited: [[Int]] = Array(repeating: Array(repeating: 0, count: n), count: n)
-visited[0][0] = 1
+//let n: Int = Int(readLine()!)!
+//var arr: [[Int]] = []
+//for _ in 0..<n {
+//    arr.append(readLine()!.split(separator: " ").map{Int($0)!})
+//}
+//var visited: [[Int]] = Array(repeating: Array(repeating: 0, count: n), count: n)
+//visited[0][0] = 1
+//
+//for y in 0..<n {
+//    for x in 0..<n {
+//        if visited[y][x] != 0 {
+//            if x + arr[y][x] < n && arr[y][x] != 0 {
+//                visited[y][x + arr[y][x]] += visited[y][x]
+//            }
+//            if y + arr[y][x] < n && arr[y][x] != 0 {
+//                visited[y + arr[y][x]][x] += visited[y][x]
+//            }
+//        }
+//    }
+//}
+//
+//print(visited[n-1][n-1])
 
-for y in 0..<n {
-    for x in 0..<n {
-        if visited[y][x] != 0 {
-            if x + arr[y][x] < n && arr[y][x] != 0 {
-                visited[y][x + arr[y][x]] += visited[y][x]
-            }
-            if y + arr[y][x] < n && arr[y][x] != 0 {
-                visited[y + arr[y][x]][x] += visited[y][x]
-            }
-        }
+// MARK: - 백준 9184번 신나는 함수 실행
+
+var result: [[[Int]]] = Array(repeating: Array(repeating: Array(repeating: 0, count: 21), count: 21), count: 21)
+
+func solution(_ a: Int, _ b: Int, _ c: Int) -> Int {
+    if a<=0 || b<=0 || c<=0 {
+        return 1
     }
+    
+    if a<21 && b<21 && c<21 && result[a][b][c] != 0 {
+        return result[a][b][c]
+    }
+    
+    if a>20 || b>20 || c>20 {
+        result[20][20][20] = solution(20, 20, 20)
+        return solution(20, 20, 20)
+    }
+    
+    if a<b && b<c {
+        result[a][b][c] = solution(a, b, c-1) + solution(a, b-1, c-1) - solution(a, b-1, c)
+        return solution(a, b, c-1) + solution(a, b-1, c-1) - solution(a, b-1, c)
+    }
+    result[a][b][c] = solution(a-1, b, c) + solution(a-1, b-1, c) + solution(a-1, b, c-1) - solution(a-1, b-1, c-1)
+    return solution(a-1, b, c) + solution(a-1, b-1, c) + solution(a-1, b, c-1) - solution(a-1, b-1, c-1)
+    
 }
 
-print(visited[n-1][n-1])
+while true {
+    let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    if read == [-1, -1, -1] {
+        break
+    }
+    print("w(\(read[0]), \(read[1]), \(read[2])) = \(solution(read[0], read[1], read[2]))")
+    
+}
+
+
