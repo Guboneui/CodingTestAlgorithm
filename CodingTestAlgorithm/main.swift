@@ -9672,31 +9672,84 @@ import Foundation
 
 
 // MARK: - 백준 2004번 조합 0의 개수
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let n: Int = read[0]
-let m: Int = read[1]
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = read[0]
+//let m: Int = read[1]
+//
+//
+//func solution2(_ num: Int) -> Int {
+//    var count: Int = 0
+//    var i: Int = 2
+//    while num >= i {
+//        count += num/i
+//        i *= 2
+//    }
+//    return count
+//}
+//
+//func solution5(_ num: Int) -> Int {
+//    var count: Int = 0
+//    var i: Int = 5
+//    while num >= i {
+//        count += num/i
+//        i *= 5
+//    }
+//    return count
+//}
+//
+//let a: Int = solution2(n) - (solution2(m)+solution2(n-m))
+//let b: Int = solution5(n) - (solution5(m)+solution5(n-m))
+//print(min(a, b))
 
-
-func solution2(_ num: Int) -> Int {
-    var count: Int = 0
-    var i: Int = 2
-    while num >= i {
-        count += num/i
-        i *= 2
-    }
-    return count
-}
-
-func solution5(_ num: Int) -> Int {
-    var count: Int = 0
-    var i: Int = 5
-    while num >= i {
-        count += num/i
-        i *= 5
-    }
-    return count
-}
-
-let a: Int = solution2(n) - (solution2(m)+solution2(n-m))
-let b: Int = solution5(n) - (solution5(m)+solution5(n-m))
-print(min(a, b))
+// MARK: - 백준 2504번 괄호의 값
+//let arr: [String] = readLine()!.map{String($0)}
+//
+//var result: Int = 0
+//var temp: Int = 1
+//var check: Bool = true
+//var stack: [String] = []
+//
+//
+//for i in 0..<arr.count {
+//    if arr[i] == "(" {
+//        temp *= 2
+//        stack.append(arr[i])
+//
+//    } else if arr[i] == "[" {
+//        temp *= 3
+//        stack.append(arr[i])
+//
+//    } else if arr[i] == ")" {
+//
+//        if stack.isEmpty || stack.last != "(" {
+//            check = false
+//            break
+//        }
+//
+//        if arr[i-1] == "(" {
+//            result += temp
+//        }
+//        stack.removeLast()
+//        temp /= 2
+//
+//    } else if arr[i] == "]" {
+//        if stack.isEmpty || stack.last != "[" {
+//            check = false
+//            break
+//        }
+//
+//        if arr[i-1] == "[" {
+//            result += temp
+//        }
+//        stack.removeLast()
+//        temp /= 3
+//
+//    }
+//}
+//
+//if !stack.isEmpty || !check{
+//    print(0)
+//} else {
+//    print(result)
+//}
+//
