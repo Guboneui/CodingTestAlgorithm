@@ -9636,38 +9636,67 @@ import Foundation
 
 // MARK: - 백준 9184번 신나는 함수 실행
 
-var result: [[[Int]]] = Array(repeating: Array(repeating: Array(repeating: 0, count: 21), count: 21), count: 21)
+//var result: [[[Int]]] = Array(repeating: Array(repeating: Array(repeating: 0, count: 21), count: 21), count: 21)
+//
+//func solution(_ a: Int, _ b: Int, _ c: Int) -> Int {
+//    if a<=0 || b<=0 || c<=0 {
+//        return 1
+//    }
+//
+//    if a<21 && b<21 && c<21 && result[a][b][c] != 0 {
+//        return result[a][b][c]
+//    }
+//
+//    if a>20 || b>20 || c>20 {
+//        result[20][20][20] = solution(20, 20, 20)
+//        return solution(20, 20, 20)
+//    }
+//
+//    if a<b && b<c {
+//        result[a][b][c] = solution(a, b, c-1) + solution(a, b-1, c-1) - solution(a, b-1, c)
+//        return solution(a, b, c-1) + solution(a, b-1, c-1) - solution(a, b-1, c)
+//    }
+//    result[a][b][c] = solution(a-1, b, c) + solution(a-1, b-1, c) + solution(a-1, b, c-1) - solution(a-1, b-1, c-1)
+//    return solution(a-1, b, c) + solution(a-1, b-1, c) + solution(a-1, b, c-1) - solution(a-1, b-1, c-1)
+//
+//}
+//
+//while true {
+//    let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    if read == [-1, -1, -1] {
+//        break
+//    }
+//    print("w(\(read[0]), \(read[1]), \(read[2])) = \(solution(read[0], read[1], read[2]))")
+//
+//}
 
-func solution(_ a: Int, _ b: Int, _ c: Int) -> Int {
-    if a<=0 || b<=0 || c<=0 {
-        return 1
+
+// MARK: - 백준 2004번 조합 0의 개수
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let n: Int = read[0]
+let m: Int = read[1]
+
+
+func solution2(_ num: Int) -> Int {
+    var count: Int = 0
+    var i: Int = 2
+    while num >= i {
+        count += num/i
+        i *= 2
     }
-    
-    if a<21 && b<21 && c<21 && result[a][b][c] != 0 {
-        return result[a][b][c]
-    }
-    
-    if a>20 || b>20 || c>20 {
-        result[20][20][20] = solution(20, 20, 20)
-        return solution(20, 20, 20)
-    }
-    
-    if a<b && b<c {
-        result[a][b][c] = solution(a, b, c-1) + solution(a, b-1, c-1) - solution(a, b-1, c)
-        return solution(a, b, c-1) + solution(a, b-1, c-1) - solution(a, b-1, c)
-    }
-    result[a][b][c] = solution(a-1, b, c) + solution(a-1, b-1, c) + solution(a-1, b, c-1) - solution(a-1, b-1, c-1)
-    return solution(a-1, b, c) + solution(a-1, b-1, c) + solution(a-1, b, c-1) - solution(a-1, b-1, c-1)
-    
+    return count
 }
 
-while true {
-    let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    if read == [-1, -1, -1] {
-        break
+func solution5(_ num: Int) -> Int {
+    var count: Int = 0
+    var i: Int = 5
+    while num >= i {
+        count += num/i
+        i *= 5
     }
-    print("w(\(read[0]), \(read[1]), \(read[2])) = \(solution(read[0], read[1], read[2]))")
-    
+    return count
 }
 
-
+let a: Int = solution2(n) - (solution2(m)+solution2(n-m))
+let b: Int = solution5(n) - (solution5(m)+solution5(n-m))
+print(min(a, b))
