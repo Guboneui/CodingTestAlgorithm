@@ -9753,3 +9753,38 @@ import Foundation
 //    print(result)
 //}
 //
+
+// MARK: - 백준 15663번 N과 M(9)
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let n: Int = read[0]
+let m: Int = read[1]
+let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted(by: <)
+
+var result: [Int] = []
+var visited: [Bool] = Array(repeating: false, count: n)
+var dict: [[Int]:Int] = [:]
+var answer: [[Int]] = []
+
+func solution(_ depth: Int, _ start: Int) {
+    if depth == m {
+        if dict[result] == nil {
+            result.forEach{print($0, terminator: " ")}
+            print()
+            dict[result] = 1
+            
+        }
+    }
+    
+    for i in 0..<n {
+        if visited[i] == false {
+            visited[i] = true
+            result.append(arr[i])
+            solution(depth+1, i)
+            result.removeLast()
+            visited[i] = false
+        }
+    }
+}
+
+solution(0, 0)
+
