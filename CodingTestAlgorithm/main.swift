@@ -9858,5 +9858,30 @@ import Foundation
 //print(result.last!)
 //print(result[0])
 
+// MARK: - 백준 15666번 N과 M (12)
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let length: Int = read[0]
+let target: Int = read[1]
+let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted(by: <)
+var visited: [Bool] = Array(repeating: false, count: length)
+var result: [Int] = []
+var dict: [[Int]:Int] = [:]
 
+func solution(_ depth: Int) {
+    if depth == target {
+        if dict[result] == nil {
+            result.forEach{print($0, terminator: " ")}
+            print()
+            dict[result] = 1
+        }
+        return
+    }
+    
+    for i in 0..<length where result.last ?? 0 <= arr[i]{
+        result.append(arr[i])
+        solution(depth+1)
+        result.removeLast()
+    }
+}
 
+solution(0)
