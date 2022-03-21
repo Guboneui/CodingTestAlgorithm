@@ -9887,34 +9887,53 @@ import Foundation
 //solution(0)
 
 // MARK: - 백준 15664번 N과 M (10)
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let n: Int = read[0]
-let m: Int = read[1]
-let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted()
-var visited: [Bool] = Array(repeating: false, count: n)
-var dict: [[Int]:Int] = [:]
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = read[0]
+//let m: Int = read[1]
+//let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted()
+//var visited: [Bool] = Array(repeating: false, count: n)
+//var dict: [[Int]:Int] = [:]
+//
+//var result: [Int] = []
+//
+//func solution(_ depth: Int) {
+//    if depth == m {
+//        if dict[result] == nil {
+//            result.forEach{print($0, terminator: " ")}
+//            print()
+//            dict[result] = 1
+//            return
+//        }
+//    }
+//
+//    for i in 0..<n where result.last ?? 0 <= arr[i] {
+//        if visited[i] == false {
+//            visited[i] = true
+//            result.append(arr[i])
+//            solution(depth+1)
+//            result.removeLast()
+//            visited[i] = false
+//        }
+//    }
+//}
+//
+//solution(0)
 
-var result: [Int] = []
+// MARK: - 백준 15988번 1, 2, 3 더하기 3
+let testCases: Int = Int(readLine()!)!
+var arr: [Int] = Array(repeating: 0, count: 1000001)
+arr[1] = 1
+arr[2] = 2
+arr[3] = 4
 
-func solution(_ depth: Int) {
-    if depth == m {
-        if dict[result] == nil {
-            result.forEach{print($0, terminator: " ")}
-            print()
-            dict[result] = 1
-            return
-        }
-    }
-    
-    for i in 0..<n where result.last ?? 0 <= arr[i] {
-        if visited[i] == false {
-            visited[i] = true
-            result.append(arr[i])
-            solution(depth+1)
-            result.removeLast()
-            visited[i] = false
-        }
-    }
+for i in stride(from: 4, through: 1000000, by: 1) {
+    arr[i] = (arr[i-1] + arr[i-2] + arr[i-3]) % 1000000009
 }
+    
+for _ in 0..<testCases {
+    let target: Int = Int(readLine()!)!
+    print(arr[target])
+}
+    
+   
 
-solution(0)
