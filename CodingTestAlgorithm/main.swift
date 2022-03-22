@@ -9980,6 +9980,40 @@ import Foundation
 //print(String(repeating: "1", count: solution(A, B)))
 
 // MARK: - 백준 5567번 결혼식
+//let n: Int = Int(readLine()!)!
+//let node: Int = Int(readLine()!)!
+//var graph: [[Int]] = Array(repeating: [Int](), count: n+1)
+//for _ in 0..<node {
+//    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    let a: Int = temp[0]
+//    let b: Int = temp[1]
+//    graph[a].append(b)
+//    graph[b].append(a)
+//}
+//
+//var visited: [Bool] = Array(repeating: false, count: n+1)
+//visited[1] = true
+//var arr: [Int] = graph[1]
+//
+//func solution(_ v: Int) {
+//
+//    for i in graph[v] {
+//        if visited[i] == false {
+//            visited[i] = true
+//        }
+//    }
+//
+//}
+//
+//for i in arr {
+//    visited[i] = true
+//    solution(i)
+//}
+//
+//print(visited.filter{$0 == true}.count - 1)
+
+
+
 let n: Int = Int(readLine()!)!
 let node: Int = Int(readLine()!)!
 var graph: [[Int]] = Array(repeating: [Int](), count: n+1)
@@ -9991,23 +10025,15 @@ for _ in 0..<node {
     graph[b].append(a)
 }
 
+var result: Int = graph[1].count
 var visited: [Bool] = Array(repeating: false, count: n+1)
 visited[1] = true
-var arr: [Int] = graph[1]
-
-func solution(_ v: Int) {
-
-    for i in graph[v] {
-        if visited[i] == false {
-            visited[i] = true
-        }
+graph[1].forEach{visited[$0] = true}
+graph[1].forEach{graph[$0].forEach{
+    if visited[$0] == false {
+        visited[$0] = true
+        result += 1
     }
-    
-}
+}}
 
-for i in arr {
-    visited[i] = true
-    solution(i)
-}
-
-print(visited.filter{$0 == true}.count - 1)
+print(result)
