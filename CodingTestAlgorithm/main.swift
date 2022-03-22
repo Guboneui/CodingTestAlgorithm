@@ -9959,3 +9959,22 @@ import Foundation
 //solution([])
 
 
+// MARK: - 백준 1850번 최대공약수
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let A: Int = read[0]
+let B: Int = read[1]
+
+func solution(_ x: Int, _ y: Int) -> Int {
+    var a: Int = max(x, y)
+    var b: Int = min(x, y)
+    
+    while b > 0 {
+        let temp: Int = a
+        a = b
+        b = temp % b
+    }
+    
+    return a
+}
+
+print(String(repeating: "1", count: solution(A, B)))
