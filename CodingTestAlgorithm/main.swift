@@ -9960,21 +9960,54 @@ import Foundation
 
 
 // MARK: - 백준 1850번 최대공약수
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let A: Int = read[0]
-let B: Int = read[1]
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let A: Int = read[0]
+//let B: Int = read[1]
+//
+//func solution(_ x: Int, _ y: Int) -> Int {
+//    var a: Int = max(x, y)
+//    var b: Int = min(x, y)
+//
+//    while b > 0 {
+//        let temp: Int = a
+//        a = b
+//        b = temp % b
+//    }
+//
+//    return a
+//}
+//
+//print(String(repeating: "1", count: solution(A, B)))
 
-func solution(_ x: Int, _ y: Int) -> Int {
-    var a: Int = max(x, y)
-    var b: Int = min(x, y)
-    
-    while b > 0 {
-        let temp: Int = a
-        a = b
-        b = temp % b
-    }
-    
-    return a
+// MARK: - 백준 5567번 결혼식
+let n: Int = Int(readLine()!)!
+let node: Int = Int(readLine()!)!
+var graph: [[Int]] = Array(repeating: [Int](), count: n+1)
+for _ in 0..<node {
+    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    let a: Int = temp[0]
+    let b: Int = temp[1]
+    graph[a].append(b)
+    graph[b].append(a)
 }
 
-print(String(repeating: "1", count: solution(A, B)))
+var visited: [Bool] = Array(repeating: false, count: n+1)
+visited[1] = true
+var arr: [Int] = graph[1]
+
+func solution(_ v: Int) {
+
+    for i in graph[v] {
+        if visited[i] == false {
+            visited[i] = true
+        }
+    }
+    
+}
+
+for i in arr {
+    visited[i] = true
+    solution(i)
+}
+
+print(visited.filter{$0 == true}.count - 1)
