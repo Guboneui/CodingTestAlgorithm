@@ -9920,20 +9920,42 @@ import Foundation
 //solution(0)
 
 // MARK: - 백준 15988번 1, 2, 3 더하기 3
-let testCases: Int = Int(readLine()!)!
-var arr: [Int] = Array(repeating: 0, count: 1000001)
-arr[1] = 1
-arr[2] = 2
-arr[3] = 4
+//let testCases: Int = Int(readLine()!)!
+//var arr: [Int] = Array(repeating: 0, count: 1000001)
+//arr[1] = 1
+//arr[2] = 2
+//arr[3] = 4
+//
+//for i in stride(from: 4, through: 1000000, by: 1) {
+//    arr[i] = (arr[i-1] + arr[i-2] + arr[i-3]) % 1000000009
+//}
+//
+//for _ in 0..<testCases {
+//    let target: Int = Int(readLine()!)!
+//    print(arr[target])
+//}
+    
+// MARK: - 백준 15665번 N과 M (11)
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = read[0]
+//let m: Int = read[1]
+//let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted()
+//var dict: [[String]:Int] = [:]
+//
+//func solution(_ temp: [String]) {
+//    if temp.count == m {
+//        if dict[temp] == nil {
+//            print(temp.joined(separator: " "))
+//            dict[temp] = 1
+//        }
+//        return
+//    }
+//
+//    for i in 0..<n {
+//        solution(temp + [String(arr[i])])
+//    }
+//}
+//
+//solution([])
 
-for i in stride(from: 4, through: 1000000, by: 1) {
-    arr[i] = (arr[i-1] + arr[i-2] + arr[i-3]) % 1000000009
-}
-    
-for _ in 0..<testCases {
-    let target: Int = Int(readLine()!)!
-    print(arr[target])
-}
-    
-   
 
