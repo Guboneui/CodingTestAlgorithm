@@ -10165,25 +10165,50 @@ import Foundation
 //
 //print(result)
 
-let n = Int(readLine()!)!
-let m = Int(readLine()!)!
-let s = readLine()!.map{$0}
-print(s)
-var result = 0
-var compare = 0
-var i = 0
-while i < m-2 {
-    if String(s[i...i+2]) == "IOI" {
-        compare += 1
-        if compare == n {
-            compare -= 1
-            result += 1
-        }
-        i += 1
-    } else {
-        compare = 0
+//let n = Int(readLine()!)!
+//let m = Int(readLine()!)!
+//let s = readLine()!.map{$0}
+//print(s)
+//var result = 0
+//var compare = 0
+//var i = 0
+//while i < m-2 {
+//    if String(s[i...i+2]) == "IOI" {
+//        compare += 1
+//        if compare == n {
+//            compare -= 1
+//            result += 1
+//        }
+//        i += 1
+//    } else {
+//        compare = 0
+//    }
+//    i += 1
+//}
+//
+//print(result)
+
+// MARK: - 백준 1024번 수열의 합
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let targetNumber: Int = read[0]
+var minLength: Int = read[1]
+
+var result: Int = -1
+var tempIndex: Int = 0
+
+for i in stride(from: minLength, through: 100, by: 1) {
+    let k: Int = i*(i-1)/2
+    if ((targetNumber-k)%i == 0 && (targetNumber-k)/i >= 0) {
+        result = (targetNumber-k) / i
+        tempIndex = i
+        break
     }
-    i += 1
 }
 
-print(result)
+if result == -1 {
+    print(-1)
+} else {
+    for i in 0..<tempIndex {
+        print(result+i, terminator: " ")
+    }
+}
