@@ -10012,28 +10012,91 @@ import Foundation
 //
 //print(visited.filter{$0 == true}.count - 1)
 
+//let n: Int = Int(readLine()!)!
+//let node: Int = Int(readLine()!)!
+//var graph: [[Int]] = Array(repeating: [Int](), count: n+1)
+//for _ in 0..<node {
+//    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    let a: Int = temp[0]
+//    let b: Int = temp[1]
+//    graph[a].append(b)
+//    graph[b].append(a)
+//}
+//
+//var result: Int = graph[1].count
+//var visited: [Bool] = Array(repeating: false, count: n+1)
+//visited[1] = true
+//graph[1].forEach{visited[$0] = true}
+//graph[1].forEach{graph[$0].forEach{
+//    if visited[$0] == false {
+//        visited[$0] = true
+//        result += 1
+//    }
+//}}
+//
+//print(result)
 
-
-let n: Int = Int(readLine()!)!
-let node: Int = Int(readLine()!)!
-var graph: [[Int]] = Array(repeating: [Int](), count: n+1)
-for _ in 0..<node {
+// MARK: - 백준 18111번 마인크래프트
+let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let h: Int = input[0]
+let w: Int = input[1]
+let block: Int = input[2]
+var field: [[Int]] = []
+for _ in 0..<h {
     let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    let a: Int = temp[0]
-    let b: Int = temp[1]
-    graph[a].append(b)
-    graph[b].append(a)
+    field.append(temp)
 }
 
-var result: Int = graph[1].count
-var visited: [Bool] = Array(repeating: false, count: n+1)
-visited[1] = true
-graph[1].forEach{visited[$0] = true}
-graph[1].forEach{graph[$0].forEach{
-    if visited[$0] == false {
-        visited[$0] = true
-        result += 1
-    }
-}}
+var minValue: Int = 256
+var maxValue: Int = 0
 
-print(result)
+for i in 0..<h {
+    for j in 0..<w {
+        if field[i][j] <= minValue {
+            minValue = field[i][j]
+        }
+        if field[i][j] >= maxValue {
+            maxValue = field[i][j]
+        }
+    }
+}
+
+var result: [Int] = [0, 0]
+
+for i in stride(from: maxValue, through: minValue, by: -1) {
+    var time: Int = 0
+    var tempBlock: Int = block
+    
+    for j in 0..<h {
+        for k in 0..<w {
+            if field[j][k] < i {
+                tempBlock -= (i - field[j][k])
+                time += (i - field[j][k])
+            } else if field[j][k] > i {
+                tempBlock += (field[j][k] - i)
+                time += (field[j][k] - i) * 2
+                
+            } else {
+                continue
+            }
+        }
+    }
+    
+    if tempBlock < 0 {
+        continue
+    }
+    
+    if result[0] == 0 {
+        result[0] = time
+        result[1] = i
+    } else {
+        if result[0] > time {
+            result[0] = time
+            result[1] = i
+        } else if result[0] == time {
+            result[1] = max(result[1], i)
+        }
+    }
+}
+
+print(result[0], result[1])
