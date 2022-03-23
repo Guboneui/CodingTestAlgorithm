@@ -10037,66 +10037,85 @@ import Foundation
 //print(result)
 
 // MARK: - 백준 18111번 마인크래프트
-let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let h: Int = input[0]
-let w: Int = input[1]
-let block: Int = input[2]
-var field: [[Int]] = []
-for _ in 0..<h {
-    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    field.append(temp)
+//let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let h: Int = input[0]
+//let w: Int = input[1]
+//let block: Int = input[2]
+//var field: [[Int]] = []
+//for _ in 0..<h {
+//    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    field.append(temp)
+//}
+//
+//var minValue: Int = 256
+//var maxValue: Int = 0
+//
+//for i in 0..<h {
+//    for j in 0..<w {
+//        if field[i][j] <= minValue {
+//            minValue = field[i][j]
+//        }
+//        if field[i][j] >= maxValue {
+//            maxValue = field[i][j]
+//        }
+//    }
+//}
+//
+//var result: [Int] = [0, 0]
+//
+//for i in stride(from: maxValue, through: minValue, by: -1) {
+//    var time: Int = 0
+//    var tempBlock: Int = block
+//
+//    for j in 0..<h {
+//        for k in 0..<w {
+//            if field[j][k] < i {
+//                tempBlock -= (i - field[j][k])
+//                time += (i - field[j][k])
+//            } else if field[j][k] > i {
+//                tempBlock += (field[j][k] - i)
+//                time += (field[j][k] - i) * 2
+//
+//            } else {
+//                continue
+//            }
+//        }
+//    }
+//
+//    if tempBlock < 0 {
+//        continue
+//    }
+//
+//    if result[0] == 0 {
+//        result[0] = time
+//        result[1] = i
+//    } else {
+//        if result[0] > time {
+//            result[0] = time
+//            result[1] = i
+//        } else if result[0] == time {
+//            result[1] = max(result[1], i)
+//        }
+//    }
+//}
+//
+//print(result[0], result[1])
+
+// MARK: - 백준 15990번 1, 2, 3 더하기 5
+let testCases: Int = Int(readLine()!)!
+var dp: [[Int]] = Array(repeating: Array(repeating: 0, count: 4), count: 100001)
+dp[1][1] = 1
+dp[2][2] = 1
+dp[3][1] = 1
+dp[3][2] = 1
+dp[3][3] = 1
+for i in stride(from: 4, through: 100000, by: 1) {
+    dp[i][1] = (dp[i - 1][2] + dp[i - 1][3]) % 1000000009
+    dp[i][2] = (dp[i - 2][1] + dp[i - 2][3]) % 1000000009
+    dp[i][3] = (dp[i - 3][1] + dp[i - 3][2]) % 1000000009
 }
 
-var minValue: Int = 256
-var maxValue: Int = 0
-
-for i in 0..<h {
-    for j in 0..<w {
-        if field[i][j] <= minValue {
-            minValue = field[i][j]
-        }
-        if field[i][j] >= maxValue {
-            maxValue = field[i][j]
-        }
-    }
+for _ in 0..<testCases {
+    let read: Int = Int(readLine()!)!
+    print("\((dp[read][1] + dp[read][2] + dp[read][3]) % 1000000009)")
 }
-
-var result: [Int] = [0, 0]
-
-for i in stride(from: maxValue, through: minValue, by: -1) {
-    var time: Int = 0
-    var tempBlock: Int = block
-    
-    for j in 0..<h {
-        for k in 0..<w {
-            if field[j][k] < i {
-                tempBlock -= (i - field[j][k])
-                time += (i - field[j][k])
-            } else if field[j][k] > i {
-                tempBlock += (field[j][k] - i)
-                time += (field[j][k] - i) * 2
-                
-            } else {
-                continue
-            }
-        }
-    }
-    
-    if tempBlock < 0 {
-        continue
-    }
-    
-    if result[0] == 0 {
-        result[0] = time
-        result[1] = i
-    } else {
-        if result[0] > time {
-            result[0] = time
-            result[1] = i
-        } else if result[0] == time {
-            result[1] = max(result[1], i)
-        }
-    }
-}
-
-print(result[0], result[1])
