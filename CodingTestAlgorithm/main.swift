@@ -10121,22 +10121,46 @@ import Foundation
 //}
 
 // MARK: - 백준 11060번 점프 점프
+//let n: Int = Int(readLine()!)!
+//let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//var dp: [Int] = Array(repeating: Int.max, count: 1001)
+//dp[1] = 0
+//for i in 1...n {
+//    for j in stride(from: 1, through: arr[i-1], by: 1) {
+//        if i + j <= n {
+//            dp[i+j] = min(dp[i]+1, dp[i+j])
+//        }
+//    }
+//}
+//
+//
+//if dp[n] == Int.max {
+//    print(-1)
+//} else {
+//    print(dp[n])
+//}
+
+// MARK: - 백준 5525번 IOIOI
 let n: Int = Int(readLine()!)!
-let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-var dp: [Int] = Array(repeating: Int.max, count: 1001)
-dp[1] = 0
-for i in 1...n {
-    for j in stride(from: 1, through: arr[i-1], by: 1) {
-        if i + j <= n {
-            dp[i+j] = min(dp[i]+1, dp[i+j])
-        }
+let str: String = "IO"
+var target: String = ""
+for _ in 0..<n {
+    target += str
+}
+target += "I"
+
+                 
+var result: Int = 0
+let length: Int = Int(readLine()!)!
+let arr: [String] = readLine()!.map{String($0)}
+
+for i in 0...(length - target.count) {
+    if arr[i] == "O" {continue}
+    let temp: String = arr[i..<i+target.count].joined(separator: "")
+    if temp == target {
+        result += 1
     }
+    
 }
 
-
-if dp[n] == Int.max {
-    print(-1)
-} else {
-    print(dp[n])
-}
-
+print(result)
