@@ -10102,20 +10102,41 @@ import Foundation
 //print(result[0], result[1])
 
 // MARK: - 백준 15990번 1, 2, 3 더하기 5
-let testCases: Int = Int(readLine()!)!
-var dp: [[Int]] = Array(repeating: Array(repeating: 0, count: 4), count: 100001)
-dp[1][1] = 1
-dp[2][2] = 1
-dp[3][1] = 1
-dp[3][2] = 1
-dp[3][3] = 1
-for i in stride(from: 4, through: 100000, by: 1) {
-    dp[i][1] = (dp[i - 1][2] + dp[i - 1][3]) % 1000000009
-    dp[i][2] = (dp[i - 2][1] + dp[i - 2][3]) % 1000000009
-    dp[i][3] = (dp[i - 3][1] + dp[i - 3][2]) % 1000000009
+//let testCases: Int = Int(readLine()!)!
+//var dp: [[Int]] = Array(repeating: Array(repeating: 0, count: 4), count: 100001)
+//dp[1][1] = 1
+//dp[2][2] = 1
+//dp[3][1] = 1
+//dp[3][2] = 1
+//dp[3][3] = 1
+//for i in stride(from: 4, through: 100000, by: 1) {
+//    dp[i][1] = (dp[i - 1][2] + dp[i - 1][3]) % 1000000009
+//    dp[i][2] = (dp[i - 2][1] + dp[i - 2][3]) % 1000000009
+//    dp[i][3] = (dp[i - 3][1] + dp[i - 3][2]) % 1000000009
+//}
+//
+//for _ in 0..<testCases {
+//    let read: Int = Int(readLine()!)!
+//    print("\((dp[read][1] + dp[read][2] + dp[read][3]) % 1000000009)")
+//}
+
+// MARK: - 백준 11060번 점프 점프
+let n: Int = Int(readLine()!)!
+let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+var dp: [Int] = Array(repeating: Int.max, count: 1001)
+dp[1] = 0
+for i in 1...n {
+    for j in stride(from: 1, through: arr[i-1], by: 1) {
+        if i + j <= n {
+            dp[i+j] = min(dp[i]+1, dp[i+j])
+        }
+    }
 }
 
-for _ in 0..<testCases {
-    let read: Int = Int(readLine()!)!
-    print("\((dp[read][1] + dp[read][2] + dp[read][3]) % 1000000009)")
+
+if dp[n] == Int.max {
+    print(-1)
+} else {
+    print(dp[n])
 }
+
