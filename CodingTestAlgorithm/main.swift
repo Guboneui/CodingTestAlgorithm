@@ -10141,26 +10141,49 @@ import Foundation
 //}
 
 // MARK: - 백준 5525번 IOIOI
-let n: Int = Int(readLine()!)!
-let str: String = "IO"
-var target: String = ""
-for _ in 0..<n {
-    target += str
-}
-target += "I"
+//let n: Int = Int(readLine()!)!
+//let str: String = "IO"
+//var target: String = ""
+//for _ in 0..<n {
+//    target += str
+//}
+//target += "I"
+//
+//
+//var result: Int = 0
+//let length: Int = Int(readLine()!)!
+//let arr: [String] = readLine()!.map{String($0)}
+//
+//for i in 0...(length - target.count) {
+//    if arr[i] == "O" {continue}
+//    let temp: String = arr[i..<i+target.count].joined(separator: "")
+//    if temp == target {
+//        result += 1
+//    }
+//
+//}
+//
+//print(result)
 
-                 
-var result: Int = 0
-let length: Int = Int(readLine()!)!
-let arr: [String] = readLine()!.map{String($0)}
-
-for i in 0...(length - target.count) {
-    if arr[i] == "O" {continue}
-    let temp: String = arr[i..<i+target.count].joined(separator: "")
-    if temp == target {
-        result += 1
+let n = Int(readLine()!)!
+let m = Int(readLine()!)!
+let s = readLine()!.map{$0}
+print(s)
+var result = 0
+var compare = 0
+var i = 0
+while i < m-2 {
+    if String(s[i...i+2]) == "IOI" {
+        compare += 1
+        if compare == n {
+            compare -= 1
+            result += 1
+        }
+        i += 1
+    } else {
+        compare = 0
     }
-    
+    i += 1
 }
 
 print(result)
