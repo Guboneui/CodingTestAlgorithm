@@ -10214,39 +10214,56 @@ import Foundation
 //}
 
 // MARK: - 백준 2210번 숫자판 점프
-var graph: [[String]] = []
-for _ in 0..<5 {
-    graph.append(readLine()!.split(separator: " ").map{String($0)})
+//var graph: [[String]] = []
+//for _ in 0..<5 {
+//    graph.append(readLine()!.split(separator: " ").map{String($0)})
+//}
+//
+//let dx: [Int] = [1, -1, 0, 0]
+//let dy: [Int] = [0, 0, 1, -1]
+//
+//var result: Set<String> = []
+//
+//func solution(_ depth: Int, _ x: Int, _ y: Int, _ str: String) {
+//    if depth == 6 {
+//        result.insert(str)
+//        return
+//    }
+//
+//    for i in 0..<dx.count {
+//        let nx: Int = x + dx[i]
+//        let ny: Int = y + dy[i]
+//
+////        if nx < 0 || nx >= 5 || ny < 0 || ny >= 5 { continue }
+////        solution(depth + 1, nx, ny, str + graph[nx][ny])
+//
+//        if nx>=0 && nx<5 && ny>=0 && ny<5 {
+//            solution(depth+1, nx, ny, str + graph[nx][ny])
+//        }
+//    }
+//}
+//
+//for i in 0..<5 {
+//    for j in 0..<5 {
+//        solution(0, i, j, "")
+//    }
+//}
+//
+//print(result.count)
+
+
+// MARK: - 백준 15903번 카드 합체 놀이
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let length: Int = read[0]
+let count: Int = read[1]
+var result: Int = 0
+var cards: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted(by: <)
+
+for _ in 0..<count {
+    let temp: Int = cards[0] + cards[1]
+    cards[0] = temp
+    cards[1] = temp
+    cards.sort(by: <)
 }
 
-let dx: [Int] = [1, -1, 0, 0]
-let dy: [Int] = [0, 0, 1, -1]
-
-var result: Set<String> = []
-
-func solution(_ depth: Int, _ x: Int, _ y: Int, _ str: String) {
-    if depth == 6 {
-        result.insert(str)
-        return
-    }
-    
-    for i in 0..<dx.count {
-        let nx: Int = x + dx[i]
-        let ny: Int = y + dy[i]
-        
-//        if nx < 0 || nx >= 5 || ny < 0 || ny >= 5 { continue }
-//        solution(depth + 1, nx, ny, str + graph[nx][ny])
-        
-        if nx>=0 && nx<5 && ny>=0 && ny<5 {
-            solution(depth+1, nx, ny, str + graph[nx][ny])
-        }
-    }
-}
-
-for i in 0..<5 {
-    for j in 0..<5 {
-        solution(0, i, j, "")
-    }
-}
-
-print(result.count)
+print(cards.reduce(0, +))
