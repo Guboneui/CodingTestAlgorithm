@@ -10189,26 +10189,64 @@ import Foundation
 //print(result)
 
 // MARK: - 백준 1024번 수열의 합
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let targetNumber: Int = read[0]
-var minLength: Int = read[1]
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let targetNumber: Int = read[0]
+//var minLength: Int = read[1]
+//
+//var result: Int = -1
+//var tempIndex: Int = 0
+//
+//for i in stride(from: minLength, through: 100, by: 1) {
+//    let k: Int = i*(i-1)/2
+//    if ((targetNumber-k)%i == 0 && (targetNumber-k)/i >= 0) {
+//        result = (targetNumber-k) / i
+//        tempIndex = i
+//        break
+//    }
+//}
+//
+//if result == -1 {
+//    print(-1)
+//} else {
+//    for i in 0..<tempIndex {
+//        print(result+i, terminator: " ")
+//    }
+//}
 
-var result: Int = -1
-var tempIndex: Int = 0
+// MARK: - 백준 2210번 숫자판 점프
+var graph: [[String]] = []
+for _ in 0..<5 {
+    graph.append(readLine()!.split(separator: " ").map{String($0)})
+}
 
-for i in stride(from: minLength, through: 100, by: 1) {
-    let k: Int = i*(i-1)/2
-    if ((targetNumber-k)%i == 0 && (targetNumber-k)/i >= 0) {
-        result = (targetNumber-k) / i
-        tempIndex = i
-        break
+let dx: [Int] = [1, -1, 0, 0]
+let dy: [Int] = [0, 0, 1, -1]
+
+var result: Set<String> = []
+
+func solution(_ depth: Int, _ x: Int, _ y: Int, _ str: String) {
+    if depth == 6 {
+        result.insert(str)
+        return
+    }
+    
+    for i in 0..<dx.count {
+        let nx: Int = x + dx[i]
+        let ny: Int = y + dy[i]
+        
+//        if nx < 0 || nx >= 5 || ny < 0 || ny >= 5 { continue }
+//        solution(depth + 1, nx, ny, str + graph[nx][ny])
+        
+        if nx>=0 && nx<5 && ny>=0 && ny<5 {
+            solution(depth+1, nx, ny, str + graph[nx][ny])
+        }
     }
 }
 
-if result == -1 {
-    print(-1)
-} else {
-    for i in 0..<tempIndex {
-        print(result+i, terminator: " ")
+for i in 0..<5 {
+    for j in 0..<5 {
+        solution(0, i, j, "")
     }
 }
+
+print(result.count)
