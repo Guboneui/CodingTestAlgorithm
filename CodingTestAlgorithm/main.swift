@@ -10253,17 +10253,91 @@ import Foundation
 
 
 // MARK: - 백준 15903번 카드 합체 놀이
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let length: Int = read[0]
-let count: Int = read[1]
-var result: Int = 0
-var cards: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted(by: <)
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let length: Int = read[0]
+//let count: Int = read[1]
+//var result: Int = 0
+//var cards: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted(by: <)
+//
+//for _ in 0..<count {
+//    let temp: Int = cards[0] + cards[1]
+//    cards[0] = temp
+//    cards[1] = temp
+//    cards.sort(by: <)
+//}
+//
+//print(cards.reduce(0, +))
 
-for _ in 0..<count {
-    let temp: Int = cards[0] + cards[1]
-    cards[0] = temp
-    cards[1] = temp
-    cards.sort(by: <)
+// MARK: - 백준 15658번 연산자 끼워넣기 2
+
+let n = Int(String(readLine()!))!
+let arr = readLine()!.split(separator: " ").map{Int(String($0))!}
+var operandArr = readLine()!.split(separator: " ").map{Int(String($0))!}
+var operArr = [Character]()
+var visited = Array(repeating: false, count: 100)
+var result = arr[0]
+var resultMax = -1000000001
+var resultMin = Int.max
+var oper = [Character]()
+while true{
+    if operandArr[0] == 0 && operandArr[1] == 0 && operandArr[2] == 0 && operandArr[3] == 0{
+        break
+    }
+
+    if operandArr[0] >= 1{
+        operandArr[0] -= 1
+        operArr.append("+")
+    }
+    if operandArr[1] >= 1{
+        operandArr[1] -= 1
+        operArr.append("-")
+    }
+    if operandArr[2] >= 1{
+        operandArr[2] -= 1
+        operArr.append("*")
+    }
+    if operandArr[3] >= 1{
+        operandArr[3] -= 1
+        operArr.append("/")
+    }
+}
+var count = 0
+func dfs(_ depth: Int){
+    if depth == n - 1{
+        print(oper)
+        for i in 0..<oper.count{
+            if oper[i] == "+"{
+                result += arr[i + 1]
+            }
+            if oper[i] == "-"{
+                result -= arr[i + 1]
+            }
+            if oper[i] == "*"{
+                result *= arr[i + 1]
+            }
+            if oper[i] == "/"{
+                result /= arr[i + 1]
+            }
+        }
+        resultMin = min(resultMin, result)
+        resultMax = max(resultMax, result)
+        result = arr[0]
+        count += 1
+        return
+    }
+    for i in 0..<operArr.count{
+        if !visited[i]{
+            visited[i] = true
+            oper.append(operArr[i])
+
+            dfs(depth + 1)
+            visited[i] = false
+            oper.removeLast()
+        }
+    }
 }
 
-print(cards.reduce(0, +))
+dfs(0)
+print(count)
+print(resultMax)
+print(resultMin)
