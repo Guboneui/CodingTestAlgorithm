@@ -10305,54 +10305,95 @@ import Foundation
 //print(minResult)
 
 // MARK: - 백준 2304번 창고 다각형
+//let n: Int = Int(readLine()!)!
+//var block: [(Int, Int)] = []
+//var maxHeight: (Int, Int) = (0, 0)
+//var dict: [Int:Int] = [:]
+//for _ in 0..<n {
+//    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    if temp[1] > maxHeight.1 {
+//        maxHeight = (temp[0], temp[1])
+//    }
+//    block.append((temp[0], temp[1]))
+//
+//    if dict[temp[0]] == nil {
+//        dict[temp[0]] = temp[1]
+//    }
+//
+//}
+//
+//block.sort{$0.0 < $1.0}
+//
+//var leftSum: Int = 0
+//var initLeftHeight: Int = block[0].1
+//var initLeftIndex: Int = 0
+//var rightSum: Int = 0
+//var initRightHeight: Int = block[block.count-1].1
+//var initRightIndex: Int = block.count - 1
+//
+//for i in (block[0].0)..<maxHeight.0 {
+//    if dict[i] == nil {
+//        leftSum += initLeftHeight
+//    } else {
+//        if initLeftHeight < dict[i]! {
+//            initLeftHeight = dict[i]!
+//        }
+//        leftSum += initLeftHeight
+//    }
+//
+//    print(leftSum)
+//}
+//
+//for i in stride(from: block.last!.0, to: maxHeight.0, by: -1) {
+//    if dict[i] == nil {
+//        rightSum += initRightHeight
+//    } else {
+//        if initRightHeight < dict[i]! {
+//            initRightHeight = dict[i]!
+//        }
+//        rightSum += initRightHeight
+//    }
+//}
+//
+//print(leftSum + rightSum + maxHeight.1)
+
+// MARK: - 백준 2961번 도영이가 만든 맛있는 음식
+
 let n: Int = Int(readLine()!)!
-var block: [(Int, Int)] = []
-var maxHeight: (Int, Int) = (0, 0)
-var dict: [Int:Int] = [:]
+var arr: [(Int, Int)] = []
 for _ in 0..<n {
     let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    if temp[1] > maxHeight.1 {
-        maxHeight = (temp[0], temp[1])
-    }
-    block.append((temp[0], temp[1]))
-    
-    if dict[temp[0]] == nil {
-        dict[temp[0]] = temp[1]
-    }
-    
+    arr.append((temp[0], temp[1]))
 }
+var visited: [Bool] = Array(repeating: false, count: n)
 
-block.sort{$0.0 < $1.0}
-
-var leftSum: Int = 0
-var initLeftHeight: Int = block[0].1
-var initLeftIndex: Int = 0
-var rightSum: Int = 0
-var initRightHeight: Int = block[block.count-1].1
-var initRightIndex: Int = block.count - 1
-
-for i in (block[0].0)..<maxHeight.0 {
-    if dict[i] == nil {
-        leftSum += initLeftHeight
-    } else {
-        if initLeftHeight < dict[i]! {
-            initLeftHeight = dict[i]!
+var temp: [(Int, Int)] = []
+var result: Int = Int.max
+func solution(_ start: Int) {
+    if temp.isEmpty == false {
+        var s: Int = 1
+        var b: Int = 0
+        
+        for cook in temp {
+            s *= cook.0
+            b += cook.1
         }
-        leftSum += initLeftHeight
+        
+        result = min(result, abs(s - b))
+        
+        
     }
     
-    print(leftSum)
-}
-
-for i in stride(from: block.last!.0, to: maxHeight.0, by: -1) {
-    if dict[i] == nil {
-        rightSum += initRightHeight
-    } else {
-        if initRightHeight < dict[i]! {
-            initRightHeight = dict[i]!
+    for i in start..<arr.count {
+        if visited[i] == false {
+            visited[i] = true
+            temp.append(arr[i])
+            solution(i)
+            temp.removeLast()
+            visited[i] = false
         }
-        rightSum += initRightHeight
     }
 }
 
-print(leftSum + rightSum + maxHeight.1)
+solution(0)
+print(result)
