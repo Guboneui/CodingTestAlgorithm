@@ -10270,33 +10270,89 @@ import Foundation
 
 // MARK: - 백준 15658번 연산자 끼워넣기 2
 
+//let n: Int = Int(readLine()!)!
+//let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//var cal: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//
+//var minResult: Int = Int.max
+//var maxResult: Int = Int.min
+//
+//func solution(_ depth: Int, _ result: Int, _ plus: Int, _ minus: Int, _ multiply: Int, _ divide: Int) {
+//    if depth == n-1 {
+//        minResult = min(minResult, result)
+//        maxResult = max(maxResult, result)
+//        return
+//    }
+//
+//    for i in 0..<cal.count {
+//        if i == 0 && cal[i] > plus {
+//            solution(depth+1, result + arr[depth+1], plus+1, minus, multiply, divide)
+//        }
+//        if i == 1 && cal[i] > minus {
+//            solution(depth+1, result - arr[depth+1], plus, minus+1, multiply, divide)
+//        }
+//        if i == 2 && cal[i] > multiply {
+//            solution(depth+1, result * arr[depth+1], plus, minus, multiply+1, divide)
+//        }
+//        if i == 3 && cal[i] > divide {
+//            solution(depth+1, result / arr[depth+1], plus, minus, multiply, divide+1)
+//        }
+//    }
+//}
+//
+//solution(0, arr[0], 0, 0, 0, 0)
+//print(maxResult)
+//print(minResult)
+
+// MARK: - 백준 2304번 창고 다각형
 let n: Int = Int(readLine()!)!
-let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-var cal: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-
-var minResult: Int = Int.max
-var maxResult: Int = Int.min
-
-func solution(_ depth: Int, _ result: Int, _ plus: Int, _ minus: Int, _ multiply: Int, _ divide: Int) {
-    if depth == n-1 {
-        minResult = min(minResult, result)
-        maxResult = max(maxResult, result)
-        return
+var block: [(Int, Int)] = []
+var maxHeight: (Int, Int) = (0, 0)
+var dict: [Int:Int] = [:]
+for _ in 0..<n {
+    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    if temp[1] > maxHeight.1 {
+        maxHeight = (temp[0], temp[1])
+    }
+    block.append((temp[0], temp[1]))
+    
+    if dict[temp[0]] == nil {
+        dict[temp[0]] = temp[1]
     }
     
-    for i in 0..<cal.count {
-        if i == 0 && cal[i] > plus {
-            solution(depth+1, result + arr[depth+1], plus+1, minus, multiply, divide)
-        } else if i == 1 && cal[i] > minus {
-            solution(depth+1, result - arr[depth+1], plus, minus+1, multiply, divide)
-        } else if i == 2 && cal[i] > multiply {
-            solution(depth+1, result * arr[depth+1], plus, minus, multiply+1, divide)
-        } else if i == 3 && cal[i] > divide {
-            solution(depth+1, result / arr[depth+1], plus, minus, multiply, divide+1)
+}
+
+block.sort{$0.0 < $1.0}
+
+var leftSum: Int = 0
+var initLeftHeight: Int = block[0].1
+var initLeftIndex: Int = 0
+var rightSum: Int = 0
+var initRightHeight: Int = block[block.count-1].1
+var initRightIndex: Int = block.count - 1
+
+for i in (block[0].0)..<maxHeight.0 {
+    if dict[i] == nil {
+        leftSum += initLeftHeight
+    } else {
+        if initLeftHeight < dict[i]! {
+            initLeftHeight = dict[i]!
         }
+        leftSum += initLeftHeight
+    }
+    
+    print(leftSum)
+}
+
+for i in stride(from: block.last!.0, to: maxHeight.0, by: -1) {
+    if dict[i] == nil {
+        rightSum += initRightHeight
+    } else {
+        if initRightHeight < dict[i]! {
+            initRightHeight = dict[i]!
+        }
+        rightSum += initRightHeight
     }
 }
 
-solution(0, arr[0], 0, 0, 0, 0)
-print(maxResult)
-print(minResult)
+print(leftSum + rightSum + maxHeight.1)
