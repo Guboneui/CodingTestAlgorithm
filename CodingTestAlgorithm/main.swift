@@ -10270,74 +10270,33 @@ import Foundation
 
 // MARK: - 백준 15658번 연산자 끼워넣기 2
 
-let n = Int(String(readLine()!))!
-let arr = readLine()!.split(separator: " ").map{Int(String($0))!}
-var operandArr = readLine()!.split(separator: " ").map{Int(String($0))!}
-var operArr = [Character]()
-var visited = Array(repeating: false, count: 100)
-var result = arr[0]
-var resultMax = -1000000001
-var resultMin = Int.max
-var oper = [Character]()
-while true{
-    if operandArr[0] == 0 && operandArr[1] == 0 && operandArr[2] == 0 && operandArr[3] == 0{
-        break
-    }
+let n: Int = Int(readLine()!)!
+let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+var cal: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
 
-    if operandArr[0] >= 1{
-        operandArr[0] -= 1
-        operArr.append("+")
-    }
-    if operandArr[1] >= 1{
-        operandArr[1] -= 1
-        operArr.append("-")
-    }
-    if operandArr[2] >= 1{
-        operandArr[2] -= 1
-        operArr.append("*")
-    }
-    if operandArr[3] >= 1{
-        operandArr[3] -= 1
-        operArr.append("/")
-    }
-}
-var count = 0
-func dfs(_ depth: Int){
-    if depth == n - 1{
-        print(oper)
-        for i in 0..<oper.count{
-            if oper[i] == "+"{
-                result += arr[i + 1]
-            }
-            if oper[i] == "-"{
-                result -= arr[i + 1]
-            }
-            if oper[i] == "*"{
-                result *= arr[i + 1]
-            }
-            if oper[i] == "/"{
-                result /= arr[i + 1]
-            }
-        }
-        resultMin = min(resultMin, result)
-        resultMax = max(resultMax, result)
-        result = arr[0]
-        count += 1
+var minResult: Int = Int.max
+var maxResult: Int = Int.min
+
+func solution(_ depth: Int, _ result: Int, _ plus: Int, _ minus: Int, _ multiply: Int, _ divide: Int) {
+    if depth == n-1 {
+        minResult = min(minResult, result)
+        maxResult = max(maxResult, result)
         return
     }
-    for i in 0..<operArr.count{
-        if !visited[i]{
-            visited[i] = true
-            oper.append(operArr[i])
-
-            dfs(depth + 1)
-            visited[i] = false
-            oper.removeLast()
+    
+    for i in 0..<cal.count {
+        if i == 0 && cal[i] > plus {
+            solution(depth+1, result + arr[depth+1], plus+1, minus, multiply, divide)
+        } else if i == 1 && cal[i] > minus {
+            solution(depth+1, result - arr[depth+1], plus, minus+1, multiply, divide)
+        } else if i == 2 && cal[i] > multiply {
+            solution(depth+1, result * arr[depth+1], plus, minus, multiply+1, divide)
+        } else if i == 3 && cal[i] > divide {
+            solution(depth+1, result / arr[depth+1], plus, minus, multiply, divide+1)
         }
     }
 }
 
-dfs(0)
-print(count)
-print(resultMax)
-print(resultMin)
+solution(0, arr[0], 0, 0, 0, 0)
+print(maxResult)
+print(minResult)
