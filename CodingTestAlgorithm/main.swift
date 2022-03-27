@@ -10358,42 +10358,113 @@ import Foundation
 //print(leftSum + rightSum + maxHeight.1)
 
 // MARK: - 백준 2961번 도영이가 만든 맛있는 음식
+//
+//let n: Int = Int(readLine()!)!
+//var arr: [(Int, Int)] = []
+//for _ in 0..<n {
+//    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    arr.append((temp[0], temp[1]))
+//}
+//var visited: [Bool] = Array(repeating: false, count: n)
+//
+//var temp: [(Int, Int)] = []
+//var result: Int = Int.max
+//func solution(_ start: Int) {
+//    if temp.isEmpty == false {
+//        var s: Int = 1
+//        var b: Int = 0
+//
+//        for cook in temp {
+//            s *= cook.0
+//            b += cook.1
+//        }
+//
+//        result = min(result, abs(s - b))
+//
+//
+//    }
+//
+//    for i in start..<arr.count {
+//        if visited[i] == false {
+//            visited[i] = true
+//            temp.append(arr[i])
+//            solution(i)
+//            temp.removeLast()
+//            visited[i] = false
+//        }
+//    }
+//}
+//
+//solution(0)
+//print(result)
 
+// MARK: - 백준 14620번 꽃길
 let n: Int = Int(readLine()!)!
-var arr: [(Int, Int)] = []
+var graph: [[Int]] = []
 for _ in 0..<n {
-    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    arr.append((temp[0], temp[1]))
+    graph.append(readLine()!.split(separator: " ").map{Int($0)!})
 }
-var visited: [Bool] = Array(repeating: false, count: n)
+var result: [Int] = []
+var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: n), count: n)
+var minResult: Int = Int.max
+let dx: [Int] = [0, 1, -1, 0, 0]
+let dy: [Int] = [0, 0, 0, 1, -1]
 
-var temp: [(Int, Int)] = []
-var result: Int = Int.max
-func solution(_ start: Int) {
-    if temp.isEmpty == false {
-        var s: Int = 1
-        var b: Int = 0
-        
-        for cook in temp {
-            s *= cook.0
-            b += cook.1
+func isInGraph(_ x: Int, _ y: Int) -> Bool {
+    if x>=0 && x<n && y>=0 && y<n {
+        return true
+    }
+    return false
+}
+
+func isExistFlower(_ x: Int, _ y: Int) -> Bool {
+    for i in 0..<5 {
+        let nx: Int = x + dx[i]
+        let ny: Int = y + dy[i]
+        if isInGraph(nx, ny) == false || visited[nx][ny] == true {
+            return false
         }
-        
-        result = min(result, abs(s - b))
-        
-        
+    }
+    return true
+}
+
+func totalPrice(_ x: Int, _ y: Int) -> Int {
+    var sum: Int = 0
+    for i in 0..<5 {
+        let nx: Int = x + dx[i]
+        let ny: Int = y + dy[i]
+        visited[nx][ny] = true
+        sum += graph[nx][ny]
+    }
+    return sum
+}
+
+func makeFalse(_ x: Int, _ y: Int) {
+    for i in 0..<5 {
+        let nx: Int = x + dx[i]
+        let ny: Int = y + dy[i]
+        visited[nx][ny] = false
+    }
+}
+
+func solution(_ x: Int, _ y: Int, _ sum: Int, _ count: Int) {
+    if count == 3 {
+        minResult = min(minResult, sum)
+        return
     }
     
-    for i in start..<arr.count {
-        if visited[i] == false {
-            visited[i] = true
-            temp.append(arr[i])
-            solution(i)
-            temp.removeLast()
-            visited[i] = false
+    for i in x..<n-1 {
+        for j in 1..<n-1 {
+            if isExistFlower(i, j) {
+                let price: Int = totalPrice(i, j)
+                solution(i, j, sum + price, count + 1)
+                makeFalse(i, j)
+            }
         }
     }
+    
 }
 
-solution(0)
-print(result)
+solution(0, 0, 0, 0)
+print(minResult)
+
