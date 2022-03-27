@@ -10409,62 +10409,110 @@ var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: n), coun
 var minResult: Int = Int.max
 let dx: [Int] = [0, 1, -1, 0, 0]
 let dy: [Int] = [0, 0, 0, 1, -1]
+//
+//func isInGraph(_ x: Int, _ y: Int) -> Bool {
+//    if x>=0 && x<n && y>=0 && y<n {
+//        return true
+//    }
+//    return false
+//}
+//
+//func isExistFlower(_ x: Int, _ y: Int) -> Bool {
+//    for i in 0..<5 {
+//        let nx: Int = x + dx[i]
+//        let ny: Int = y + dy[i]
+//        if isInGraph(nx, ny) == false || visited[nx][ny] == true {
+//            return false
+//        }
+//    }
+//    return true
+//}
+//
+//func totalPrice(_ x: Int, _ y: Int) -> Int {
+//    var sum: Int = 0
+//    for i in 0..<5 {
+//        let nx: Int = x + dx[i]
+//        let ny: Int = y + dy[i]
+//        visited[nx][ny] = true
+//        sum += graph[nx][ny]
+//    }
+//    return sum
+//}
+//
+//func makeFalse(_ x: Int, _ y: Int) {
+//    for i in 0..<5 {
+//        let nx: Int = x + dx[i]
+//        let ny: Int = y + dy[i]
+//        visited[nx][ny] = false
+//    }
+//}
+//
+//func solution(_ x: Int, _ y: Int, _ sum: Int, _ count: Int) {
+//    if count == 3 {
+//        minResult = min(minResult, sum)
+//        return
+//    }
+//
+//    for i in x..<n-1 {
+//        for j in 1..<n-1 {
+//            if isExistFlower(i, j) {
+//                let price: Int = totalPrice(i, j)
+//                solution(i, j, sum + price, count + 1)
+//                makeFalse(i, j)
+//            }
+//        }
+//    }
+//
+//}
+//
+//solution(0, 0, 0, 0)
+//print(minResult)
+//
 
-func isInGraph(_ x: Int, _ y: Int) -> Bool {
-    if x>=0 && x<n && y>=0 && y<n {
-        return true
-    }
-    return false
-}
+func solution(_ count: Int, _ x: Int, _ totalPrice: Int) {
 
-func isExistFlower(_ x: Int, _ y: Int) -> Bool {
-    for i in 0..<5 {
-        let nx: Int = x + dx[i]
-        let ny: Int = y + dy[i]
-        if isInGraph(nx, ny) == false || visited[nx][ny] == true {
-            return false
-        }
-    }
-    return true
-}
-
-func totalPrice(_ x: Int, _ y: Int) -> Int {
-    var sum: Int = 0
-    for i in 0..<5 {
-        let nx: Int = x + dx[i]
-        let ny: Int = y + dy[i]
-        visited[nx][ny] = true
-        sum += graph[nx][ny]
-    }
-    return sum
-}
-
-func makeFalse(_ x: Int, _ y: Int) {
-    for i in 0..<5 {
-        let nx: Int = x + dx[i]
-        let ny: Int = y + dy[i]
-        visited[nx][ny] = false
-    }
-}
-
-func solution(_ x: Int, _ y: Int, _ sum: Int, _ count: Int) {
     if count == 3 {
-        minResult = min(minResult, sum)
+        minResult = min(minResult, totalPrice)
         return
     }
-    
+
     for i in x..<n-1 {
         for j in 1..<n-1 {
-            if isExistFlower(i, j) {
-                let price: Int = totalPrice(i, j)
-                solution(i, j, sum + price, count + 1)
-                makeFalse(i, j)
+            let a: (Int, Int) = (i+1, j)
+            let b: (Int, Int) = (i-1, j)
+            let c: (Int, Int) = (i, j+1)
+            let d: (Int, Int) = (i, j-1)
+
+
+            if a.0>=0 && a.1<n && b.0>=0 && b.1<n && c.0>=0 && c.1<n && d.0>=0 && d.1<n && i>=0 && i<n && j>=0 && j<n {
+                if !visited[i][j] && !visited[a.0][a.1] && !visited[b.0][b.1] && !visited[c.0][c.1] && !visited[d.0][d.1] {
+                    visited[i][j] = true
+                    visited[a.0][a.1] = true
+                    visited[b.0][b.1] = true
+                    visited[c.0][c.1] = true
+                    visited[d.0][d.1] = true
+                    let sum: Int = graph[i][j] + graph[a.0][a.1] + graph[b.0][b.1] + graph[c.0][c.1] + graph[d.0][d.1]
+//                    if result.count == 3 {
+//                        result.sort()
+//                        result.removeLast()
+//                        result.append(sum)
+//                    } else {
+//                        result.append(sum)
+//                    }
+                    
+                    
+                    solution(count + 1, i, totalPrice + sum)
+                    visited[i][j] = false
+                    visited[a.0][a.1] = false
+                    visited[b.0][b.1] = false
+                    visited[c.0][c.1] = false
+                    visited[d.0][d.1] = false
+                }
+
             }
         }
     }
-    
 }
 
-solution(0, 0, 0, 0)
+solution(0, 0, 0)
 print(minResult)
-
