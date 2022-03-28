@@ -10640,6 +10640,61 @@ import Foundation
 //print(arr[h-1][w-1])
 
 // MARK: - 백준 2667번 단지번호붙이기
+/// BFS 풀이
+//let n: Int = Int(readLine()!)!
+//var graph: [[Int]] = []
+//for _ in 0..<n {
+//    graph.append(readLine()!.map{Int(String($0))!})
+//}
+//
+//let dx: [Int] = [1, -1, 0, 0]
+//let dy: [Int] = [0, 0, 1, -1]
+//
+//var result: [Int] = []
+//var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: n), count: n)
+//
+//
+//func BFS(_ input: (Int, Int)) {
+//    var queue: [(Int, Int)] = [input]
+//    var count: Int = 1
+//
+//    while !queue.isEmpty {
+//        let popValue: (Int, Int) = queue.removeFirst()
+//        graph[popValue.0][popValue.1] = 0
+//
+//        for i in 0..<4 {
+//            let nx: Int = popValue.0 + dx[i]
+//            let ny: Int = popValue.1 + dy[i]
+//
+//            if nx>=0 && nx<n && ny>=0 && ny<n {
+//                if visited[nx][ny] == false {
+//                    visited[nx][ny] = true
+//                    if graph[nx][ny] == 1 {
+//                        count += 1
+//                        graph[nx][ny] = 0
+//                        queue.append((nx, ny))
+//                    }
+//
+//                }
+//            }
+//        }
+//    }
+//    result.append(count)
+//}
+//
+//
+//for i in 0..<n {
+//    for j in 0..<n {
+//        if graph[i][j] == 1 && visited[i][j] == false {
+//            BFS((i, j))
+//        }
+//    }
+//}
+//
+//print(result.count)
+//print(result.sorted().map{String($0)}.joined(separator: "\n"))
+
+/// DFS 풀이
 let n: Int = Int(readLine()!)!
 var graph: [[Int]] = []
 for _ in 0..<n {
@@ -10652,43 +10707,38 @@ let dy: [Int] = [0, 0, 1, -1]
 var result: [Int] = []
 var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: n), count: n)
 
+var count: Int = 0
 
-func BFS(_ input: (Int, Int)) {
-    var queue: [(Int, Int)] = [input]
-    var count: Int = 1
+func dfs(_ x: Int, _ y: Int) {
+    count += 1
     
-    while !queue.isEmpty {
-        let popValue: (Int, Int) = queue.removeFirst()
-        graph[popValue.0][popValue.1] = 0
+    for i in 0..<4 {
+        let nx: Int = x + dx[i]
+        let ny: Int = y + dy[i]
         
-        for i in 0..<4 {
-            let nx: Int = popValue.0 + dx[i]
-            let ny: Int = popValue.1 + dy[i]
-            
-            if nx>=0 && nx<n && ny>=0 && ny<n {
-                if visited[nx][ny] == false {
-                    visited[nx][ny] = true
-                    if graph[nx][ny] == 1 {
-                        count += 1
-                        graph[nx][ny] = 0
-                        queue.append((nx, ny))
-                    }
-                    
-                }
+        if nx>=0 && nx<n && ny>=0 && ny<n {
+            if visited[nx][ny] == false && graph[nx][ny] == 1 {
+                visited[nx][ny] = true
+                graph[nx][ny] = 0
+                dfs(nx, ny)
             }
         }
     }
-    result.append(count)
 }
-
 
 for i in 0..<n {
     for j in 0..<n {
         if graph[i][j] == 1 && visited[i][j] == false {
-            BFS((i, j))
+            graph[i][j] = 0
+            visited[i][j] = false
+            count = 0
+            dfs(i, j)
+            result.append(count)
+            
         }
     }
 }
+
 
 print(result.count)
 print(result.sorted().map{String($0)}.joined(separator: "\n"))
