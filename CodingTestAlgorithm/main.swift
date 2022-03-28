@@ -10601,6 +10601,41 @@ import Foundation
 //}
 
 // MARK: - 백준 9658번 돌 게임 4
-let n: Int = Int(readLine()!)!
-print(n%7 == 1 || n%7 == 3 ? "CY" : "SK")
+//let n: Int = Int(readLine()!)!
+//print(n%7 == 1 || n%7 == 3 ? "CY" : "SK")
+
+// MARK: - 백준 2178번 미로 탐색
+let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let h: Int = input[0]
+let w: Int = input[1]
+var arr: [[Int]] = []
+for _ in 0..<h {
+    let temp: [Int] = readLine()!.map{Int(String($0))!}
+    arr.append(temp)
+}
+
+let dx: [Int] = [1, -1, 0, 0]
+let dy: [Int] = [0, 0, 1, -1]
+
+var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: w), count: h)
+var queue: [(Int, Int)] = [(0, 0)]
+
+while !queue.isEmpty {
+    let popValue: (Int, Int) = queue.removeFirst()
+    if visited[popValue.0][popValue.1] == false {
+        visited[popValue.0][popValue.1] = true
+        for i in 0..<4 {
+            let nx: Int = popValue.0 + dx[i]
+            let ny: Int = popValue.1 + dy[i]
+            
+            if nx>=0 && nx<h && ny>=0 && ny<w {
+                if arr[nx][ny]>=1 && visited[nx][ny] == false {
+                    arr[nx][ny] = arr[popValue.0][popValue.1] + 1
+                    queue.append((nx, ny))
+                }
+            }
+        }
+    }
+}
+print(arr[h-1][w-1])
 
