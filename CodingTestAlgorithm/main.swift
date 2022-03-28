@@ -10399,16 +10399,16 @@ import Foundation
 //print(result)
 
 // MARK: - 백준 14620번 꽃길
-let n: Int = Int(readLine()!)!
-var graph: [[Int]] = []
-for _ in 0..<n {
-    graph.append(readLine()!.split(separator: " ").map{Int($0)!})
-}
-var result: [Int] = []
-var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: n), count: n)
-var minResult: Int = Int.max
-let dx: [Int] = [0, 1, -1, 0, 0]
-let dy: [Int] = [0, 0, 0, 1, -1]
+//let n: Int = Int(readLine()!)!
+//var graph: [[Int]] = []
+//for _ in 0..<n {
+//    graph.append(readLine()!.split(separator: " ").map{Int($0)!})
+//}
+//var result: [Int] = []
+//var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: n), count: n)
+//var minResult: Int = Int.max
+//let dx: [Int] = [0, 1, -1, 0, 0]
+//let dy: [Int] = [0, 0, 0, 1, -1]
 //
 //func isInGraph(_ x: Int, _ y: Int) -> Bool {
 //    if x>=0 && x<n && y>=0 && y<n {
@@ -10469,50 +10469,99 @@ let dy: [Int] = [0, 0, 0, 1, -1]
 //print(minResult)
 //
 
-func solution(_ count: Int, _ x: Int, _ totalPrice: Int) {
+//func solution(_ count: Int, _ x: Int, _ totalPrice: Int) {
+//
+//    if count == 3 {
+//        minResult = min(minResult, totalPrice)
+//        return
+//    }
+//
+//    for i in x..<n-1 {
+//        for j in 1..<n-1 {
+//            let a: (Int, Int) = (i+1, j)
+//            let b: (Int, Int) = (i-1, j)
+//            let c: (Int, Int) = (i, j+1)
+//            let d: (Int, Int) = (i, j-1)
+//
+//
+//            if a.0>=0 && a.1<n && b.0>=0 && b.1<n && c.0>=0 && c.1<n && d.0>=0 && d.1<n && i>=0 && i<n && j>=0 && j<n {
+//                if !visited[i][j] && !visited[a.0][a.1] && !visited[b.0][b.1] && !visited[c.0][c.1] && !visited[d.0][d.1] {
+//                    visited[i][j] = true
+//                    visited[a.0][a.1] = true
+//                    visited[b.0][b.1] = true
+//                    visited[c.0][c.1] = true
+//                    visited[d.0][d.1] = true
+//                    let sum: Int = graph[i][j] + graph[a.0][a.1] + graph[b.0][b.1] + graph[c.0][c.1] + graph[d.0][d.1]
+////                    if result.count == 3 {
+////                        result.sort()
+////                        result.removeLast()
+////                        result.append(sum)
+////                    } else {
+////                        result.append(sum)
+////                    }
+//
+//
+//                    solution(count + 1, i, totalPrice + sum)
+//                    visited[i][j] = false
+//                    visited[a.0][a.1] = false
+//                    visited[b.0][b.1] = false
+//                    visited[c.0][c.1] = false
+//                    visited[d.0][d.1] = false
+//                }
+//
+//            }
+//        }
+//    }
+//}
+//
+//solution(0, 0, 0)
+//print(minResult)
 
-    if count == 3 {
-        minResult = min(minResult, totalPrice)
-        return
+// MARK: - 백준 1535번 안녕
+let n: Int = Int(readLine()!)!
+let a: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let b: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+
+var arr: [(Int, Int)] = []
+
+for i in 0..<n {
+    arr.append((a[i], b[i]))
+}
+
+arr.sort{
+    if $0.0 == $1.0 {
+        return $0.1 > $1.1
     }
+    return $0.0 < $1.0
 
-    for i in x..<n-1 {
-        for j in 1..<n-1 {
-            let a: (Int, Int) = (i+1, j)
-            let b: (Int, Int) = (i-1, j)
-            let c: (Int, Int) = (i, j+1)
-            let d: (Int, Int) = (i, j-1)
+}
 
 
-            if a.0>=0 && a.1<n && b.0>=0 && b.1<n && c.0>=0 && c.1<n && d.0>=0 && d.1<n && i>=0 && i<n && j>=0 && j<n {
-                if !visited[i][j] && !visited[a.0][a.1] && !visited[b.0][b.1] && !visited[c.0][c.1] && !visited[d.0][d.1] {
-                    visited[i][j] = true
-                    visited[a.0][a.1] = true
-                    visited[b.0][b.1] = true
-                    visited[c.0][c.1] = true
-                    visited[d.0][d.1] = true
-                    let sum: Int = graph[i][j] + graph[a.0][a.1] + graph[b.0][b.1] + graph[c.0][c.1] + graph[d.0][d.1]
-//                    if result.count == 3 {
-//                        result.sort()
-//                        result.removeLast()
-//                        result.append(sum)
-//                    } else {
-//                        result.append(sum)
-//                    }
-                    
-                    
-                    solution(count + 1, i, totalPrice + sum)
-                    visited[i][j] = false
-                    visited[a.0][a.1] = false
-                    visited[b.0][b.1] = false
-                    visited[c.0][c.1] = false
-                    visited[d.0][d.1] = false
-                }
-
-            }
+var visited: [Bool] = Array(repeating: false, count: n)
+var sum: Int = 0
+var result: [(Int, Int)] = []
+var maxResult: Int = 0
+var tempResult: Int = 0
+func solution(_ start: Int) {
+    if sum < 100 && !result.isEmpty {
+        maxResult = max(maxResult, tempResult)
+    }
+    
+    for i in start..<n {
+        if visited[i] == false {
+            visited[i] = true
+            sum += arr[i].0
+            result.append(arr[i])
+            tempResult += arr[i].1
+            solution(i)
+            tempResult -= arr[i].1
+            result.removeLast()
+            sum -= arr[i].0
+            visited[i] = false
+            
         }
     }
 }
 
-solution(0, 0, 0)
-print(minResult)
+solution(0)
+print(maxResult)
