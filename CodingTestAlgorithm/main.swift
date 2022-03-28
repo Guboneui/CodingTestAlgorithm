@@ -9934,7 +9934,7 @@ import Foundation
 //    let target: Int = Int(readLine()!)!
 //    print(arr[target])
 //}
-    
+
 // MARK: - 백준 15665번 N과 M (11)
 //let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
 //let n: Int = read[0]
@@ -10518,50 +10518,84 @@ import Foundation
 //print(minResult)
 
 // MARK: - 백준 1535번 안녕
-let n: Int = Int(readLine()!)!
-let a: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let b: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = Int(readLine()!)!
+//let a: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let b: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//
+//var arr: [(Int, Int)] = []
+//
+//for i in 0..<n {
+//    arr.append((a[i], b[i]))
+//}
+//
+//arr.sort{
+//    if $0.0 == $1.0 {
+//        return $0.1 > $1.1
+//    }
+//    return $0.0 < $1.0
+//
+//}
+//
+//
+//var visited: [Bool] = Array(repeating: false, count: n)
+//var sum: Int = 0
+//var result: [(Int, Int)] = []
+//var maxResult: Int = 0
+//var tempResult: Int = 0
+//func solution(_ start: Int) {
+//    if sum < 100 && !result.isEmpty {
+//        maxResult = max(maxResult, tempResult)
+//    }
+//
+//    for i in start..<n {
+//        if visited[i] == false {
+//            visited[i] = true
+//            sum += arr[i].0
+//            result.append(arr[i])
+//            tempResult += arr[i].1
+//            solution(i)
+//            tempResult -= arr[i].1
+//            result.removeLast()
+//            sum -= arr[i].0
+//            visited[i] = false
+//
+//        }
+//    }
+//}
+//
+//solution(0)
+//print(maxResult)
 
-var arr: [(Int, Int)] = []
+// MARK: - 백준 17103번 골드바흐 파티션
 
-for i in 0..<n {
-    arr.append((a[i], b[i]))
-}
+let testCases: Int = Int(readLine()!)!
 
-arr.sort{
-    if $0.0 == $1.0 {
-        return $0.1 > $1.1
-    }
-    return $0.0 < $1.0
+func checkPrimeNumber(_ num: Int) -> [Int] {
+    var arr: [Int] = Array(0...num)
+    arr[1] = 0
 
-}
-
-
-var visited: [Bool] = Array(repeating: false, count: n)
-var sum: Int = 0
-var result: [(Int, Int)] = []
-var maxResult: Int = 0
-var tempResult: Int = 0
-func solution(_ start: Int) {
-    if sum < 100 && !result.isEmpty {
-        maxResult = max(maxResult, tempResult)
-    }
-    
-    for i in start..<n {
-        if visited[i] == false {
-            visited[i] = true
-            sum += arr[i].0
-            result.append(arr[i])
-            tempResult += arr[i].1
-            solution(i)
-            tempResult -= arr[i].1
-            result.removeLast()
-            sum -= arr[i].0
-            visited[i] = false
-            
+    for i in 0..<Int(sqrt(Double(num)))+1 {
+        if arr[i] == 0 { continue }
+        for j in stride(from: i*2, through: num, by: i) {
+            arr[j] = 0
         }
     }
+    return arr
 }
 
-solution(0)
-print(maxResult)
+
+for _ in 0..<testCases {
+    let n: Int = Int(readLine()!)!
+    var result: Int = 0
+    let arr: [Int] = checkPrimeNumber(n)
+    for i in stride(from: 2, through: n/2, by: 1) {
+        if arr[i] != 0 {
+            if arr[n-i] != 0 {
+            result += 1
+            }
+        }
+    }
+
+
+    print(result)
+}
