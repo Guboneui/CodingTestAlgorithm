@@ -10568,34 +10568,39 @@ import Foundation
 
 // MARK: - 백준 17103번 골드바흐 파티션
 
-let testCases: Int = Int(readLine()!)!
+//let testCases: Int = Int(readLine()!)!
+//
+//func checkPrimeNumber(_ num: Int) -> [Int] {
+//    var arr: [Int] = Array(0...num)
+//    arr[1] = 0
+//
+//    for i in 0..<Int(sqrt(Double(num)))+1 {
+//        if arr[i] == 0 { continue }
+//        for j in stride(from: i*2, through: num, by: i) {
+//            arr[j] = 0
+//        }
+//    }
+//    return arr
+//}
+//
+//
+//for _ in 0..<testCases {
+//    let n: Int = Int(readLine()!)!
+//    var result: Int = 0
+//    let arr: [Int] = checkPrimeNumber(n)
+//    for i in stride(from: 2, through: n/2, by: 1) {
+//        if arr[i] != 0 {
+//            if arr[n-i] != 0 {
+//            result += 1
+//            }
+//        }
+//    }
+//
+//
+//    print(result)
+//}
 
-func checkPrimeNumber(_ num: Int) -> [Int] {
-    var arr: [Int] = Array(0...num)
-    arr[1] = 0
+// MARK: - 백준 9658번 돌 게임 4
+let n: Int = Int(readLine()!)!
+print(n%7 == 1 || n%7 == 3 ? "CY" : "SK")
 
-    for i in 0..<Int(sqrt(Double(num)))+1 {
-        if arr[i] == 0 { continue }
-        for j in stride(from: i*2, through: num, by: i) {
-            arr[j] = 0
-        }
-    }
-    return arr
-}
-
-
-for _ in 0..<testCases {
-    let n: Int = Int(readLine()!)!
-    var result: Int = 0
-    let arr: [Int] = checkPrimeNumber(n)
-    for i in stride(from: 2, through: n/2, by: 1) {
-        if arr[i] != 0 {
-            if arr[n-i] != 0 {
-            result += 1
-            }
-        }
-    }
-
-
-    print(result)
-}
