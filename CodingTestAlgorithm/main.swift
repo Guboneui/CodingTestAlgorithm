@@ -10831,27 +10831,50 @@ import Foundation
 
 
 // MARK: - 백준 10844번 쉬운 계단 수
-let n: Int = Int(readLine()!)!
+//let n: Int = Int(readLine()!)!
+//
+//if n==1 {
+//    print(9)
+//} else if n==2 {
+//    print(17)
+//} else {
+//    var arr: [[Int]] = Array(repeating: Array(repeating: 0, count: 10), count: n+1)
+//    arr[1] = [0, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+//    arr[2] = [1, 1, 2, 2, 2, 2, 2, 2, 2, 1]
+//
+//    for i in 3...n {
+//        for j in 0...9 {
+//            if j == 0 {
+//                arr[i][j] = arr[i-1][j+1] % 1000000000
+//            } else if j == 9 {
+//                arr[i][j] = arr[i-1][j-1] % 1000000000
+//            } else {
+//                arr[i][j] = (arr[i-1][j-1] + arr[i-1][j+1]) % 1000000000
+//            }
+//        }
+//    }
+//    print(arr[n].reduce(0, +))
+//}
 
-if n==1 {
-    print(9)
-} else if n==2 {
-    print(17)
-} else {
-    var arr: [[Int]] = Array(repeating: Array(repeating: 0, count: 10), count: n+1)
-    arr[1] = [0, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-    arr[2] = [1, 1, 2, 2, 2, 2, 2, 2, 2, 1]
-    
-    for i in 3...n {
-        for j in 0...9 {
-            if j == 0 {
-                arr[i][j] = arr[i-1][j+1] % 1000000000
-            } else if j == 9 {
-                arr[i][j] = arr[i-1][j-1] % 1000000000
-            } else {
-                arr[i][j] = (arr[i-1][j-1] + arr[i-1][j+1]) % 1000000000
-            }
+// MARK: - 백준 9020번 골드바흐의 추측
+let testCases: Int = Int(readLine()!)!
+for _ in 0..<testCases {
+    let n: Int = Int(readLine()!)!
+    var primeNumber: [Int] = Array(0...n)
+    primeNumber[1] = 0
+    for i in 2..<Int(sqrt(Double(n)))+1 {
+        for j in stride(from: i*2, through: n, by: i) {
+            primeNumber[j] = 0
         }
     }
-    print(arr[n].reduce(0, +))
+    var result: [(Int, Int)] = []
+    
+    for i in 2...n/2 {
+        if primeNumber[i] == 0 || primeNumber[n-i] == 0 { continue }
+        result.append((i, n-i))
+        
+    }
+    
+    print("\(result.last!.0) \(result.last!.1)")
+    
 }
