@@ -10695,50 +10695,92 @@ import Foundation
 //print(result.sorted().map{String($0)}.joined(separator: "\n"))
 
 /// DFS 풀이
-let n: Int = Int(readLine()!)!
-var graph: [[Int]] = []
-for _ in 0..<n {
-    graph.append(readLine()!.map{Int(String($0))!})
-}
+//let n: Int = Int(readLine()!)!
+//var graph: [[Int]] = []
+//for _ in 0..<n {
+//    graph.append(readLine()!.map{Int(String($0))!})
+//}
+//
+//let dx: [Int] = [1, -1, 0, 0]
+//let dy: [Int] = [0, 0, 1, -1]
+//
+//var result: [Int] = []
+//var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: n), count: n)
+//
+//var count: Int = 0
+//
+//func dfs(_ x: Int, _ y: Int) {
+//    count += 1
+//
+//    for i in 0..<4 {
+//        let nx: Int = x + dx[i]
+//        let ny: Int = y + dy[i]
+//
+//        if nx>=0 && nx<n && ny>=0 && ny<n {
+//            if visited[nx][ny] == false && graph[nx][ny] == 1 {
+//                visited[nx][ny] = true
+//                graph[nx][ny] = 0
+//                dfs(nx, ny)
+//            }
+//        }
+//    }
+//}
+//
+//for i in 0..<n {
+//    for j in 0..<n {
+//        if graph[i][j] == 1 && visited[i][j] == false {
+//            graph[i][j] = 0
+//            visited[i][j] = false
+//            count = 0
+//            dfs(i, j)
+//            result.append(count)
+//
+//        }
+//    }
+//}
+//
+//
+//print(result.count)
+//print(result.sorted().map{String($0)}.joined(separator: "\n"))
 
-let dx: [Int] = [1, -1, 0, 0]
-let dy: [Int] = [0, 0, 1, -1]
-
-var result: [Int] = []
-var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: n), count: n)
-
+// MARK: - 백준 1697번 숨바꼭질
+let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let subin: Int = input[0]
+let sister: Int = input[1]
+var graph: [Int] = Array(repeating: 0, count: 100001)
+var visited: [Bool] = Array(repeating: false, count: 100001)
 var count: Int = 0
 
-func dfs(_ x: Int, _ y: Int) {
-    count += 1
+var queue: [Int] = []
+func bfs(_ subin: Int, _ sister: Int) -> Int {
+    queue.append(subin)
     
-    for i in 0..<4 {
-        let nx: Int = x + dx[i]
-        let ny: Int = y + dy[i]
+    while !queue.isEmpty {
+        let popData: Int = queue.removeFirst()
+        if popData == sister {
+            break
+        }
         
-        if nx>=0 && nx<n && ny>=0 && ny<n {
-            if visited[nx][ny] == false && graph[nx][ny] == 1 {
-                visited[nx][ny] = true
-                graph[nx][ny] = 0
-                dfs(nx, ny)
-            }
+        if popData > 0 && visited[popData-1] == false {
+            queue.append(popData-1)
+            visited[popData-1] = true
+            graph[popData-1] = graph[popData] + 1
+        }
+        
+        if popData < 100000 && visited[popData+1] == false {
+            queue.append(popData+1)
+            visited[popData+1] = true
+            graph[popData+1] = graph[popData] + 1
+        }
+        
+        if popData*2 < 100001 && visited[popData*2] == false {
+            queue.append(popData*2)
+            visited[popData*2] = true
+            graph[popData*2] = graph[popData] + 1
         }
     }
+    
+    return graph[sister]
 }
 
-for i in 0..<n {
-    for j in 0..<n {
-        if graph[i][j] == 1 && visited[i][j] == false {
-            graph[i][j] = 0
-            visited[i][j] = false
-            count = 0
-            dfs(i, j)
-            result.append(count)
-            
-        }
-    }
-}
-
-
-print(result.count)
-print(result.sorted().map{String($0)}.joined(separator: "\n"))
+print(bfs(subin, sister))
