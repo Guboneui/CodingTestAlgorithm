@@ -10786,24 +10786,46 @@ import Foundation
 //print(bfs(subin, sister))
 
 // MARK: - 백준 1932번 정수 삼각형
+//let n: Int = Int(readLine()!)!
+//var graph: [[Int]] = []
+//for _ in 0..<n {
+//    graph.append(readLine()!.split(separator: " ").map{Int($0)!})
+//}
+//
+//for i in 1..<n {
+//    let beforeArr: [Int] = graph[i-1]
+//    let currentArr: [Int] = graph[i]
+//    for j in 0..<currentArr.count {
+//        if j==0 {
+//            graph[i][j] += beforeArr[0]
+//        } else if j==currentArr.count-1 {
+//            graph[i][j] += beforeArr[beforeArr.count-1]
+//        } else {
+//            graph[i][j] = max(graph[i][j]+beforeArr[j-1], graph[i][j]+beforeArr[j])
+//        }
+//    }
+//}
+//
+//print(graph.last!.max()!)
+
+// MARK: - 백준 2156번 포도주 시식
 let n: Int = Int(readLine()!)!
-var graph: [[Int]] = []
+var arr: [Int] = [0]
+var result: [Int] = Array(repeating: 0, count: n+1)
 for _ in 0..<n {
-    graph.append(readLine()!.split(separator: " ").map{Int($0)!})
+    arr.append(Int(readLine()!)!)
 }
 
-for i in 1..<n {
-    let beforeArr: [Int] = graph[i-1]
-    let currentArr: [Int] = graph[i]
-    for j in 0..<currentArr.count {
-        if j==0 {
-            graph[i][j] += beforeArr[0]
-        } else if j==currentArr.count-1 {
-            graph[i][j] += beforeArr[beforeArr.count-1]
-        } else {
-            graph[i][j] = max(graph[i][j]+beforeArr[j-1], graph[i][j]+beforeArr[j])
-        }
+if n == 1 {
+    print(arr[1])
+} else if n == 2 {
+    print(arr[1]+arr[2])
+} else {
+    result[1] = arr[1]
+    result[2] = arr[1] + arr[2]
+    for i in 3...n {
+        result[i] = max(result[i-1], result[i-2] + arr[i], result[i-3] + arr[i-1] + arr[i])
     }
+    print(result[n])
 }
 
-print(graph.last!.max()!)
