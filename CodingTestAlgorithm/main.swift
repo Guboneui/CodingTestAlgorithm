@@ -10809,23 +10809,49 @@ import Foundation
 //print(graph.last!.max()!)
 
 // MARK: - 백준 2156번 포도주 시식
+//let n: Int = Int(readLine()!)!
+//var arr: [Int] = [0]
+//var result: [Int] = Array(repeating: 0, count: n+1)
+//for _ in 0..<n {
+//    arr.append(Int(readLine()!)!)
+//}
+//
+//if n == 1 {
+//    print(arr[1])
+//} else if n == 2 {
+//    print(arr[1]+arr[2])
+//} else {
+//    result[1] = arr[1]
+//    result[2] = arr[1] + arr[2]
+//    for i in 3...n {
+//        result[i] = max(result[i-1], result[i-2] + arr[i], result[i-3] + arr[i-1] + arr[i])
+//    }
+//    print(result[n])
+//}
+
+
+// MARK: - 백준 10844번 쉬운 계단 수
 let n: Int = Int(readLine()!)!
-var arr: [Int] = [0]
-var result: [Int] = Array(repeating: 0, count: n+1)
-for _ in 0..<n {
-    arr.append(Int(readLine()!)!)
-}
 
-if n == 1 {
-    print(arr[1])
-} else if n == 2 {
-    print(arr[1]+arr[2])
+if n==1 {
+    print(9)
+} else if n==2 {
+    print(17)
 } else {
-    result[1] = arr[1]
-    result[2] = arr[1] + arr[2]
+    var arr: [[Int]] = Array(repeating: Array(repeating: 0, count: 10), count: n+1)
+    arr[1] = [0, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    arr[2] = [1, 1, 2, 2, 2, 2, 2, 2, 2, 1]
+    
     for i in 3...n {
-        result[i] = max(result[i-1], result[i-2] + arr[i], result[i-3] + arr[i-1] + arr[i])
+        for j in 0...9 {
+            if j == 0 {
+                arr[i][j] = arr[i-1][j+1] % 1000000000
+            } else if j == 9 {
+                arr[i][j] = arr[i-1][j-1] % 1000000000
+            } else {
+                arr[i][j] = (arr[i-1][j-1] + arr[i-1][j+1]) % 1000000000
+            }
+        }
     }
-    print(result[n])
+    print(arr[n].reduce(0, +))
 }
-
