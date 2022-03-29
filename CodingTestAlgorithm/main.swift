@@ -10744,43 +10744,66 @@ import Foundation
 //print(result.sorted().map{String($0)}.joined(separator: "\n"))
 
 // MARK: - 백준 1697번 숨바꼭질
-let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let subin: Int = input[0]
-let sister: Int = input[1]
-var graph: [Int] = Array(repeating: 0, count: 100001)
-var visited: [Bool] = Array(repeating: false, count: 100001)
-var count: Int = 0
+//let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let subin: Int = input[0]
+//let sister: Int = input[1]
+//var graph: [Int] = Array(repeating: 0, count: 100001)
+//var visited: [Bool] = Array(repeating: false, count: 100001)
+//var count: Int = 0
+//
+//var queue: [Int] = []
+//func bfs(_ subin: Int, _ sister: Int) -> Int {
+//    queue.append(subin)
+//
+//    while !queue.isEmpty {
+//        let popData: Int = queue.removeFirst()
+//        if popData == sister {
+//            break
+//        }
+//
+//        if popData > 0 && visited[popData-1] == false {
+//            queue.append(popData-1)
+//            visited[popData-1] = true
+//            graph[popData-1] = graph[popData] + 1
+//        }
+//
+//        if popData < 100000 && visited[popData+1] == false {
+//            queue.append(popData+1)
+//            visited[popData+1] = true
+//            graph[popData+1] = graph[popData] + 1
+//        }
+//
+//        if popData*2 < 100001 && visited[popData*2] == false {
+//            queue.append(popData*2)
+//            visited[popData*2] = true
+//            graph[popData*2] = graph[popData] + 1
+//        }
+//    }
+//
+//    return graph[sister]
+//}
+//
+//print(bfs(subin, sister))
 
-var queue: [Int] = []
-func bfs(_ subin: Int, _ sister: Int) -> Int {
-    queue.append(subin)
-    
-    while !queue.isEmpty {
-        let popData: Int = queue.removeFirst()
-        if popData == sister {
-            break
-        }
-        
-        if popData > 0 && visited[popData-1] == false {
-            queue.append(popData-1)
-            visited[popData-1] = true
-            graph[popData-1] = graph[popData] + 1
-        }
-        
-        if popData < 100000 && visited[popData+1] == false {
-            queue.append(popData+1)
-            visited[popData+1] = true
-            graph[popData+1] = graph[popData] + 1
-        }
-        
-        if popData*2 < 100001 && visited[popData*2] == false {
-            queue.append(popData*2)
-            visited[popData*2] = true
-            graph[popData*2] = graph[popData] + 1
-        }
-    }
-    
-    return graph[sister]
+// MARK: - 백준 1932번 정수 삼각형
+let n: Int = Int(readLine()!)!
+var graph: [[Int]] = []
+for _ in 0..<n {
+    graph.append(readLine()!.split(separator: " ").map{Int($0)!})
 }
 
-print(bfs(subin, sister))
+for i in 1..<n {
+    let beforeArr: [Int] = graph[i-1]
+    let currentArr: [Int] = graph[i]
+    for j in 0..<currentArr.count {
+        if j==0 {
+            graph[i][j] += beforeArr[0]
+        } else if j==currentArr.count-1 {
+            graph[i][j] += beforeArr[beforeArr.count-1]
+        } else {
+            graph[i][j] = max(graph[i][j]+beforeArr[j-1], graph[i][j]+beforeArr[j])
+        }
+    }
+}
+
+print(graph.last!.max()!)
