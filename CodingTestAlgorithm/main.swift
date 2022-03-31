@@ -10953,19 +10953,51 @@ import Foundation
 //print(minResult)
 
 // MARK: - 백준 1149번 RGB거리
+//let n: Int = Int(readLine()!)!
+//var RGB: [[Int]] = []
+//for _ in 0..<n {
+//    RGB.append(readLine()!.split(separator: " ").map{Int($0)!})
+//}
+//
+//var result: [[Int]] = []
+//result.append(RGB[0])
+//for i in 1..<n {
+//    var temp: [Int] = []
+//    temp.append(min(result[i-1][1], result[i-1][2]) + RGB[i][0])
+//    temp.append(min(result[i-1][0], result[i-1][2]) + RGB[i][1])
+//    temp.append(min(result[i-1][0], result[i-1][1]) + RGB[i][2])
+//    result.append(temp)
+//}
+//print(result.last!.min()!)
+
+// MARK: - 백준 11052번 카드 구매하기
+
 let n: Int = Int(readLine()!)!
-var RGB: [[Int]] = []
-for _ in 0..<n {
-    RGB.append(readLine()!.split(separator: " ").map{Int($0)!})
+let price: [Int] = [0] + readLine()!.split(separator: " ").map{Int($0)!}
+let indexArr: [Int] = Array(0...n)
+var result: [Int] = []
+var sum: Int = 0
+var maxResult: Int = 0
+func solution(_ index: Int) {
+    if sum > n { return }
+    
+    if sum == n {
+        var temp: Int = 0
+        for i in result {
+            temp += price[i]
+        }
+        maxResult = max(maxResult, temp)
+        return
+    }
+    
+    for i in 1...n {
+            sum += indexArr[i]
+            result.append(indexArr[i])
+            solution(i)
+            sum -= indexArr[i]
+            result.removeLast()
+    }
 }
 
-var result: [[Int]] = []
-result.append(RGB[0])
-for i in 1..<n {
-    var temp: [Int] = []
-    temp.append(min(result[i-1][1], result[i-1][2]) + RGB[i][0])
-    temp.append(min(result[i-1][0], result[i-1][2]) + RGB[i][1])
-    temp.append(min(result[i-1][0], result[i-1][1]) + RGB[i][2])
-    result.append(temp)
-}
-print(result.last!.min()!)
+solution(0)
+print(maxResult)
