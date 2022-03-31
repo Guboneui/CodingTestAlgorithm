@@ -10972,32 +10972,47 @@ import Foundation
 
 // MARK: - 백준 11052번 카드 구매하기
 
+//let n: Int = Int(readLine()!)!
+//let price: [Int] = [0] + readLine()!.split(separator: " ").map{Int($0)!}
+//let indexArr: [Int] = Array(0...n)
+//var result: [Int] = []
+//var sum: Int = 0
+//var maxResult: Int = 0
+//func solution(_ index: Int) {
+//    if sum > n { return }
+//
+//    if sum == n {
+//        var temp: Int = 0
+//        for i in result {
+//            temp += price[i]
+//        }
+//        maxResult = max(maxResult, temp)
+//        return
+//    }
+//
+//    for i in 1...n {
+//            sum += indexArr[i]
+//            result.append(indexArr[i])
+//            solution(i)
+//            sum -= indexArr[i]
+//            result.removeLast()
+//    }
+//}
+//
+//solution(0)
+//print(maxResult)
+
 let n: Int = Int(readLine()!)!
-let price: [Int] = [0] + readLine()!.split(separator: " ").map{Int($0)!}
-let indexArr: [Int] = Array(0...n)
-var result: [Int] = []
-var sum: Int = 0
-var maxResult: Int = 0
-func solution(_ index: Int) {
-    if sum > n { return }
-    
-    if sum == n {
-        var temp: Int = 0
-        for i in result {
-            temp += price[i]
-        }
-        maxResult = max(maxResult, temp)
-        return
-    }
-    
-    for i in 1...n {
-            sum += indexArr[i]
-            result.append(indexArr[i])
-            solution(i)
-            sum -= indexArr[i]
-            result.removeLast()
+let card: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+var dp: [Int] = Array(repeating: 0, count: n+1)
+for i in 0..<n {
+    dp[i+1] = card[i]
+}
+
+for i in stride(from: 2, through: n, by: 1) {
+    for j in stride(from: 1, through: i-1, by: 1) {
+        dp[i] = max(dp[i-j] + dp[j], dp[i])
     }
 }
 
-solution(0)
-print(maxResult)
+print(dp[n])
