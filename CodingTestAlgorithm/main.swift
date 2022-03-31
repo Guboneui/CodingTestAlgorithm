@@ -10857,24 +10857,97 @@ import Foundation
 //}
 
 // MARK: - 백준 9020번 골드바흐의 추측
-let testCases: Int = Int(readLine()!)!
-for _ in 0..<testCases {
-    let n: Int = Int(readLine()!)!
-    var primeNumber: [Int] = Array(0...n)
-    primeNumber[1] = 0
-    for i in 2..<Int(sqrt(Double(n)))+1 {
-        for j in stride(from: i*2, through: n, by: i) {
-            primeNumber[j] = 0
+//let testCases: Int = Int(readLine()!)!
+//for _ in 0..<testCases {
+//    let n: Int = Int(readLine()!)!
+//    var primeNumber: [Int] = Array(0...n)
+//    primeNumber[1] = 0
+//    for i in 2..<Int(sqrt(Double(n)))+1 {
+//        for j in stride(from: i*2, through: n, by: i) {
+//            primeNumber[j] = 0
+//        }
+//    }
+//    var result: [(Int, Int)] = []
+//
+//    for i in 2...n/2 {
+//        if primeNumber[i] == 0 || primeNumber[n-i] == 0 { continue }
+//        result.append((i, n-i))
+//
+//    }
+//
+//    print("\(result.last!.0) \(result.last!.1)")
+//
+//}
+
+// MARK: - 백준 14888번 연산자 끼워넣기
+let n: Int = Int(readLine()!)!
+let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+var inputOper: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+var oper: [String] = []
+for i in 0..<4 {
+    while inputOper[i] >= 1 {
+        if i == 0 {
+            oper.append("+")
+            inputOper[i] -= 1
+        } else if i == 1 {
+            oper.append("-")
+            inputOper[i] -= 1
+        } else if i == 2 {
+            oper.append("*")
+            inputOper[i] -= 1
+        } else if i == 3 {
+            oper.append("/")
+            inputOper[i] -= 1
         }
     }
-    var result: [(Int, Int)] = []
-    
-    for i in 2...n/2 {
-        if primeNumber[i] == 0 || primeNumber[n-i] == 0 { continue }
-        result.append((i, n-i))
+   
+}
+
+var minResult: Int = Int.max
+var maxResult: Int = Int.min
+
+var visited: [Bool] = Array(repeating: false, count: oper.count)
+var result: [String] = []
+
+func solution(_ depth: Int) {
+    if depth == n-1 {
+        var tempIndex: Int = 1
+        var tempValue: Int = arr[0]
+        
+        for i in result {
+            if i == "+" {
+                tempValue += arr[tempIndex]
+                tempIndex += 1
+            } else if i == "-" {
+                tempValue -= arr[tempIndex]
+                tempIndex += 1
+            } else if i == "*" {
+                tempValue *= arr[tempIndex]
+                tempIndex += 1
+            } else if i == "/" {
+                tempValue /= arr[tempIndex]
+                tempIndex += 1
+            }
+        }
+        
+        minResult = min(minResult, tempValue)
+        maxResult = max(maxResult, tempValue)
+        return
         
     }
     
-    print("\(result.last!.0) \(result.last!.1)")
+    for i in 0..<oper.count {
+        if visited[i] == false {
+            visited[i] = true
+            result.append(oper[i])
+            solution(depth + 1)
+            result.removeLast()
+            visited[i] = false
+        }
+    }
     
 }
+
+solution(0)
+print(maxResult)
+print(minResult)
