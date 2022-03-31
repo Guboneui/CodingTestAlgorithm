@@ -10880,74 +10880,92 @@ import Foundation
 //}
 
 // MARK: - 백준 14888번 연산자 끼워넣기
+//let n: Int = Int(readLine()!)!
+//let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//var inputOper: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//var oper: [String] = []
+//for i in 0..<4 {
+//    while inputOper[i] >= 1 {
+//        if i == 0 {
+//            oper.append("+")
+//            inputOper[i] -= 1
+//        } else if i == 1 {
+//            oper.append("-")
+//            inputOper[i] -= 1
+//        } else if i == 2 {
+//            oper.append("*")
+//            inputOper[i] -= 1
+//        } else if i == 3 {
+//            oper.append("/")
+//            inputOper[i] -= 1
+//        }
+//    }
+//
+//}
+//
+//var minResult: Int = Int.max
+//var maxResult: Int = Int.min
+//
+//var visited: [Bool] = Array(repeating: false, count: oper.count)
+//var result: [String] = []
+//
+//func solution(_ depth: Int) {
+//    if depth == n-1 {
+//        var tempIndex: Int = 1
+//        var tempValue: Int = arr[0]
+//
+//        for i in result {
+//            if i == "+" {
+//                tempValue += arr[tempIndex]
+//                tempIndex += 1
+//            } else if i == "-" {
+//                tempValue -= arr[tempIndex]
+//                tempIndex += 1
+//            } else if i == "*" {
+//                tempValue *= arr[tempIndex]
+//                tempIndex += 1
+//            } else if i == "/" {
+//                tempValue /= arr[tempIndex]
+//                tempIndex += 1
+//            }
+//        }
+//
+//        minResult = min(minResult, tempValue)
+//        maxResult = max(maxResult, tempValue)
+//        return
+//
+//    }
+//
+//    for i in 0..<oper.count {
+//        if visited[i] == false {
+//            visited[i] = true
+//            result.append(oper[i])
+//            solution(depth + 1)
+//            result.removeLast()
+//            visited[i] = false
+//        }
+//    }
+//
+//}
+//
+//solution(0)
+//print(maxResult)
+//print(minResult)
+
+// MARK: - 백준 1149번 RGB거리
 let n: Int = Int(readLine()!)!
-let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-var inputOper: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-var oper: [String] = []
-for i in 0..<4 {
-    while inputOper[i] >= 1 {
-        if i == 0 {
-            oper.append("+")
-            inputOper[i] -= 1
-        } else if i == 1 {
-            oper.append("-")
-            inputOper[i] -= 1
-        } else if i == 2 {
-            oper.append("*")
-            inputOper[i] -= 1
-        } else if i == 3 {
-            oper.append("/")
-            inputOper[i] -= 1
-        }
-    }
-   
+var RGB: [[Int]] = []
+for _ in 0..<n {
+    RGB.append(readLine()!.split(separator: " ").map{Int($0)!})
 }
 
-var minResult: Int = Int.max
-var maxResult: Int = Int.min
-
-var visited: [Bool] = Array(repeating: false, count: oper.count)
-var result: [String] = []
-
-func solution(_ depth: Int) {
-    if depth == n-1 {
-        var tempIndex: Int = 1
-        var tempValue: Int = arr[0]
-        
-        for i in result {
-            if i == "+" {
-                tempValue += arr[tempIndex]
-                tempIndex += 1
-            } else if i == "-" {
-                tempValue -= arr[tempIndex]
-                tempIndex += 1
-            } else if i == "*" {
-                tempValue *= arr[tempIndex]
-                tempIndex += 1
-            } else if i == "/" {
-                tempValue /= arr[tempIndex]
-                tempIndex += 1
-            }
-        }
-        
-        minResult = min(minResult, tempValue)
-        maxResult = max(maxResult, tempValue)
-        return
-        
-    }
-    
-    for i in 0..<oper.count {
-        if visited[i] == false {
-            visited[i] = true
-            result.append(oper[i])
-            solution(depth + 1)
-            result.removeLast()
-            visited[i] = false
-        }
-    }
-    
+var result: [[Int]] = []
+result.append(RGB[0])
+for i in 1..<n {
+    var temp: [Int] = []
+    temp.append(min(result[i-1][1], result[i-1][2]) + RGB[i][0])
+    temp.append(min(result[i-1][0], result[i-1][2]) + RGB[i][1])
+    temp.append(min(result[i-1][0], result[i-1][1]) + RGB[i][2])
+    result.append(temp)
 }
-
-solution(0)
-print(maxResult)
-print(minResult)
+print(result.last!.min()!)
