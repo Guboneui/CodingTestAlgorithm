@@ -11018,27 +11018,46 @@ import Foundation
 // MARK: - 백준 16953번 A->B
 let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
 let a: Int = input[0]
-let b: Int = input[1]
-var count: Int = 0
-var check: Bool = false
-func solution(_ str: String, _ cnt: Int) {
-    if Int(str)! > b {
-        return
+var b: Int = input[1]
+//var count: Int = 0
+//var check: Bool = false
+//func solution(_ str: String, _ cnt: Int) {
+//    if Int(str)! > b {
+//        return
+//    }
+//
+//    if Int(str)! == b {
+//        check = true
+//        count = cnt
+//        return
+//    }
+//
+//    solution(String(Int(str)!*2), cnt + 1)
+//    solution(str + "1", cnt + 1)
+//}
+//
+//solution(String(a), 1)
+//
+//if check {
+//    print(count)
+//} else {
+//    print(-1)
+//}
+
+var count: Int = 1
+
+while a<b {
+    if b%2 == 0 {
+        b /= 2
+    } else if b%10 == 1 {
+        b /= 10
+    } else {
+        break
     }
-     
-    if Int(str)! == b {
-        check = true
-        count = cnt
-        return
-    }
-    
-    solution(String(Int(str)!*2), cnt + 1)
-    solution(str + "1", cnt + 1)
+    count += 1
 }
 
-solution(String(a), 1)
-
-if check {
+if a == b {
     print(count)
 } else {
     print(-1)
