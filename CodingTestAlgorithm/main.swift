@@ -11002,17 +11002,44 @@ import Foundation
 //solution(0)
 //print(maxResult)
 
-let n: Int = Int(readLine()!)!
-let card: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-var dp: [Int] = Array(repeating: 0, count: n+1)
-for i in 0..<n {
-    dp[i+1] = card[i]
-}
+//let n: Int = Int(readLine()!)!
+//let card: [Int] = [0] + readLine()!.split(separator: " ").map{Int($0)!}
+//var dp: [Int] = Array(repeating: 0, count: n+1)
+//
+//for i in 1...n {
+//    for j in 1...i {
+//        dp[i] = max(dp[i-j] + card[j], dp[i])
+//    }
+//}
+//
+//print(dp[n])
 
-for i in stride(from: 2, through: n, by: 1) {
-    for j in stride(from: 1, through: i-1, by: 1) {
-        dp[i] = max(dp[i-j] + dp[j], dp[i])
+
+// MARK: - 백준 16953번 A->B
+let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let a: Int = input[0]
+let b: Int = input[1]
+var count: Int = 0
+var check: Bool = false
+func solution(_ str: String, _ cnt: Int) {
+    if Int(str)! > b {
+        return
     }
+     
+    if Int(str)! == b {
+        check = true
+        count = cnt
+        return
+    }
+    
+    solution(String(Int(str)!*2), cnt + 1)
+    solution(str + "1", cnt + 1)
 }
 
-print(dp[n])
+solution(String(a), 1)
+
+if check {
+    print(count)
+} else {
+    print(-1)
+}
