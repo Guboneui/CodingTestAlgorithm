@@ -11138,36 +11138,56 @@ import Foundation
 //print(result[n][m])
 
 // MARK: - 백준 1500번 최대 곱
+//let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let s: Int = input[0]
+//let k: Int = input[1]
+//let number: [Int] = Array(1...s)
+//var result: [Int] = []
+//var maxResult: Int = 0
+//func dfs(_ depth: Int, _ start: Int, _ sum: Int, _ mul: Int) {
+//
+//    if sum > s {
+//        return
+//    }
+//
+//    if depth == k && sum == s {
+//        print(result)
+//        maxResult = max(maxResult, mul)
+//        return
+//    }
+//
+//    for i in start..<s-1 {
+//        result.append(number[i])
+//        dfs(depth+1, i, sum + number[i], mul * number[i])
+//        result.removeLast()
+//    }
+//}
+//
+//if k == 1 {
+//    print(s)
+//} else {
+//    dfs(0, 0, 0, 1)
+//    print(maxResult)
+//}
+
+
+
 let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
 let s: Int = input[0]
-let k: Int = input[1]
-let number: [Int] = Array(1...s)
-var result: [Int] = []
-var maxResult: Int = 0
-func dfs(_ depth: Int, _ start: Int, _ sum: Int, _ mul: Int) {
-    
-    if sum > s {
-        return
+var k: Int = input[1]
+
+var q: Int = s/k
+var r: Int = s%k
+var n: Int = 1
+
+while k>0 {
+    if r>0 {
+        n *= q+1
+        r -= 1
+    } else {
+        n *= q
     }
-    
-    if depth == k && sum == s {
-        print(result)
-        maxResult = max(maxResult, mul)
-        return
-    }
-    
-    for i in start..<s-1 {
-        result.append(number[i])
-        dfs(depth+1, i, sum + number[i], mul * number[i])
-        result.removeLast()
-    }
+    k -= 1
 }
 
-if k == 1 {
-    print(s)
-} else {
-    dfs(0, 0, 0, 1)
-    print(maxResult)
-}
-
-
+print(n)
