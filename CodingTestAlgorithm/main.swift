@@ -11016,9 +11016,9 @@ import Foundation
 
 
 // MARK: - 백준 16953번 A->B
-let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let a: Int = input[0]
-var b: Int = input[1]
+//let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let a: Int = input[0]
+//var b: Int = input[1]
 //var count: Int = 0
 //var check: Bool = false
 //func solution(_ str: String, _ cnt: Int) {
@@ -11044,21 +11044,76 @@ var b: Int = input[1]
 //    print(-1)
 //}
 
-var count: Int = 1
+//var count: Int = 1
+//
+//while a<b {
+//    if b%2 == 0 {
+//        b /= 2
+//    } else if b%10 == 1 {
+//        b /= 10
+//    } else {
+//        break
+//    }
+//    count += 1
+//}
+//
+//if a == b {
+//    print(count)
+//} else {
+//    print(-1)
+//}
 
-while a<b {
-    if b%2 == 0 {
-        b /= 2
-    } else if b%10 == 1 {
-        b /= 10
-    } else {
-        break
+
+// MARK: - ;;;
+let n: Int = Int(readLine()!)!
+let arr: [Int] = [0] + readLine()!.split(separator: " ").map{Int($0)!}
+var sale: [[(Int, Int)]] = [[(0,0)]]
+for _ in 0..<n {
+    let saleInfo: Int = Int(readLine()!)!
+    var tempInfo: [(Int,Int)] = []
+    for _ in 0..<saleInfo {
+        let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+        tempInfo.append((temp[0], temp[1]))
     }
-    count += 1
+    sale.append(tempInfo)
 }
 
-if a == b {
-    print(count)
-} else {
-    print(-1)
+var visited: [Bool] = Array(repeating: false, count: n+1)
+var buyInfo: [Int] = []
+
+var minResult: Int = Int.max
+
+func solution() {
+    if buyInfo.count == n {
+        var paper: [Int] = arr
+        var myPrice: Int = 0
+        for i in buyInfo {
+            if paper[i] <= 0 {
+                myPrice += 1
+            } else {
+                myPrice += paper[i]
+            }
+
+            for j in sale[i] {
+                let index: Int = j.0
+                let saleInfo: Int = j.1
+                paper[index] -= saleInfo
+            }
+        }
+        minResult = min(minResult, myPrice)
+    }
+    for i in 1...n {
+        if visited[i] == false {
+            visited[i] = true
+            buyInfo.append(i)
+            solution()
+            buyInfo.removeLast()
+            visited[i] = false
+
+        }
+    }
 }
+solution()
+print("\(minResult)")
+
+
