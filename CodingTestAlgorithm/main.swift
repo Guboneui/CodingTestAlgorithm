@@ -11118,21 +11118,56 @@ import Foundation
 
 
 // MARK: - 백준 11048번 이동하기
+//let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = input[0]
+//let m: Int = input[1]
+//var graph: [[Int]] = [Array(repeating: 0, count: m+1)]
+//for _ in 0..<n {
+//    graph.append([0] + readLine()!.split(separator: " ").map{Int($0)!})
+//}
+//
+//var result: [[Int]] = Array(repeating: Array(repeating: 0, count: m+1), count: n+1)
+//
+//for i in 1...n {
+//    for j in 1...m {
+//        result[i][j] = max(result[i-1][j-1], result[i-1][j], result[i][j-1]) + graph[i][j]
+//    }
+//}
+//
+//
+//print(result[n][m])
+
+// MARK: - 백준 1500번 최대 곱
 let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let n: Int = input[0]
-let m: Int = input[1]
-var graph: [[Int]] = [Array(repeating: 0, count: m+1)]
-for _ in 0..<n {
-    graph.append([0] + readLine()!.split(separator: " ").map{Int($0)!})
-}
-
-var result: [[Int]] = Array(repeating: Array(repeating: 0, count: m+1), count: n+1)
-
-for i in 1...n {
-    for j in 1...m {
-        result[i][j] = max(result[i-1][j-1], result[i-1][j], result[i][j-1]) + graph[i][j]
+let s: Int = input[0]
+let k: Int = input[1]
+let number: [Int] = Array(1...s)
+var result: [Int] = []
+var maxResult: Int = 0
+func dfs(_ depth: Int, _ start: Int, _ sum: Int, _ mul: Int) {
+    
+    if sum > s {
+        return
+    }
+    
+    if depth == k && sum == s {
+        print(result)
+        maxResult = max(maxResult, mul)
+        return
+    }
+    
+    for i in start..<s-1 {
+        result.append(number[i])
+        dfs(depth+1, i, sum + number[i], mul * number[i])
+        result.removeLast()
     }
 }
 
+if k == 1 {
+    print(s)
+} else {
+    dfs(0, 0, 0, 1)
+    print(maxResult)
+}
 
-print(result[n][m])
+
