@@ -11195,82 +11195,107 @@ import Foundation
 
 
 // MARK: - 백준 12761번 돌다리
-let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let a: Int = input[0]
-let b: Int = input[1]
-let dong: Int = input[2]
-let ju: Int = input[3]
+//let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let a: Int = input[0]
+//let b: Int = input[1]
+//let dong: Int = input[2]
+//let ju: Int = input[3]
+//
+//var graph: [Int] = Array(repeating: Int.max, count: 100001)
+//var visited: [Bool] = Array(repeating: false, count: 100001)
+//graph[dong] = 0
+//var queue: [Int] = []
+//func bfs(_ d: Int, _ j: Int) -> Int {
+//    queue.append(d)
+//
+//    while !queue.isEmpty {
+//        let popData: Int = queue.removeFirst()
+//        if popData == j {
+//            break
+//        }
+//
+//        if popData+1 < 100001 && visited[popData+1] == false {
+//            visited[popData+1] = true
+//            graph[popData+1] = min(graph[popData]+1, graph[popData+1])
+//            queue.append(popData+1)
+//        }
+//
+//        if popData-1 > 0 && visited[popData-1] == false  {
+//            visited[popData-1] = true
+//            graph[popData-1] = min(graph[popData]+1, graph[popData-1])
+//            queue.append(popData-1)
+//        }
+//
+//        if popData+a < 100001 && visited[popData+a] == false  {
+//            visited[popData+a] = true
+//            graph[popData+a] = min(graph[popData]+1, graph[popData+a])
+//            queue.append(popData+a)
+//        }
+//
+//        if popData-a > 0 && visited[popData-a] == false  {
+//            visited[popData-a] = true
+//            graph[popData-a] = min(graph[popData]+1, graph[popData-a])
+//            queue.append(popData-a)
+//        }
+//
+//        if popData*a < 100001 && visited[popData*a] == false  {
+//            visited[popData*a] = true
+//            graph[popData*a] = min(graph[popData]+1, graph[popData*a])
+//            queue.append(popData*a)
+//        }
+//
+//        if popData+b < 100001 && visited[popData+b] == false  {
+//            visited[popData+b] = true
+//            graph[popData+b] = min(graph[popData]+1, graph[popData+b])
+//            queue.append(popData+b)
+//        }
+//
+//        if popData-b > 0 && visited[popData-b] == false  {
+//            visited[popData-b] = true
+//            graph[popData-b] = min(graph[popData]+1, graph[popData-b])
+//            queue.append(popData-b)
+//        }
+//
+//        if popData*b < 100001 && visited[popData*b] == false  {
+//            visited[popData*b] = true
+//            graph[popData*b] = min(graph[popData]+1, graph[popData*b])
+//            queue.append(popData*b)
+//        }
+//
+//
+//    }
+//    return graph[j]
+//}
+//
+//print(bfs(dong, ju))
 
-var graph: [Int] = Array(repeating: Int.max, count: 100001)
-var visited: [Bool] = Array(repeating: false, count: 100001)
-graph[dong] = 0
-var queue: [Int] = []
-func bfs(_ d: Int, _ j: Int) -> Int {
-    queue.append(d)
-    
-    while !queue.isEmpty {
-        let popData: Int = queue.removeFirst()
-        if popData == j {
-            break
-        }
-        
-        if popData+1 < 100001 && visited[popData+1] == false {
-            visited[popData+1] = true
-            graph[popData+1] = min(graph[popData]+1, graph[popData+1])
-            queue.append(popData+1)
-        }
-        
-        if popData-1 > 0 && visited[popData-1] == false  {
-            visited[popData-1] = true
-            graph[popData-1] = min(graph[popData]+1, graph[popData-1])
-            queue.append(popData-1)
-        }
-        
-        if popData+a < 100001 && visited[popData+a] == false  {
-            visited[popData+a] = true
-            graph[popData+a] = min(graph[popData]+1, graph[popData+a])
-            queue.append(popData+a)
-        }
-        
-        if popData-a > 0 && visited[popData-a] == false  {
-            visited[popData-a] = true
-            graph[popData-a] = min(graph[popData]+1, graph[popData-a])
-            queue.append(popData-a)
-        }
-        
-        if popData*a < 100001 && visited[popData*a] == false  {
-            visited[popData*a] = true
-            graph[popData*a] = min(graph[popData]+1, graph[popData*a])
-            queue.append(popData*a)
-        }
-        
-        if popData+b < 100001 && visited[popData+b] == false  {
-            visited[popData+b] = true
-            graph[popData+b] = min(graph[popData]+1, graph[popData+b])
-            queue.append(popData+b)
-        }
-        
-        if popData-b > 0 && visited[popData-b] == false  {
-            visited[popData-b] = true
-            graph[popData-b] = min(graph[popData]+1, graph[popData-b])
-            queue.append(popData-b)
-        }
-        
-        if popData*b < 100001 && visited[popData*b] == false  {
-            visited[popData*b] = true
-            graph[popData*b] = min(graph[popData]+1, graph[popData*b])
-            queue.append(popData*b)
-        }
-        
-        
+// MARK: - 백준 14225번 부분수열의 합
+let n: Int = Int(readLine()!)!
+let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let base: Int = arr.reduce(0, +)
+var dict: [Int:Int] = [:]
+for i in 1...base+1 {
+    dict[i] = 1
+}
+var visited: [Bool] = Array(repeating: false, count: n)
+var sum: Int = 0
+
+func dfs(_ start: Int) {
+    if sum > 0 {
+        dict.removeValue(forKey: sum)
     }
     
-    
-    
-    
-    
-    return graph[j]
-    
+    for i in start..<n {
+        if visited[i] == false {
+            visited[i] = true
+            sum += arr[i]
+            dfs(i)
+            sum -= arr[i]
+            visited[i] = false
+        }
+    }
 }
 
-print(bfs(dong, ju))
+dfs(0)
+
+print(dict.sorted{$0.key < $1.key}[0].key)
