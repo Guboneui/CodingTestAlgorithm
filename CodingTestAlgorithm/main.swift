@@ -11172,22 +11172,105 @@ import Foundation
 
 
 
+//let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let s: Int = input[0]
+//var k: Int = input[1]
+//
+//var q: Int = s/k
+//var r: Int = s%k
+//var n: Int = 1
+//
+//while k>0 {
+//    if r>0 {
+//        n *= q+1
+//        r -= 1
+//    } else {
+//        n *= q
+//    }
+//    k -= 1
+//}
+//
+//print(n)
+
+
+
+// MARK: - 백준 12761번 돌다리
 let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let s: Int = input[0]
-var k: Int = input[1]
+let a: Int = input[0]
+let b: Int = input[1]
+let dong: Int = input[2]
+let ju: Int = input[3]
 
-var q: Int = s/k
-var r: Int = s%k
-var n: Int = 1
-
-while k>0 {
-    if r>0 {
-        n *= q+1
-        r -= 1
-    } else {
-        n *= q
+var graph: [Int] = Array(repeating: Int.max, count: 100001)
+var visited: [Bool] = Array(repeating: false, count: 100001)
+graph[dong] = 0
+var queue: [Int] = []
+func bfs(_ d: Int, _ j: Int) -> Int {
+    queue.append(d)
+    
+    while !queue.isEmpty {
+        let popData: Int = queue.removeFirst()
+        if popData == j {
+            break
+        }
+        
+        if popData+1 < 100001 && visited[popData+1] == false {
+            visited[popData+1] = true
+            graph[popData+1] = min(graph[popData]+1, graph[popData+1])
+            queue.append(popData+1)
+        }
+        
+        if popData-1 > 0 && visited[popData-1] == false  {
+            visited[popData-1] = true
+            graph[popData-1] = min(graph[popData]+1, graph[popData-1])
+            queue.append(popData-1)
+        }
+        
+        if popData+a < 100001 && visited[popData+a] == false  {
+            visited[popData+a] = true
+            graph[popData+a] = min(graph[popData]+1, graph[popData+a])
+            queue.append(popData+a)
+        }
+        
+        if popData-a > 0 && visited[popData-a] == false  {
+            visited[popData-a] = true
+            graph[popData-a] = min(graph[popData]+1, graph[popData-a])
+            queue.append(popData-a)
+        }
+        
+        if popData*a < 100001 && visited[popData*a] == false  {
+            visited[popData*a] = true
+            graph[popData*a] = min(graph[popData]+1, graph[popData*a])
+            queue.append(popData*a)
+        }
+        
+        if popData+b < 100001 && visited[popData+b] == false  {
+            visited[popData+b] = true
+            graph[popData+b] = min(graph[popData]+1, graph[popData+b])
+            queue.append(popData+b)
+        }
+        
+        if popData-b > 0 && visited[popData-b] == false  {
+            visited[popData-b] = true
+            graph[popData-b] = min(graph[popData]+1, graph[popData-b])
+            queue.append(popData-b)
+        }
+        
+        if popData*b < 100001 && visited[popData*b] == false  {
+            visited[popData*b] = true
+            graph[popData*b] = min(graph[popData]+1, graph[popData*b])
+            queue.append(popData*b)
+        }
+        
+        
     }
-    k -= 1
+    
+    
+    
+    
+    
+    return graph[j]
+    
 }
 
-print(n)
+print(bfs(dong, ju))
