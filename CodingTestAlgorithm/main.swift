@@ -11301,35 +11301,59 @@ import Foundation
 //print(dict.sorted{$0.key < $1.key}[0].key)
 
 
-let n: Int = Int(readLine()!)!
-let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let base: Int = arr.reduce(0, +)
-var result: [Bool] = Array(repeating: false, count: base+2)
+//let n: Int = Int(readLine()!)!
+//let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let base: Int = arr.reduce(0, +)
+//var result: [Bool] = Array(repeating: false, count: base+2)
+//
+//var visited: [Bool] = Array(repeating: false, count: n)
+//var sum: Int = 0
+//
+//func dfs(_ start: Int) {
+//    if sum > 0 {
+//        result[sum] = true
+//    }
+//
+//    for i in start..<n {
+//        if visited[i] == false {
+//            visited[i] = true
+//            sum += arr[i]
+//            dfs(i)
+//            sum -= arr[i]
+//            visited[i] = false
+//        }
+//    }
+//}
+//
+//dfs(0)
+//
+//for i in 1..<result.count {
+//    if result[i] == false {
+//        print(i)
+//        break
+//    }
+//}
 
-var visited: [Bool] = Array(repeating: false, count: n)
-var sum: Int = 0
-
-func dfs(_ start: Int) {
-    if sum > 0 {
-        result[sum] = true
-    }
-    
-    for i in start..<n {
-        if visited[i] == false {
-            visited[i] = true
-            sum += arr[i]
-            dfs(i)
-            sum -= arr[i]
-            visited[i] = false
-        }
+// MARK: - 백준 15989번 1, 2, 3 더하기 4
+let testCases: Int = Int(readLine()!)!
+var dp: [[Int]] = Array(repeating: Array(repeating: 0, count: 4), count: 10001)
+for i in 1...3 {
+    for j in 1...i {
+        dp[i][j] = 1
     }
 }
 
-dfs(0)
+for i in 4...10000 {
+    dp[i][1] = dp[i-1][1]
+    dp[i][2] = dp[i-2][1] + dp[i-2][2]
+    dp[i][3] = dp[i-3][1] + dp[i-3][2] + dp[i-3][3]
+}
 
-for i in 1..<result.count {
-    if result[i] == false {
-        print(i)
-        break
+for _ in 0..<testCases {
+    let read: Int = Int(readLine()!)!
+    var result: Int = 0
+    for num in dp[read] {
+        result += num
     }
+    print(result)
 }
