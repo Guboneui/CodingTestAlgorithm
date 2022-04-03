@@ -11270,19 +11270,48 @@ import Foundation
 //print(bfs(dong, ju))
 
 // MARK: - 백준 14225번 부분수열의 합
+//let n: Int = Int(readLine()!)!
+//let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let base: Int = arr.reduce(0, +)
+//var dict: [Int:Int] = [:]
+//for i in 1...base+1 {
+//    dict[i] = 1
+//}
+//var visited: [Bool] = Array(repeating: false, count: n)
+//var sum: Int = 0
+//
+//func dfs(_ start: Int) {
+//    if sum > 0 {
+//        dict.removeValue(forKey: sum)
+//    }
+//
+//    for i in start..<n {
+//        if visited[i] == false {
+//            visited[i] = true
+//            sum += arr[i]
+//            dfs(i)
+//            sum -= arr[i]
+//            visited[i] = false
+//        }
+//    }
+//}
+//
+//dfs(0)
+//
+//print(dict.sorted{$0.key < $1.key}[0].key)
+
+
 let n: Int = Int(readLine()!)!
 let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
 let base: Int = arr.reduce(0, +)
-var dict: [Int:Int] = [:]
-for i in 1...base+1 {
-    dict[i] = 1
-}
+var result: [Bool] = Array(repeating: false, count: base+2)
+
 var visited: [Bool] = Array(repeating: false, count: n)
 var sum: Int = 0
 
 func dfs(_ start: Int) {
     if sum > 0 {
-        dict.removeValue(forKey: sum)
+        result[sum] = true
     }
     
     for i in start..<n {
@@ -11298,4 +11327,9 @@ func dfs(_ start: Int) {
 
 dfs(0)
 
-print(dict.sorted{$0.key < $1.key}[0].key)
+for i in 1..<result.count {
+    if result[i] == false {
+        print(i)
+        break
+    }
+}
