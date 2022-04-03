@@ -11335,25 +11335,86 @@ import Foundation
 //}
 
 // MARK: - 백준 15989번 1, 2, 3 더하기 4
-let testCases: Int = Int(readLine()!)!
-var dp: [[Int]] = Array(repeating: Array(repeating: 0, count: 4), count: 10001)
-for i in 1...3 {
-    for j in 1...i {
-        dp[i][j] = 1
+//let testCases: Int = Int(readLine()!)!
+//var dp: [[Int]] = Array(repeating: Array(repeating: 0, count: 4), count: 10001)
+//for i in 1...3 {
+//    for j in 1...i {
+//        dp[i][j] = 1
+//    }
+//}
+//
+//for i in 4...10000 {
+//    dp[i][1] = dp[i-1][1]
+//    dp[i][2] = dp[i-2][1] + dp[i-2][2]
+//    dp[i][3] = dp[i-3][1] + dp[i-3][2] + dp[i-3][3]
+//}
+//
+//for _ in 0..<testCases {
+//    let read: Int = Int(readLine()!)!
+//    var result: Int = 0
+//    for num in dp[read] {
+//        result += num
+//    }
+//    print(result)
+//}
+
+// MARK: - 백준 6118번 숨바꼭질
+let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let node: Int = input[0]
+let line: Int = input[1]
+
+var graph: [[Int]] = Array(repeating: [Int](), count: node+1)
+
+for _ in 0..<line {
+    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    graph[temp[0]].append(temp[1])
+    graph[temp[1]].append(temp[0])
+}
+var visited: [Bool] = Array(repeating: false, count: node+1)
+var result: [Int] = Array(repeating: 0, count: node+1)
+func bfs(_ v: Int) {
+    var queue: [Int] = [v]
+    visited[v] = true
+    
+    while !queue.isEmpty {
+        let popValeu: Int = queue.removeFirst()
+        for i in graph[popValeu] {
+            if visited[i] == false {
+                queue.append(i)
+                visited[i] = true
+                result[i] = result[popValeu] + 1
+            }
+        }
     }
 }
 
-for i in 4...10000 {
-    dp[i][1] = dp[i-1][1]
-    dp[i][2] = dp[i-2][1] + dp[i-2][2]
-    dp[i][3] = dp[i-3][1] + dp[i-3][2] + dp[i-3][3]
-}
+bfs(1)
+let maxResult: Int = result.max()!
 
-for _ in 0..<testCases {
-    let read: Int = Int(readLine()!)!
-    var result: Int = 0
-    for num in dp[read] {
-        result += num
-    }
-    print(result)
-}
+print(result.firstIndex(of: maxResult)!, terminator: " ")
+print(maxResult, terminator: " ")
+print(result.filter{$0 == maxResult}.count, terminator: " ")
+
+
+//func BFS(v: Int) {
+//
+//
+//    var queue: [Int] = [v]
+//    bfsVisited[v] = true
+//
+//
+//    while !queue.isEmpty {
+//        let v = queue.removeFirst()
+//        bfsResult.append(v)
+//        for i in graph[v] {
+//            if bfsVisited[i] == false {
+//                queue.append(i)
+//                bfsVisited[i] = true
+//
+//            }
+//        }
+//    }
+//    print(bfsResult.map{String($0)}.joined(separator: " "))
+//}
+//
+//BFS(v: v)
