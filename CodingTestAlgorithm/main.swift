@@ -11436,16 +11436,40 @@ import Foundation
 //}
 
 // MARK: - 백준 11057번 오르막 수
-let n: Int = Int(readLine()!)!
-var dp: [Int] = Array(repeating: 1, count: 10)
+//let n: Int = Int(readLine()!)!
+//var dp: [Int] = Array(repeating: 1, count: 10)
+//
+//for _ in 1..<n {
+//    for i in 1...9 {
+//        dp[i] = (dp[i] + dp[i-1]) % 10007
+//    }
+//}
+//
+//
+//print(dp.reduce(0, +)%10007)
 
-for _ in 1..<n {
-    for i in 1...9 {
-        dp[i] = (dp[i] + dp[i-1]) % 10007
-    }
+
+// MARK: - 백준 11660번 구간 합 구하기 5
+let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let n: Int = input[0]
+let testCases: Int = input[1]
+var graph: [[Int]] = []
+for _ in 0..<n {
+    graph.append(readLine()!.split(separator: " ").map{Int($0)!})
 }
 
-
-print(dp.reduce(0, +)%10007)
-
+for _ in 0..<testCases {
+    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    let (x1, y1, x2, y2) = (temp[0], temp[1], temp[2], temp[3])
+    var copyGraph: [[Int]] = graph
+    var result: Int = 0
+    
+    for i in (x1-1)...(x2-1) {
+        for j in y1..<y2 {
+            copyGraph[i][j] = copyGraph[i][j] + copyGraph[i][j-1]
+        }
+        result += copyGraph[i][y2-1]
+    }
+    print(result)
+}
 
