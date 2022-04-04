@@ -11450,24 +11450,38 @@ import Foundation
 
 
 // MARK: - 백준 11660번 구간 합 구하기 5
-let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let n: Int = input[0]
-let testCases: Int = input[1]
-var graph: [[Int]] = []
-var dp: [[Int]] = Array(repeating: Array(repeating: 0, count: n+1), count: n+1)
+//let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = input[0]
+//let testCases: Int = input[1]
+//var graph: [[Int]] = []
+//var dp: [[Int]] = Array(repeating: Array(repeating: 0, count: n+1), count: n+1)
+//
+//for _ in 0..<n {
+//    graph.append(readLine()!.split(separator: " ").map{Int($0)!})
+//}
+//
+//for i in 1...n {
+//    for j in 1...n {
+//        dp[i][j] += dp[i][j-1] + dp[i-1][j] - dp[i-1][j-1] + graph[i-1][j-1]
+//    }
+//}
+//
+//for _ in 0..<testCases {
+//    let read = readLine()!.split(separator: " ").map{Int(String($0))!}
+//    let (x1, y1, x2, y2) = (read[0],read[1],read[2],read[3])
+//    print(dp[x2][y2] - dp[x2][y1-1] - dp[x1-1][y2] + dp[x1-1][y1-1])
+//}
 
-for _ in 0..<n {
-    graph.append(readLine()!.split(separator: " ").map{Int($0)!})
-}
-
-for i in 1...n {
-    for j in 1...n {
-        dp[i][j] += dp[i][j-1] + dp[i-1][j] - dp[i-1][j-1] + graph[i-1][j-1]
+// MARK: - 백준 16194번 카드 구매하기 2
+let n: Int = Int(readLine()!)!
+let card: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+var dp: [Int] = Array(repeating: 999999, count: n+1)
+dp[0] = 0
+for i in 1..<n+1 {
+    for j in 1..<i+1 {
+        dp[i] = min(dp[i], dp[i-j]+card[j-1])
     }
 }
 
-for _ in 0..<testCases {
-    let read = readLine()!.split(separator: " ").map{Int(String($0))!}
-    let (x1, y1, x2, y2) = (read[0],read[1],read[2],read[3])
-    print(dp[x2][y2] - dp[x2][y1-1] - dp[x1-1][y2] + dp[x1-1][y1-1])
-}
+print(dp[n])
+
