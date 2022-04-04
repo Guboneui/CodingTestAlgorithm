@@ -11490,38 +11490,30 @@ let testCases: Int = Int(readLine()!)!
 for _ in 0..<testCases {
     let size: Int = Int(readLine()!)!
     let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted()
-    var result: [Int] = []
-    var minResult: Int = 1000000
-    var dict: [[Int]:Int] = [:]
-    var visited: [Bool] = Array(repeating: false, count: size)
-    func solution(_ depth: Int) {
-        if depth == size {
-            
-            if dict[result] == nil {
-                dict[result] = 1
-                var temp: [Int] = result + [result[0]]
-                
-                var tempMinResult: Int = 0
-                for i in 1..<temp.count {
-                    tempMinResult = max(tempMinResult, abs(temp[i]-temp[i-1]))
-                }
-                minResult = min(minResult, tempMinResult)
-            }
-            
-            return
+    var result: [Int] = Array(repeating: 0, count: size)
+    result[0] = arr[0]
+    
+    var flag: Bool = false
+    var index: Int = 1
+    var startIndex: Int = 1
+    var lastIndex: Int = size - 1
+    
+    while startIndex<=lastIndex {
+        if flag == false {
+            result[startIndex] = arr[index]
+            startIndex += 1
+        } else {
+            result[lastIndex] = arr[index]
+            lastIndex -= 1
         }
-        
-        for i in 0..<size {
-            if visited[i] == false {
-                visited[i] = true
-                result.append(arr[i])
-                solution(depth+1)
-                result.removeLast()
-                visited[i] = false
-            }
-        }
+        index += 1
+        flag.toggle()
     }
     
-    solution(0)
-    print(minResult)
+    let checkArr: [Int] = result + [result[0]]
+    var maxResult: Int = 0
+    for i in 1..<checkArr.count {
+        maxResult = max(maxResult, abs(checkArr[i]-checkArr[i-1]))
+    }
+    print(maxResult)
 }
