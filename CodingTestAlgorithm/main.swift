@@ -11359,62 +11359,79 @@ import Foundation
 //}
 
 // MARK: - 백준 6118번 숨바꼭질
-let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let node: Int = input[0]
-let line: Int = input[1]
-
-var graph: [[Int]] = Array(repeating: [Int](), count: node+1)
-
-for _ in 0..<line {
-    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    graph[temp[0]].append(temp[1])
-    graph[temp[1]].append(temp[0])
-}
-var visited: [Bool] = Array(repeating: false, count: node+1)
-var result: [Int] = Array(repeating: 0, count: node+1)
-func bfs(_ v: Int) {
-    var queue: [Int] = [v]
-    visited[v] = true
-    
-    while !queue.isEmpty {
-        let popValeu: Int = queue.removeFirst()
-        for i in graph[popValeu] {
-            if visited[i] == false {
-                queue.append(i)
-                visited[i] = true
-                result[i] = result[popValeu] + 1
-            }
-        }
-    }
-}
-
-bfs(1)
-let maxResult: Int = result.max()!
-
-print(result.firstIndex(of: maxResult)!, terminator: " ")
-print(maxResult, terminator: " ")
-print(result.filter{$0 == maxResult}.count, terminator: " ")
-
-
-//func BFS(v: Int) {
+//let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let node: Int = input[0]
+//let line: Int = input[1]
 //
+//var graph: [[Int]] = Array(repeating: [Int](), count: node+1)
 //
+//for _ in 0..<line {
+//    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    graph[temp[0]].append(temp[1])
+//    graph[temp[1]].append(temp[0])
+//}
+//var visited: [Bool] = Array(repeating: false, count: node+1)
+//var result: [Int] = Array(repeating: 0, count: node+1)
+//func bfs(_ v: Int) {
 //    var queue: [Int] = [v]
-//    bfsVisited[v] = true
-//
+//    visited[v] = true
 //
 //    while !queue.isEmpty {
-//        let v = queue.removeFirst()
-//        bfsResult.append(v)
-//        for i in graph[v] {
-//            if bfsVisited[i] == false {
+//        let popValeu: Int = queue.removeFirst()
+//        for i in graph[popValeu] {
+//            if visited[i] == false {
 //                queue.append(i)
-//                bfsVisited[i] = true
-//
+//                visited[i] = true
+//                result[i] = result[popValeu] + 1
 //            }
 //        }
 //    }
-//    print(bfsResult.map{String($0)}.joined(separator: " "))
 //}
 //
-//BFS(v: v)
+//bfs(1)
+//let maxResult: Int = result.max()!
+//
+//print(result.firstIndex(of: maxResult)!, terminator: " ")
+//print(maxResult, terminator: " ")
+//print(result.filter{$0 == maxResult}.count, terminator: " ")
+//
+//
+
+
+//
+//public static int[] mergeSort(int[] arr, int p, int r) {
+//    if (p < r) {
+//        int q = (p+r) / 2;
+//        mergeSort(arr, p, q);
+//        mergeSort(arr, q+1, r);
+//        merge(arr, p, q, r);
+//    }
+//    return arr;
+//}
+
+// MARK: - 백준 1790번 수 이어 쓰기 2
+let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let n: Int = input[0]
+var k: Int = input[1]
+
+var result: Int = 0
+var digit: Int = 1
+var count: Int = 9
+
+while k > digit * count {
+    k -= digit * count
+    result += count
+    digit += 1
+    count *= 10
+}
+
+result = result + 1 + (k-1)/digit
+
+if result > n {
+    print(-1)
+} else {
+    let index: Int = (k-1) % digit
+    let str = String(result)
+    print(str[str.index(str.startIndex, offsetBy: index)])
+}
+
