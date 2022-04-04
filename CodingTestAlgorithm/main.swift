@@ -11454,22 +11454,20 @@ let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
 let n: Int = input[0]
 let testCases: Int = input[1]
 var graph: [[Int]] = []
+var dp: [[Int]] = Array(repeating: Array(repeating: 0, count: n+1), count: n+1)
+
 for _ in 0..<n {
     graph.append(readLine()!.split(separator: " ").map{Int($0)!})
 }
 
-for _ in 0..<testCases {
-    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    let (x1, y1, x2, y2) = (temp[0], temp[1], temp[2], temp[3])
-    var copyGraph: [[Int]] = graph
-    var result: Int = 0
-    
-    for i in (x1-1)...(x2-1) {
-        for j in y1..<y2 {
-            copyGraph[i][j] = copyGraph[i][j] + copyGraph[i][j-1]
-        }
-        result += copyGraph[i][y2-1]
+for i in 1...n {
+    for j in 1...n {
+        dp[i][j] += dp[i][j-1] + dp[i-1][j] - dp[i-1][j-1] + graph[i-1][j-1]
     }
-    print(result)
 }
 
+for _ in 0..<testCases {
+    let read = readLine()!.split(separator: " ").map{Int(String($0))!}
+    let (x1, y1, x2, y2) = (read[0],read[1],read[2],read[3])
+    print(dp[x2][y2] - dp[x2][y1-1] - dp[x1-1][y2] + dp[x1-1][y1-1])
+}
