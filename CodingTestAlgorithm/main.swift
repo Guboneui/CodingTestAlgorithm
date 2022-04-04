@@ -11473,15 +11473,55 @@ import Foundation
 //}
 
 // MARK: - 백준 16194번 카드 구매하기 2
-let n: Int = Int(readLine()!)!
-let card: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-var dp: [Int] = Array(repeating: 999999, count: n+1)
-dp[0] = 0
-for i in 1..<n+1 {
-    for j in 1..<i+1 {
-        dp[i] = min(dp[i], dp[i-j]+card[j-1])
+//let n: Int = Int(readLine()!)!
+//let card: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//var dp: [Int] = Array(repeating: 999999, count: n+1)
+//dp[0] = 0
+//for i in 1..<n+1 {
+//    for j in 1..<i+1 {
+//        dp[i] = min(dp[i], dp[i-j]+card[j-1])
+//    }
+//}
+//
+//print(dp[n])
+
+// MARK: - 백준 11497번 통나무 건너뛰기
+let testCases: Int = Int(readLine()!)!
+for _ in 0..<testCases {
+    let size: Int = Int(readLine()!)!
+    let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted()
+    var result: [Int] = []
+    var minResult: Int = 1000000
+    var dict: [[Int]:Int] = [:]
+    var visited: [Bool] = Array(repeating: false, count: size)
+    func solution(_ depth: Int) {
+        if depth == size {
+            
+            if dict[result] == nil {
+                dict[result] = 1
+                var temp: [Int] = result + [result[0]]
+                
+                var tempMinResult: Int = 0
+                for i in 1..<temp.count {
+                    tempMinResult = max(tempMinResult, abs(temp[i]-temp[i-1]))
+                }
+                minResult = min(minResult, tempMinResult)
+            }
+            
+            return
+        }
+        
+        for i in 0..<size {
+            if visited[i] == false {
+                visited[i] = true
+                result.append(arr[i])
+                solution(depth+1)
+                result.removeLast()
+                visited[i] = false
+            }
+        }
     }
+    
+    solution(0)
+    print(minResult)
 }
-
-print(dp[n])
-
