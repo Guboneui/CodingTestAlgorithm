@@ -11410,28 +11410,42 @@ import Foundation
 //}
 
 // MARK: - 백준 1790번 수 이어 쓰기 2
-let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let n: Int = input[0]
-var k: Int = input[1]
+//let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = input[0]
+//var k: Int = input[1]
+//
+//var result: Int = 0
+//var digit: Int = 1
+//var count: Int = 9
+//
+//while k > digit * count {
+//    k -= digit * count
+//    result += count
+//    digit += 1
+//    count *= 10
+//}
+//
+//result = result + 1 + (k-1)/digit
+//
+//if result > n {
+//    print(-1)
+//} else {
+//    let index: Int = (k-1) % digit
+//    let str = String(result)
+//    print(str[str.index(str.startIndex, offsetBy: index)])
+//}
 
-var result: Int = 0
-var digit: Int = 1
-var count: Int = 9
+// MARK: - 백준 11057번 오르막 수
+let n: Int = Int(readLine()!)!
+var dp: [Int] = Array(repeating: 1, count: 10)
 
-while k > digit * count {
-    k -= digit * count
-    result += count
-    digit += 1
-    count *= 10
+for _ in 1..<n {
+    for i in 1...9 {
+        dp[i] = (dp[i] + dp[i-1]) % 10007
+    }
 }
 
-result = result + 1 + (k-1)/digit
 
-if result > n {
-    print(-1)
-} else {
-    let index: Int = (k-1) % digit
-    let str = String(result)
-    print(str[str.index(str.startIndex, offsetBy: index)])
-}
+print(dp.reduce(0, +)%10007)
+
 
