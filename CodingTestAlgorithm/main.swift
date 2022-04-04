@@ -11486,34 +11486,137 @@ import Foundation
 //print(dp[n])
 
 // MARK: - 백준 11497번 통나무 건너뛰기
-let testCases: Int = Int(readLine()!)!
-for _ in 0..<testCases {
-    let size: Int = Int(readLine()!)!
-    let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted()
-    var result: [Int] = Array(repeating: 0, count: size)
-    result[0] = arr[0]
-    
-    var flag: Bool = false
-    var index: Int = 1
-    var startIndex: Int = 1
-    var lastIndex: Int = size - 1
-    
-    while startIndex<=lastIndex {
-        if flag == false {
-            result[startIndex] = arr[index]
-            startIndex += 1
-        } else {
-            result[lastIndex] = arr[index]
-            lastIndex -= 1
-        }
-        index += 1
-        flag.toggle()
-    }
-    
-    let checkArr: [Int] = result + [result[0]]
-    var maxResult: Int = 0
-    for i in 1..<checkArr.count {
-        maxResult = max(maxResult, abs(checkArr[i]-checkArr[i-1]))
-    }
-    print(maxResult)
+//let testCases: Int = Int(readLine()!)!
+//for _ in 0..<testCases {
+//    let size: Int = Int(readLine()!)!
+//    let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}.sorted()
+//    var result: [Int] = Array(repeating: 0, count: size)
+//    result[0] = arr[0]
+//
+//    var flag: Bool = false
+//    var index: Int = 1
+//    var startIndex: Int = 1
+//    var lastIndex: Int = size - 1
+//
+//    while startIndex<=lastIndex {
+//        if flag == false {
+//            result[startIndex] = arr[index]
+//            startIndex += 1
+//        } else {
+//            result[lastIndex] = arr[index]
+//            lastIndex -= 1
+//        }
+//        index += 1
+//        flag.toggle()
+//    }
+//
+//    let checkArr: [Int] = result + [result[0]]
+//    var maxResult: Int = 0
+//    for i in 1..<checkArr.count {
+//        maxResult = max(maxResult, abs(checkArr[i]-checkArr[i-1]))
+//    }
+//    print(maxResult)
+//}
+
+// MARK: - 백준 2564번 경비원
+let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let width: Int = input[0]
+let height: Int = input[1]
+let n: Int = Int(readLine()!)!
+var place: [(Int, Int)] = []
+for _ in 0..<n {
+    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    place.append((temp[0], temp[1]))
 }
+
+let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let muin: (Int, Int) = (temp[0], temp[1])
+
+var result: Int = 0
+
+
+if muin.0 == 1 {
+    for market in place {
+        if market.0 == muin.0 {
+            result += abs(muin.1 - market.1)
+        } else {
+            if market.0 == 2 {
+                result += min(muin.1 + height + market.1, width - muin.1 + height + width - market.1)
+            }
+            
+            if market.0 == 3 {
+                result += muin.1 + market.1
+            }
+            
+            if market.0 == 4 {
+                result += width - muin.1 + market.1
+            }
+        }
+    }
+    
+}
+
+if muin.0 == 2 {
+    for market in place {
+        if market.0 == muin.0 {
+            result += abs(muin.1 - market.1)
+        } else {
+            if market.0 == 1 {
+                result += min(muin.1 + height + market.1, width - muin.1 + height + width - market.1)
+            }
+            
+            if market.0 == 3 {
+                result += muin.1 + height - market.1
+            }
+            
+            if market.0 == 4 {
+                result += width - muin.1 + height - market.1
+            }
+            
+        }
+    }
+}
+
+if muin.0 == 3 {    // 서
+    for market in place {
+        if market.0 == muin.0 {
+            result += abs(muin.1 - market.1)
+        } else {
+            if market.0 == 1 {  // 북
+                result += muin.1 + market.1
+            }
+            
+            if market.0 == 2 {  // 남
+                result += height - muin.1 + market.1
+            }
+            
+            if market.0 == 4 { // 동
+                result += min(muin.1 + width + market.1, height - muin.1 + width + height - market.1)
+            }
+            
+        }
+    }
+}
+
+if muin.0 == 4 {    // 동
+    for market in place {
+        if market.0 == muin.0 {
+            result += abs(muin.1 - market.1)
+        } else {
+            if market.0 == 1 {  // 북
+                result += muin.1 + width - market.1
+            }
+            
+            if market.0 == 2 {  // 남
+                result += height - muin.1 + width - market.1
+            }
+            
+            if market.0 == 3 { // 서
+                result += min(muin.1 + width + market.1, height - muin.1 + width + height - market.1)
+            }
+            
+        }
+    }
+}
+
+print(result)
