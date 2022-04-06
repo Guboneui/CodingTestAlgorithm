@@ -11519,104 +11519,155 @@ import Foundation
 //}
 
 // MARK: - 백준 2564번 경비원
+//let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let width: Int = input[0]
+//let height: Int = input[1]
+//let n: Int = Int(readLine()!)!
+//var place: [(Int, Int)] = []
+//for _ in 0..<n {
+//    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    place.append((temp[0], temp[1]))
+//}
+//
+//let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let muin: (Int, Int) = (temp[0], temp[1])
+//
+//var result: Int = 0
+//
+//
+//if muin.0 == 1 {
+//    for market in place {
+//        if market.0 == muin.0 {
+//            result += abs(muin.1 - market.1)
+//        } else {
+//            if market.0 == 2 {
+//                result += min(muin.1 + height + market.1, width - muin.1 + height + width - market.1)
+//            }
+//
+//            if market.0 == 3 {
+//                result += muin.1 + market.1
+//            }
+//
+//            if market.0 == 4 {
+//                result += width - muin.1 + market.1
+//            }
+//        }
+//    }
+//
+//}
+//
+//if muin.0 == 2 {
+//    for market in place {
+//        if market.0 == muin.0 {
+//            result += abs(muin.1 - market.1)
+//        } else {
+//            if market.0 == 1 {
+//                result += min(muin.1 + height + market.1, width - muin.1 + height + width - market.1)
+//            }
+//
+//            if market.0 == 3 {
+//                result += muin.1 + height - market.1
+//            }
+//
+//            if market.0 == 4 {
+//                result += width - muin.1 + height - market.1
+//            }
+//
+//        }
+//    }
+//}
+//
+//if muin.0 == 3 {    // 서
+//    for market in place {
+//        if market.0 == muin.0 {
+//            result += abs(muin.1 - market.1)
+//        } else {
+//            if market.0 == 1 {  // 북
+//                result += muin.1 + market.1
+//            }
+//
+//            if market.0 == 2 {  // 남
+//                result += height - muin.1 + market.1
+//            }
+//
+//            if market.0 == 4 { // 동
+//                result += min(muin.1 + width + market.1, height - muin.1 + width + height - market.1)
+//            }
+//
+//        }
+//    }
+//}
+//
+//if muin.0 == 4 {    // 동
+//    for market in place {
+//        if market.0 == muin.0 {
+//            result += abs(muin.1 - market.1)
+//        } else {
+//            if market.0 == 1 {  // 북
+//                result += muin.1 + width - market.1
+//            }
+//
+//            if market.0 == 2 {  // 남
+//                result += height - muin.1 + width - market.1
+//            }
+//
+//            if market.0 == 3 { // 서
+//                result += min(muin.1 + width + market.1, height - muin.1 + width + height - market.1)
+//            }
+//
+//        }
+//    }
+//}
+//
+//print(result)
+
+
+// MARK: - 백준 12101번 1, 2, 3 더하기 2
 let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let width: Int = input[0]
-let height: Int = input[1]
-let n: Int = Int(readLine()!)!
-var place: [(Int, Int)] = []
-for _ in 0..<n {
-    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    place.append((temp[0], temp[1]))
-}
+let target: Int = input[0]
+let resultNum: Int = input[1]
+var result: [[String]] = []
 
-let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let muin: (Int, Int) = (temp[0], temp[1])
+var temp: [Int] = []
+var sum: Int = 0
 
-var result: Int = 0
-
-
-if muin.0 == 1 {
-    for market in place {
-        if market.0 == muin.0 {
-            result += abs(muin.1 - market.1)
-        } else {
-            if market.0 == 2 {
-                result += min(muin.1 + height + market.1, width - muin.1 + height + width - market.1)
-            }
-            
-            if market.0 == 3 {
-                result += muin.1 + market.1
-            }
-            
-            if market.0 == 4 {
-                result += width - muin.1 + market.1
-            }
-        }
+func solution() {
+    
+    if sum > target {
+        return
     }
     
-}
-
-if muin.0 == 2 {
-    for market in place {
-        if market.0 == muin.0 {
-            result += abs(muin.1 - market.1)
-        } else {
-            if market.0 == 1 {
-                result += min(muin.1 + height + market.1, width - muin.1 + height + width - market.1)
-            }
-            
-            if market.0 == 3 {
-                result += muin.1 + height - market.1
-            }
-            
-            if market.0 == 4 {
-                result += width - muin.1 + height - market.1
-            }
-            
-        }
+    if sum == target {
+        result.append(temp.map{String($0)})
+        return
+    }
+    
+    for i in 1...3 {
+        temp.append(i)
+        sum += i
+        solution()
+        sum -= i
+        temp.removeLast()
+        
     }
 }
 
-if muin.0 == 3 {    // 서
-    for market in place {
-        if market.0 == muin.0 {
-            result += abs(muin.1 - market.1)
-        } else {
-            if market.0 == 1 {  // 북
-                result += muin.1 + market.1
-            }
-            
-            if market.0 == 2 {  // 남
-                result += height - muin.1 + market.1
-            }
-            
-            if market.0 == 4 { // 동
-                result += min(muin.1 + width + market.1, height - muin.1 + width + height - market.1)
-            }
-            
-        }
-    }
-}
+solution()
 
-if muin.0 == 4 {    // 동
-    for market in place {
-        if market.0 == muin.0 {
-            result += abs(muin.1 - market.1)
-        } else {
-            if market.0 == 1 {  // 북
-                result += muin.1 + width - market.1
-            }
-            
-            if market.0 == 2 {  // 남
-                result += height - muin.1 + width - market.1
-            }
-            
-            if market.0 == 3 { // 서
-                result += min(muin.1 + width + market.1, height - muin.1 + width + height - market.1)
-            }
-            
-        }
-    }
-}
 
-print(result)
+if resultNum > result.count {
+    print(-1)
+} else {
+    let k: [String] = result[resultNum-1]
+    var resultString: String = ""
+    for i in 0..<k.count {
+        if i == k.count-1 {
+            resultString += k[i]
+        } else {
+            resultString += k[i]
+            resultString += "+"
+        }
+        
+    }
+    print(resultString)
+}
