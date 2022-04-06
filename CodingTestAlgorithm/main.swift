@@ -11695,23 +11695,74 @@ import Foundation
 
 
 // MARK: - 백준 11051번 이항 계수 2
-let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let n: Int = input[0]
-let k: Int = input[1]
-var graph: [[Int]] = Array(repeating: Array(repeating: 0, count: n+1), count: n+1)
-graph[1][0] = 1
-graph[1][1] = 1
+//let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = input[0]
+//let k: Int = input[1]
+//var graph: [[Int]] = Array(repeating: Array(repeating: 0, count: n+1), count: n+1)
+//graph[1][0] = 1
+//graph[1][1] = 1
+//
+//if n>1 {
+//    for i in 2...n {
+//        for j in 0...i {
+//            if j == 0 || j == i {
+//                graph[i][j] = 1
+//            } else {
+//                graph[i][j] = (graph[i-1][j-1] + graph[i-1][j]) % 10007
+//            }
+//        }
+//    }
+//}
+//
+//print(graph[n][k] % 10007)
 
-if n>1 {
-    for i in 2...n {
-        for j in 0...i {
-            if j == 0 || j == i {
-                graph[i][j] = 1
-            } else {
-                graph[i][j] = (graph[i-1][j-1] + graph[i-1][j]) % 10007
+// MARK: - 백준 1389번 케빈 베이컨의 6단계 법칙
+let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let friends: Int = input[0]
+let line: Int = input[1]
+var graph: [[Int]] = Array(repeating: [Int](), count: friends+1)
+for _ in 0..<line {
+    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    graph[temp[0]].append(temp[1])
+    graph[temp[1]].append(temp[0])
+}
+
+
+var visited: [Bool] = Array(repeating: false, count: friends+1)
+
+
+
+func bfs(_ v: Int) -> Int {
+    visited[v] = true
+    var quque: [Int] = [v]
+    var result: [Int] = Array(repeating: 0, count: friends+1)
+    
+    while !quque.isEmpty {
+        let popData: Int = quque.removeFirst()
+        for i in graph[popData] {
+            if visited[i] == false {
+                visited[i] = true
+                quque.append(i)
+                result[i] = result[popData] + 1
+                
             }
         }
     }
+    
+    return result.reduce(0, +)
 }
 
-print(graph[n][k] % 10007)
+var checkNum: Int = Int.max
+var resultIndex: Int = 0
+for i in 1...friends {
+    visited = Array(repeating: false, count: friends+1)
+    let k: Int = bfs(i)
+    if checkNum > k {
+        checkNum = k
+        resultIndex = i
+        
+    }
+}
+
+print(resultIndex)
+
