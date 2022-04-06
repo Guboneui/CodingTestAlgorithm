@@ -11717,52 +11717,83 @@ import Foundation
 //print(graph[n][k] % 10007)
 
 // MARK: - 백준 1389번 케빈 베이컨의 6단계 법칙
+//let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let friends: Int = input[0]
+//let line: Int = input[1]
+//var graph: [[Int]] = Array(repeating: [Int](), count: friends+1)
+//for _ in 0..<line {
+//    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    graph[temp[0]].append(temp[1])
+//    graph[temp[1]].append(temp[0])
+//}
+//
+//
+//var visited: [Bool] = Array(repeating: false, count: friends+1)
+//
+//
+//
+//func bfs(_ v: Int) -> Int {
+//    visited[v] = true
+//    var quque: [Int] = [v]
+//    var result: [Int] = Array(repeating: 0, count: friends+1)
+//
+//    while !quque.isEmpty {
+//        let popData: Int = quque.removeFirst()
+//        for i in graph[popData] {
+//            if visited[i] == false {
+//                visited[i] = true
+//                quque.append(i)
+//                result[i] = result[popData] + 1
+//
+//            }
+//        }
+//    }
+//
+//    return result.reduce(0, +)
+//}
+//
+//var checkNum: Int = Int.max
+//var resultIndex: Int = 0
+//for i in 1...friends {
+//    visited = Array(repeating: false, count: friends+1)
+//    let k: Int = bfs(i)
+//    if checkNum > k {
+//        checkNum = k
+//        resultIndex = i
+//
+//    }
+//}
+//
+//print(resultIndex)
+
+// MARK: - 백준 2502번 떡 먹는 호랑이
 let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let friends: Int = input[0]
-let line: Int = input[1]
-var graph: [[Int]] = Array(repeating: [Int](), count: friends+1)
-for _ in 0..<line {
-    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    graph[temp[0]].append(temp[1])
-    graph[temp[1]].append(temp[0])
-}
+let target: Int = input[0]
+var dduck: Int = input[1]
 
+var arr: [(Int, Int)] = Array(repeating: (0, 0), count: target+1)
+arr[1] = (1, 0)
+arr[2] = (0, 1)
 
-var visited: [Bool] = Array(repeating: false, count: friends+1)
-
-
-
-func bfs(_ v: Int) -> Int {
-    visited[v] = true
-    var quque: [Int] = [v]
-    var result: [Int] = Array(repeating: 0, count: friends+1)
-    
-    while !quque.isEmpty {
-        let popData: Int = quque.removeFirst()
-        for i in graph[popData] {
-            if visited[i] == false {
-                visited[i] = true
-                quque.append(i)
-                result[i] = result[popData] + 1
-                
-            }
-        }
-    }
-    
-    return result.reduce(0, +)
-}
-
-var checkNum: Int = Int.max
-var resultIndex: Int = 0
-for i in 1...friends {
-    visited = Array(repeating: false, count: friends+1)
-    let k: Int = bfs(i)
-    if checkNum > k {
-        checkNum = k
-        resultIndex = i
-        
+if target>=3 {
+    for i in 3...target {
+        arr[i] = (arr[i-1].0 + arr[i-2].0, arr[i-1].1 + arr[i-2].1)
     }
 }
 
-print(resultIndex)
+let a: Int = arr[target].0
+let b: Int = arr[target].1
 
+var x: Int = 1
+var y: Int = 1
+
+while true {
+    if (dduck - (a*x)) % b == 0 {
+        y = (dduck - (a*x)) / b
+        break
+    } else {
+        x += 1
+    }
+}
+print(x)
+print(y)
