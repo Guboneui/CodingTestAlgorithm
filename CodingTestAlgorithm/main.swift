@@ -11674,21 +11674,44 @@ import Foundation
 
 // MARK: - 백준 1629번 곱셈
 
-let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let a: Int = input[0]
-let b: Int = input[1]
-let c: Int = input[2]
+//let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let a: Int = input[0]
+//let b: Int = input[1]
+//let c: Int = input[2]
+//
+//func solution(_ n: Int) -> Int {
+//    if n == 0 { return 1 }
+//
+//    if n%2 == 0 {
+//        let num: Int = solution(n/2)
+//        return num%c * num%c
+//    } else {
+//        let num = solution((n-1)/2)
+//        return num%c * num%c * a%c
+//    }
+//}
+//
+//print(solution(b))
 
-func solution(_ n: Int) -> Int {
-    if n == 0 { return 1 }
-    
-    if n%2 == 0 {
-        let num: Int = solution(n/2)
-        return num%c * num%c
-    } else {
-        let num = solution((n-1)/2)
-        return num%c * num%c * a%c
+
+// MARK: - 백준 11051번 이항 계수 2
+let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let n: Int = input[0]
+let k: Int = input[1]
+var graph: [[Int]] = Array(repeating: Array(repeating: 0, count: n+1), count: n+1)
+graph[1][0] = 1
+graph[1][1] = 1
+
+if n>1 {
+    for i in 2...n {
+        for j in 0...i {
+            if j == 0 || j == i {
+                graph[i][j] = 1
+            } else {
+                graph[i][j] = (graph[i-1][j-1] + graph[i-1][j]) % 10007
+            }
+        }
     }
 }
 
-print(solution(b))
+print(graph[n][k] % 10007)
