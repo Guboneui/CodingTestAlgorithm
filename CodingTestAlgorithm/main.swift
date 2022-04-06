@@ -11623,51 +11623,72 @@ import Foundation
 
 
 // MARK: - 백준 12101번 1, 2, 3 더하기 2
+//let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let target: Int = input[0]
+//let resultNum: Int = input[1]
+//var result: [[String]] = []
+//
+//var temp: [Int] = []
+//var sum: Int = 0
+//
+//func solution() {
+//
+//    if sum > target {
+//        return
+//    }
+//
+//    if sum == target {
+//        result.append(temp.map{String($0)})
+//        return
+//    }
+//
+//    for i in 1...3 {
+//        temp.append(i)
+//        sum += i
+//        solution()
+//        sum -= i
+//        temp.removeLast()
+//
+//    }
+//}
+//
+//solution()
+//
+//
+//if resultNum > result.count {
+//    print(-1)
+//} else {
+//    let k: [String] = result[resultNum-1]
+//    var resultString: String = ""
+//    for i in 0..<k.count {
+//        if i == k.count-1 {
+//            resultString += k[i]
+//        } else {
+//            resultString += k[i]
+//            resultString += "+"
+//        }
+//
+//    }
+//    print(resultString)
+//}
+
+// MARK: - 백준 1629번 곱셈
+
 let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let target: Int = input[0]
-let resultNum: Int = input[1]
-var result: [[String]] = []
+let a: Int = input[0]
+let b: Int = input[1]
+let c: Int = input[2]
 
-var temp: [Int] = []
-var sum: Int = 0
-
-func solution() {
+func solution(_ n: Int) -> Int {
+    if n == 0 { return 1 }
     
-    if sum > target {
-        return
-    }
-    
-    if sum == target {
-        result.append(temp.map{String($0)})
-        return
-    }
-    
-    for i in 1...3 {
-        temp.append(i)
-        sum += i
-        solution()
-        sum -= i
-        temp.removeLast()
-        
+    if n%2 == 0 {
+        let num: Int = solution(n/2)
+        return num%c * num%c
+    } else {
+        let num = solution((n-1)/2)
+        return num%c * num%c * a%c
     }
 }
 
-solution()
-
-
-if resultNum > result.count {
-    print(-1)
-} else {
-    let k: [String] = result[resultNum-1]
-    var resultString: String = ""
-    for i in 0..<k.count {
-        if i == k.count-1 {
-            resultString += k[i]
-        } else {
-            resultString += k[i]
-            resultString += "+"
-        }
-        
-    }
-    print(resultString)
-}
+print(solution(b))
