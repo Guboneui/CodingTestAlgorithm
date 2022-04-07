@@ -11767,33 +11767,50 @@ import Foundation
 //print(resultIndex)
 
 // MARK: - 백준 2502번 떡 먹는 호랑이
-let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let target: Int = input[0]
-var dduck: Int = input[1]
+//let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let target: Int = input[0]
+//var dduck: Int = input[1]
+//
+//var arr: [(Int, Int)] = Array(repeating: (0, 0), count: target+1)
+//arr[1] = (1, 0)
+//arr[2] = (0, 1)
+//
+//if target>=3 {
+//    for i in 3...target {
+//        arr[i] = (arr[i-1].0 + arr[i-2].0, arr[i-1].1 + arr[i-2].1)
+//    }
+//}
+//
+//let a: Int = arr[target].0
+//let b: Int = arr[target].1
+//
+//var x: Int = 1
+//var y: Int = 1
+//
+//while true {
+//    if (dduck - (a*x)) % b == 0 {
+//        y = (dduck - (a*x)) / b
+//        break
+//    } else {
+//        x += 1
+//    }
+//}
+//print(x)
+//print(y)
 
-var arr: [(Int, Int)] = Array(repeating: (0, 0), count: target+1)
-arr[1] = (1, 0)
-arr[2] = (0, 1)
+// MARK: - 백준 2410번 2의 멱수의 합
+let target: Int = Int(readLine()!)!
+var dp: [Int] = Array(repeating: 0, count: target+1)
+dp[1] = 1
+dp[2] = 2
 
-if target>=3 {
-    for i in 3...target {
-        arr[i] = (arr[i-1].0 + arr[i-2].0, arr[i-1].1 + arr[i-2].1)
-    }
-}
-
-let a: Int = arr[target].0
-let b: Int = arr[target].1
-
-var x: Int = 1
-var y: Int = 1
-
-while true {
-    if (dduck - (a*x)) % b == 0 {
-        y = (dduck - (a*x)) / b
-        break
+for i in 3...target {
+    if i%2 == 0 {
+        dp[i] = (dp[i-1]+dp[i/2]) % 1000000000
+        
     } else {
-        x += 1
+        dp[i] = dp[i-1]
     }
 }
-print(x)
-print(y)
+print(dp)
+print(dp[target])
