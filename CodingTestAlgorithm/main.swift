@@ -11823,42 +11823,81 @@ import Foundation
 
 // MARK: - 백준 1342번 행운의 문자열
 let input: [String] = readLine()!.map{String($0)}
-var visited: [Bool] = Array(repeating: false, count: input.count)
-var result: [String] = []
-var checkDict: [[String] : Int] = [:]
-var count: Int = 0
-func solution(_ depth: Int) {
-    if depth == input.count {
-        if checkDict[result] == nil {
-            checkDict[result] = 1
-            var check: Bool = true
-            for i in 1..<result.count-1 {
-                if result[i-1] == result[i] || result[i] == result[i+1] {
-                    check = false
-                    break
-                }
-            }
-            
-            if check == true {
-                count += 1
-            }
-            
-        }
-        
-        
-        return
-    }
-    
-    for i in 0..<input.count {
-        if visited[i] == false {
-            visited[i] = true
-            result.append(input[i])
-            solution(depth + 1)
-            result.removeLast()
-            visited[i] = false
-        }
+var dict: [String:Int] = [:]
+for text in input {
+    if dict[text] == nil {
+        dict[text] = 1
+    } else {
+        dict[text]! += 1
     }
 }
 
-solution(0)
+var result: [String] = []
+
+var checkDict: [[String]:Int] = [:]
+var count: Int = 0
+func solution() {
+    if result.count == input.count {
+        if checkDict[result] == nil {
+            checkDict[result] = 1
+            count += 1
+        }
+        return
+    }
+    
+
+    
+    for (key, _) in dict where dict[key]! > 0 && (result.last ?? "") != key {
+        dict[key]! -= 1
+        result.append(key)
+        solution()
+        result.removeLast()
+        dict[key]! += 1
+
+    }
+}
+
+solution()
 print(count)
+
+
+//var visited: [Bool] = Array(repeating: false, count: input.count)
+
+//var result: [String] = []
+//var checkDict: [[String] : Int] = [:]
+//var count: Int = 0
+//func solution(_ depth: Int) {
+//    if depth == input.count {
+//        if checkDict[result] == nil {
+//            checkDict[result] = 1
+//            var check: Bool = true
+//            for i in 0..<result.count-1 {
+//                if result[i] == result[i+1] {
+//                    check = false
+//                    break
+//                }
+//            }
+//
+//            if check == true {
+//                count += 1
+//            }
+//
+//        }
+//
+//
+//        return
+//    }
+//
+//    for i in 0..<input.count {
+//        if visited[i] == false {
+//            visited[i] = true
+//            result.append(input[i])
+//            solution(depth + 1)
+//            result.removeLast()
+//            visited[i] = false
+//        }
+//    }
+//}
+//
+//solution(0)
+//print(count)
