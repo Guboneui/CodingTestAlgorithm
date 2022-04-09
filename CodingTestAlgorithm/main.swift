@@ -11800,23 +11800,65 @@ import Foundation
 
 // MARK: - 백준 16198번 에너지 모으기
 
-let n: Int = Int(readLine()!)!
-let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-var maxResult: Int = 0
+//let n: Int = Int(readLine()!)!
+//let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//var maxResult: Int = 0
+//
+//func solution(_ inputArr: [Int], _ sum: Int) {
+//    if inputArr.count == 2 {
+//        maxResult = max(maxResult, sum)
+//        return
+//    }
+//
+//    for i in 1..<inputArr.count-1 {
+//        var tempArr: [Int] = inputArr
+//        tempArr.remove(at: i)
+//        solution(tempArr, sum + inputArr[i-1] * inputArr[i+1])
+//    }
+//}
+//
+//solution(arr, 0)
+//print(maxResult)
 
-func solution(_ inputArr: [Int], _ sum: Int) {
-    if inputArr.count == 2 {
-        maxResult = max(maxResult, sum)
+
+// MARK: - 백준 1342번 행운의 문자열
+let input: [String] = readLine()!.map{String($0)}
+var visited: [Bool] = Array(repeating: false, count: input.count)
+var result: [String] = []
+var checkDict: [[String] : Int] = [:]
+var count: Int = 0
+func solution(_ depth: Int) {
+    if depth == input.count {
+        if checkDict[result] == nil {
+            checkDict[result] = 1
+            var check: Bool = true
+            for i in 1..<result.count-1 {
+                if result[i-1] == result[i] || result[i] == result[i+1] {
+                    check = false
+                    break
+                }
+            }
+            
+            if check == true {
+                count += 1
+            }
+            
+        }
+        
+        
         return
     }
     
-    for i in 1..<inputArr.count-1 {
-        var tempArr: [Int] = inputArr
-        tempArr.remove(at: i)
-        solution(tempArr, sum + inputArr[i-1] * inputArr[i+1])
+    for i in 0..<input.count {
+        if visited[i] == false {
+            visited[i] = true
+            result.append(input[i])
+            solution(depth + 1)
+            result.removeLast()
+            visited[i] = false
+        }
     }
 }
 
-solution(arr, 0)
-print(maxResult)
-
+solution(0)
+print(count)
