@@ -11798,19 +11798,25 @@ import Foundation
 //print(x)
 //print(y)
 
-// MARK: - 백준 2410번 2의 멱수의 합
-let target: Int = Int(readLine()!)!
-var dp: [Int] = Array(repeating: 0, count: target+1)
-dp[1] = 1
-dp[2] = 2
+// MARK: - 백준 16198번 에너지 모으기
 
-for i in 3...target {
-    if i%2 == 0 {
-        dp[i] = (dp[i-1]+dp[i/2]) % 1000000000
-        
-    } else {
-        dp[i] = dp[i-1]
+let n: Int = Int(readLine()!)!
+let arr: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+var maxResult: Int = 0
+
+func solution(_ inputArr: [Int], _ sum: Int) {
+    if inputArr.count == 2 {
+        maxResult = max(maxResult, sum)
+        return
+    }
+    
+    for i in 1..<inputArr.count-1 {
+        var tempArr: [Int] = inputArr
+        tempArr.remove(at: i)
+        solution(tempArr, sum + inputArr[i-1] * inputArr[i+1])
     }
 }
-print(dp)
-print(dp[target])
+
+solution(arr, 0)
+print(maxResult)
+
