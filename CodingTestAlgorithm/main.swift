@@ -11832,72 +11832,25 @@ for text in input {
     }
 }
 
+var sortDict = dict.sorted(by: {$0.key < $1.key})
 var result: [String] = []
-
-var checkDict: [[String]:Int] = [:]
 var count: Int = 0
-func solution() {
-    if result.count == input.count {
-        if checkDict[result] == nil {
-            checkDict[result] = 1
-            count += 1
-        }
+
+func solution(_ lastText: String, _ depth: Int) {
+    if depth == input.count {
+        count += 1
         return
     }
     
-
-    
-    for (key, _) in dict where dict[key]! > 0 && (result.last ?? "") != key {
-        dict[key]! -= 1
-        result.append(key)
-        solution()
-        result.removeLast()
-        dict[key]! += 1
-
+    for dictValue in 0..<sortDict.count {
+        if sortDict[dictValue].value < 1 || lastText == sortDict[dictValue].key { continue }
+        sortDict[dictValue].value -= 1
+        solution(sortDict[dictValue].key, depth+1)
+        sortDict[dictValue].value += 1
     }
 }
 
-solution()
+solution("", 0)
 print(count)
 
 
-//var visited: [Bool] = Array(repeating: false, count: input.count)
-
-//var result: [String] = []
-//var checkDict: [[String] : Int] = [:]
-//var count: Int = 0
-//func solution(_ depth: Int) {
-//    if depth == input.count {
-//        if checkDict[result] == nil {
-//            checkDict[result] = 1
-//            var check: Bool = true
-//            for i in 0..<result.count-1 {
-//                if result[i] == result[i+1] {
-//                    check = false
-//                    break
-//                }
-//            }
-//
-//            if check == true {
-//                count += 1
-//            }
-//
-//        }
-//
-//
-//        return
-//    }
-//
-//    for i in 0..<input.count {
-//        if visited[i] == false {
-//            visited[i] = true
-//            result.append(input[i])
-//            solution(depth + 1)
-//            result.removeLast()
-//            visited[i] = false
-//        }
-//    }
-//}
-//
-//solution(0)
-//print(count)
