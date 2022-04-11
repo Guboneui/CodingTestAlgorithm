@@ -11854,57 +11854,97 @@ import Foundation
 //print(count)
 
 // MARK: - 백준 1926번 그림
-let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let n: Int = input[0]
-let m: Int = input[1]
-var graph: [[Int]] = []
-for _ in 0..<n {
-    graph.append(readLine()!.split(separator: " ").map{Int($0)!})
-}
+//let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = input[0]
+//let m: Int = input[1]
+//var graph: [[Int]] = []
+//for _ in 0..<n {
+//    graph.append(readLine()!.split(separator: " ").map{Int($0)!})
+//}
+//
+//let dx: [Int] = [1, -1, 0, 0]
+//let dy: [Int] = [0, 0, 1, -1]
+//var result: [Int] = []
+//var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: m), count: n)
+//
+//func bfs(_ x: Int, _ y: Int) -> Int {
+//    var queue: [(Int, Int)] = [(x, y)]
+//    var count: Int = 0
+//
+//    while !queue.isEmpty {
+//        let popValue: (Int, Int) = queue.removeFirst()
+//        graph[popValue.0][popValue.1] = 0
+//        count += 1
+//        for i in 0..<dx.count {
+//            let nx: Int = popValue.0 + dx[i]
+//            let ny: Int = popValue.1 + dy[i]
+//
+//            if nx>=0 && nx<n && ny>=0 && ny<m && graph[nx][ny] == 1 && visited[nx][ny] == false {
+//                visited[nx][ny] = true
+//                queue.append((nx, ny))
+//
+//            }
+//        }
+//    }
+//    return count
+//}
+//
+//for i in 0..<n {
+//    for j in 0..<m {
+//        if graph[i][j] == 0 { continue }
+//        result.append((bfs(i, j)))
+//
+//    }
+//}
+//
+//print(result.count)
+//if result.count == 0 {
+//    print(0)
+//} else {
+//    print(result.max()!)
+//}
+//
 
+// MARK: - 프로그래머스 level2 기능개발
 
-let dx: [Int] = [1, -1, 0, 0]
-let dy: [Int] = [0, 0, 1, -1]
-var result: [Int] = []
-var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: m), count: n)
-
-func bfs(_ x: Int, _ y: Int) -> Int {
-    var queue: [(Int, Int)] = [(x, y)]
-    var count: Int = 0
+func solution(_ progresses:[Int], _ speeds:[Int]) -> [Int] {
+    var result: [Int] = []
+    var n: Int = 0
     
-    while !queue.isEmpty {
-        let popValue: (Int, Int) = queue.removeFirst()
-        graph[popValue.0][popValue.1] = 0
-        count += 1
-        for i in 0..<dx.count {
-            let nx: Int = popValue.0 + dx[i]
-            let ny: Int = popValue.1 + dy[i]
-            
-            if nx>=0 && nx<n && ny>=0 && ny<m && graph[nx][ny] == 1 && visited[nx][ny] == false {
-                visited[nx][ny] = true
-                queue.append((nx, ny))
-                
+    var progressesArr: [Int] = progresses
+    var speedsArr: [Int] = speeds
+    
+    while !progressesArr.isEmpty {
+        
+        if (100 - progressesArr[0]) % speedsArr[0] == 0 {
+            n = (100 - progressesArr[0]) / speedsArr[0]
+        } else {
+            n = (100 - progressesArr[0]) / speedsArr[0] + 1
+        }
+        
+        for i in 0..<progressesArr.count {
+            progressesArr[i] += speedsArr[i] * n
+        }
+        
+        var count: Int = 0
+        
+        for i in 0..<progressesArr.count {
+            if progressesArr[i] >= 100 { count += 1 }
+            else {
+                break
             }
         }
         
+        result.append(count)
+        
+        progressesArr = Array(progressesArr[count..<progressesArr.count])
+        speedsArr = Array(speedsArr[count..<speedsArr.count])
+        
         
     }
     
-    return count
+    return result
 }
 
 
-for i in 0..<n {
-    for j in 0..<m {
-        if graph[i][j] == 0 { continue }
-        result.append((bfs(i, j)))
-        
-    }
-}
-print(result.count)
-if result.count == 0 {
-    print(0)
-} else {
-    print(result.max()!)
-}
-
+print(solution([99, 99, 99], [1, 1, 1]))
