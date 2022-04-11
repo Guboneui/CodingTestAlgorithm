@@ -11907,44 +11907,57 @@ import Foundation
 
 // MARK: - 프로그래머스 level2 기능개발
 
-func solution(_ progresses:[Int], _ speeds:[Int]) -> [Int] {
-    var result: [Int] = []
-    var n: Int = 0
+//func solution(_ progresses:[Int], _ speeds:[Int]) -> [Int] {
+//    var result: [Int] = []
+//    var n: Int = 0
+//
+//    var progressesArr: [Int] = progresses
+//    var speedsArr: [Int] = speeds
+//
+//    while !progressesArr.isEmpty {
+//
+//        if (100 - progressesArr[0]) % speedsArr[0] == 0 {
+//            n = (100 - progressesArr[0]) / speedsArr[0]
+//        } else {
+//            n = (100 - progressesArr[0]) / speedsArr[0] + 1
+//        }
+//
+//        for i in 0..<progressesArr.count {
+//            progressesArr[i] += speedsArr[i] * n
+//        }
+//
+//        var count: Int = 0
+//
+//        for i in 0..<progressesArr.count {
+//            if progressesArr[i] >= 100 { count += 1 }
+//            else {
+//                break
+//            }
+//        }
+//
+//        result.append(count)
+//
+//        progressesArr = Array(progressesArr[count..<progressesArr.count])
+//        speedsArr = Array(speedsArr[count..<speedsArr.count])
+//
+//    }
+//
+//    return result
+//}
+
+// MARK: - 프로그래머스 level1 실패율
+
+func solution(_ N:Int, _ stages:[Int]) -> [Int] {
+    var dict: [Int:Float] = [:]
+    var person: Int = stages.count
     
-    var progressesArr: [Int] = progresses
-    var speedsArr: [Int] = speeds
-    
-    while !progressesArr.isEmpty {
-        
-        if (100 - progressesArr[0]) % speedsArr[0] == 0 {
-            n = (100 - progressesArr[0]) / speedsArr[0]
-        } else {
-            n = (100 - progressesArr[0]) / speedsArr[0] + 1
-        }
-        
-        for i in 0..<progressesArr.count {
-            progressesArr[i] += speedsArr[i] * n
-        }
-        
-        var count: Int = 0
-        
-        for i in 0..<progressesArr.count {
-            if progressesArr[i] >= 100 { count += 1 }
-            else {
-                break
-            }
-        }
-        
-        result.append(count)
-        
-        progressesArr = Array(progressesArr[count..<progressesArr.count])
-        speedsArr = Array(speedsArr[count..<speedsArr.count])
-        
-        
+    for i in 1...N {
+        let a: Int = stages.filter{$0 == i}.count
+        dict[i] = Float(a) / Float(person)
+        person -= a
     }
     
-    return result
+    let result = dict.sorted(by: <).sorted(by: {$0.value>$1.value})
+    
+    return result.map{$0.key}
 }
-
-
-print(solution([99, 99, 99], [1, 1, 1]))
