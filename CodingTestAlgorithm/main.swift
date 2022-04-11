@@ -11822,35 +11822,89 @@ import Foundation
 
 
 // MARK: - 백준 1342번 행운의 문자열
-let input: [String] = readLine()!.map{String($0)}
-var dict: [String:Int] = [:]
-for text in input {
-    if dict[text] == nil {
-        dict[text] = 1
-    } else {
-        dict[text]! += 1
-    }
+//let input: [String] = readLine()!.map{String($0)}
+//var dict: [String:Int] = [:]
+//for text in input {
+//    if dict[text] == nil {
+//        dict[text] = 1
+//    } else {
+//        dict[text]! += 1
+//    }
+//}
+//
+//var sortDict = dict.sorted(by: {$0.key < $1.key})
+//var result: [String] = []
+//var count: Int = 0
+//
+//func solution(_ lastText: String, _ depth: Int) {
+//    if depth == input.count {
+//        count += 1
+//        return
+//    }
+//
+//    for dictValue in 0..<sortDict.count {
+//        if sortDict[dictValue].value < 1 || lastText == sortDict[dictValue].key { continue }
+//        sortDict[dictValue].value -= 1
+//        solution(sortDict[dictValue].key, depth+1)
+//        sortDict[dictValue].value += 1
+//    }
+//}
+//
+//solution("", 0)
+//print(count)
+
+// MARK: - 백준 1926번 그림
+let input: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let n: Int = input[0]
+let m: Int = input[1]
+var graph: [[Int]] = []
+for _ in 0..<n {
+    graph.append(readLine()!.split(separator: " ").map{Int($0)!})
 }
 
-var sortDict = dict.sorted(by: {$0.key < $1.key})
-var result: [String] = []
-var count: Int = 0
 
-func solution(_ lastText: String, _ depth: Int) {
-    if depth == input.count {
+let dx: [Int] = [1, -1, 0, 0]
+let dy: [Int] = [0, 0, 1, -1]
+var result: [Int] = []
+var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: m), count: n)
+
+func bfs(_ x: Int, _ y: Int) -> Int {
+    var queue: [(Int, Int)] = [(x, y)]
+    var count: Int = 0
+    
+    while !queue.isEmpty {
+        let popValue: (Int, Int) = queue.removeFirst()
+        graph[popValue.0][popValue.1] = 0
         count += 1
-        return
+        for i in 0..<dx.count {
+            let nx: Int = popValue.0 + dx[i]
+            let ny: Int = popValue.1 + dy[i]
+            
+            if nx>=0 && nx<n && ny>=0 && ny<m && graph[nx][ny] == 1 && visited[nx][ny] == false {
+                visited[nx][ny] = true
+                queue.append((nx, ny))
+                
+            }
+        }
+        
+        
     }
     
-    for dictValue in 0..<sortDict.count {
-        if sortDict[dictValue].value < 1 || lastText == sortDict[dictValue].key { continue }
-        sortDict[dictValue].value -= 1
-        solution(sortDict[dictValue].key, depth+1)
-        sortDict[dictValue].value += 1
-    }
+    return count
 }
 
-solution("", 0)
-print(count)
 
+for i in 0..<n {
+    for j in 0..<m {
+        if graph[i][j] == 0 { continue }
+        result.append((bfs(i, j)))
+        
+    }
+}
+print(result.count)
+if result.count == 0 {
+    print(0)
+} else {
+    print(result.max()!)
+}
 
