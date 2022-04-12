@@ -11947,17 +11947,54 @@ import Foundation
 
 // MARK: - 프로그래머스 level1 실패율
 
-func solution(_ N:Int, _ stages:[Int]) -> [Int] {
-    var dict: [Int:Float] = [:]
-    var person: Int = stages.count
+//func solution(_ N:Int, _ stages:[Int]) -> [Int] {
+//    var dict: [Int:Float] = [:]
+//    var person: Int = stages.count
+//
+//    for i in 1...N {
+//        let a: Int = stages.filter{$0 == i}.count
+//        dict[i] = Float(a) / Float(person)
+//        person -= a
+//    }
+//
+//    let result = dict.sorted(by: <).sorted(by: {$0.value>$1.value})
+//
+//    return result.map{$0.key}
+//}
+
+// MARK: - 프로그래머스 level1 크레인 인형뽑기 게임
+
+func solution(_ board:[[Int]], _ moves:[Int]) -> Int {
     
-    for i in 1...N {
-        let a: Int = stages.filter{$0 == i}.count
-        dict[i] = Float(a) / Float(person)
-        person -= a
+    var newBoard: [[Int]] = Array(repeating: [Int](), count: board.count)
+    var movesIndex: [Int] = moves.map{$0 - 1}   // 배열 계산 편하게 하기 위해서
+    var result: Int = 0
+    var stack: [Int] = []
+    
+    for i in 0..<board.count {
+        for j in 0..<board.count {
+            if board[j][i] == 0 { continue }
+            newBoard[i].insert(board[j][i], at: 0)
+        }
     }
     
-    let result = dict.sorted(by: <).sorted(by: {$0.value>$1.value})
+    print(newBoard)
     
-    return result.map{$0.key}
+    for i in movesIndex {
+        if newBoard[i].isEmpty { continue }
+        stack.append(newBoard[i].removeLast())
+        
+        if stack.count > 1 {
+            if stack[stack.count-1] == stack[stack.count-2] {
+                stack.removeLast()
+                stack.removeLast()
+                result += 2
+            }
+        }
+        
+    }
+
+    return result
 }
+
+print(solution([[0,0,0,0,0],[0,0,1,0,3],[0,2,5,0,1],[4,2,4,4,2],[3,5,1,3,1]], [1,5,3,5,1,2,1,4]))
