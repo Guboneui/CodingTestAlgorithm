@@ -11964,37 +11964,87 @@ import Foundation
 
 // MARK: - 프로그래머스 level1 크레인 인형뽑기 게임
 
-func solution(_ board:[[Int]], _ moves:[Int]) -> Int {
+//func solution(_ board:[[Int]], _ moves:[Int]) -> Int {
+//
+//    var newBoard: [[Int]] = Array(repeating: [Int](), count: board.count)
+//    var movesIndex: [Int] = moves.map{$0 - 1}   // 배열 계산 편하게 하기 위해서
+//    var result: Int = 0
+//    var stack: [Int] = []
+//
+//    for i in 0..<board.count {
+//        for j in 0..<board.count {
+//            if board[j][i] == 0 { continue }
+//            newBoard[i].insert(board[j][i], at: 0)
+//        }
+//    }
+//
+//    print(newBoard)
+//
+//    for i in movesIndex {
+//        if newBoard[i].isEmpty { continue }
+//        stack.append(newBoard[i].removeLast())
+//
+//        if stack.count > 1 {
+//            if stack[stack.count-1] == stack[stack.count-2] {
+//                stack.removeLast()
+//                stack.removeLast()
+//                result += 2
+//            }
+//        }
+//
+//    }
+//
+//    return result
+//}
+//
+//print(solution([[0,0,0,0,0],[0,0,1,0,3],[0,2,5,0,1],[4,2,4,4,2],[3,5,1,3,1]], [1,5,3,5,1,2,1,4]))
+
+
+// MARK: - 프로그래머스 level1 신고 결과 받기
+
+func solution(_ id_list:[String], _ report:[String], _ k:Int) -> [Int] {
     
-    var newBoard: [[Int]] = Array(repeating: [Int](), count: board.count)
-    var movesIndex: [Int] = moves.map{$0 - 1}   // 배열 계산 편하게 하기 위해서
-    var result: Int = 0
-    var stack: [Int] = []
-    
-    for i in 0..<board.count {
-        for j in 0..<board.count {
-            if board[j][i] == 0 { continue }
-            newBoard[i].insert(board[j][i], at: 0)
+    var result: [Int] = []
+    var reportDict: [String:Set<String>] = [:]
+    for i in 0..<report.count {
+        let temp: [String] = report[i].split(separator: " ").map{String($0)}
+        if reportDict[temp[0]] == nil {
+            reportDict[temp[0]] = [temp[1]]
+        } else {
+            reportDict[temp[0]]!.insert(temp[1])
         }
     }
     
-    print(newBoard)
+    var countDict: [String:Int] = [:]
+    for i in id_list {
+        if countDict[i] == nil {
+            countDict[i] = 0
+        }
+    }
     
-    for i in movesIndex {
-        if newBoard[i].isEmpty { continue }
-        stack.append(newBoard[i].removeLast())
+    
+    for (_, value) in reportDict {
+        value.forEach({
+            countDict[$0]! += 1
+        })
+    }
+    
+    
+    countDict = countDict.filter{ $0.value >= k }
+    
+    for id in id_list {
+        var count: Int = 0
+        let setArr = reportDict[id] ?? []
         
-        if stack.count > 1 {
-            if stack[stack.count-1] == stack[stack.count-2] {
-                stack.removeLast()
-                stack.removeLast()
-                result += 2
+        for i in countDict {
+            if setArr.contains(i.key) {
+                count += 1
             }
         }
         
+        result.append(count)
     }
-
     return result
 }
 
-print(solution([[0,0,0,0,0],[0,0,1,0,3],[0,2,5,0,1],[4,2,4,4,2],[3,5,1,3,1]], [1,5,3,5,1,2,1,4]))
+print(solution(["muzi", "frodo", "apeach", "neo"], ["muzi frodo","apeach frodo","frodo neo","muzi neo","apeach muzi"], 2))
