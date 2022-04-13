@@ -12002,49 +12002,64 @@ import Foundation
 
 // MARK: - 프로그래머스 level1 신고 결과 받기
 
-func solution(_ id_list:[String], _ report:[String], _ k:Int) -> [Int] {
-    
-    var result: [Int] = []
-    var reportDict: [String:Set<String>] = [:]
-    for i in 0..<report.count {
-        let temp: [String] = report[i].split(separator: " ").map{String($0)}
-        if reportDict[temp[0]] == nil {
-            reportDict[temp[0]] = [temp[1]]
-        } else {
-            reportDict[temp[0]]!.insert(temp[1])
-        }
+//func solution(_ id_list:[String], _ report:[String], _ k:Int) -> [Int] {
+//
+//    var result: [Int] = []
+//    var reportDict: [String:Set<String>] = [:]
+//    for i in 0..<report.count {
+//        let temp: [String] = report[i].split(separator: " ").map{String($0)}
+//        if reportDict[temp[0]] == nil {
+//            reportDict[temp[0]] = [temp[1]]
+//        } else {
+//            reportDict[temp[0]]!.insert(temp[1])
+//        }
+//    }
+//
+//    var countDict: [String:Int] = [:]
+//    for i in id_list {
+//        if countDict[i] == nil {
+//            countDict[i] = 0
+//        }
+//    }
+//
+//
+//    for (_, value) in reportDict {
+//        value.forEach({
+//            countDict[$0]! += 1
+//        })
+//    }
+//
+//
+//    countDict = countDict.filter{ $0.value >= k }
+//
+//    for id in id_list {
+//        var count: Int = 0
+//        let setArr = reportDict[id] ?? []
+//
+//        for i in countDict {
+//            if setArr.contains(i.key) {
+//                count += 1
+//            }
+//        }
+//
+//        result.append(count)
+//    }
+//    return result
+//}
+//
+//print(solution(["muzi", "frodo", "apeach", "neo"], ["muzi frodo","apeach frodo","frodo neo","muzi neo","apeach muzi"], 2))
+
+// MARK: - 프로그래머스 level2 가장 큰 수 (정렬)
+func solution(_ numbers:[Int]) -> String {
+
+    let newNumbers: [Int] = numbers.sorted {
+        return Int("\($0)\($1)")! > Int("\($1)\($0)")!
     }
     
-    var countDict: [String:Int] = [:]
-    for i in id_list {
-        if countDict[i] == nil {
-            countDict[i] = 0
-        }
-    }
-    
-    
-    for (_, value) in reportDict {
-        value.forEach({
-            countDict[$0]! += 1
-        })
-    }
-    
-    
-    countDict = countDict.filter{ $0.value >= k }
-    
-    for id in id_list {
-        var count: Int = 0
-        let setArr = reportDict[id] ?? []
-        
-        for i in countDict {
-            if setArr.contains(i.key) {
-                count += 1
-            }
-        }
-        
-        result.append(count)
-    }
-    return result
+
+    let result: String = newNumbers.map{String($0)}.reduce("", +)
+    return result.first == "0" ? "0" : result
+   
 }
 
-print(solution(["muzi", "frodo", "apeach", "neo"], ["muzi frodo","apeach frodo","frodo neo","muzi neo","apeach muzi"], 2))
+print(solution([0, 0, 0]))
