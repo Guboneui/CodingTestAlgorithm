@@ -12067,92 +12067,129 @@ import Foundation
 
 // MARK: - 프로그래머스 level2 수식 최대화
 
-func solution(_ expression:String) -> Int64 {
-    
-    let expressionArr: [String] = expression.map{String($0)}
-    var number: [String] = []
-    var operand: [String] = []
-    var temp: String = ""
-    
-    /// 숫자, 기호  나눠서 배열에 저장
-    for i in 0..<expressionArr.count {
-        if expressionArr[i] == "+" || expressionArr[i] == "-" || expressionArr[i] == "*" {
-            operand.append(expressionArr[i])
-            number.append(temp)
-            temp = ""
-        } else {
-            temp += expressionArr[i]
-            if i == expressionArr.count - 1 {
-                number.append(temp)
-            }
-        }
-    }
-    
-    
-    /// 우선순위 선언 가능한 부호 집합 구성
-    let checkOperand: [String] = Array(Set(operand))
-    var operandSet: [[String]] = []
-    
-    /// 존재하는 부호들로 우선순위 구성을 위한 백트래킹 func
-    var tempArr: [String] = []
-    var tempVisited: [Bool] = Array(repeating: false, count: checkOperand.count)
-    func makeOperandSet(_ depth: Int) {
-        if depth == checkOperand.count {
-            operandSet.append(tempArr)
-            return
-        }
-        
-        for i in 0..<checkOperand.count {
-            if tempVisited[i] == false {
-                tempVisited[i] = true
-                tempArr.append(checkOperand[i])
-                makeOperandSet(depth + 1)
-                tempArr.removeLast()
-                tempVisited[i] = false
-            }
-        }
-    }
-    
-    makeOperandSet(0)
+//func solution(_ expression:String) -> Int64 {
+//
+//    let expressionArr: [String] = expression.map{String($0)}
+//    var number: [String] = []
+//    var operand: [String] = []
+//    var temp: String = ""
+//
+//    /// 숫자, 기호  나눠서 배열에 저장
+//    for i in 0..<expressionArr.count {
+//        if expressionArr[i] == "+" || expressionArr[i] == "-" || expressionArr[i] == "*" {
+//            operand.append(expressionArr[i])
+//            number.append(temp)
+//            temp = ""
+//        } else {
+//            temp += expressionArr[i]
+//            if i == expressionArr.count - 1 {
+//                number.append(temp)
+//            }
+//        }
+//    }
+//
+//
+//    /// 우선순위 선언 가능한 부호 집합 구성
+//    let checkOperand: [String] = Array(Set(operand))
+//    var operandSet: [[String]] = []
+//
+//    /// 존재하는 부호들로 우선순위 구성을 위한 백트래킹 func
+//    var tempArr: [String] = []
+//    var tempVisited: [Bool] = Array(repeating: false, count: checkOperand.count)
+//    func makeOperandSet(_ depth: Int) {
+//        if depth == checkOperand.count {
+//            operandSet.append(tempArr)
+//            return
+//        }
+//
+//        for i in 0..<checkOperand.count {
+//            if tempVisited[i] == false {
+//                tempVisited[i] = true
+//                tempArr.append(checkOperand[i])
+//                makeOperandSet(depth + 1)
+//                tempArr.removeLast()
+//                tempVisited[i] = false
+//            }
+//        }
+//    }
+//
+//    makeOperandSet(0)
+//
+//
+//    var maxResult: Int64 = 0
+//
+//    for operSet in operandSet {
+//        var copyNumber: [String] = number
+//        var copyOperand: [String] = operand
+//        var index: Int = 0
+//        while !copyOperand.isEmpty {
+//            if copyOperand.contains(operSet[index]) {
+//                let findIndex: Int = copyOperand.firstIndex(of: operSet[index])!
+//                let oper: String = copyOperand[findIndex]
+//                copyOperand.remove(at: findIndex)
+//
+//                if oper == "+" {
+//                    copyNumber[findIndex] = String(Int(copyNumber[findIndex])! + Int(copyNumber[findIndex+1])!)
+//                    copyNumber.remove(at: findIndex + 1)
+//
+//                } else if oper == "*" {
+//                    copyNumber[findIndex] = String(Int(copyNumber[findIndex])! * Int(copyNumber[findIndex+1])!)
+//                    copyNumber.remove(at: findIndex + 1)
+//
+//                } else if oper == "-" {
+//                    copyNumber[findIndex] = String(Int(copyNumber[findIndex])! - Int(copyNumber[findIndex+1])!)
+//                    copyNumber.remove(at: findIndex + 1)
+//
+//                }
+//
+//
+//            } else {
+//                index += 1
+//            }
+//        }
+//
+//        maxResult = max(maxResult, abs(Int64(copyNumber[0])!))
+//
+//    }
+//
+//    return maxResult
+//}
+//
+//print(solution("50*6-3*2"))
 
+// MARK: - 프로그래머스 level2 순위 검색 -> 정확성 + 효율성
+
+func solution(_ info:[String], _ query:[String]) -> [Int] {
+    var infoArr: [(Set<String>, Int)] = []
+    var queryArr: [(Set<String>, Int)] = []
     
-    var maxResult: Int64 = 0
-    
-    for operSet in operandSet {
-        var copyNumber: [String] = number
-        var copyOperand: [String] = operand
-        var index: Int = 0
-        while !copyOperand.isEmpty {
-            if copyOperand.contains(operSet[index]) {
-                let findIndex: Int = copyOperand.firstIndex(of: operSet[index])!
-                let oper: String = copyOperand[findIndex]
-                copyOperand.remove(at: findIndex)
-                
-                if oper == "+" {
-                    copyNumber[findIndex] = String(Int(copyNumber[findIndex])! + Int(copyNumber[findIndex+1])!)
-                    copyNumber.remove(at: findIndex + 1)
-                    
-                } else if oper == "*" {
-                    copyNumber[findIndex] = String(Int(copyNumber[findIndex])! * Int(copyNumber[findIndex+1])!)
-                    copyNumber.remove(at: findIndex + 1)
-                    
-                } else if oper == "-" {
-                    copyNumber[findIndex] = String(Int(copyNumber[findIndex])! - Int(copyNumber[findIndex+1])!)
-                    copyNumber.remove(at: findIndex + 1)
-                    
-                }
-                
-                
-            } else {
-                index += 1
-            }
-        }
-        
-        maxResult = max(maxResult, abs(Int64(copyNumber[0])!))
+    for i in info {
+        let temp: [String] = i.split(separator: " ").map{String($0)}
+        var tempSet: Set<String> = Set(temp[0..<temp.count-1])
+        var tempScore: Int = Int(temp.last!)!
+        infoArr.append((tempSet, tempScore))
         
     }
     
-    return maxResult
+    for q in query {
+        var temp: [String] = q.replacingOccurrences(of: "and ", with: "").replacingOccurrences(of: "- ", with: "").split(separator: " ").map{String($0)}
+        var tempScore: Int = Int(temp.removeLast())!
+        var tempSet: Set<String> = Set(temp)
+        queryArr.append((tempSet, tempScore))
+    }
+    
+    var result: [Int] = []
+
+    for q in queryArr {
+        var count: Int = 0
+        for i in infoArr {
+            if q.0.subtracting(i.0).isEmpty && i.1 >= q.1 { count += 1}
+        }
+        result.append(count)
+    }
+
+    return result
 }
 
-print(solution("50*6-3*2"))
+solution(["java backend junior pizza 150","python frontend senior chicken 210","python frontend senior chicken 150","cpp backend senior pizza 260","java backend junior chicken 80","python backend senior chicken 50"],
+         ["java and backend and junior and pizza 100","python and frontend and senior and chicken 200","cpp and - and senior and pizza 250","- and backend and senior and - 150","- and - and - and chicken 100","- and - and - and - 150"])
