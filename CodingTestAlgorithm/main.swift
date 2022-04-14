@@ -12191,76 +12191,139 @@ import Foundation
 //    return result
 //}
 
-func solution(_ info:[String], _ query:[String]) -> [Int] {
+//func solution(_ info:[String], _ query:[String]) -> [Int] {
+//    var result: [Int] = []
+//    var dict: [String:[Int]] = [:]
+//
+//    for text in info {
+//        let infos = text.components(separatedBy: .whitespaces)
+//        let languages: [String] = [infos[0], "-"]
+//        let jobs: [String] = [infos[1], "-"]
+//        let careers: [String] = [infos[2], "-"]
+//        let soulFoods: [String] = [infos[3], "-"]
+//        let score: Int = Int(infos[4])!
+//
+//        for lang in languages {
+//            for job in jobs {
+//                for career in careers {
+//                    for food in soulFoods {
+//                        let k: String = "\(lang) \(job) \(career) \(food)"
+//                        if dict[k] == nil {
+//                            dict[k] = [score]
+//                        } else {
+//                            dict[k]?.append(score)
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
+//
+//
+//    for i in dict {
+//        let sortedValue = i.value.sorted()
+//        dict[i.key] = sortedValue
+//    }
+//
+//
+//    query.forEach {
+//        let newQuery: [String] = $0.components(separatedBy: .whitespaces)
+//
+//        let lang: String = newQuery[0]
+//        let job: String = newQuery[2]
+//        let career: String = newQuery[4]
+//        let food: String = newQuery[6]
+//        let score: Int = Int(newQuery[7])!
+//
+//        let k: String = "\(lang) \(job) \(career) \(food)"
+//
+//        if let matchScores = dict[k] {
+//            var start = 0
+//            var end = matchScores.count
+//            while start < end {
+//                let mid = (start + end) / 2
+//                if matchScores[mid] >= score {
+//                    end = mid
+//                } else {
+//                    start = mid + 1
+//                }
+//            }
+//
+//            result.append(matchScores.count - start)
+//        } else {
+//            result.append(0)
+//        }
+//
+//    }
+//
+//
+//
+//    return result
+//}
+
+
+// MARK: - 프로그래머스 level2 거리두기 확인하기
+
+func solution(_ places:[[String]]) -> [Int] {
     var result: [Int] = []
-    var dict: [String:[Int]] = [:]
     
-    for text in info {
-        let infos = text.components(separatedBy: .whitespaces)
-        let languages: [String] = [infos[0], "-"]
-        let jobs: [String] = [infos[1], "-"]
-        let careers: [String] = [infos[2], "-"]
-        let soulFoods: [String] = [infos[3], "-"]
-        let score: Int = Int(infos[4])!
+    
+    for place in places {
+        var newPlace: [[String]] = []
+        place.forEach{newPlace.append($0.map{String($0)})}
+        var pPlace: [(Int, Int)] = []
+        var check: Bool = true
+        /// P인 곳의 좌표 확인
+        for i in 0..<place.count {
+            let temp: [String] = place[i].map{String($0)}
+            for j in 0..<temp.count {
+                if temp[j] == "P" { pPlace.append((i, j)) }
+            }
+        }
         
-        for lang in languages {
-            for job in jobs {
-                for career in careers {
-                    for food in soulFoods {
-                        let k: String = "\(lang) \(job) \(career) \(food)"
-                        if dict[k] == nil {
-                            dict[k] = [score]
-                        } else {
-                            dict[k]?.append(score)
+        for i in 0..<pPlace.count {
+            for j in i+1..<pPlace.count {
+                let distance: Int = abs(pPlace[i].0 - pPlace[j].0) + abs(pPlace[i].1 - pPlace[j].1)
+                
+                if distance > 2 {
+                    continue
+                } else if distance == 2 {
+                    if pPlace[i].0 == pPlace[j].0 {
+                        let minIndex: Int = min(pPlace[i].1, pPlace[j].1) + 1
+                        if newPlace[pPlace[i].0][minIndex] == "O" {
+                            check = false
+                            break
+                        }
+                    } else if pPlace[i].1 == pPlace[j].1 {
+                        let minIndex: Int = min(pPlace[i].0, pPlace[j].0) + 1
+                        if newPlace[minIndex][pPlace[i].1] == "O" {
+                            check = false
+                            break
+                        }
+                    } else {
+                        if newPlace[pPlace[i].0][pPlace[j].1] == "O" || newPlace[pPlace[j].0][pPlace[i].1] == "O" {
+                            check = false
+                            break
                         }
                     }
-                }
-            }
-        }
-    }
-        
-    
-    for i in dict {
-        let sortedValue = i.value.sorted()
-        dict[i.key] = sortedValue
-    }
-    
-    
-    query.forEach {
-        let newQuery: [String] = $0.components(separatedBy: .whitespaces)
-        
-        let lang: String = newQuery[0]
-        let job: String = newQuery[2]
-        let career: String = newQuery[4]
-        let food: String = newQuery[6]
-        let score: Int = Int(newQuery[7])!
-        
-        let k: String = "\(lang) \(job) \(career) \(food)"
-        
-        if let matchScores = dict[k] {
-            var start = 0
-            var end = matchScores.count
-            while start < end {
-                let mid = (start + end) / 2
-                if matchScores[mid] >= score {
-                    end = mid
                 } else {
-                    start = mid + 1
+                    check = false
+                    break
                 }
             }
-            
-            result.append(matchScores.count - start)
-        } else {
-            result.append(0)
         }
         
+        
+        if check { result.append(1) }
+        else { result.append(0) }
     }
-    
-    
     
     return result
 }
 
 
-print(solution(["java backend junior pizza 150","python frontend senior chicken 210","python frontend senior chicken 150","cpp backend senior pizza 260","java backend junior chicken 80","python backend senior chicken 50"],
-         ["java and backend and junior and pizza 100","python and frontend and senior and chicken 200","cpp and - and senior and pizza 250","- and backend and senior and - 150","- and - and - and chicken 100","- and - and - and - 150"]))
+print(solution([["POOOP", "OXXOX", "OPXPX", "OOXOX", "POXXP"],
+                ["POOPX", "OXPXP", "PXXXO", "OXXXO", "OOOPP"],
+                ["PXOPX", "OXOXP", "OXPOX", "OXXOP", "PXPOX"],
+                ["OOOXX", "XOOOX", "OOOXX", "OXOOX", "OOOOO"],
+                ["PXPXP", "XPXPX", "PXPXP", "XPXPX", "PXPXP"]]))
