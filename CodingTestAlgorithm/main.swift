@@ -12264,66 +12264,154 @@ import Foundation
 
 // MARK: - 프로그래머스 level2 거리두기 확인하기
 
-func solution(_ places:[[String]]) -> [Int] {
-    var result: [Int] = []
+//func solution(_ places:[[String]]) -> [Int] {
+//    var result: [Int] = []
+//
+//
+//    for place in places {
+//        var newPlace: [[String]] = []
+//        place.forEach{newPlace.append($0.map{String($0)})}
+//        var pPlace: [(Int, Int)] = []
+//        var check: Bool = true
+//        /// P인 곳의 좌표 확인
+//        for i in 0..<place.count {
+//            let temp: [String] = place[i].map{String($0)}
+//            for j in 0..<temp.count {
+//                if temp[j] == "P" { pPlace.append((i, j)) }
+//            }
+//        }
+//
+//        for i in 0..<pPlace.count {
+//            for j in i+1..<pPlace.count {
+//                let distance: Int = abs(pPlace[i].0 - pPlace[j].0) + abs(pPlace[i].1 - pPlace[j].1)
+//
+//                if distance > 2 {
+//                    continue
+//                } else if distance == 2 {
+//                    if pPlace[i].0 == pPlace[j].0 {
+//                        let minIndex: Int = min(pPlace[i].1, pPlace[j].1) + 1
+//                        if newPlace[pPlace[i].0][minIndex] == "O" {
+//                            check = false
+//                            break
+//                        }
+//                    } else if pPlace[i].1 == pPlace[j].1 {
+//                        let minIndex: Int = min(pPlace[i].0, pPlace[j].0) + 1
+//                        if newPlace[minIndex][pPlace[i].1] == "O" {
+//                            check = false
+//                            break
+//                        }
+//                    } else {
+//                        if newPlace[pPlace[i].0][pPlace[j].1] == "O" || newPlace[pPlace[j].0][pPlace[i].1] == "O" {
+//                            check = false
+//                            break
+//                        }
+//                    }
+//                } else {
+//                    check = false
+//                    break
+//                }
+//            }
+//        }
+//
+//
+//        if check { result.append(1) }
+//        else { result.append(0) }
+//    }
+//
+//    return result
+//}
+//
+//
+//print(solution([["POOOP", "OXXOX", "OPXPX", "OOXOX", "POXXP"],
+//                ["POOPX", "OXPXP", "PXXXO", "OXXXO", "OOOPP"],
+//                ["PXOPX", "OXOXP", "OXPOX", "OXXOP", "PXPOX"],
+//                ["OOOXX", "XOOOX", "OOOXX", "OXOOX", "OOOOO"],
+//                ["PXPXP", "XPXPX", "PXPXP", "XPXPX", "PXPXP"]]))
+
+
+// MARK: - 프로그래머스 level3 표 편집
+
+func solution(_ n:Int, _ k:Int, _ cmd:[String]) -> String {
+    
+    /// 이름 확인을 위한 배열
+    let baseArr: [Int] = Array(0..<n)
+    /// 로직 수행을 위한 배열
+    var arr: [Int?] = Array(0..<n)
+    /// 삭제 된 요소 확인을 위한 스택 ( 가장 최근에 삭제된 것을 확인하기 위해 removeLast() 사용
+    var delete: [(Int, Int)] = []
+    /// 현재 선택 중인 위치 확인을 위해서
+    var currentIndex: Int = k
+    
+    var result: String = ""
     
     
-    for place in places {
-        var newPlace: [[String]] = []
-        place.forEach{newPlace.append($0.map{String($0)})}
-        var pPlace: [(Int, Int)] = []
-        var check: Bool = true
-        /// P인 곳의 좌표 확인
-        for i in 0..<place.count {
-            let temp: [String] = place[i].map{String($0)}
-            for j in 0..<temp.count {
-                if temp[j] == "P" { pPlace.append((i, j)) }
-            }
-        }
-        
-        for i in 0..<pPlace.count {
-            for j in i+1..<pPlace.count {
-                let distance: Int = abs(pPlace[i].0 - pPlace[j].0) + abs(pPlace[i].1 - pPlace[j].1)
+    
+    for c in cmd {
+        let cmdText: [String] = c.split(separator: " ").map{String($0)}
+        if cmdText[0] == "U" {
+            var count: Int = 0
+            
+            while count < Int(cmdText[1])! {
+                currentIndex -= 1
+                if currentIndex == 0 { break }
                 
-                if distance > 2 {
+                
+                if arr[currentIndex] == nil {
                     continue
-                } else if distance == 2 {
-                    if pPlace[i].0 == pPlace[j].0 {
-                        let minIndex: Int = min(pPlace[i].1, pPlace[j].1) + 1
-                        if newPlace[pPlace[i].0][minIndex] == "O" {
-                            check = false
-                            break
-                        }
-                    } else if pPlace[i].1 == pPlace[j].1 {
-                        let minIndex: Int = min(pPlace[i].0, pPlace[j].0) + 1
-                        if newPlace[minIndex][pPlace[i].1] == "O" {
-                            check = false
-                            break
-                        }
-                    } else {
-                        if newPlace[pPlace[i].0][pPlace[j].1] == "O" || newPlace[pPlace[j].0][pPlace[i].1] == "O" {
-                            check = false
-                            break
-                        }
-                    }
                 } else {
-                    check = false
-                    break
+                    count += 1
                 }
             }
+            
+            
+        } else if cmdText[0] == "D" {
+            var count: Int = 0
+            while count < Int(cmdText[1])! {
+                currentIndex += 1
+                if currentIndex == arr.count - 1 { break }
+                
+                if arr[currentIndex] == nil {
+                    continue
+                } else {
+                    count += 1
+                }
+            }
+        } else if cmdText[0] == "C" {
+            if currentIndex == arr.count-1 {
+                delete.append((currentIndex, arr[currentIndex]!))
+                arr[currentIndex] = nil
+                currentIndex -= 1
+                while arr[currentIndex] == nil {
+                    currentIndex -= 1
+                    
+                }
+                
+                
+            } else {
+                delete.append((currentIndex, arr[currentIndex]!))
+                arr[currentIndex] = nil
+                currentIndex += 1
+                while arr[currentIndex] == nil {
+                    currentIndex += 1
+                }
+                
+            }
+            
+        } else if cmdText[0] == "Z" {
+            let popValue: (Int, Int) = delete.removeLast()
+            arr[popValue.0] = popValue.1
         }
-        
-        
-        if check { result.append(1) }
-        else { result.append(0) }
     }
+    
+    
+    for i in 0..<arr.count {
+        if arr[i] == nil { result += "X" }
+        else { result += "O" }
+    }
+    
     
     return result
 }
 
 
-print(solution([["POOOP", "OXXOX", "OPXPX", "OOXOX", "POXXP"],
-                ["POOPX", "OXPXP", "PXXXO", "OXXXO", "OOOPP"],
-                ["PXOPX", "OXOXP", "OXPOX", "OXXOP", "PXPOX"],
-                ["OOOXX", "XOOOX", "OOOXX", "OXOOX", "OOOOO"],
-                ["PXPXP", "XPXPX", "PXPXP", "XPXPX", "PXPXP"]]))
+print(solution(8, 2, ["D 2","C","U 3","C","D 4","C","U 2","Z","Z"]))
