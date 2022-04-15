@@ -12331,87 +12331,192 @@ import Foundation
 
 // MARK: - 프로그래머스 level3 표 편집
 
+//func solution(_ n:Int, _ k:Int, _ cmd:[String]) -> String {
+//
+//    /// 이름 확인을 위한 배열
+//    let baseArr: [Int] = Array(0..<n)
+//    /// 로직 수행을 위한 배열
+//    var arr: [Int?] = Array(0..<n)
+//    /// 삭제 된 요소 확인을 위한 스택 ( 가장 최근에 삭제된 것을 확인하기 위해 removeLast() 사용
+//    var delete: [(Int, Int)] = []
+//    /// 현재 선택 중인 위치 확인을 위해서
+//    var currentIndex: Int = k
+//
+//    var result: String = ""
+//
+//
+//
+//    for c in cmd {
+//        let cmdText: [String] = c.split(separator: " ").map{String($0)}
+//        if cmdText[0] == "U" {
+//            var count: Int = 0
+//
+//            while count != Int(cmdText[1])! {
+//                currentIndex -= 1
+//                if currentIndex == 0 { break }
+//
+//                if arr[currentIndex] == nil {
+//                    continue
+//                } else {
+//                    count += 1
+//                }
+//            }
+//
+//
+//        } else if cmdText[0] == "D" {
+//            var count: Int = 0
+//            while count != Int(cmdText[1])! {
+//                currentIndex += 1
+//                if currentIndex == arr.count - 1 { break }
+//
+//                if arr[currentIndex] == nil {
+//                    continue
+//                } else {
+//                    count += 1
+//                }
+//            }
+//        } else if cmdText[0] == "C" {
+//            if currentIndex == arr.count-1 {
+//                delete.append((currentIndex, currentIndex))
+//                arr[currentIndex] = nil
+//                currentIndex -= 1
+//                while arr[currentIndex] == nil {
+//                    if currentIndex == 0 { break }
+//                    currentIndex -= 1
+//
+//                }
+//
+//
+//            } else {
+//                delete.append((currentIndex, currentIndex))
+//                arr[currentIndex] = nil
+//                currentIndex += 1
+//                while arr[currentIndex] == nil {
+//                    if currentIndex == arr.count-1 { break }
+//                    currentIndex += 1
+//                }
+//
+//            }
+//
+//        } else if cmdText[0] == "Z" {
+//            let popValue: (Int, Int) = delete.removeLast()
+//            arr[popValue.0] = popValue.1
+//        }
+//    }
+//
+//
+//    arr.forEach({
+//        if $0 == nil { result += "X" }
+//        else { result += "O" }
+//    })
+//
+//
+//
+//    return result
+//}
+
+
 func solution(_ n:Int, _ k:Int, _ cmd:[String]) -> String {
-    
-    /// 이름 확인을 위한 배열
-    let baseArr: [Int] = Array(0..<n)
-    /// 로직 수행을 위한 배열
-    var arr: [Int?] = Array(0..<n)
-    /// 삭제 된 요소 확인을 위한 스택 ( 가장 최근에 삭제된 것을 확인하기 위해 removeLast() 사용
-    var delete: [(Int, Int)] = []
-    /// 현재 선택 중인 위치 확인을 위해서
+
     var currentIndex: Int = k
-    
+    var linkedList: [(Int, Int?)] = []
+    var delete: [(Int, Int?)] = []
     var result: String = ""
-    
-    
-    
-    for c in cmd {
-        let cmdText: [String] = c.split(separator: " ").map{String($0)}
-        if cmdText[0] == "U" {
-            var count: Int = 0
-            
-            while count < Int(cmdText[1])! {
-                currentIndex -= 1
-                if currentIndex == 0 { break }
-                
-                
-                if arr[currentIndex] == nil {
-                    continue
-                } else {
-                    count += 1
-                }
-            }
-            
-            
-        } else if cmdText[0] == "D" {
-            var count: Int = 0
-            while count < Int(cmdText[1])! {
-                currentIndex += 1
-                if currentIndex == arr.count - 1 { break }
-                
-                if arr[currentIndex] == nil {
-                    continue
-                } else {
-                    count += 1
-                }
-            }
-        } else if cmdText[0] == "C" {
-            if currentIndex == arr.count-1 {
-                delete.append((currentIndex, arr[currentIndex]!))
-                arr[currentIndex] = nil
-                currentIndex -= 1
-                while arr[currentIndex] == nil {
-                    currentIndex -= 1
-                    
-                }
-                
-                
-            } else {
-                delete.append((currentIndex, arr[currentIndex]!))
-                arr[currentIndex] = nil
-                currentIndex += 1
-                while arr[currentIndex] == nil {
-                    currentIndex += 1
-                }
-                
-            }
-            
-        } else if cmdText[0] == "Z" {
-            let popValue: (Int, Int) = delete.removeLast()
-            arr[popValue.0] = popValue.1
+
+    for i in 0..<n {
+        if i == n-1 {
+            linkedList.append((i, nil))
+        } else {
+            linkedList.append((i, i+1))
         }
     }
-    
-    
-    for i in 0..<arr.count {
-        if arr[i] == nil { result += "X" }
-        else { result += "O" }
+
+    for c in cmd {
+        let cmdText: [String] = c.split(separator: " ").map{String($0)}
+
+        if cmdText[0] == "U" {
+            if currentIndex - Int(cmdText[1])! >= 0 {
+                currentIndex -= Int(cmdText[1])!
+                
+            } else {
+                currentIndex = 0
+                
+            }
+        } else if cmdText[0] == "D" {
+            if currentIndex + Int(cmdText[1])! < linkedList.count {
+                currentIndex += Int(cmdText[1])!
+                
+            } else {
+                currentIndex = linkedList.count - 1
+                
+            }
+        } else if cmdText[0] == "C" {   // 삭제 로직
+            if currentIndex == 0 {
+                linkedList.remove(at: currentIndex)
+                
+            } else if currentIndex == linkedList.count-1 {
+                linkedList[currentIndex-1].1 = linkedList[currentIndex].1
+                delete.append(linkedList.remove(at: currentIndex))
+                currentIndex -= 1
+                
+            } else {
+                linkedList[currentIndex-1].1 = linkedList[currentIndex].1
+                delete.append(linkedList.remove(at: currentIndex))
+                
+            }
+
+        } else if cmdText[0] == "Z" {
+            let popValue: (Int, Int?) = delete.removeLast()
+            if popValue.0 >= linkedList.count {
+                linkedList.append(popValue)
+                linkedList[linkedList.count-1].1 = nil
+                linkedList[linkedList.count-2].1 = linkedList[linkedList.count-1].0
+                
+            } else {
+                for i in 0..<linkedList.count {
+                    if linkedList[i].0 > popValue.0 {
+                        
+                        if i == 0 {
+                            linkedList.insert(popValue, at: 0)
+                            linkedList[0].1 = linkedList[1].0
+                            
+                            if currentIndex >= i {
+                                currentIndex += 1
+                            }
+                            break
+                        } else {
+                            linkedList.insert(popValue, at: i)
+                            linkedList[i-1].1 = linkedList[i].0
+                            linkedList[i].1 = linkedList[i+1].0
+                            
+                            if currentIndex >= i {
+                                currentIndex += 1
+                            }
+                            break
+                        }
+                    }
+                }
+                
+            }
+        }
     }
+
     
     
+    var checkIndex: Int = 0
+    for i in 0..<n {
+        if i == linkedList[checkIndex].0 {
+            result += "O"
+            checkIndex += 1
+        } else {
+            result += "X"
+        }
+    }
+
     return result
 }
 
 
-print(solution(8, 2, ["D 2","C","U 3","C","D 4","C","U 2","Z","Z"]))
+
+print(solution(8, 2, ["D 2","C","U 3","C","D 4","C","U 2","Z","Z","U 1","C"]))
+
