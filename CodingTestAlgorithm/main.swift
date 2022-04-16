@@ -12420,15 +12420,13 @@ import Foundation
 
 func solution(_ n:Int, _ k:Int, _ cmd:[String]) -> String {
 
-    var linkedList: [(Int, Int, Int)] = []
+    var linkedList: [(Int, Int, Int, Bool)] = []
     var currentIndex: Int = k
-    var deletedList: [(Int, Int, Int)] = []
-    var resultArr1: [String] = Array(repeating: "O", count: n)
-    var resultArr2: [String] = Array(repeating: "X", count: n)
+    var deletedList: [Int] = []
     var result: String = ""
     
     for i in 0..<n {
-        linkedList.append((i-1, i, i+1))
+        linkedList.append((i-1, i, i+1, false))
     }
     
     
@@ -12437,68 +12435,62 @@ func solution(_ n:Int, _ k:Int, _ cmd:[String]) -> String {
         
         switch cmdText[0] {
         case "D":
-            currentIndex += Int(cmdText[1])!
+            for _ in 0..<Int(cmdText[1])! {
+                currentIndex = linkedList[currentIndex].2
+            }
+            
         case "U":
-            currentIndex -= Int(cmdText[1])!
+            for _ in 0..<Int(cmdText[1])! {
+                currentIndex = linkedList[currentIndex].0
+            }
+            
         case "C":
-            if currentIndex == linkedList.count-1 {
-                linkedList[currentIndex-1].2 = linkedList[currentIndex].2
-                deletedList.append(linkedList.remove(at: currentIndex))
-                currentIndex = linkedList.count - 1
-            } else if currentIndex == 0 {
-                linkedList[currentIndex+1].0 = linkedList[currentIndex].0
-                deletedList.append(linkedList.remove(at: currentIndex))
-                
+            deletedList.append(currentIndex)
+            
+            if linkedList[currentIndex].2 == n {
+                linkedList[linkedList[currentIndex].0].2 = linkedList[currentIndex].2
+                linkedList[currentIndex].3 = true
+                currentIndex = linkedList[currentIndex].0
             } else {
-                linkedList[currentIndex-1].2 = linkedList[currentIndex].2
-                linkedList[currentIndex+1].0 = linkedList[currentIndex].0
-                deletedList.append(linkedList.remove(at: currentIndex))
+                if linkedList[currentIndex].0 == -1 {
+                    linkedList[linkedList[currentIndex].2].0 = linkedList[currentIndex].0
+                    linkedList[currentIndex].3 = true
+                    currentIndex = linkedList[currentIndex].2
+
+                } else {
+                    linkedList[linkedList[currentIndex].0].2 = linkedList[currentIndex].2
+                    linkedList[linkedList[currentIndex].2].0 = linkedList[currentIndex].0
+                    linkedList[currentIndex].3 = true
+                    currentIndex = linkedList[currentIndex].2
+
+                }
             }
         case "Z":
-            let popValue: (Int, Int, Int) = deletedList.removeLast()
-            if popValue.1 > linkedList.last!.1 {
-                linkedList.append(popValue)
-            } else if popValue.1 < linkedList.first!.1 {
-                linkedList.insert(popValue, at: 0)
-                currentIndex += 1
-            } else {
-                var start: Int = 0
-                var end: Int = linkedList.count-1
-                
-                
-                while start <= end {
-                    let mid: Int = (start + end) / 2
-                    if popValue.1 > linkedList[mid].1 {
-                       start = mid + 1
-                    } else {
-                        end = mid - 1
-                    }
-                }
-                
-                linkedList.insert(popValue, at: start)
-                
-                if start <= currentIndex {
-                    currentIndex += 1
-                }
-                
+            let popValue: Int = deletedList.removeLast()
+            
+            linkedList[popValue].3 = false
+            
+            if linkedList[popValue].0 >= 0 {
+                linkedList[linkedList[popValue].0].2 = popValue
             }
+            
+            if linkedList[popValue].2 <= linkedList.count - 1 {
+                linkedList[linkedList[popValue].2].0 = popValue
+            }
+
         default:
             print("default")
             break
         }
+       
     }
     
-    if linkedList.count > deletedList.count {
-        for dl in deletedList {
-            resultArr1[dl.1] = "X"
-        }
-        return resultArr1.joined(separator: "")
-    } else {
-        for ll in linkedList {
-            resultArr2[ll.1] = "O"
-        }
-        return resultArr2.joined(separator: "")
+    for list in linkedList {
+        result += list.3 ? "X" : "O"
     }
+    
+    return result
+    
 }
 
 
