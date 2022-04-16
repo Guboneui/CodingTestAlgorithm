@@ -12416,107 +12416,94 @@ import Foundation
 //}
 
 
+
+
 func solution(_ n:Int, _ k:Int, _ cmd:[String]) -> String {
 
+    var linkedList: [(Int, Int, Int)] = []
     var currentIndex: Int = k
-    var linkedList: [(Int, Int?)] = []
-    var delete: [(Int, Int?)] = []
+    var deletedList: [(Int, Int, Int)] = []
+    var resultArr1: [String] = Array(repeating: "O", count: n)
+    var resultArr2: [String] = Array(repeating: "X", count: n)
     var result: String = ""
-
+    
     for i in 0..<n {
-        if i == n-1 {
-            linkedList.append((i, nil))
-        } else {
-            linkedList.append((i, i+1))
-        }
+        linkedList.append((i-1, i, i+1))
     }
-
+    
+    
     for c in cmd {
         let cmdText: [String] = c.split(separator: " ").map{String($0)}
-
-        if cmdText[0] == "U" {
-            if currentIndex - Int(cmdText[1])! >= 0 {
-                currentIndex -= Int(cmdText[1])!
-                
-            } else {
-                currentIndex = 0
-                
-            }
-        } else if cmdText[0] == "D" {
-            if currentIndex + Int(cmdText[1])! < linkedList.count {
-                currentIndex += Int(cmdText[1])!
-                
-            } else {
+        
+        switch cmdText[0] {
+        case "D":
+            currentIndex += Int(cmdText[1])!
+        case "U":
+            currentIndex -= Int(cmdText[1])!
+        case "C":
+            if currentIndex == linkedList.count-1 {
+                linkedList[currentIndex-1].2 = linkedList[currentIndex].2
+                deletedList.append(linkedList.remove(at: currentIndex))
                 currentIndex = linkedList.count - 1
-                
-            }
-        } else if cmdText[0] == "C" {   // 삭제 로직
-            if currentIndex == 0 {
-                linkedList.remove(at: currentIndex)
-                
-            } else if currentIndex == linkedList.count-1 {
-                linkedList[currentIndex-1].1 = linkedList[currentIndex].1
-                delete.append(linkedList.remove(at: currentIndex))
-                currentIndex -= 1
+            } else if currentIndex == 0 {
+                linkedList[currentIndex+1].0 = linkedList[currentIndex].0
+                deletedList.append(linkedList.remove(at: currentIndex))
                 
             } else {
-                linkedList[currentIndex-1].1 = linkedList[currentIndex].1
-                delete.append(linkedList.remove(at: currentIndex))
-                
+                linkedList[currentIndex-1].2 = linkedList[currentIndex].2
+                linkedList[currentIndex+1].0 = linkedList[currentIndex].0
+                deletedList.append(linkedList.remove(at: currentIndex))
             }
-
-        } else if cmdText[0] == "Z" {
-            let popValue: (Int, Int?) = delete.removeLast()
-            if popValue.0 >= linkedList.count {
+        case "Z":
+            let popValue: (Int, Int, Int) = deletedList.removeLast()
+            if popValue.1 > linkedList.last!.1 {
                 linkedList.append(popValue)
-                linkedList[linkedList.count-1].1 = nil
-                linkedList[linkedList.count-2].1 = linkedList[linkedList.count-1].0
-                
+            } else if popValue.1 < linkedList.first!.1 {
+                linkedList.insert(popValue, at: 0)
+                currentIndex += 1
             } else {
-                for i in 0..<linkedList.count {
-                    if linkedList[i].0 > popValue.0 {
-                        
-                        if i == 0 {
-                            linkedList.insert(popValue, at: 0)
-                            linkedList[0].1 = linkedList[1].0
-                            
-                            if currentIndex >= i {
-                                currentIndex += 1
-                            }
-                            break
-                        } else {
-                            linkedList.insert(popValue, at: i)
-                            linkedList[i-1].1 = linkedList[i].0
-                            linkedList[i].1 = linkedList[i+1].0
-                            
-                            if currentIndex >= i {
-                                currentIndex += 1
-                            }
-                            break
-                        }
+                var start: Int = 0
+                var end: Int = linkedList.count-1
+                
+                
+                while start <= end {
+                    let mid: Int = (start + end) / 2
+                    if popValue.1 > linkedList[mid].1 {
+                       start = mid + 1
+                    } else {
+                        end = mid - 1
                     }
                 }
                 
+                linkedList.insert(popValue, at: start)
+                
+                if start <= currentIndex {
+                    currentIndex += 1
+                }
+                
             }
+        default:
+            print("default")
+            break
         }
     }
-
     
-    
-    var checkIndex: Int = 0
-    for i in 0..<n {
-        if i == linkedList[checkIndex].0 {
-            result += "O"
-            checkIndex += 1
-        } else {
-            result += "X"
+    if linkedList.count > deletedList.count {
+        for dl in deletedList {
+            resultArr1[dl.1] = "X"
         }
+        return resultArr1.joined(separator: "")
+    } else {
+        for ll in linkedList {
+            resultArr2[ll.1] = "O"
+        }
+        return resultArr2.joined(separator: "")
     }
-
-    return result
 }
 
 
 
-print(solution(8, 2, ["D 2","C","U 3","C","D 4","C","U 2","Z","Z","U 1","C"]))
+print(solution(8, 2, ["D 2","C","U 3","C","D 4","C","U 2","Z","Z"]))
+
+
 
