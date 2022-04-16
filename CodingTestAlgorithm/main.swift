@@ -12501,61 +12501,159 @@ import Foundation
 
 // MARK: - 프로그래머스 level3 보석 쇼핑
 
-func solution(_ gems:[String]) -> [Int] {
-    
-    let gemsCount: Int = Set(gems).count
-    
-    if gemsCount == 1 {
-        return [1, 1]
-    }
+//func solution(_ gems:[String]) -> [Int] {
+//
+//    let gemsCount: Int = Set(gems).count
+//
+//    if gemsCount == 1 {
+//        return [1, 1]
+//    }
+//
+//    var dict: [String:Int] = [:]
+//    var leftIndex: Int = 0
+//    var rightIndex: Int = 0
+//    var result: [Int] = [0, gems.count-1]
+//    var minus: Int = gems.count
+//
+//    while rightIndex < gems.count {
+//
+//        if dict[gems[leftIndex]] == nil {
+//            dict[gems[leftIndex]] = 0
+//
+//        } else {
+//            if dict.count == gemsCount {
+//
+//                if (rightIndex - leftIndex) < minus {
+//                    minus = rightIndex - leftIndex
+//                    result[0] = leftIndex + 1
+//                    result[1] = rightIndex + 1
+//
+//                }
+//
+//                dict[gems[leftIndex]]! -= 1
+//
+//                if dict[gems[leftIndex]] == 0 {
+//                    dict[gems[leftIndex]] = nil
+//
+//                }
+//
+//                leftIndex += 1
+//
+//            } else {
+//                if dict[gems[rightIndex]] == nil {
+//                    dict[gems[rightIndex]] = 0
+//
+//                } else {
+//                    dict[gems[rightIndex]]! += 1
+//                    rightIndex += 1
+//
+//                }
+//            }
+//        }
+//    }
+//
+//    return result
+//}
+//
+//print(solution(["DIA", "RUBY", "RUBY", "DIA", "DIA", "EMERALD", "SAPPHIRE", "DIA"]))
 
-    var dict: [String:Int] = [:]
-    var leftIndex: Int = 0
-    var rightIndex: Int = 0
-    var result: [Int] = [0, gems.count-1]
-    var minus: Int = gems.count
+// MARK: - 프로그래머스 level1 키패드 누르기
+
+func solution(_ numbers:[Int], _ hand:String) -> String {
     
-    while rightIndex < gems.count {
+    let keypad: [(Int, Int)] = [(3, 1), (0, 0), (0, 1), (0, 2), (1, 0), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2)]
+    var result: String = ""
+    var leftHand: Int = -1
+    var rightHand: Int = -1
+    
+    for num in 0..<numbers.count {
         
-        if dict[gems[leftIndex]] == nil {
-            dict[gems[leftIndex]] = 0
+        switch numbers[num] {
+        case 1, 4, 7:
+            result += "L"
+            leftHand = numbers[num]
             
-        } else {
-            if dict.count == gemsCount {
-                
-                if (rightIndex - leftIndex) < minus {
-                    minus = rightIndex - leftIndex
-                    result[0] = leftIndex + 1
-                    result[1] = rightIndex + 1
-                    
-                }
-                
-                dict[gems[leftIndex]]! -= 1
-                
-                if dict[gems[leftIndex]] == 0 {
-                    dict[gems[leftIndex]] = nil
-
-                }
-                
-                leftIndex += 1
-                
-            } else {
-                if dict[gems[rightIndex]] == nil {
-                    dict[gems[rightIndex]] = 0
-                    
+        case 3, 6, 9:
+            result += "R"
+            rightHand = numbers[num]
+            
+        case 2, 5, 8, 0:
+            if leftHand == -1 && rightHand == -1 {
+                if hand == "left" {
+                    result += "L"
+                    leftHand = numbers[num]
                 } else {
-                    dict[gems[rightIndex]]! += 1
-                    rightIndex += 1
-                    
+                    result += "R"
+                    rightHand = numbers[num]
                 }
+            } else if leftHand == -1 {
+                let n: Int = numbers[num]
+                if (abs(3-keypad[n].0) + abs(0-keypad[n].1)) == (abs(keypad[rightHand].0 - keypad[n].0) + abs(keypad[rightHand].1) - keypad[n].1) {
+                    if hand == "left" {
+                        result += "L"
+                        leftHand = n
+                    } else {
+                        result += "R"
+                        rightHand = n
+                    }
+                } else if (abs(3-keypad[n].0) + abs(0-keypad[n].1)) < (abs(keypad[rightHand].0 - keypad[n].0) + abs(keypad[rightHand].1) - keypad[n].1) {
+                    result += "L"
+                    leftHand = n
+                } else {
+                    result += "R"
+                    rightHand = n
+                }
+                
+            } else if rightHand == -1 {
+                let n: Int = numbers[num]
+                if  (abs(keypad[leftHand].0 - keypad[n].0) + abs(keypad[leftHand].1) - keypad[n].1) == abs(3 - keypad[n].0) + abs(2 - keypad[n].1) {
+                    if hand == "left" {
+                        result += "L"
+                        leftHand = n
+                    } else {
+                        result += "R"
+                        rightHand = n
+                    }
+                } else if (abs(keypad[leftHand].0 - keypad[n].0) + abs(keypad[leftHand].1 - keypad[n].1)) < (abs(3 - keypad[n].0) + abs(2 - keypad[n].1)) {
+                    result += "L"
+                    leftHand = n
+                } else {
+                    result += "R"
+                    rightHand = n
+                }
+            } else {
+                
+                let n: Int = numbers[num]
+                if  (abs(keypad[leftHand].0 - keypad[n].0) + abs(keypad[leftHand].1 - keypad[n].1)) == (abs(keypad[rightHand].0 - keypad[n].0) + abs(keypad[rightHand].1 - keypad[n].1)) {
+                    if hand == "left" {
+                        result += "L"
+                        leftHand = n
+                    } else {
+                        result += "R"
+                        rightHand = n
+                    }
+                } else if (abs(keypad[leftHand].0 - keypad[n].0) + abs(keypad[leftHand].1 - keypad[n].1)) < (abs(keypad[rightHand].0 - keypad[n].0) + abs(keypad[rightHand].1 - keypad[n].1)) {
+                    result += "L"
+                    leftHand = n
+                } else {
+                    result += "R"
+                    rightHand = n
+                }
+                
             }
+            
+            
+        default:
+            break
         }
     }
+    
+    
+    
+    
     
     return result
 }
 
 
-
-
-print(solution(["DIA", "RUBY", "RUBY", "DIA", "DIA", "EMERALD", "SAPPHIRE", "DIA"]))
+print(solution([1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5], "right"))
