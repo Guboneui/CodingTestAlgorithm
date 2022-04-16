@@ -12502,25 +12502,60 @@ import Foundation
 // MARK: - 프로그래머스 level3 보석 쇼핑
 
 func solution(_ gems:[String]) -> [Int] {
-    let gemsCount: Int = Set(gems).count
-    var result: [Int] = [0, gems.count]
     
-    for i in 0...gems.count-gemsCount {
-        for j in i+gemsCount-1..<gems.count {
-            let temp: [String] = Array(gems[i...j])
-            if Set(temp).count == gemsCount {
-                if result[1]-result[0] > j-i {
-                    result = [i, j]
-                }
-                if result[1]-result[0] == j-i {
-                    result = i < result[0] ? [i, j] : result
+    let gemsCount: Int = Set(gems).count
+    
+    if gemsCount == 1 {
+        return [1, 1]
+    }
+
+    var dict: [String:Int] = [:]
+    var leftIndex: Int = 0
+    var rightIndex: Int = 0
+    var result: [Int] = [0, gems.count-1]
+    var minus: Int = gems.count
+    
+    while rightIndex < gems.count {
+        
+        if dict[gems[leftIndex]] == nil {
+            dict[gems[leftIndex]] = 0
+            
+        } else {
+            if dict.count == gemsCount {
+                
+                if (rightIndex - leftIndex) < minus {
+                    minus = rightIndex - leftIndex
+                    result[0] = leftIndex + 1
+                    result[1] = rightIndex + 1
+                    
                 }
                 
+                dict[gems[leftIndex]]! -= 1
                 
+                if dict[gems[leftIndex]] == 0 {
+                    dict[gems[leftIndex]] = nil
+
+                }
+                
+                leftIndex += 1
+                
+            } else {
+                if dict[gems[rightIndex]] == nil {
+                    dict[gems[rightIndex]] = 0
+                    
+                } else {
+                    dict[gems[rightIndex]]! += 1
+                    rightIndex += 1
+                    
+                }
             }
         }
     }
-    return [result[0]+1, result[1]+1]
+    
+    return result
 }
 
-print(solution(["ZZZ", "YYY", "NNNN", "YYY", "BBB"]))
+
+
+
+print(solution(["DIA", "RUBY", "RUBY", "DIA", "DIA", "EMERALD", "SAPPHIRE", "DIA"]))
