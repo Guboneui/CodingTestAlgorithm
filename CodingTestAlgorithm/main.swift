@@ -12417,85 +12417,110 @@ import Foundation
 
 
 
+//
+//func solution(_ n:Int, _ k:Int, _ cmd:[String]) -> String {
+//
+//    var linkedList: [(Int, Int, Int, Bool)] = []
+//    var currentIndex: Int = k
+//    var deletedList: [Int] = []
+//    var result: String = ""
+//
+//    for i in 0..<n {
+//        linkedList.append((i-1, i, i+1, false))
+//    }
+//
+//
+//    for c in cmd {
+//        let cmdText: [String] = c.split(separator: " ").map{String($0)}
+//
+//        switch cmdText[0] {
+//        case "D":
+//            for _ in 0..<Int(cmdText[1])! {
+//                currentIndex = linkedList[currentIndex].2
+//            }
+//
+//        case "U":
+//            for _ in 0..<Int(cmdText[1])! {
+//                currentIndex = linkedList[currentIndex].0
+//            }
+//
+//        case "C":
+//            deletedList.append(currentIndex)
+//
+//            if linkedList[currentIndex].2 == n {
+//                linkedList[linkedList[currentIndex].0].2 = linkedList[currentIndex].2
+//                linkedList[currentIndex].3 = true
+//                currentIndex = linkedList[currentIndex].0
+//            } else {
+//                if linkedList[currentIndex].0 == -1 {
+//                    linkedList[linkedList[currentIndex].2].0 = linkedList[currentIndex].0
+//                    linkedList[currentIndex].3 = true
+//                    currentIndex = linkedList[currentIndex].2
+//
+//                } else {
+//                    linkedList[linkedList[currentIndex].0].2 = linkedList[currentIndex].2
+//                    linkedList[linkedList[currentIndex].2].0 = linkedList[currentIndex].0
+//                    linkedList[currentIndex].3 = true
+//                    currentIndex = linkedList[currentIndex].2
+//
+//                }
+//            }
+//        case "Z":
+//            let popValue: Int = deletedList.removeLast()
+//
+//            linkedList[popValue].3 = false
+//
+//            if linkedList[popValue].0 >= 0 {
+//                linkedList[linkedList[popValue].0].2 = popValue
+//            }
+//
+//            if linkedList[popValue].2 <= linkedList.count - 1 {
+//                linkedList[linkedList[popValue].2].0 = popValue
+//            }
+//
+//        default:
+//            print("default")
+//            break
+//        }
+//
+//    }
+//
+//    for list in linkedList {
+//        result += list.3 ? "X" : "O"
+//    }
+//
+//    return result
+//
+//}
+//
+//
+//
+//print(solution(8, 2, ["D 2","C","U 3","C","D 4","C","U 2","Z","Z"]))
+//
+//
 
-func solution(_ n:Int, _ k:Int, _ cmd:[String]) -> String {
+// MARK: - 프로그래머스 level3 보석 쇼핑
 
-    var linkedList: [(Int, Int, Int, Bool)] = []
-    var currentIndex: Int = k
-    var deletedList: [Int] = []
-    var result: String = ""
+func solution(_ gems:[String]) -> [Int] {
+    let gemsCount: Int = Set(gems).count
+    var result: [Int] = [0, gems.count]
     
-    for i in 0..<n {
-        linkedList.append((i-1, i, i+1, false))
-    }
-    
-    
-    for c in cmd {
-        let cmdText: [String] = c.split(separator: " ").map{String($0)}
-        
-        switch cmdText[0] {
-        case "D":
-            for _ in 0..<Int(cmdText[1])! {
-                currentIndex = linkedList[currentIndex].2
-            }
-            
-        case "U":
-            for _ in 0..<Int(cmdText[1])! {
-                currentIndex = linkedList[currentIndex].0
-            }
-            
-        case "C":
-            deletedList.append(currentIndex)
-            
-            if linkedList[currentIndex].2 == n {
-                linkedList[linkedList[currentIndex].0].2 = linkedList[currentIndex].2
-                linkedList[currentIndex].3 = true
-                currentIndex = linkedList[currentIndex].0
-            } else {
-                if linkedList[currentIndex].0 == -1 {
-                    linkedList[linkedList[currentIndex].2].0 = linkedList[currentIndex].0
-                    linkedList[currentIndex].3 = true
-                    currentIndex = linkedList[currentIndex].2
-
-                } else {
-                    linkedList[linkedList[currentIndex].0].2 = linkedList[currentIndex].2
-                    linkedList[linkedList[currentIndex].2].0 = linkedList[currentIndex].0
-                    linkedList[currentIndex].3 = true
-                    currentIndex = linkedList[currentIndex].2
-
+    for i in 0...gems.count-gemsCount {
+        for j in i+gemsCount-1..<gems.count {
+            let temp: [String] = Array(gems[i...j])
+            if Set(temp).count == gemsCount {
+                if result[1]-result[0] > j-i {
+                    result = [i, j]
                 }
+                if result[1]-result[0] == j-i {
+                    result = i < result[0] ? [i, j] : result
+                }
+                
+                
             }
-        case "Z":
-            let popValue: Int = deletedList.removeLast()
-            
-            linkedList[popValue].3 = false
-            
-            if linkedList[popValue].0 >= 0 {
-                linkedList[linkedList[popValue].0].2 = popValue
-            }
-            
-            if linkedList[popValue].2 <= linkedList.count - 1 {
-                linkedList[linkedList[popValue].2].0 = popValue
-            }
-
-        default:
-            print("default")
-            break
         }
-       
     }
-    
-    for list in linkedList {
-        result += list.3 ? "X" : "O"
-    }
-    
-    return result
-    
+    return [result[0]+1, result[1]+1]
 }
 
-
-
-print(solution(8, 2, ["D 2","C","U 3","C","D 4","C","U 2","Z","Z"]))
-
-
-
+print(solution(["ZZZ", "YYY", "NNNN", "YYY", "BBB"]))
