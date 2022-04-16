@@ -12559,101 +12559,156 @@ import Foundation
 
 // MARK: - 프로그래머스 level1 키패드 누르기
 
+//func solution(_ numbers:[Int], _ hand:String) -> String {
+//
+//    let keypad: [(Int, Int)] = [(3, 1), (0, 0), (0, 1), (0, 2), (1, 0), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2)]
+//    var result: String = ""
+//    var leftHand: Int = -1
+//    var rightHand: Int = -1
+//
+//    for num in 0..<numbers.count {
+//
+//        switch numbers[num] {
+//        case 1, 4, 7:
+//            result += "L"
+//            leftHand = numbers[num]
+//
+//        case 3, 6, 9:
+//            result += "R"
+//            rightHand = numbers[num]
+//
+//        case 2, 5, 8, 0:
+//            if leftHand == -1 && rightHand == -1 {
+//                if hand == "left" {
+//                    result += "L"
+//                    leftHand = numbers[num]
+//                } else {
+//                    result += "R"
+//                    rightHand = numbers[num]
+//                }
+//            } else if leftHand == -1 {
+//                let n: Int = numbers[num]
+//                if (abs(3-keypad[n].0) + abs(0-keypad[n].1)) == (abs(keypad[rightHand].0 - keypad[n].0) + abs(keypad[rightHand].1) - keypad[n].1) {
+//                    if hand == "left" {
+//                        result += "L"
+//                        leftHand = n
+//                    } else {
+//                        result += "R"
+//                        rightHand = n
+//                    }
+//                } else if (abs(3-keypad[n].0) + abs(0-keypad[n].1)) < (abs(keypad[rightHand].0 - keypad[n].0) + abs(keypad[rightHand].1) - keypad[n].1) {
+//                    result += "L"
+//                    leftHand = n
+//                } else {
+//                    result += "R"
+//                    rightHand = n
+//                }
+//
+//            } else if rightHand == -1 {
+//                let n: Int = numbers[num]
+//                if  (abs(keypad[leftHand].0 - keypad[n].0) + abs(keypad[leftHand].1) - keypad[n].1) == abs(3 - keypad[n].0) + abs(2 - keypad[n].1) {
+//                    if hand == "left" {
+//                        result += "L"
+//                        leftHand = n
+//                    } else {
+//                        result += "R"
+//                        rightHand = n
+//                    }
+//                } else if (abs(keypad[leftHand].0 - keypad[n].0) + abs(keypad[leftHand].1 - keypad[n].1)) < (abs(3 - keypad[n].0) + abs(2 - keypad[n].1)) {
+//                    result += "L"
+//                    leftHand = n
+//                } else {
+//                    result += "R"
+//                    rightHand = n
+//                }
+//            } else {
+//
+//                let n: Int = numbers[num]
+//                if  (abs(keypad[leftHand].0 - keypad[n].0) + abs(keypad[leftHand].1 - keypad[n].1)) == (abs(keypad[rightHand].0 - keypad[n].0) + abs(keypad[rightHand].1 - keypad[n].1)) {
+//                    if hand == "left" {
+//                        result += "L"
+//                        leftHand = n
+//                    } else {
+//                        result += "R"
+//                        rightHand = n
+//                    }
+//                } else if (abs(keypad[leftHand].0 - keypad[n].0) + abs(keypad[leftHand].1 - keypad[n].1)) < (abs(keypad[rightHand].0 - keypad[n].0) + abs(keypad[rightHand].1 - keypad[n].1)) {
+//                    result += "L"
+//                    leftHand = n
+//                } else {
+//                    result += "R"
+//                    rightHand = n
+//                }
+//
+//            }
+//
+//
+//        default:
+//            break
+//        }
+//    }
+//
+//
+//
+//
+//
+//    return result
+//}
+//
+//
+//print(solution([1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5], "right"))
+
+let keypad: [String:(Int, Int)] = ["1":(0, 0), "2":(0, 1), "3":(0, 2),
+                                   "4":(1, 0), "5":(1, 1), "6":(1, 2),
+                                   "7":(2, 0), "8":(2, 1), "9":(2, 2),
+                                   "*":(3, 0), "0":(3, 1), "#":(3, 2)]
+
 func solution(_ numbers:[Int], _ hand:String) -> String {
     
-    let keypad: [(Int, Int)] = [(3, 1), (0, 0), (0, 1), (0, 2), (1, 0), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2)]
     var result: String = ""
-    var leftHand: Int = -1
-    var rightHand: Int = -1
+    var leftHand: String = "*"
+    var rightHand: String = "#"
+    let userHand: String = hand == "right" ? "R" : "L"
     
-    for num in 0..<numbers.count {
-        
-        switch numbers[num] {
-        case 1, 4, 7:
+    for number in numbers {
+        if number == 1 || number == 4 || number == 7 {
             result += "L"
-            leftHand = numbers[num]
-            
-        case 3, 6, 9:
+            leftHand = String(number)
+        } else if number == 3 || number == 6 || number == 9 {
             result += "R"
-            rightHand = numbers[num]
+            rightHand = String(number)
+        } else if number == 2 || number == 5 || number == 8 || number == 0 {
+            let leftDistance: Int = distance(leftHand, String(number))
+            let rightDistance: Int = distance(rightHand, String(number))
             
-        case 2, 5, 8, 0:
-            if leftHand == -1 && rightHand == -1 {
-                if hand == "left" {
-                    result += "L"
-                    leftHand = numbers[num]
+            if leftDistance == rightDistance {
+                result += userHand
+                if userHand == "L" {
+                    leftHand = String(number)
                 } else {
-                    result += "R"
-                    rightHand = numbers[num]
+                    rightHand = String(number)
                 }
-            } else if leftHand == -1 {
-                let n: Int = numbers[num]
-                if (abs(3-keypad[n].0) + abs(0-keypad[n].1)) == (abs(keypad[rightHand].0 - keypad[n].0) + abs(keypad[rightHand].1) - keypad[n].1) {
-                    if hand == "left" {
-                        result += "L"
-                        leftHand = n
-                    } else {
-                        result += "R"
-                        rightHand = n
-                    }
-                } else if (abs(3-keypad[n].0) + abs(0-keypad[n].1)) < (abs(keypad[rightHand].0 - keypad[n].0) + abs(keypad[rightHand].1) - keypad[n].1) {
-                    result += "L"
-                    leftHand = n
-                } else {
-                    result += "R"
-                    rightHand = n
-                }
-                
-            } else if rightHand == -1 {
-                let n: Int = numbers[num]
-                if  (abs(keypad[leftHand].0 - keypad[n].0) + abs(keypad[leftHand].1) - keypad[n].1) == abs(3 - keypad[n].0) + abs(2 - keypad[n].1) {
-                    if hand == "left" {
-                        result += "L"
-                        leftHand = n
-                    } else {
-                        result += "R"
-                        rightHand = n
-                    }
-                } else if (abs(keypad[leftHand].0 - keypad[n].0) + abs(keypad[leftHand].1 - keypad[n].1)) < (abs(3 - keypad[n].0) + abs(2 - keypad[n].1)) {
-                    result += "L"
-                    leftHand = n
-                } else {
-                    result += "R"
-                    rightHand = n
-                }
-            } else {
-                
-                let n: Int = numbers[num]
-                if  (abs(keypad[leftHand].0 - keypad[n].0) + abs(keypad[leftHand].1 - keypad[n].1)) == (abs(keypad[rightHand].0 - keypad[n].0) + abs(keypad[rightHand].1 - keypad[n].1)) {
-                    if hand == "left" {
-                        result += "L"
-                        leftHand = n
-                    } else {
-                        result += "R"
-                        rightHand = n
-                    }
-                } else if (abs(keypad[leftHand].0 - keypad[n].0) + abs(keypad[leftHand].1 - keypad[n].1)) < (abs(keypad[rightHand].0 - keypad[n].0) + abs(keypad[rightHand].1 - keypad[n].1)) {
-                    result += "L"
-                    leftHand = n
-                } else {
-                    result += "R"
-                    rightHand = n
-                }
-                
+            } else if leftDistance < rightDistance {
+                result += "L"
+                leftHand = String(number)
+            } else if leftDistance > rightDistance {
+                result += "R"
+                rightHand = String(number)
             }
-            
-            
-        default:
-            break
         }
     }
-    
-    
-    
-    
     
     return result
 }
 
+func distance(_ start: String, _ end: String) -> Int {
+    let x1 = keypad[start]!.0
+    let y1 = keypad[start]!.1
+    
+    let x2 = keypad[end]!.0
+    let y2 = keypad[end]!.1
+    
+    return abs(x1-x2) + abs(y1-y2)
+}
 
 print(solution([1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5], "right"))
