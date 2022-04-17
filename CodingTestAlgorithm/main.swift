@@ -12716,37 +12716,74 @@ let keypad: [String:(Int, Int)] = ["1":(0, 0), "2":(0, 1), "3":(0, 2),
 
 // MARK: - 프로그래머스 level3 경주로 건설
 
-func solution(_ board:[[Int]]) -> Int {
+//func solution(_ board:[[Int]]) -> Int {
+//
+//    let n: Int = board.count
+//    var road: [[Int]] = Array(repeating: Array(repeating: Int.max, count: n), count: n)
+//    let direction: [(Int, Int)] = [(0, 1), (1, 0), (-1, 0), (0, -1)]
+//
+//    func dfs(_ current: (x: Int, y: Int, cost: Int, move: Int)) {
+//        if board[current.x][current.y] == 1 || current.cost > road[current.x][current.y] {
+//            return
+//        }
+//
+//        road[current.x][current.y] = current.cost
+//
+//        for i in 0..<direction.count {
+//            let nx: Int = current.x + direction[i].0
+//            let ny: Int = current.y + direction[i].1
+//
+//            if nx>=0 && nx<n && ny>=0 && ny<n {
+//                if current.move == i {
+//                    dfs((x: nx, y: ny, cost: current.cost + 100, move: i))
+//                } else {
+//                    dfs((x: nx, y: ny, cost: current.cost + 600, move: i))
+//                }
+//            }
+//        }
+//    }
+//
+//    road[0][0] = 0
+//
+//    dfs((x: 0, y: 1, cost: 100, move: 0))
+//    dfs((x: 1, y: 0, cost: 100, move: 1))
+//
+//    return road[n-1][n-1]
+//}
+
+// MARK: - 프로그래머스 level2 튜플
+
+func solution(_ s:String) -> [Int] {
     
-    let n: Int = board.count
-    var road: [[Int]] = Array(repeating: Array(repeating: Int.max, count: n), count: n)
-    let direction: [(Int, Int)] = [(0, 1), (1, 0), (-1, 0), (0, -1)]
+    var temp = s
     
-    func dfs(_ current: (x: Int, y: Int, cost: Int, move: Int)) {
-        if board[current.x][current.y] == 1 || current.cost > road[current.x][current.y] {
-            return
-        }
+    temp = temp.replacingOccurrences(of: "},{", with: " ")
+                .replacingOccurrences(of: "{", with: "")
+                .replacingOccurrences(of: "}", with: "")
+    
+    
+    let tempTuple = temp.split(separator: " ").map{String($0)}
+    
+    var tuple: [[String]] = []
+    
+    for t in tempTuple {
+        tuple.append(t.replacingOccurrences(of: ",", with: " ").split(separator: " ").map{String($0)})
+    }
+    tuple.sort{$0.count < $1.count}
+    
+    var index: Int = 0
+    var result: [Int] = []
+    
+    for arr in tuple {
         
-        road[current.x][current.y] = current.cost
-        
-        for i in 0..<direction.count {
-            let nx: Int = current.x + direction[i].0
-            let ny: Int = current.y + direction[i].1
-            
-            if nx>=0 && nx<n && ny>=0 && ny<n {
-                if current.move == i {
-                    dfs((x: nx, y: ny, cost: current.cost + 100, move: i))
-                } else {
-                    dfs((x: nx, y: ny, cost: current.cost + 600, move: i))
-                }
+        arr.forEach{
+            if !result.contains(Int($0)!) {
+                result.append(Int($0)!)
             }
         }
     }
     
-    road[0][0] = 0
-    
-    dfs((x: 0, y: 1, cost: 100, move: 0))
-    dfs((x: 1, y: 0, cost: 100, move: 1))
-    
-    return road[n-1][n-1]
+    return result
 }
+
+print(solution("{{4,2,3},{3},{2,3,4,1},{2,3}}"))
