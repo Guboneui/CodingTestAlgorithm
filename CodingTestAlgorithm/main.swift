@@ -12663,52 +12663,90 @@ let keypad: [String:(Int, Int)] = ["1":(0, 0), "2":(0, 1), "3":(0, 2),
                                    "7":(2, 0), "8":(2, 1), "9":(2, 2),
                                    "*":(3, 0), "0":(3, 1), "#":(3, 2)]
 
-func solution(_ numbers:[Int], _ hand:String) -> String {
+//func solution(_ numbers:[Int], _ hand:String) -> String {
+//
+//    var result: String = ""
+//    var leftHand: String = "*"
+//    var rightHand: String = "#"
+//    let userHand: String = hand == "right" ? "R" : "L"
+//
+//    for number in numbers {
+//        if number == 1 || number == 4 || number == 7 {
+//            result += "L"
+//            leftHand = String(number)
+//        } else if number == 3 || number == 6 || number == 9 {
+//            result += "R"
+//            rightHand = String(number)
+//        } else if number == 2 || number == 5 || number == 8 || number == 0 {
+//            let leftDistance: Int = distance(leftHand, String(number))
+//            let rightDistance: Int = distance(rightHand, String(number))
+//
+//            if leftDistance == rightDistance {
+//                result += userHand
+//                if userHand == "L" {
+//                    leftHand = String(number)
+//                } else {
+//                    rightHand = String(number)
+//                }
+//            } else if leftDistance < rightDistance {
+//                result += "L"
+//                leftHand = String(number)
+//            } else if leftDistance > rightDistance {
+//                result += "R"
+//                rightHand = String(number)
+//            }
+//        }
+//    }
+//
+//    return result
+//}
+//
+//func distance(_ start: String, _ end: String) -> Int {
+//    let x1 = keypad[start]!.0
+//    let y1 = keypad[start]!.1
+//
+//    let x2 = keypad[end]!.0
+//    let y2 = keypad[end]!.1
+//
+//    return abs(x1-x2) + abs(y1-y2)
+//}
+//
+//print(solution([1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5], "right"))
+
+
+// MARK: - 프로그래머스 level3 경주로 건설
+
+func solution(_ board:[[Int]]) -> Int {
     
-    var result: String = ""
-    var leftHand: String = "*"
-    var rightHand: String = "#"
-    let userHand: String = hand == "right" ? "R" : "L"
+    let n: Int = board.count
+    var road: [[Int]] = Array(repeating: Array(repeating: Int.max, count: n), count: n)
+    let direction: [(Int, Int)] = [(0, 1), (1, 0), (-1, 0), (0, -1)]
     
-    for number in numbers {
-        if number == 1 || number == 4 || number == 7 {
-            result += "L"
-            leftHand = String(number)
-        } else if number == 3 || number == 6 || number == 9 {
-            result += "R"
-            rightHand = String(number)
-        } else if number == 2 || number == 5 || number == 8 || number == 0 {
-            let leftDistance: Int = distance(leftHand, String(number))
-            let rightDistance: Int = distance(rightHand, String(number))
+    func dfs(_ current: (x: Int, y: Int, cost: Int, move: Int)) {
+        if board[current.x][current.y] == 1 || current.cost > road[current.x][current.y] {
+            return
+        }
+        
+        road[current.x][current.y] = current.cost
+        
+        for i in 0..<direction.count {
+            let nx: Int = current.x + direction[i].0
+            let ny: Int = current.y + direction[i].1
             
-            if leftDistance == rightDistance {
-                result += userHand
-                if userHand == "L" {
-                    leftHand = String(number)
+            if nx>=0 && nx<n && ny>=0 && ny<n {
+                if current.move == i {
+                    dfs((x: nx, y: ny, cost: current.cost + 100, move: i))
                 } else {
-                    rightHand = String(number)
+                    dfs((x: nx, y: ny, cost: current.cost + 600, move: i))
                 }
-            } else if leftDistance < rightDistance {
-                result += "L"
-                leftHand = String(number)
-            } else if leftDistance > rightDistance {
-                result += "R"
-                rightHand = String(number)
             }
         }
     }
     
-    return result
-}
-
-func distance(_ start: String, _ end: String) -> Int {
-    let x1 = keypad[start]!.0
-    let y1 = keypad[start]!.1
+    road[0][0] = 0
     
-    let x2 = keypad[end]!.0
-    let y2 = keypad[end]!.1
+    dfs((x: 0, y: 1, cost: 100, move: 0))
+    dfs((x: 1, y: 0, cost: 100, move: 1))
     
-    return abs(x1-x2) + abs(y1-y2)
+    return road[n-1][n-1]
 }
-
-print(solution([1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5], "right"))
