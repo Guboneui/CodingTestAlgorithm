@@ -12755,14 +12755,12 @@ let keypad: [String:(Int, Int)] = ["1":(0, 0), "2":(0, 1), "3":(0, 2),
 
 func solution(_ s:String) -> [Int] {
     
+    var result: [Int] = []
     var temp = s
-    
+    temp.removeLast(2)
+    temp.removeFirst(2)
     temp = temp.replacingOccurrences(of: "},{", with: " ")
-                .replacingOccurrences(of: "{", with: "")
-                .replacingOccurrences(of: "}", with: "")
-    
-    
-    let tempTuple = temp.split(separator: " ").map{String($0)}
+    let tempTuple: [String] = temp.split(separator: " ").map{String($0)}
     
     var tuple: [[String]] = []
     
@@ -12771,11 +12769,8 @@ func solution(_ s:String) -> [Int] {
     }
     tuple.sort{$0.count < $1.count}
     
-    var index: Int = 0
-    var result: [Int] = []
     
     for arr in tuple {
-        
         arr.forEach{
             if !result.contains(Int($0)!) {
                 result.append(Int($0)!)
