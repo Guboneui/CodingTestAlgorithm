@@ -12753,32 +12753,118 @@ let keypad: [String:(Int, Int)] = ["1":(0, 0), "2":(0, 1), "3":(0, 2),
 
 // MARK: - 프로그래머스 level2 튜플
 
-func solution(_ s:String) -> [Int] {
+//func solution(_ s:String) -> [Int] {
+//
+//    var result: [Int] = []
+//    var temp = s
+//    temp.removeLast(2)
+//    temp.removeFirst(2)
+//    temp = temp.replacingOccurrences(of: "},{", with: " ")
+//    let tempTuple: [String] = temp.split(separator: " ").map{String($0)}
+//
+//    var tuple: [[String]] = []
+//
+//    for t in tempTuple {
+//        tuple.append(t.replacingOccurrences(of: ",", with: " ").split(separator: " ").map{String($0)})
+//    }
+//    tuple.sort{$0.count < $1.count}
+//
+//
+//    for arr in tuple {
+//        arr.forEach{
+//            if !result.contains(Int($0)!) {
+//                result.append(Int($0)!)
+//            }
+//        }
+//    }
+//
+//    return result
+//}
+//
+//print(solution("{{4,2,3},{3},{2,3,4,1},{2,3}}"))
+
+// MARK: - 프로그래머스 level3 불량 사용자
+
+//func solution(_ user_id:[String], _ banned_id:[String]) -> Int {
+//    var result: Int = 0
+//    var checkDict: [Set<[String]>:Int]
+//
+//    while true {
+//        var visited: [Bool] = Array(repeating: false, count: user_id.count)
+//
+//        for ban in banned_id {
+//            let banArr: [String] = ban.map{String($0)}
+//            for i in 0..<user_id.count {
+//                if ban.count != user_id[i].count { continue }
+//
+//                let userArr: [String] = user_id[i].map{String($0)}
+//                var check: Bool = true
+//
+//                for j in 0..<banArr.count {
+//
+//                }
+//
+//
+//            }
+//        }
+//    }
+//
+//
+//    return result
+//}
+
+
+func solution(_ user_id:[String], _ banned_id:[String]) -> Int {
     
-    var result: [Int] = []
-    var temp = s
-    temp.removeLast(2)
-    temp.removeFirst(2)
-    temp = temp.replacingOccurrences(of: "},{", with: " ")
-    let tempTuple: [String] = temp.split(separator: " ").map{String($0)}
+    func isEqualCheck(userID: String, bannedID: String) -> Bool {
+        if userID.count != bannedID.count { return false }
     
-    var tuple: [[String]] = []
-    
-    for t in tempTuple {
-        tuple.append(t.replacingOccurrences(of: ",", with: " ").split(separator: " ").map{String($0)})
+        let userIDArr: [String] = userID.map{String($0)}
+        let bannedIDArr: [String] = bannedID.map{String($0)}
+        
+        for i in 0..<bannedIDArr.count {
+            if bannedIDArr[i] != "*" && bannedIDArr[i] != userIDArr[i] {
+                return false
+            }
+            
+        }
+        return true
     }
-    tuple.sort{$0.count < $1.count}
     
+    func findID(userID: [String], bannedID: [String]) -> [[Int]] {
+        var banArr: [[Int]] = Array(repeating: [Int](), count: bannedID.count)
+        
+        for (i, u) in userID.enumerated() {
+            for (j, b) in bannedID.enumerated() {
+                if isEqualCheck(userID: u, bannedID: b) {
+                    banArr[j].append(i)
+                }
+            }
+        }
+        return banArr
+    }
     
-    for arr in tuple {
-        arr.forEach{
-            if !result.contains(Int($0)!) {
-                result.append(Int($0)!)
+    var result: Set<[Int]> = []
+    
+    func makeResult(banArray: [[Int]], banIDSet: Set<Int>, answer:inout Set<[Int]>, index: Int) {
+        for id in banArray[index] {
+            var newBandsIds = banIDSet
+            newBandsIds.insert(id)
+            
+            if index != banArray.count - 1 {
+                makeResult(banArray: banArray, banIDSet: newBandsIds, answer: &answer, index: index + 1)
+            } else if newBandsIds.count == banArray.count {
+                answer.insert(newBandsIds.sorted())
             }
         }
     }
     
-    return result
+    
+    let banArr = findID(userID: user_id, bannedID: banned_id)
+    makeResult(banArray: banArr, banIDSet: [], answer: &result, index: 0)
+    
+    return result.count
 }
 
-print(solution("{{4,2,3},{3},{2,3,4,1},{2,3}}"))
+print(solution(["frodo", "fradi", "crodo", "abc123", "frodoc"], ["fr*d*", "abc1**"]))
+
