@@ -12658,10 +12658,10 @@ import Foundation
 //
 //print(solution([1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5], "right"))
 
-let keypad: [String:(Int, Int)] = ["1":(0, 0), "2":(0, 1), "3":(0, 2),
-                                   "4":(1, 0), "5":(1, 1), "6":(1, 2),
-                                   "7":(2, 0), "8":(2, 1), "9":(2, 2),
-                                   "*":(3, 0), "0":(3, 1), "#":(3, 2)]
+//let keypad: [String:(Int, Int)] = ["1":(0, 0), "2":(0, 1), "3":(0, 2),
+//                                   "4":(1, 0), "5":(1, 1), "6":(1, 2),
+//                                   "7":(2, 0), "8":(2, 1), "9":(2, 2),
+//                                   "*":(3, 0), "0":(3, 1), "#":(3, 2)]
 
 //func solution(_ numbers:[Int], _ hand:String) -> String {
 //
@@ -12814,57 +12814,94 @@ let keypad: [String:(Int, Int)] = ["1":(0, 0), "2":(0, 1), "3":(0, 2),
 //}
 
 
-func solution(_ user_id:[String], _ banned_id:[String]) -> Int {
+//func solution(_ user_id:[String], _ banned_id:[String]) -> Int {
+//
+//    func isEqualCheck(userID: String, bannedID: String) -> Bool {
+//        if userID.count != bannedID.count { return false }
+//
+//        let userIDArr: [String] = userID.map{String($0)}
+//        let bannedIDArr: [String] = bannedID.map{String($0)}
+//
+//        for i in 0..<bannedIDArr.count {
+//            if bannedIDArr[i] != "*" && bannedIDArr[i] != userIDArr[i] {
+//                return false
+//            }
+//
+//        }
+//        return true
+//    }
+//
+//    func findID(userID: [String], bannedID: [String]) -> [[Int]] {
+//        var banArr: [[Int]] = Array(repeating: [Int](), count: bannedID.count)
+//
+//        for (i, u) in userID.enumerated() {
+//            for (j, b) in bannedID.enumerated() {
+//                if isEqualCheck(userID: u, bannedID: b) {
+//                    banArr[j].append(i)
+//                }
+//            }
+//        }
+//        return banArr
+//    }
+//
+//    var result: Set<[Int]> = []
+//
+//    func makeResult(banArray: [[Int]], banIDSet: Set<Int>, answer:inout Set<[Int]>, index: Int) {
+//        for id in banArray[index] {
+//            var newBandsIds = banIDSet
+//            newBandsIds.insert(id)
+//
+//            if index != banArray.count - 1 {
+//                makeResult(banArray: banArray, banIDSet: newBandsIds, answer: &answer, index: index + 1)
+//            } else if newBandsIds.count == banArray.count {
+//                answer.insert(newBandsIds.sorted())
+//            }
+//        }
+//    }
+//
+//
+//    let banArr = findID(userID: user_id, bannedID: banned_id)
+//    makeResult(banArray: banArr, banIDSet: [], answer: &result, index: 0)
+//
+//    return result.count
+//}
+//
+//print(solution(["frodo", "fradi", "crodo", "abc123", "frodoc"], ["fr*d*", "abc1**"]))
+//
+
+// MARK: - 프로그래머스 level3 징검다리 건너기
+
+func solution(_ stones:[Int], _ k:Int) -> Int {
     
-    func isEqualCheck(userID: String, bannedID: String) -> Bool {
-        if userID.count != bannedID.count { return false }
+    var bridge: [Int] = stones
+    var result: Int = 0
+    var check: Bool = true
     
-        let userIDArr: [String] = userID.map{String($0)}
-        let bannedIDArr: [String] = bannedID.map{String($0)}
-        
-        for i in 0..<bannedIDArr.count {
-            if bannedIDArr[i] != "*" && bannedIDArr[i] != userIDArr[i] {
-                return false
+    while check {
+        for i in 0..<bridge.count {
+            if bridge[i] != 0 {
+                bridge[i] -= 1
             }
-            
         }
-        return true
-    }
-    
-    func findID(userID: [String], bannedID: [String]) -> [[Int]] {
-        var banArr: [[Int]] = Array(repeating: [Int](), count: bannedID.count)
         
-        for (i, u) in userID.enumerated() {
-            for (j, b) in bannedID.enumerated() {
-                if isEqualCheck(userID: u, bannedID: b) {
-                    banArr[j].append(i)
+        var count: Int = 0
+        for i in bridge {
+            if i == 0 {
+                count += 1
+                if count >= k {
+                    check = false
+                    break
                 }
+            } else {
+                count = 0
             }
-        }
-        return banArr
-    }
-    
-    var result: Set<[Int]> = []
-    
-    func makeResult(banArray: [[Int]], banIDSet: Set<Int>, answer:inout Set<[Int]>, index: Int) {
-        for id in banArray[index] {
-            var newBandsIds = banIDSet
-            newBandsIds.insert(id)
             
-            if index != banArray.count - 1 {
-                makeResult(banArray: banArray, banIDSet: newBandsIds, answer: &answer, index: index + 1)
-            } else if newBandsIds.count == banArray.count {
-                answer.insert(newBandsIds.sorted())
-            }
         }
+        
+        result += 1
     }
-    
-    
-    let banArr = findID(userID: user_id, bannedID: banned_id)
-    makeResult(banArray: banArr, banIDSet: [], answer: &result, index: 0)
-    
-    return result.count
+        
+    return result
 }
 
-print(solution(["frodo", "fradi", "crodo", "abc123", "frodoc"], ["fr*d*", "abc1**"]))
-
+print(solution([2, 4, 5, 3, 2, 1, 4, 2, 5, 1], 3))
