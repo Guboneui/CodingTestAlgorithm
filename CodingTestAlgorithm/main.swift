@@ -12939,25 +12939,86 @@ import Foundation
 
 // MARK: - 프로그래머스 level2 k진수에서 소수 개수 구하기
 
-func solution(_ n:Int, _ k:Int) -> Int {
+//func solution(_ n:Int, _ k:Int) -> Int {
+//
+//    let changeNum: String = String(n, radix: k)
+//    let arr: [Int] = changeNum.split(separator: "0").map{String($0)}.filter{$0 != "1"}.map{Int($0)!}
+//    var result: Int = 0
+//
+//
+//    for num in arr {
+//        var check: Bool = true
+//        for i in 2...Int(sqrt(Double(num))) + 1 {
+//            if (num % i == 0) && (i != num) {
+//                check = false
+//                break
+//            }
+//        }
+//
+//        if check { result += 1 }
+//    }
+//
+//    return result
+//}
+//print(solution(110011, 10))
+
+
+// MARK: - 프로그래머스 level2 주차 요금 계산
+
+func solution(_ fees:[Int], _ records:[String]) -> [Int] {
+    let baseTime: Int = fees[0]
+    let baseFee: Int = fees[1]
+    let upperTime: Int = fees[2]
+    let upperFee: Int = fees[3]
+    var result: [Int] = []
+    var dict: [String:[(String, String)]] = [:]
     
-    let changeNum: String = String(n, radix: k)
-    let arr: [Int] = changeNum.split(separator: "0").map{String($0)}.filter{$0 != "1"}.map{Int($0)!}
-    var result: Int = 0
-    
-    
-    for num in arr {
-        var check: Bool = true
-        for i in 2...Int(sqrt(Double(num))) + 1 {
-            if (num % i == 0) && (i != num) {
-                check = false
-                break
-            }
+    for record in records {
+        let temp: [String] = record.split(separator: " ").map{String($0)}
+        if dict[temp[1]] == nil {
+            dict[temp[1]] = [(temp[0], temp[2])]
+        } else {
+            dict[temp[1]]!.append((temp[0], temp[2]))
         }
-        
-        if check { result += 1 }
     }
     
+    let recordDict = dict.sorted{$0.key < $1.key}
+    
+    for (_, values) in recordDict {
+        var recordValue = values
+        if values.count % 2 == 1 {
+            recordValue.append(("23:59", "OUT"))
+        }
+        
+        var totalFee: Int = 0
+        var totalTime: Int = 0
+        
+        for i in stride(from: 0, to: recordValue.count, by: 2) {
+            let inTime: [Int] = recordValue[i].0.split(separator: ":").map{Int($0)!}
+            let outTime: [Int] = recordValue[i+1].0.split(separator: ":").map{Int($0)!}
+            let time: Int = ((outTime[0] - inTime[0]) * 60) + (outTime[1] - inTime[1])
+            
+            totalTime += time
+
+        }
+        
+        if totalTime <= baseTime {
+            totalFee += baseFee
+        } else {
+            var tempFee: Int = 0
+            tempFee += baseFee
+            totalTime -= baseTime
+
+            totalTime = Int(ceil((Double(totalTime)/Double(upperTime))))
+            tempFee += totalTime * upperFee
+
+            totalFee += tempFee
+        }
+
+        result.append(totalFee)
+    }
+   
     return result
 }
-print(solution(110011, 10))
+
+solution([180, 5000, 10, 600], ["05:34 5961 IN", "06:00 0000 IN", "06:34 0000 OUT", "07:59 5961 OUT", "07:59 0148 IN", "18:59 0000 IN", "19:09 0148 OUT", "22:59 5961 IN", "23:00 5961 OUT"])
