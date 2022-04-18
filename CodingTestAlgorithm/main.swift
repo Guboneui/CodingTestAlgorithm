@@ -12965,60 +12965,118 @@ import Foundation
 
 // MARK: - 프로그래머스 level2 주차 요금 계산
 
-func solution(_ fees:[Int], _ records:[String]) -> [Int] {
-    let baseTime: Int = fees[0]
-    let baseFee: Int = fees[1]
-    let upperTime: Int = fees[2]
-    let upperFee: Int = fees[3]
-    var result: [Int] = []
-    var dict: [String:[(String, String)]] = [:]
+//func solution(_ fees:[Int], _ records:[String]) -> [Int] {
+//    let baseTime: Int = fees[0]
+//    let baseFee: Int = fees[1]
+//    let upperTime: Int = fees[2]
+//    let upperFee: Int = fees[3]
+//    var result: [Int] = []
+//    var dict: [String:[(String, String)]] = [:]
+//
+//    for record in records {
+//        let temp: [String] = record.split(separator: " ").map{String($0)}
+//        if dict[temp[1]] == nil {
+//            dict[temp[1]] = [(temp[0], temp[2])]
+//        } else {
+//            dict[temp[1]]!.append((temp[0], temp[2]))
+//        }
+//    }
+//
+//    let recordDict = dict.sorted{$0.key < $1.key}
+//
+//    for (_, values) in recordDict {
+//        var recordValue = values
+//        if values.count % 2 == 1 {
+//            recordValue.append(("23:59", "OUT"))
+//        }
+//
+//        var totalFee: Int = 0
+//        var totalTime: Int = 0
+//
+//        for i in stride(from: 0, to: recordValue.count, by: 2) {
+//            let inTime: [Int] = recordValue[i].0.split(separator: ":").map{Int($0)!}
+//            let outTime: [Int] = recordValue[i+1].0.split(separator: ":").map{Int($0)!}
+//            let time: Int = ((outTime[0] - inTime[0]) * 60) + (outTime[1] - inTime[1])
+//
+//            totalTime += time
+//
+//        }
+//
+//        if totalTime <= baseTime {
+//            totalFee += baseFee
+//        } else {
+//            var tempFee: Int = 0
+//            tempFee += baseFee
+//            totalTime -= baseTime
+//
+//            totalTime = Int(ceil((Double(totalTime)/Double(upperTime))))
+//            tempFee += totalTime * upperFee
+//
+//            totalFee += tempFee
+//        }
+//
+//        result.append(totalFee)
+//    }
+//
+//    return result
+//}
+//
+//solution([180, 5000, 10, 600], ["05:34 5961 IN", "06:00 0000 IN", "06:34 0000 OUT", "07:59 5961 OUT", "07:59 0148 IN", "18:59 0000 IN", "19:09 0148 OUT", "22:59 5961 IN", "23:00 5961 OUT"])
+
+
+
+// MARK: - 프로그래머스 level2 양궁 대회
+
+func solution(_ n:Int, _ info:[Int]) -> [Int] {
+    var result = Array(repeating: 0, count: 11)
+    var arr = Array(repeating: 0, count: 11)
+    var ryonSum = 0
+    var apeachSum = 0
+    var scoreGap = 0 //점수차이 계산
+    var ryonWin = false
     
-    for record in records {
-        let temp: [String] = record.split(separator: " ").map{String($0)}
-        if dict[temp[1]] == nil {
-            dict[temp[1]] = [(temp[0], temp[2])]
-        } else {
-            dict[temp[1]]!.append((temp[0], temp[2]))
-        }
-    }
-    
-    let recordDict = dict.sorted{$0.key < $1.key}
-    
-    for (_, values) in recordDict {
-        var recordValue = values
-        if values.count % 2 == 1 {
-            recordValue.append(("23:59", "OUT"))
-        }
-        
-        var totalFee: Int = 0
-        var totalTime: Int = 0
-        
-        for i in stride(from: 0, to: recordValue.count, by: 2) {
-            let inTime: [Int] = recordValue[i].0.split(separator: ":").map{Int($0)!}
-            let outTime: [Int] = recordValue[i+1].0.split(separator: ":").map{Int($0)!}
-            let time: Int = ((outTime[0] - inTime[0]) * 60) + (outTime[1] - inTime[1])
+    func dfs(_ depth: Int, _ start: Int) {
+        if depth == n{
+            print(arr)
+            ryonSum = 0
+            apeachSum = 0
             
-            totalTime += time
-
+            for i in 0...10 {
+                if arr[i] == 0 && info[i] == 0 { continue }
+                if info[i] < arr[i] {
+                    ryonSum += 10 - i
+                } else {
+                    apeachSum += 10 - i
+                }
+            }
+            
+            if ryonSum > apeachSum {
+                ryonWin = true
+                if ryonSum - apeachSum > scoreGap {
+                    result = arr
+                    scoreGap = ryonSum - apeachSum
+                }
+            }
+            return
         }
         
-        if totalTime <= baseTime {
-            totalFee += baseFee
-        } else {
-            var tempFee: Int = 0
-            tempFee += baseFee
-            totalTime -= baseTime
-
-            totalTime = Int(ceil((Double(totalTime)/Double(upperTime))))
-            tempFee += totalTime * upperFee
-
-            totalFee += tempFee
+        for i in start...10 {
+            arr[10 - i] += 1
+            dfs(depth + 1, i)
+            arr[10 - i] -= 1
         }
-
-        result.append(totalFee)
     }
-   
+    
+    dfs(0, 0)
+    
+    if !ryonWin{
+        result = [-1]
+    }
+    
+    
     return result
 }
 
-solution([180, 5000, 10, 600], ["05:34 5961 IN", "06:00 0000 IN", "06:34 0000 OUT", "07:59 5961 OUT", "07:59 0148 IN", "18:59 0000 IN", "19:09 0148 OUT", "22:59 5961 IN", "23:00 5961 OUT"])
+
+print(solution(5, [2,1,1,1,0,0,0,0,0,0,0]))
+
