@@ -12871,37 +12871,69 @@ import Foundation
 
 // MARK: - 프로그래머스 level3 징검다리 건너기
 
+//func solution(_ stones:[Int], _ k:Int) -> Int {
+//
+//    var bridge: [Int] = stones
+//    var result: Int = 0
+//    var check: Bool = true
+//
+//    while check {
+//        for i in 0..<bridge.count {
+//            if bridge[i] != 0 {
+//                bridge[i] -= 1
+//            }
+//        }
+//
+//        var count: Int = 0
+//        for i in bridge {
+//            if i == 0 {
+//                count += 1
+//                if count >= k {
+//                    check = false
+//                    break
+//                }
+//            } else {
+//                count = 0
+//            }
+//
+//        }
+//
+//        result += 1
+//    }
+//
+//    return result
+//}
+
 func solution(_ stones:[Int], _ k:Int) -> Int {
+    var left: Int = 1
+    var right: Int = 200000000
     
-    var bridge: [Int] = stones
-    var result: Int = 0
-    var check: Bool = true
-    
-    while check {
-        for i in 0..<bridge.count {
-            if bridge[i] != 0 {
-                bridge[i] -= 1
-            }
-        }
+    while left < right {
+        let mid: Int = (left + right) / 2
+        var zeroCount: Int = 0
         
-        var count: Int = 0
-        for i in bridge {
-            if i == 0 {
-                count += 1
-                if count >= k {
-                    check = false
+        for i in 0..<stones.count {
+            if stones[i] - mid <= 0 {
+                zeroCount += 1
+                
+                if zeroCount >= k {
                     break
                 }
             } else {
-                count = 0
+                zeroCount = 0
             }
-            
         }
         
-        result += 1
+        if zeroCount >= k {
+            right = mid
+        } else {
+            left = mid + 1
+        }
     }
-        
-    return result
+    
+    return left
 }
 
 print(solution([2, 4, 5, 3, 2, 1, 4, 2, 5, 1], 3))
+
+
