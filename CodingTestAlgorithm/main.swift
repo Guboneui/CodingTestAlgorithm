@@ -12904,36 +12904,60 @@ import Foundation
 //    return result
 //}
 
-func solution(_ stones:[Int], _ k:Int) -> Int {
-    var left: Int = 1
-    var right: Int = 200000000
+//func solution(_ stones:[Int], _ k:Int) -> Int {
+//    var left: Int = 1
+//    var right: Int = 200000000
+//
+//    while left < right {
+//        let mid: Int = (left + right) / 2
+//        var zeroCount: Int = 0
+//
+//        for i in 0..<stones.count {
+//            if stones[i] - mid <= 0 {
+//                zeroCount += 1
+//
+//                if zeroCount >= k {
+//                    break
+//                }
+//            } else {
+//                zeroCount = 0
+//            }
+//        }
+//
+//        if zeroCount >= k {
+//            right = mid
+//        } else {
+//            left = mid + 1
+//        }
+//    }
+//
+//    return left
+//}
+//
+//print(solution([2, 4, 5, 3, 2, 1, 4, 2, 5, 1], 3))
+
+
+// MARK: - 프로그래머스 level2 k진수에서 소수 개수 구하기
+
+func solution(_ n:Int, _ k:Int) -> Int {
     
-    while left < right {
-        let mid: Int = (left + right) / 2
-        var zeroCount: Int = 0
-        
-        for i in 0..<stones.count {
-            if stones[i] - mid <= 0 {
-                zeroCount += 1
-                
-                if zeroCount >= k {
-                    break
-                }
-            } else {
-                zeroCount = 0
+    let changeNum: String = String(n, radix: k)
+    let arr: [Int] = changeNum.split(separator: "0").map{String($0)}.filter{$0 != "1"}.map{Int($0)!}
+    var result: Int = 0
+    
+    
+    for num in arr {
+        var check: Bool = true
+        for i in 2...Int(sqrt(Double(num))) + 1 {
+            if (num % i == 0) && (i != num) {
+                check = false
+                break
             }
         }
         
-        if zeroCount >= k {
-            right = mid
-        } else {
-            left = mid + 1
-        }
+        if check { result += 1 }
     }
     
-    return left
+    return result
 }
-
-print(solution([2, 4, 5, 3, 2, 1, 4, 2, 5, 1], 3))
-
-
+print(solution(110011, 10))
