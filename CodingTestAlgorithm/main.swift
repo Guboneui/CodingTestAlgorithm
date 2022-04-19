@@ -13083,90 +13083,162 @@ import Foundation
 
 // MARK: - 프로그래머스 level2 행렬 테두리 회전하기
 
-func solution(_ rows:Int, _ columns:Int, _ queries:[[Int]]) -> [Int] {
-    var graph: [[Int]] = Array(repeating: Array(repeating: 0, count: columns), count: rows)
-    var one: Int = 1
-    for i in 0..<rows {
-        for j in 0..<columns {
-            graph[i][j] = one
-            one += 1
+//func solution(_ rows:Int, _ columns:Int, _ queries:[[Int]]) -> [Int] {
+//    var graph: [[Int]] = Array(repeating: Array(repeating: 0, count: columns), count: rows)
+//    var one: Int = 1
+//    for i in 0..<rows {
+//        for j in 0..<columns {
+//            graph[i][j] = one
+//            one += 1
+//        }
+//    }
+//
+//    var result: [Int] = []
+//
+//    for q in queries {
+//        var query: [Int] = q
+//        for i in 0..<query.count {
+//            query[i] -= 1
+//        }
+//
+//        let x1: Int = query[0]
+//        let y1: Int = query[1]
+//        let x2: Int = query[2]
+//        let y2: Int = query[3]
+//
+//        var tempX1: Int = query[0]
+//        var tempY1: Int = query[1]
+//        var tempX2: Int = query[2]
+//        var tempY2: Int = query[3]
+//        var targetIndex: [(Int, Int)] = []
+//
+//
+//        for i in 0..<4 {
+//
+//            if i==0 {
+//                while tempY1 != y2+1 {
+//                    targetIndex.append((x1, tempY1))
+//                    tempY1 += 1
+//                }
+//            } else if i==1 {
+//                while tempX1 != x2 + 1 {
+//                    if targetIndex.last! != (tempX1, y2) {
+//                        targetIndex.append((tempX1, y2))
+//                    }
+//                    tempX1 += 1
+//                }
+//            } else if i==2 {
+//                while tempY2 != y1 {
+//                    if targetIndex.last! != (x2, tempY2) {
+//                        targetIndex.append((x2, tempY2))
+//                    }
+//                    tempY2 -= 1
+//                }
+//
+//            } else {
+//                while tempX2 != x1 {
+//                    if targetIndex.last! != (tempX2, y1) {
+//                        targetIndex.append((tempX2, y1))
+//                    }
+//                    tempX2 -= 1
+//                }
+//            }
+//
+//        }
+//
+//
+//        var targetNumber: [Int] = []
+//
+//        for ti in targetIndex {
+//            targetNumber.append(graph[ti.0][ti.1])
+//        }
+//
+//        result.append(targetNumber.min()!)
+//
+//        targetNumber.insert(targetNumber.last!, at: 0)
+//
+//        for i in 0..<targetIndex.count {
+//            graph[targetIndex[i].0][targetIndex[i].1] = targetNumber[i]
+//        }
+//
+//    }
+//    return result
+//}
+//print(solution(100, 97, [[1,1,100,97]]))
+
+
+// MARK: - 프로그래머스 level2 메뉴 리뉴얼
+
+var menuCollection: [[String]:Int] = [:]
+
+func solution(_ orders:[String], _ course:[Int]) -> [String] {
+    
+    var result: [String] = []
+    
+    for o in orders {
+        let order: [String] = o.map{String($0)}.sorted()
+        for i in 2...order.count {
+            let tempVisited: [Bool] = Array(repeating: false, count: order.count)
+            tracking(targetNum: i, depth: 0, visit: tempVisited, arr: [], startIndex: 0, orderArr: order)
+        }
+        
+    }
+    
+    for i in course {
+        let tempMenu: [[String]:Int] = menuCollection.filter{$0.key.count == i}
+        let maxCount: Int = tempMenu.values.max() ?? 0
+        let menuCourse: [[String]:Int] = tempMenu.filter{$0.value == maxCount}.filter{$0.value > 1}
+        for (key, _) in menuCourse {
+            result.append(key.joined(separator: ""))
         }
     }
     
-    var result: [Int] = []
-    
-    for q in queries {
-        var query: [Int] = q
-        for i in 0..<query.count {
-            query[i] -= 1
-        }
-        
-        let x1: Int = query[0]
-        let y1: Int = query[1]
-        let x2: Int = query[2]
-        let y2: Int = query[3]
-        
-        var tempX1: Int = query[0]
-        var tempY1: Int = query[1]
-        var tempX2: Int = query[2]
-        var tempY2: Int = query[3]
-        var targetIndex: [(Int, Int)] = []
-        
-        
-        for i in 0..<4 {
-            
-            if i==0 {
-                while tempY1 != y2+1 {
-                    targetIndex.append((x1, tempY1))
-                    tempY1 += 1
-                }
-            } else if i==1 {
-                while tempX1 != x2 + 1 {
-                    if targetIndex.last! != (tempX1, y2) {
-                        targetIndex.append((tempX1, y2))
-                    }
-                    tempX1 += 1
-                }
-            } else if i==2 {
-                while tempY2 != y1 {
-                    if targetIndex.last! != (x2, tempY2) {
-                        targetIndex.append((x2, tempY2))
-                    }
-                    tempY2 -= 1
-                }
-                
-            } else {
-                while tempX2 != x1 {
-                    if targetIndex.last! != (tempX2, y1) {
-                        targetIndex.append((tempX2, y1))
-                    }
-                    tempX2 -= 1
-                }
-            }
-            
-        }
-    
-        
-        var targetNumber: [Int] = []
-        
-        for ti in targetIndex {
-            targetNumber.append(graph[ti.0][ti.1])
-        }
-        
-        result.append(targetNumber.min()!)
-        
-        targetNumber.insert(targetNumber.last!, at: 0)
-        
-        for i in 0..<targetIndex.count {
-            graph[targetIndex[i].0][targetIndex[i].1] = targetNumber[i]
-        }
-        
-        
-        
-        
-    }
-    
-    
-    return result
+    return result.sorted()
 }
-print(solution(100, 97, [[1,1,100,97]]))
+
+func tracking(targetNum: Int, depth: Int, visit: [Bool], arr: [String], startIndex: Int, orderArr: [String]) {
+    var visited: [Bool] = visit
+    if depth == targetNum {
+        if menuCollection[arr] == nil {
+            menuCollection[arr] = 1
+        } else {
+            menuCollection[arr]! += 1
+        }
+        return
+    }
+    
+    for i in startIndex..<orderArr.count where arr.last ?? "" < orderArr[i] {
+        if visited[i] == false {
+            visited[i] = true
+            tracking(targetNum: targetNum, depth: depth+1, visit: visited, arr: arr + [orderArr[i]], startIndex: startIndex+1, orderArr: orderArr)
+        }
+    }
+}
+
+print(solution(["ABCDE", "AB", "CD", "ADE", "XYZ", "XYZ", "ACD"], [2, 3, 5]))
+
+//
+//let k: [String] = ["A", "B", "C", "D", "E"]
+//var visited: [Bool] = Array(repeating: false, count: k.count)
+//
+//var temp: [String] = []
+//
+//func test(start: Int, arr: [String], v: [Bool]) {
+//    var vv: [Bool] = v
+//    if arr.count == 3 {
+//        print(arr)
+//        return
+//    }
+//
+//    for i in start..<k.count where arr.last ?? "" < k[i]{
+//        if visited[i] == false {
+//            vv[i] = true
+//            //temp.append(k[i])
+//            test(start: start+1, arr: arr + [k[i]], v: vv)
+//            //temp.removeLast()
+//            //visited[i] = false
+//        }
+//    }
+//}
+//
+//test(start: 0, arr: [], v: visited)
