@@ -13027,56 +13027,146 @@ import Foundation
 
 // MARK: - 프로그래머스 level2 양궁 대회
 
-func solution(_ n:Int, _ info:[Int]) -> [Int] {
-    var result = Array(repeating: 0, count: 11)
-    var arr = Array(repeating: 0, count: 11)
-    var ryonSum = 0
-    var apeachSum = 0
-    var scoreGap = 0 //점수차이 계산
-    var ryonWin = false
-    
-    func dfs(_ depth: Int, _ start: Int) {
-        if depth == n{
-            print(arr)
-            ryonSum = 0
-            apeachSum = 0
-            
-            for i in 0...10 {
-                if arr[i] == 0 && info[i] == 0 { continue }
-                if info[i] < arr[i] {
-                    ryonSum += 10 - i
-                } else {
-                    apeachSum += 10 - i
-                }
-            }
-            
-            if ryonSum > apeachSum {
-                ryonWin = true
-                if ryonSum - apeachSum > scoreGap {
-                    result = arr
-                    scoreGap = ryonSum - apeachSum
-                }
-            }
-            return
-        }
-        
-        for i in start...10 {
-            arr[10 - i] += 1
-            dfs(depth + 1, i)
-            arr[10 - i] -= 1
+//func solution(_ n:Int, _ info:[Int]) -> [Int] {
+//    var result = Array(repeating: 0, count: 11)
+//    var arr = Array(repeating: 0, count: 11)
+//    var ryonSum = 0
+//    var apeachSum = 0
+//    var scoreGap = 0 //점수차이 계산
+//    var ryonWin = false
+//
+//    func dfs(_ depth: Int, _ start: Int) {
+//        if depth == n{
+//            print(arr)
+//            ryonSum = 0
+//            apeachSum = 0
+//
+//            for i in 0...10 {
+//                if arr[i] == 0 && info[i] == 0 { continue }
+//                if info[i] < arr[i] {
+//                    ryonSum += 10 - i
+//                } else {
+//                    apeachSum += 10 - i
+//                }
+//            }
+//
+//            if ryonSum > apeachSum {
+//                ryonWin = true
+//                if ryonSum - apeachSum > scoreGap {
+//                    result = arr
+//                    scoreGap = ryonSum - apeachSum
+//                }
+//            }
+//            return
+//        }
+//
+//        for i in start...10 {
+//            arr[10 - i] += 1
+//            dfs(depth + 1, i)
+//            arr[10 - i] -= 1
+//        }
+//    }
+//
+//    dfs(0, 0)
+//
+//    if !ryonWin{
+//        result = [-1]
+//    }
+//
+//
+//    return result
+//}
+//
+//
+//print(solution(5, [2,1,1,1,0,0,0,0,0,0,0]))
+//
+
+// MARK: - 프로그래머스 level2 행렬 테두리 회전하기
+
+func solution(_ rows:Int, _ columns:Int, _ queries:[[Int]]) -> [Int] {
+    var graph: [[Int]] = Array(repeating: Array(repeating: 0, count: columns), count: rows)
+    var one: Int = 1
+    for i in 0..<rows {
+        for j in 0..<columns {
+            graph[i][j] = one
+            one += 1
         }
     }
     
-    dfs(0, 0)
+    var result: [Int] = []
     
-    if !ryonWin{
-        result = [-1]
+    for q in queries {
+        var query: [Int] = q
+        for i in 0..<query.count {
+            query[i] -= 1
+        }
+        
+        let x1: Int = query[0]
+        let y1: Int = query[1]
+        let x2: Int = query[2]
+        let y2: Int = query[3]
+        
+        var tempX1: Int = query[0]
+        var tempY1: Int = query[1]
+        var tempX2: Int = query[2]
+        var tempY2: Int = query[3]
+        var targetIndex: [(Int, Int)] = []
+        
+        
+        for i in 0..<4 {
+            
+            if i==0 {
+                while tempY1 != y2+1 {
+                    targetIndex.append((x1, tempY1))
+                    tempY1 += 1
+                }
+            } else if i==1 {
+                while tempX1 != x2 + 1 {
+                    if targetIndex.last! != (tempX1, y2) {
+                        targetIndex.append((tempX1, y2))
+                    }
+                    tempX1 += 1
+                }
+            } else if i==2 {
+                while tempY2 != y1 {
+                    if targetIndex.last! != (x2, tempY2) {
+                        targetIndex.append((x2, tempY2))
+                    }
+                    tempY2 -= 1
+                }
+                
+            } else {
+                while tempX2 != x1 {
+                    if targetIndex.last! != (tempX2, y1) {
+                        targetIndex.append((tempX2, y1))
+                    }
+                    tempX2 -= 1
+                }
+            }
+            
+        }
+    
+        
+        var targetNumber: [Int] = []
+        
+        for ti in targetIndex {
+            targetNumber.append(graph[ti.0][ti.1])
+        }
+        
+        result.append(targetNumber.min()!)
+        
+        targetNumber.insert(targetNumber.last!, at: 0)
+        
+        for i in 0..<targetIndex.count {
+            graph[targetIndex[i].0][targetIndex[i].1] = targetNumber[i]
+        }
+        
+        
+        
+        
     }
     
     
     return result
 }
-
-
-print(solution(5, [2,1,1,1,0,0,0,0,0,0,0]))
-
+print(solution(100, 97, [[1,1,100,97]]))
