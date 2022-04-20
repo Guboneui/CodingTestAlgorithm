@@ -13220,69 +13220,161 @@ import Foundation
 
 // MARK: - 프로그래머스 level2 문자열 압축
 
-func solution(_ s:String) -> Int {
-    let arr: [String] = s.map{String($0)}
-    var result: String = String(repeating: "a", count: 1001)
+//func solution(_ s:String) -> Int {
+//    let arr: [String] = s.map{String($0)}
+//    var result: String = String(repeating: "a", count: 1001)
+//
+//    var strCount: Int = 1
+//
+//
+//    if s.count == 1 {
+//        return 1
+//    }
+//
+//
+//    while strCount <= (s.count/2) {
+//        var sliceArr: [String] = []
+//
+//        for i in stride(from: 0, to: s.count, by: strCount) {
+//            if (i+strCount) < s.count {
+//                sliceArr.append(arr[i..<i+strCount].joined(separator: ""))
+//            } else {
+//                sliceArr.append(arr[i...].joined(separator: ""))
+//            }
+//        }
+//
+//
+//        var startIndex: Int = 1
+//        var startStr: String = sliceArr[0]
+//        var count: Int = 1
+//        var tempResult: String = ""
+//
+//        while startIndex < sliceArr.count {
+//            if startStr == sliceArr[startIndex] {
+//                count += 1
+//                sliceArr.remove(at: startIndex)
+//
+//            } else {
+//                if count == 1 {
+//                    tempResult += startStr
+//                } else if count >= 2{
+//                    tempResult += "\(count)\(startStr)"
+//                }
+//
+//                startStr = sliceArr[startIndex]
+//                startIndex += 1
+//                count = 1
+//
+//            }
+//        }
+//
+//        if count == 1 {
+//            tempResult += startStr
+//        } else if count >= 2{
+//            tempResult += "\(count)\(startStr)"
+//        }
+//
+//
+//        result = tempResult.count < result.count ? tempResult : result
+//
+//        strCount += 1
+//
+//    }
+//
+//    return result.count
+//}
+//
+//print(solution("a"))
+//
+
+// MARK: - 프로그래머스 level2 괄호 변환
+
+func solution(_ p:String) -> String {
     
-    var strCount: Int = 1
-    
-    
-    if s.count == 1 {
-        return 1
+    if p == "" {
+        return ""
     }
     
-    
-    while strCount <= (s.count/2) {
-        var sliceArr: [String] = []
-        
-        for i in stride(from: 0, to: s.count, by: strCount) {
-            if (i+strCount) < s.count {
-                sliceArr.append(arr[i..<i+strCount].joined(separator: ""))
-            } else {
-                sliceArr.append(arr[i...].joined(separator: ""))
-            }
-        }
-        
-        
-        var startIndex: Int = 1
-        var startStr: String = sliceArr[0]
-        var count: Int = 1
-        var tempResult: String = ""
-        
-        while startIndex < sliceArr.count {
-            if startStr == sliceArr[startIndex] {
-                count += 1
-                sliceArr.remove(at: startIndex)
-                
-            } else {
-                if count == 1 {
-                    tempResult += startStr
-                } else if count >= 2{
-                    tempResult += "\(count)\(startStr)"
-                }
-                
-                startStr = sliceArr[startIndex]
-                startIndex += 1
-                count = 1
-                
-            }
-        }
-        
-        if count == 1 {
-            tempResult += startStr
-        } else if count >= 2{
-            tempResult += "\(count)\(startStr)"
-        }
-        
-        
-        result = tempResult.count < result.count ? tempResult : result
-        
-        strCount += 1
-        
+    if checkRightString(p) {
+        return p
     }
     
-    return result.count
+    var result: String = ""
+    var balanceString: [String] = splitString(p)
+    
+    if checkRightString(balanceString[0]) {
+        result += balanceString[0]
+        result += solution(balanceString[1])
+    } else {
+        var emptyString: String = "("
+        emptyString += solution(balanceString[1])
+        emptyString += ")"
+        
+        var tempU: String = balanceString[0]
+        tempU.removeFirst()
+        tempU.removeLast()
+        
+        var newU: String = ""
+        
+        for i in tempU {
+            if i == "(" { newU += ")"}
+            else if i == ")" { newU += "("}
+        }
+        
+        result += emptyString + newU
+        
+    }
+    return result
 }
 
-print(solution("a"))
+func checkRightString(_ p: String) -> Bool {
+    
+    if p == "" {
+        return false
+    }
+    
+    let pString: [String] = p.map{String($0)}
+    var stack: [String] = []
+    
+    
+    for str in pString {
+        stack.append(str)
+        if stack.count >= 2 {
+            if stack[stack.count-2..<stack.count].joined(separator: "") == "()" {
+                stack.removeLast(2)
+            }
+        }
+    }
+    
+    
+    return stack.isEmpty ? true : false
+}
 
+func splitString(_ p: String) -> [String] {
+    
+    if p == "" {
+        return []
+    }
+    
+    var sum: Int = 0
+    let pString: [String] = p.map{String($0)}
+    var index: Int = 0
+    
+    for i in 0..<pString.count {
+        if pString[i] == "(" { sum += 1 }
+        else if pString[i] == ")" { sum -= 1 }
+        
+        if sum == 0 {
+            index = i
+            break
+        }
+    }
+    
+    return [pString[0...index].joined(separator: ""), pString[index+1..<pString.count].joined(separator: "")]
+}
+
+
+
+
+
+print(solution("()))((()"))
