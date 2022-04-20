@@ -13289,92 +13289,135 @@ import Foundation
 
 // MARK: - 프로그래머스 level2 괄호 변환
 
-func solution(_ p:String) -> String {
-    
-    if p == "" {
-        return ""
-    }
-    
-    if checkRightString(p) {
-        return p
-    }
-    
-    var result: String = ""
-    var balanceString: [String] = splitString(p)
-    
-    if checkRightString(balanceString[0]) {
-        result += balanceString[0]
-        result += solution(balanceString[1])
-    } else {
-        var emptyString: String = "("
-        emptyString += solution(balanceString[1])
-        emptyString += ")"
+//func solution(_ p:String) -> String {
+//
+//    if p == "" {
+//        return ""
+//    }
+//
+//    if checkRightString(p) {
+//        return p
+//    }
+//
+//    var result: String = ""
+//    var balanceString: [String] = splitString(p)
+//
+//    if checkRightString(balanceString[0]) {
+//        result += balanceString[0]
+//        result += solution(balanceString[1])
+//    } else {
+//        var emptyString: String = "("
+//        emptyString += solution(balanceString[1])
+//        emptyString += ")"
+//
+//        var tempU: String = balanceString[0]
+//        tempU.removeFirst()
+//        tempU.removeLast()
+//
+//        var newU: String = ""
+//
+//        for i in tempU {
+//            if i == "(" { newU += ")"}
+//            else if i == ")" { newU += "("}
+//        }
+//
+//        result += emptyString + newU
+//
+//    }
+//    return result
+//}
+//
+//func checkRightString(_ p: String) -> Bool {
+//
+//    if p == "" {
+//        return false
+//    }
+//
+//    let pString: [String] = p.map{String($0)}
+//    var stack: [String] = []
+//
+//
+//    for str in pString {
+//        stack.append(str)
+//        if stack.count >= 2 {
+//            if stack[stack.count-2..<stack.count].joined(separator: "") == "()" {
+//                stack.removeLast(2)
+//            }
+//        }
+//    }
+//
+//
+//    return stack.isEmpty ? true : false
+//}
+//
+//func splitString(_ p: String) -> [String] {
+//
+//    if p == "" {
+//        return []
+//    }
+//
+//    var sum: Int = 0
+//    let pString: [String] = p.map{String($0)}
+//    var index: Int = 0
+//
+//    for i in 0..<pString.count {
+//        if pString[i] == "(" { sum += 1 }
+//        else if pString[i] == ")" { sum -= 1 }
+//
+//        if sum == 0 {
+//            index = i
+//            break
+//        }
+//    }
+//
+//    return [pString[0...index].joined(separator: ""), pString[index+1..<pString.count].joined(separator: "")]
+//}
+//
+//
+//
+//
+//
+//print(solution("()))((()"))
+
+
+// MARK: - 프로그래머스 level2 오픈채팅방
+
+func solution(_ record:[String]) -> [String] {
+    var user: [String:String] = [:]
+    var userRecord: [[String]] = []
+    var result: [String] = []
+    for r in record {
+        let temp: [String] = r.split(separator: " ").map{String($0)}
         
-        var tempU: String = balanceString[0]
-        tempU.removeFirst()
-        tempU.removeLast()
-        
-        var newU: String = ""
-        
-        for i in tempU {
-            if i == "(" { newU += ")"}
-            else if i == ")" { newU += "("}
+        if temp[0] == "Enter" {
+            if user[temp[1]] == nil {
+                user[temp[1]] = temp[2]
+            } else {
+                user[temp[1]] = temp[2]
+            }
+            
+            userRecord.append([temp[1], "님이 들어왔습니다."])
+            
+        } else if temp[0] == "Leave" {
+            userRecord.append([temp[1], "님이 나갔습니다."])
+            
+        } else if temp[0] == "Change" {
+            user[temp[1]]! = temp[2]
         }
         
-        result += emptyString + newU
+        
         
     }
+    
+    
+    for i in 0..<userRecord.count {
+        userRecord[i][0] = user[userRecord[i][0]]!
+        result.append(userRecord[i].joined(separator: ""))
+        
+    }
+    
+    
     return result
 }
 
-func checkRightString(_ p: String) -> Bool {
-    
-    if p == "" {
-        return false
-    }
-    
-    let pString: [String] = p.map{String($0)}
-    var stack: [String] = []
-    
-    
-    for str in pString {
-        stack.append(str)
-        if stack.count >= 2 {
-            if stack[stack.count-2..<stack.count].joined(separator: "") == "()" {
-                stack.removeLast(2)
-            }
-        }
-    }
-    
-    
-    return stack.isEmpty ? true : false
-}
-
-func splitString(_ p: String) -> [String] {
-    
-    if p == "" {
-        return []
-    }
-    
-    var sum: Int = 0
-    let pString: [String] = p.map{String($0)}
-    var index: Int = 0
-    
-    for i in 0..<pString.count {
-        if pString[i] == "(" { sum += 1 }
-        else if pString[i] == ")" { sum -= 1 }
-        
-        if sum == 0 {
-            index = i
-            break
-        }
-    }
-    
-    return [pString[0...index].joined(separator: ""), pString[index+1..<pString.count].joined(separator: "")]
-}
-
-
-
-
-
-print(solution("()))((()"))
+print(solution(["Enter uid1234 Muzi", "Enter uid4567 Prodo","Leave uid1234","Enter uid1234 Prodo","Change uid4567 Ryan"]))
