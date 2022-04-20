@@ -13168,77 +13168,121 @@ import Foundation
 
 
 // MARK: - 프로그래머스 level2 메뉴 리뉴얼
-
-var menuCollection: [[String]:Int] = [:]
-
-func solution(_ orders:[String], _ course:[Int]) -> [String] {
-    
-    var result: [String] = []
-    
-    for o in orders {
-        let order: [String] = o.map{String($0)}.sorted()
-        for i in 2...order.count {
-            let tempVisited: [Bool] = Array(repeating: false, count: order.count)
-            tracking(targetNum: i, depth: 0, visit: tempVisited, arr: [], startIndex: 0, orderArr: order)
-        }
-        
-    }
-    
-    for i in course {
-        let tempMenu: [[String]:Int] = menuCollection.filter{$0.key.count == i}
-        let maxCount: Int = tempMenu.values.max() ?? 0
-        let menuCourse: [[String]:Int] = tempMenu.filter{$0.value == maxCount}.filter{$0.value > 1}
-        for (key, _) in menuCourse {
-            result.append(key.joined(separator: ""))
-        }
-    }
-    
-    return result.sorted()
-}
-
-func tracking(targetNum: Int, depth: Int, visit: [Bool], arr: [String], startIndex: Int, orderArr: [String]) {
-    var visited: [Bool] = visit
-    if depth == targetNum {
-        if menuCollection[arr] == nil {
-            menuCollection[arr] = 1
-        } else {
-            menuCollection[arr]! += 1
-        }
-        return
-    }
-    
-    for i in startIndex..<orderArr.count where arr.last ?? "" < orderArr[i] {
-        if visited[i] == false {
-            visited[i] = true
-            tracking(targetNum: targetNum, depth: depth+1, visit: visited, arr: arr + [orderArr[i]], startIndex: startIndex+1, orderArr: orderArr)
-        }
-    }
-}
-
-print(solution(["ABCDE", "AB", "CD", "ADE", "XYZ", "XYZ", "ACD"], [2, 3, 5]))
-
 //
-//let k: [String] = ["A", "B", "C", "D", "E"]
-//var visited: [Bool] = Array(repeating: false, count: k.count)
+//var menuCollection: [[String]:Int] = [:]
 //
-//var temp: [String] = []
+//func solution(_ orders:[String], _ course:[Int]) -> [String] {
 //
-//func test(start: Int, arr: [String], v: [Bool]) {
-//    var vv: [Bool] = v
-//    if arr.count == 3 {
-//        print(arr)
+//    var result: [String] = []
+//
+//    for o in orders {
+//        let order: [String] = o.map{String($0)}.sorted()
+//        for i in 2...order.count {
+//            let tempVisited: [Bool] = Array(repeating: false, count: order.count)
+//            tracking(targetNum: i, depth: 0, visit: tempVisited, arr: [], startIndex: 0, orderArr: order)
+//        }
+//
+//    }
+//
+//    for i in course {
+//        let tempMenu: [[String]:Int] = menuCollection.filter{$0.key.count == i}
+//        let maxCount: Int = tempMenu.values.max() ?? 0
+//        let menuCourse: [[String]:Int] = tempMenu.filter{$0.value == maxCount}.filter{$0.value > 1}
+//        for (key, _) in menuCourse {
+//            result.append(key.joined(separator: ""))
+//        }
+//    }
+//
+//    return result.sorted()
+//}
+//
+//func tracking(targetNum: Int, depth: Int, visit: [Bool], arr: [String], startIndex: Int, orderArr: [String]) {
+//    var visited: [Bool] = visit
+//    if depth == targetNum {
+//        if menuCollection[arr] == nil {
+//            menuCollection[arr] = 1
+//        } else {
+//            menuCollection[arr]! += 1
+//        }
 //        return
 //    }
 //
-//    for i in start..<k.count where arr.last ?? "" < k[i]{
+//    for i in startIndex..<orderArr.count where arr.last ?? "" < orderArr[i] {
 //        if visited[i] == false {
-//            vv[i] = true
-//            //temp.append(k[i])
-//            test(start: start+1, arr: arr + [k[i]], v: vv)
-//            //temp.removeLast()
-//            //visited[i] = false
+//            visited[i] = true
+//            tracking(targetNum: targetNum, depth: depth+1, visit: visited, arr: arr + [orderArr[i]], startIndex: startIndex+1, orderArr: orderArr)
 //        }
 //    }
 //}
 //
-//test(start: 0, arr: [], v: visited)
+//print(solution(["ABCDE", "AB", "CD", "ADE", "XYZ", "XYZ", "ACD"], [2, 3, 5]))
+
+
+// MARK: - 프로그래머스 level2 문자열 압축
+
+func solution(_ s:String) -> Int {
+    let arr: [String] = s.map{String($0)}
+    var result: String = String(repeating: "a", count: 1001)
+    
+    var strCount: Int = 1
+    
+    
+    if s.count == 1 {
+        return 1
+    }
+    
+    
+    while strCount <= (s.count/2) {
+        var sliceArr: [String] = []
+        
+        for i in stride(from: 0, to: s.count, by: strCount) {
+            if (i+strCount) < s.count {
+                sliceArr.append(arr[i..<i+strCount].joined(separator: ""))
+            } else {
+                sliceArr.append(arr[i...].joined(separator: ""))
+            }
+        }
+        
+        
+        var startIndex: Int = 1
+        var startStr: String = sliceArr[0]
+        var count: Int = 1
+        var tempResult: String = ""
+        
+        while startIndex < sliceArr.count {
+            if startStr == sliceArr[startIndex] {
+                count += 1
+                sliceArr.remove(at: startIndex)
+                
+            } else {
+                if count == 1 {
+                    tempResult += startStr
+                } else if count >= 2{
+                    tempResult += "\(count)\(startStr)"
+                }
+                
+                startStr = sliceArr[startIndex]
+                startIndex += 1
+                count = 1
+                
+            }
+        }
+        
+        if count == 1 {
+            tempResult += startStr
+        } else if count >= 2{
+            tempResult += "\(count)\(startStr)"
+        }
+        
+        
+        result = tempResult.count < result.count ? tempResult : result
+        
+        strCount += 1
+        
+    }
+    
+    return result.count
+}
+
+print(solution("a"))
+
