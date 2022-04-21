@@ -13425,79 +13425,125 @@ import Foundation
 
 // MARK: - 프로그래머스 level2 후보키
 
-var typeCollection: [[Int]] = []
-var typeCheckDict: [[Int]:Int] = [:]
+//var typeCollection: [[Int]] = []
+//var typeCheckDict: [[Int]:Int] = [:]
+//
+//func solution(_ relation:[[String]]) -> Int {
+//
+//    for i in 0..<relation[0].count {
+//        let tempVisit: [Bool] = Array(repeating: false, count: relation[0].count)
+//        combination(i, [], tempVisit, Array(0..<relation[0].count))
+//    }
+//
+//    typeCollection.sort{$0.count < $1.count}
+//    var startIndex: Int = 0
+//
+//    while startIndex < typeCollection.count {
+//        let baseKey: [Int] = typeCollection[startIndex]
+//
+//        if checkUniqueKey(relation, baseKey) == true {
+//            var findIndex: Int = startIndex + 1
+//
+//            while findIndex < typeCollection.count {
+//                // 포함하고 있다면
+//                if Set(baseKey).subtracting(Set(typeCollection[findIndex])).count == 0 {
+//                    typeCollection.remove(at: findIndex)
+//                } else {
+//                    findIndex += 1
+//                }
+//            }
+//            startIndex += 1
+//        } else {
+//            typeCollection.remove(at: startIndex)
+//        }
+//    }
+//
+//    return typeCollection.count
+//}
+//
+//func checkUniqueKey(_ inputData: [[String]], _ inputType: [Int]) -> Bool {
+//    var checkUniqueDict: [[String]:Int] = [:]
+//
+//    for i in 0..<inputData.count {
+//        var temp: [String] = []
+//        for typeIndex in inputType {
+//            temp.append(inputData[i][typeIndex])
+//        }
+//        if checkUniqueDict[temp] == nil {
+//            checkUniqueDict[temp] = 1
+//        } else {
+//            checkUniqueDict[temp]! += 1
+//        }
+//    }
+//
+//    return checkUniqueDict.keys.count == inputData.count ? true : false
+//}
+//
+//func combination(_ start: Int, _ arr: [Int], _ inputVisit: [Bool], _ inputArr: [Int]) {
+//
+//    if arr.count > 0 {
+//        if typeCheckDict[arr] == nil {
+//            typeCheckDict[arr] = 1
+//            typeCollection.append(arr)
+//        }
+//    }
+//
+//    var visited: [Bool] = inputVisit
+//    for i in start..<inputArr.count {
+//        if visited[i] == false {
+//            visited[i] = true
+//            combination(i+1, arr + [inputArr[i]], visited, inputArr)
+//        }
+//    }
+//}
+//
+//print(solution([["100","ryan","music","2"],["200","apeach","math","2"],["300","tube","computer","3"],["400","con","computer","4"],["500","muzi","music","3"],["600","apeach","music","2"]]))
+//
 
-func solution(_ relation:[[String]]) -> Int {
+// MARK: - 프로그래머스 level3 다단계 칫솔 판매
+
+func solution(_ enroll:[String], _ referral:[String], _ seller:[String], _ amount:[Int]) -> [Int] {
     
-    for i in 0..<relation[0].count {
-        let tempVisit: [Bool] = Array(repeating: false, count: relation[0].count)
-        combination(i, [], tempVisit, Array(0..<relation[0].count))
+    var sellerGraphDict: [String:String] = [:] // key: 자식 노드, value: 부모 노드로 가정한 딕셔너리
+    var resultDict: [String:Int] = [:]
+    for i in 0..<enroll.count {
+        if sellerGraphDict[enroll[i]] == nil {
+            sellerGraphDict[enroll[i]] = referral[i]
+        }
+        
+        if resultDict[enroll[i]] == nil {
+            resultDict[enroll[i]] = 0
+        }
     }
-    
-    typeCollection.sort{$0.count < $1.count}
-    var startIndex: Int = 0
-    
-    while startIndex < typeCollection.count {
-        let baseKey: [Int] = typeCollection[startIndex]
 
-        if checkUniqueKey(relation, baseKey) == true {
-            var findIndex: Int = startIndex + 1
+    
+    for i in 0..<seller.count {
+        var parentNode: String = seller[i]
+        var startMoney: Int = amount[i] * 100
+ 
+        while parentNode != "-" && startMoney > 0 {
+            resultDict[parentNode]! += (startMoney - startMoney/10)
             
-            while findIndex < typeCollection.count {
-                // 포함하고 있다면
-                if Set(baseKey).subtracting(Set(typeCollection[findIndex])).count == 0 {
-                    typeCollection.remove(at: findIndex)
-                } else {
-                    findIndex += 1
-                }
-            }
-            startIndex += 1
-        } else {
-            typeCollection.remove(at: startIndex)
+            parentNode = sellerGraphDict[parentNode]!
+            startMoney /= 10
+
         }
     }
     
-    return typeCollection.count
+    var result: [Int] = []
+    for user in enroll {
+        result.append(resultDict[user]!)
+    }
+    
+    return result
 }
 
-func checkUniqueKey(_ inputData: [[String]], _ inputType: [Int]) -> Bool {
-    var checkUniqueDict: [[String]:Int] = [:]
-    
-    for i in 0..<inputData.count {
-        var temp: [String] = []
-        for typeIndex in inputType {
-            temp.append(inputData[i][typeIndex])
-        }
-        if checkUniqueDict[temp] == nil {
-            checkUniqueDict[temp] = 1
-        } else {
-            checkUniqueDict[temp]! += 1
-        }
-    }
-    
-    return checkUniqueDict.keys.count == inputData.count ? true : false
-}
+print(solution(["john", "mary", "edward", "sam", "emily", "jaimie", "tod", "young"],
+               ["-", "-", "mary", "edward", "mary", "mary", "jaimie", "edward"],
+               ["young", "john", "tod", "emily", "mary"],
+               [12, 4, 2, 5, 10]))
 
-func combination(_ start: Int, _ arr: [Int], _ inputVisit: [Bool], _ inputArr: [Int]) {
-    
-    if arr.count > 0 {
-        if typeCheckDict[arr] == nil {
-            typeCheckDict[arr] = 1
-            typeCollection.append(arr)
-        }
-    }
-    
-    var visited: [Bool] = inputVisit
-    for i in start..<inputArr.count {
-        if visited[i] == false {
-            visited[i] = true
-            combination(i+1, arr + [inputArr[i]], visited, inputArr)
-        }
-    }
-}
 
-print(solution([["100","ryan","music","2"],["200","apeach","math","2"],["300","tube","computer","3"],["400","con","computer","4"],["500","muzi","music","3"],["600","apeach","music","2"]]))
 
 
 
