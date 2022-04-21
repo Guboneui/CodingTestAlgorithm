@@ -13382,42 +13382,123 @@ import Foundation
 
 // MARK: - 프로그래머스 level2 오픈채팅방
 
-func solution(_ record:[String]) -> [String] {
-    var user: [String:String] = [:]
-    var userRecord: [[String]] = []
-    var result: [String] = []
-    for r in record {
-        let temp: [String] = r.split(separator: " ").map{String($0)}
-        
-        if temp[0] == "Enter" {
-            if user[temp[1]] == nil {
-                user[temp[1]] = temp[2]
-            } else {
-                user[temp[1]] = temp[2]
+//func solution(_ record:[String]) -> [String] {
+//    var user: [String:String] = [:]
+//    var userRecord: [[String]] = []
+//    var result: [String] = []
+//    for r in record {
+//        let temp: [String] = r.split(separator: " ").map{String($0)}
+//
+//        if temp[0] == "Enter" {
+//            if user[temp[1]] == nil {
+//                user[temp[1]] = temp[2]
+//            } else {
+//                user[temp[1]] = temp[2]
+//            }
+//
+//            userRecord.append([temp[1], "님이 들어왔습니다."])
+//
+//        } else if temp[0] == "Leave" {
+//            userRecord.append([temp[1], "님이 나갔습니다."])
+//
+//        } else if temp[0] == "Change" {
+//            user[temp[1]]! = temp[2]
+//        }
+//
+//
+//
+//    }
+//
+//
+//    for i in 0..<userRecord.count {
+//        userRecord[i][0] = user[userRecord[i][0]]!
+//        result.append(userRecord[i].joined(separator: ""))
+//
+//    }
+//
+//
+//    return result
+//}
+//
+//print(solution(["Enter uid1234 Muzi", "Enter uid4567 Prodo","Leave uid1234","Enter uid1234 Prodo","Change uid4567 Ryan"]))
+
+
+// MARK: - 프로그래머스 level2 후보키
+
+var typeCollection: [[Int]] = []
+var typeCheckDict: [[Int]:Int] = [:]
+
+func solution(_ relation:[[String]]) -> Int {
+    
+    for i in 0..<relation[0].count {
+        let tempVisit: [Bool] = Array(repeating: false, count: relation[0].count)
+        combination(i, [], tempVisit, Array(0..<relation[0].count))
+    }
+    
+    typeCollection.sort{$0.count < $1.count}
+    var startIndex: Int = 0
+    
+    while startIndex < typeCollection.count {
+        let baseKey: [Int] = typeCollection[startIndex]
+
+        if checkUniqueKey(relation, baseKey) == true {
+            var findIndex: Int = startIndex + 1
+            
+            while findIndex < typeCollection.count {
+                // 포함하고 있다면
+                if Set(baseKey).subtracting(Set(typeCollection[findIndex])).count == 0 {
+                    typeCollection.remove(at: findIndex)
+                } else {
+                    findIndex += 1
+                }
             }
-            
-            userRecord.append([temp[1], "님이 들어왔습니다."])
-            
-        } else if temp[0] == "Leave" {
-            userRecord.append([temp[1], "님이 나갔습니다."])
-            
-        } else if temp[0] == "Change" {
-            user[temp[1]]! = temp[2]
+            startIndex += 1
+        } else {
+            typeCollection.remove(at: startIndex)
         }
-        
-        
-        
     }
     
-    
-    for i in 0..<userRecord.count {
-        userRecord[i][0] = user[userRecord[i][0]]!
-        result.append(userRecord[i].joined(separator: ""))
-        
-    }
-    
-    
-    return result
+    return typeCollection.count
 }
 
-print(solution(["Enter uid1234 Muzi", "Enter uid4567 Prodo","Leave uid1234","Enter uid1234 Prodo","Change uid4567 Ryan"]))
+func checkUniqueKey(_ inputData: [[String]], _ inputType: [Int]) -> Bool {
+    var checkUniqueDict: [[String]:Int] = [:]
+    
+    for i in 0..<inputData.count {
+        var temp: [String] = []
+        for typeIndex in inputType {
+            temp.append(inputData[i][typeIndex])
+        }
+        if checkUniqueDict[temp] == nil {
+            checkUniqueDict[temp] = 1
+        } else {
+            checkUniqueDict[temp]! += 1
+        }
+    }
+    
+    return checkUniqueDict.keys.count == inputData.count ? true : false
+}
+
+func combination(_ start: Int, _ arr: [Int], _ inputVisit: [Bool], _ inputArr: [Int]) {
+    
+    if arr.count > 0 {
+        if typeCheckDict[arr] == nil {
+            typeCheckDict[arr] = 1
+            typeCollection.append(arr)
+        }
+    }
+    
+    var visited: [Bool] = inputVisit
+    for i in start..<inputArr.count {
+        if visited[i] == false {
+            visited[i] = true
+            combination(i+1, arr + [inputArr[i]], visited, inputArr)
+        }
+    }
+}
+
+print(solution([["100","ryan","music","2"],["200","apeach","math","2"],["300","tube","computer","3"],["400","con","computer","4"],["500","muzi","music","3"],["600","apeach","music","2"]]))
+
+
+
+
