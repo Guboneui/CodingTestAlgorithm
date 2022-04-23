@@ -13502,49 +13502,138 @@ import Foundation
 
 // MARK: - 프로그래머스 level3 다단계 칫솔 판매
 
-func solution(_ enroll:[String], _ referral:[String], _ seller:[String], _ amount:[Int]) -> [Int] {
+//func solution(_ enroll:[String], _ referral:[String], _ seller:[String], _ amount:[Int]) -> [Int] {
+//
+//    var sellerGraphDict: [String:String] = [:] // key: 자식 노드, value: 부모 노드로 가정한 딕셔너리
+//    var resultDict: [String:Int] = [:]
+//    for i in 0..<enroll.count {
+//        if sellerGraphDict[enroll[i]] == nil {
+//            sellerGraphDict[enroll[i]] = referral[i]
+//        }
+//
+//        if resultDict[enroll[i]] == nil {
+//            resultDict[enroll[i]] = 0
+//        }
+//    }
+//
+//
+//    for i in 0..<seller.count {
+//        var parentNode: String = seller[i]
+//        var startMoney: Int = amount[i] * 100
+//
+//        while parentNode != "-" && startMoney > 0 {
+//            resultDict[parentNode]! += (startMoney - startMoney/10)
+//
+//            parentNode = sellerGraphDict[parentNode]!
+//            startMoney /= 10
+//
+//        }
+//    }
+//
+//    var result: [Int] = []
+//    for user in enroll {
+//        result.append(resultDict[user]!)
+//    }
+//
+//    return result
+//}
+//
+//print(solution(["john", "mary", "edward", "sam", "emily", "jaimie", "tod", "young"],
+//               ["-", "-", "mary", "edward", "mary", "mary", "jaimie", "edward"],
+//               ["young", "john", "tod", "emily", "mary"],
+//               [12, 4, 2, 5, 10]))
+//
+
+
+
+// MARK: - 프로그래머스 level3 합승 택시 요금
+
+func solution(_ n:Int, _ s:Int, _ a:Int, _ b:Int, _ fares:[[Int]]) -> Int {
     
-    var sellerGraphDict: [String:String] = [:] // key: 자식 노드, value: 부모 노드로 가정한 딕셔너리
-    var resultDict: [String:Int] = [:]
-    for i in 0..<enroll.count {
-        if sellerGraphDict[enroll[i]] == nil {
-            sellerGraphDict[enroll[i]] = referral[i]
+    var graph: [[Int]] = Array(repeating: [Int](), count: n+1)
+    var startFee: [Int] = Array(repeating: 99999, count: n+1)
+    var rootAFee: [Int] = Array(repeating: 99999, count: n+1)
+    var rootBFee: [Int] = Array(repeating: 99999, count: n+1)
+    var graphFees: [[Int]] = Array(repeating: Array(repeating: 0, count: n+1), count: n+1)
+    
+    var aRoot: [(Int, Int)] = []
+    var bRoot: [(Int, Int)] = []
+    
+    for fare in fares {
+        graph[fare[0]].append(fare[1])
+        graph[fare[1]].append(fare[0])
+        
+        graphFees[fare[0]][fare[1]] = fare[2]
+        graphFees[fare[1]][fare[0]] = fare[2]
+        
+        if fare[0] == a {
+            aRoot.append((fare[1], fare[2]))
         }
         
-        if resultDict[enroll[i]] == nil {
-            resultDict[enroll[i]] = 0
+        if fare[1] == a {
+            aRoot.append((fare[0], fare[2]))
         }
+        
+        if fare[0] == b {
+            bRoot.append((fare[1], fare[2]))
+        }
+        
+        if fare[1] == b {
+            bRoot.append((fare[0], fare[2]))
+        }
+        
     }
+    
+    let minARoot: Int = aRoot.sorted{$0.1 < $1.1}[0].0
+    let minBRoot: Int = bRoot.sorted{$0.1 < $1.1}[0].0
 
     
-    for i in 0..<seller.count {
-        var parentNode: String = seller[i]
-        var startMoney: Int = amount[i] * 100
- 
-        while parentNode != "-" && startMoney > 0 {
-            resultDict[parentNode]! += (startMoney - startMoney/10)
+    func bfs(_ v: Int, _ length: Int, _ feeGraph: [Int]) -> [Int]{
+        var queue: [Int] = [v]
+        var visited: [Bool] = Array(repeating: false, count: length+1)
+        var targetFeeGraph: [Int] = feeGraph
+        targetFeeGraph[v] = 0
+        while !queue.isEmpty {
+            let popValue: Int = queue.removeFirst()
             
-            parentNode = sellerGraphDict[parentNode]!
-            startMoney /= 10
-
+            
+            if visited[popValue] == false {
+                queue += graph[popValue]
+                visited[popValue] = true
+                
+                for node in graph[popValue] {
+                    targetFeeGraph[node] = min(targetFeeGraph[node], targetFeeGraph[popValue] + graphFees[popValue][node])
+                }
+                
+                
+            }
+            
         }
+        
+        return targetFeeGraph
+        
     }
+  
+    var targetArr: [Int] = [s, minARoot, minBRoot]
     
-    var result: [Int] = []
-    for user in enroll {
-        result.append(resultDict[user]!)
+    var result: Int = Int.max
+    
+    for i in 1...n {
+        
+        startFee = bfs(s, n+1, startFee)
+        rootAFee = bfs(i, n+1, rootAFee)
+        
+        result = min(result, startFee[i] + rootAFee[a] + rootAFee[b])
+        
+        startFee = Array(repeating: 99999, count: n+1)
+        rootAFee = Array(repeating: 99999, count: n+1)
+        
     }
+
+    
     
     return result
 }
 
-print(solution(["john", "mary", "edward", "sam", "emily", "jaimie", "tod", "young"],
-               ["-", "-", "mary", "edward", "mary", "mary", "jaimie", "edward"],
-               ["young", "john", "tod", "emily", "mary"],
-               [12, 4, 2, 5, 10]))
-
-
-
-
-
+print(solution(7, 3, 4, 1, [[5, 7, 9], [4, 6, 4], [3, 6, 1], [3, 2, 3], [2, 1, 6]]))
 
