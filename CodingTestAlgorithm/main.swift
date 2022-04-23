@@ -13550,87 +13550,39 @@ import Foundation
 
 func solution(_ n:Int, _ s:Int, _ a:Int, _ b:Int, _ fares:[[Int]]) -> Int {
     
-    var graph: [[Int]] = Array(repeating: [Int](), count: n+1)
-    var startFee: [Int] = Array(repeating: 99999, count: n+1)
-    var rootAFee: [Int] = Array(repeating: 99999, count: n+1)
-    var rootBFee: [Int] = Array(repeating: 99999, count: n+1)
-    var graphFees: [[Int]] = Array(repeating: Array(repeating: 0, count: n+1), count: n+1)
+    var result: Int = 0
+    var node: [[Int]] = []
     
-    var aRoot: [(Int, Int)] = []
-    var bRoot: [(Int, Int)] = []
+    for i in 0...n {
+        var arr: [Int] = []
+        for _ in 0...n {
+            arr.append(999999)
+        }
+        node.append(arr)
+        node[i][i] = 0
+    }
     
     for fare in fares {
-        graph[fare[0]].append(fare[1])
-        graph[fare[1]].append(fare[0])
-        
-        graphFees[fare[0]][fare[1]] = fare[2]
-        graphFees[fare[1]][fare[0]] = fare[2]
-        
-        if fare[0] == a {
-            aRoot.append((fare[1], fare[2]))
-        }
-        
-        if fare[1] == a {
-            aRoot.append((fare[0], fare[2]))
-        }
-        
-        if fare[0] == b {
-            bRoot.append((fare[1], fare[2]))
-        }
-        
-        if fare[1] == b {
-            bRoot.append((fare[0], fare[2]))
-        }
-        
+        node[fare[0]][fare[1]] = fare[2]
+        node[fare[1]][fare[0]] = fare[2]
     }
+   
     
-    let minARoot: Int = aRoot.sorted{$0.1 < $1.1}[0].0
-    let minBRoot: Int = bRoot.sorted{$0.1 < $1.1}[0].0
-
-    
-    func bfs(_ v: Int, _ length: Int, _ feeGraph: [Int]) -> [Int]{
-        var queue: [Int] = [v]
-        var visited: [Bool] = Array(repeating: false, count: length+1)
-        var targetFeeGraph: [Int] = feeGraph
-        targetFeeGraph[v] = 0
-        while !queue.isEmpty {
-            let popValue: Int = queue.removeFirst()
-            
-            
-            if visited[popValue] == false {
-                queue += graph[popValue]
-                visited[popValue] = true
-                
-                for node in graph[popValue] {
-                    targetFeeGraph[node] = min(targetFeeGraph[node], targetFeeGraph[popValue] + graphFees[popValue][node])
+    for k in 1...n {
+        for i in 1...n {
+            for j in 1...n {
+                if node[i][j] > node[i][k] + node[k][j] {
+                    node[i][j] = node[i][k] + node[k][j]
                 }
-                
-                
             }
-            
         }
-        
-        return targetFeeGraph
-        
     }
-  
-    var targetArr: [Int] = [s, minARoot, minBRoot]
     
-    var result: Int = Int.max
+    result = node[s][a] + node[s][b]
     
     for i in 1...n {
-        
-        startFee = bfs(s, n+1, startFee)
-        rootAFee = bfs(i, n+1, rootAFee)
-        
-        result = min(result, startFee[i] + rootAFee[a] + rootAFee[b])
-        
-        startFee = Array(repeating: 99999, count: n+1)
-        rootAFee = Array(repeating: 99999, count: n+1)
-        
+        result = min(result, node[s][i] + node[i][a] + node[i][b])
     }
-
-    
     
     return result
 }
