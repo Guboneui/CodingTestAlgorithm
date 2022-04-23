@@ -13548,44 +13548,128 @@ import Foundation
 
 // MARK: - 프로그래머스 level3 합승 택시 요금
 
-func solution(_ n:Int, _ s:Int, _ a:Int, _ b:Int, _ fares:[[Int]]) -> Int {
-    
+//func solution(_ n:Int, _ s:Int, _ a:Int, _ b:Int, _ fares:[[Int]]) -> Int {
+//
+//    var result: Int = 0
+//    var node: [[Int]] = []
+//
+//    for i in 0...n {
+//        var arr: [Int] = []
+//        for _ in 0...n {
+//            arr.append(999999)
+//        }
+//        node.append(arr)
+//        node[i][i] = 0
+//    }
+//
+//    for fare in fares {
+//        node[fare[0]][fare[1]] = fare[2]
+//        node[fare[1]][fare[0]] = fare[2]
+//    }
+//
+//
+//    for k in 1...n {
+//        for i in 1...n {
+//            for j in 1...n {
+//                if node[i][j] > node[i][k] + node[k][j] {
+//                    node[i][j] = node[i][k] + node[k][j]
+//
+//                }
+//            }
+//        }
+//    }
+//
+//    result = node[s][a] + node[s][b]
+//
+//    for i in 1...n {
+//        result = min(result, node[s][i] + node[i][a] + node[i][b])
+//    }
+//
+//    return result
+//}
+//
+//print(solution(6, 4, 6, 2, [[4, 1, 10], [3, 5, 24], [5, 6, 2], [3, 1, 41], [5, 1, 24], [4, 6, 50], [2, 4, 66], [2, 3, 22], [1, 6, 25]]))
+//
+
+
+// MARK: - 프로그래머스 level3 양과 늑대
+
+func solution(_ info:[Int], _ edges:[[Int]]) -> Int {
     var result: Int = 0
-    var node: [[Int]] = []
+    var copyInfo: [Int] = info
+    var visited: [Bool] = Array(repeating: false, count: info.count)
+    var graph: [[Int]] = Array(repeating: [Int](), count: info.count)
+    for edge in edges {
+        graph[edge[0]].append(edge[1])
+        graph[edge[1]].append(edge[0])
+    }
     
-    for i in 0...n {
-        var arr: [Int] = []
-        for _ in 0...n {
-            arr.append(999999)
+    print(graph)
+    var countedSheep: Int = 0
+    var countedWolf: Int = 0
+    var checkArr: [Int] = []
+    
+    func tracking(_ startNode: Int, _ stack: [Int]) {
+
+        //if countedSheep > info.filter{$0 == 0}.count { return }
+        
+        
+        if countedSheep > 1 && countedSheep <= countedWolf {
+            return
         }
-        node.append(arr)
-        node[i][i] = 0
-    }
-    
-    for fare in fares {
-        node[fare[0]][fare[1]] = fare[2]
-        node[fare[1]][fare[0]] = fare[2]
-    }
-   
-    
-    for k in 1...n {
-        for i in 1...n {
-            for j in 1...n {
-                if node[i][j] > node[i][k] + node[k][j] {
-                    node[i][j] = node[i][k] + node[k][j]
+        
+        if countedSheep > countedWolf {
+            result = max(result, countedSheep)
+        }
+        
+        
+        
+        
+        
+        for node in stack {
+            if visited[node] == false {
+                visited[node] = true
+                checkArr.append(node)
+                
+                
+                if info[node] == 1 {
+                    if countedSheep <= countedWolf + 1 {
+                        let lastNode: Int = checkArr.removeLast()
+                        visited[node] = false
+                        //countedWolf -= 1
+                       // let lastNode: Int = checkArr.removeLast()
+                        
+                        tracking(lastNode, graph[lastNode])
+                        //visited[lastNode] = false
+                    } else {
+                        countedWolf += 1
+                        tracking(node, graph[node])
+                        countedWolf -= 1
+                        checkArr.removeLast()
+                        visited[node] = false
+                    }
+                } else {
+                    if copyInfo[node] == 0 {
+                        countedSheep += 1
+                        copyInfo[node] = -1
+                    }
+                    
+                    tracking(node, graph[node])
+                    //checkArr.removeLast()
+                    //visited[node] = false
+                    
                 }
             }
         }
+        
+        
+        
+        
     }
     
-    result = node[s][a] + node[s][b]
-    
-    for i in 1...n {
-        result = min(result, node[s][i] + node[i][a] + node[i][b])
-    }
-    
+    tracking(0, [0])
+    print(result)
     return result
 }
 
-print(solution(7, 3, 4, 1, [[5, 7, 9], [4, 6, 4], [3, 6, 1], [3, 2, 3], [2, 1, 6]]))
-
+solution([0,1,0,1,1,0,1,0,0,1,0], [[0,1],[0,2],[1,3],[1,4],[2,5],[2,6],[3,7],[4,8],[6,9],[9,10]])
