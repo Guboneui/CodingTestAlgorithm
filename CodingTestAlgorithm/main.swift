@@ -13596,80 +13596,35 @@ import Foundation
 
 func solution(_ info:[Int], _ edges:[[Int]]) -> Int {
     var result: Int = 0
-    var copyInfo: [Int] = info
-    var visited: [Bool] = Array(repeating: false, count: info.count)
     var graph: [[Int]] = Array(repeating: [Int](), count: info.count)
     for edge in edges {
         graph[edge[0]].append(edge[1])
-        graph[edge[1]].append(edge[0])
-    }
-    
-    print(graph)
-    var countedSheep: Int = 0
-    var countedWolf: Int = 0
-    var checkArr: [Int] = []
-    
-    func tracking(_ startNode: Int, _ stack: [Int]) {
-
-        //if countedSheep > info.filter{$0 == 0}.count { return }
-        
-        
-        if countedSheep > 1 && countedSheep <= countedWolf {
-            return
-        }
-        
-        if countedSheep > countedWolf {
-            result = max(result, countedSheep)
-        }
-        
-        
-        
-        
-        
-        for node in stack {
-            if visited[node] == false {
-                visited[node] = true
-                checkArr.append(node)
-                
-                
-                if info[node] == 1 {
-                    if countedSheep <= countedWolf + 1 {
-                        let lastNode: Int = checkArr.removeLast()
-                        visited[node] = false
-                        //countedWolf -= 1
-                       // let lastNode: Int = checkArr.removeLast()
-                        
-                        tracking(lastNode, graph[lastNode])
-                        //visited[lastNode] = false
-                    } else {
-                        countedWolf += 1
-                        tracking(node, graph[node])
-                        countedWolf -= 1
-                        checkArr.removeLast()
-                        visited[node] = false
-                    }
-                } else {
-                    if copyInfo[node] == 0 {
-                        countedSheep += 1
-                        copyInfo[node] = -1
-                    }
-                    
-                    tracking(node, graph[node])
-                    //checkArr.removeLast()
-                    //visited[node] = false
-                    
-                }
-            }
-        }
-        
-        
-        
         
     }
     
-    tracking(0, [0])
-    print(result)
+    func tracking(_ node: Int, _ edge: [Int], _ sheep: Int, _ wolf: Int) {
+        var nextEdge: [Int] = edge
+        var countedSheep: Int = sheep
+        var countedWolf: Int = wolf
+        
+        if info[node] == 0 { countedSheep += 1 }
+        else { countedWolf += 1 }
+        
+        if countedWolf >= countedSheep { return }
+        result = max(result, countedSheep)
+        
+        nextEdge.append(contentsOf: graph[node])
+        if let index = nextEdge.firstIndex(of: node) {
+            nextEdge.remove(at: index)
+        }
+        
+        for i in nextEdge {
+            tracking(i, nextEdge, countedSheep, countedWolf)
+        }
+    }
+    
+    tracking(0, [0], 0, 0)
     return result
 }
 
-solution([0,1,0,1,1,0,1,0,0,1,0], [[0,1],[0,2],[1,3],[1,4],[2,5],[2,6],[3,7],[4,8],[6,9],[9,10]])
+solution([0,0,1,1,1,0,1,0,1,0,1,1], [[0,1],[1,2],[1,4],[0,8],[8,7],[9,10],[9,11],[4,3],[6,5],[4,6],[8,9]])
