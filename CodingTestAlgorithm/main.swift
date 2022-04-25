@@ -13633,70 +13633,52 @@ import Foundation
 
 func solution(_ board:[[Int]], _ skill:[[Int]]) -> Int {
     
-    var graph: [[Int]] = board
-    var resultCount: Int = board.count * board[0].count
+    var addNumBoard: [[Int]] = Array(repeating: Array(repeating: 0, count: board[0].count+1), count: board.count+1)
+    for sk in skill {
+        changeBoard(&addNumBoard, sk)
+    }
+    addVertical(&addNumBoard)
+    
+    
+    return addHotizontal(&addNumBoard, board)
+}
 
-    func bfs(x1: Int, y1: Int, x2: Int, y2: Int, type: Int, degree: Int) {
-        let dx: [Int] = [0, 1]
-        let dy: [Int] = [1, 0]
-        
-        var queue: [(Int, Int)] = [(x1, y1)]
-        var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: graph[0].count), count: graph.count)
-        
-        if type == 1 { graph[queue[0].0][queue[0].1] -= degree}
-        else { graph[queue[0].0][queue[0].1] += degree }
-        
-        
-        while !queue.isEmpty {
-            
-            let popValue: (Int, Int) = queue.removeLast()
-            
-            if visited[popValue.0][popValue.1] == false {
-                visited[popValue.0][popValue.1] = true
-                for i in 0..<dx.count {
-                    let nx: Int = popValue.0 + dx[i]
-                    let ny: Int = popValue.1 + dy[i]
-                    
-                    if nx<=x2 && ny<=y2 && visited[nx][ny] == false {
-                        
-                        if type == 1 {graph[nx][ny] -= degree}
-                        else {graph[nx][ny] += degree}
-                    
-                        queue.append((nx, ny))
-                    }
-                }
+
+func addHotizontal(_ board: inout [[Int]], _ original: [[Int]]) -> Int {
+    var count: Int = 0
+    
+    for i in 0..<board.count-1 {
+        for j in 0..<board[0].count-1 {
+            if j != 0 {
+                board[i][j] += board[i][j-1]
+            }
+            if board[i][j] + original[i][j] > 0 {
+                count += 1
             }
         }
     }
-
-    for sk in skill {
-        let type: Int = sk[0]
-        let r1: Int = sk[1]
-        let c1: Int = sk[2]
-        let r2: Int = sk[3]
-        let c2: Int = sk[4]
-        let degree: Int = sk[5]
-        
-        
-        bfs(x1: r1, y1: c1, x2: r2, y2: c2, type: type, degree: degree)
-        
-        
-    }
-
-    
-    var result: Int = 0
-    
-    for i in 0..<graph.count {
-        for j in 0..<graph[0].count {
-            if graph[i][j] > 0 {result += 1}
-        }
-    }
-
-
-    
-    print(resultCount)
-    
-    return result
+    return count
 }
 
+func addVertical(_ board: inout [[Int]]) {
+    for j in 0..<board[0].count-1 {
+        for i in 1..<board.count-1 {
+            board[i][j] += board[i-1][j]
+        }
+    }
+}
+
+func changeBoard(_ board: inout [[Int]], _ skill: [Int]) {
+    let start: (Int, Int) = (skill[1], skill[2])
+    let end: (Int, Int) = (skill[3], skill[4])
+    let degree: Int = skill[0] == 2 ? skill[5] : -skill[5]
+    
+    board[start.0][start.1] += degree
+    board[end.0+1][end.1+1] += degree
+    board[start.0][end.1+1] -= degree
+    board[end.0+1][start.1] -= degree
+}
+
+
 print(solution([[5,5,5,5,5],[5,5,5,5,5],[5,5,5,5,5],[5,5,5,5,5]], [[1,0,0,3,4,4],[1,2,0,2,3,2],[2,1,0,3,1,2],[1,0,1,3,3,1]]))
+
