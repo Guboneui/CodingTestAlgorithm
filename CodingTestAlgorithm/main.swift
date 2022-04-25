@@ -13634,18 +13634,41 @@ import Foundation
 func solution(_ board:[[Int]], _ skill:[[Int]]) -> Int {
     
     var graph: [[Int]] = board
-    
-    func changeGraph(_ inputType: Int, _ inputDegree: Int, x1: Int, y1: Int, x2: Int, y2: Int) {
-        for x in x1...x2 {
-            for y in y1...y2 {
-                if inputType == 1 {graph[x][y] -= inputDegree}
-                else {graph[x][y] += inputDegree}
-                
+    var resultCount: Int = board.count * board[0].count
+
+    func bfs(x1: Int, y1: Int, x2: Int, y2: Int, type: Int, degree: Int) {
+        let dx: [Int] = [0, 1]
+        let dy: [Int] = [1, 0]
+        
+        var queue: [(Int, Int)] = [(x1, y1)]
+        var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: graph[0].count), count: graph.count)
+        
+        if type == 1 { graph[queue[0].0][queue[0].1] -= degree}
+        else { graph[queue[0].0][queue[0].1] += degree }
+        
+        
+        while !queue.isEmpty {
+            
+            let popValue: (Int, Int) = queue.removeLast()
+            
+            if visited[popValue.0][popValue.1] == false {
+                visited[popValue.0][popValue.1] = true
+                for i in 0..<dx.count {
+                    let nx: Int = popValue.0 + dx[i]
+                    let ny: Int = popValue.1 + dy[i]
+                    
+                    if nx<=x2 && ny<=y2 && visited[nx][ny] == false {
+                        
+                        if type == 1 {graph[nx][ny] -= degree}
+                        else {graph[nx][ny] += degree}
+                    
+                        queue.append((nx, ny))
+                    }
+                }
             }
         }
     }
-    
-    
+
     for sk in skill {
         let type: Int = sk[0]
         let r1: Int = sk[1]
@@ -13655,11 +13678,12 @@ func solution(_ board:[[Int]], _ skill:[[Int]]) -> Int {
         let degree: Int = sk[5]
         
         
-        changeGraph(type, degree, x1: r1, y1: c1, x2: r2, y2: c2)
+        bfs(x1: r1, y1: c1, x2: r2, y2: c2, type: type, degree: degree)
         
         
     }
 
+    
     var result: Int = 0
     
     for i in 0..<graph.count {
@@ -13667,8 +13691,10 @@ func solution(_ board:[[Int]], _ skill:[[Int]]) -> Int {
             if graph[i][j] > 0 {result += 1}
         }
     }
+
+
     
-    
+    print(resultCount)
     
     return result
 }
