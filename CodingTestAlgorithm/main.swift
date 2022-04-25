@@ -13594,37 +13594,83 @@ import Foundation
 
 // MARK: - 프로그래머스 level3 양과 늑대
 
-func solution(_ info:[Int], _ edges:[[Int]]) -> Int {
+//func solution(_ info:[Int], _ edges:[[Int]]) -> Int {
+//    var result: Int = 0
+//    var graph: [[Int]] = Array(repeating: [Int](), count: info.count)
+//    for edge in edges {
+//        graph[edge[0]].append(edge[1])
+//
+//    }
+//
+//    func tracking(_ node: Int, _ edge: [Int], _ sheep: Int, _ wolf: Int) {
+//        var nextEdge: [Int] = edge
+//        var countedSheep: Int = sheep
+//        var countedWolf: Int = wolf
+//
+//        if info[node] == 0 { countedSheep += 1 }
+//        else { countedWolf += 1 }
+//
+//        if countedWolf >= countedSheep { return }
+//        result = max(result, countedSheep)
+//
+//        nextEdge.append(contentsOf: graph[node])
+//        if let index = nextEdge.firstIndex(of: node) {
+//            nextEdge.remove(at: index)
+//        }
+//
+//        for i in nextEdge {
+//            tracking(i, nextEdge, countedSheep, countedWolf)
+//        }
+//    }
+//
+//    tracking(0, [0], 0, 0)
+//    return result
+//}
+//
+//solution([0,0,1,1,1,0,1,0,1,0,1,1], [[0,1],[1,2],[1,4],[0,8],[8,7],[9,10],[9,11],[4,3],[6,5],[4,6],[8,9]])
+
+// MARK: - 프로그래머스 level3 파괴되지 않은 건물
+
+func solution(_ board:[[Int]], _ skill:[[Int]]) -> Int {
+    
+    var graph: [[Int]] = board
+    
+    func changeGraph(_ inputType: Int, _ inputDegree: Int, x1: Int, y1: Int, x2: Int, y2: Int) {
+        for x in x1...x2 {
+            for y in y1...y2 {
+                if inputType == 1 {graph[x][y] -= inputDegree}
+                else {graph[x][y] += inputDegree}
+                
+            }
+        }
+    }
+    
+    
+    for sk in skill {
+        let type: Int = sk[0]
+        let r1: Int = sk[1]
+        let c1: Int = sk[2]
+        let r2: Int = sk[3]
+        let c2: Int = sk[4]
+        let degree: Int = sk[5]
+        
+        
+        changeGraph(type, degree, x1: r1, y1: c1, x2: r2, y2: c2)
+        
+        
+    }
+
     var result: Int = 0
-    var graph: [[Int]] = Array(repeating: [Int](), count: info.count)
-    for edge in edges {
-        graph[edge[0]].append(edge[1])
-        
-    }
     
-    func tracking(_ node: Int, _ edge: [Int], _ sheep: Int, _ wolf: Int) {
-        var nextEdge: [Int] = edge
-        var countedSheep: Int = sheep
-        var countedWolf: Int = wolf
-        
-        if info[node] == 0 { countedSheep += 1 }
-        else { countedWolf += 1 }
-        
-        if countedWolf >= countedSheep { return }
-        result = max(result, countedSheep)
-        
-        nextEdge.append(contentsOf: graph[node])
-        if let index = nextEdge.firstIndex(of: node) {
-            nextEdge.remove(at: index)
-        }
-        
-        for i in nextEdge {
-            tracking(i, nextEdge, countedSheep, countedWolf)
+    for i in 0..<graph.count {
+        for j in 0..<graph[0].count {
+            if graph[i][j] > 0 {result += 1}
         }
     }
     
-    tracking(0, [0], 0, 0)
+    
+    
     return result
 }
 
-solution([0,0,1,1,1,0,1,0,1,0,1,1], [[0,1],[1,2],[1,4],[0,8],[8,7],[9,10],[9,11],[4,3],[6,5],[4,6],[8,9]])
+print(solution([[5,5,5,5,5],[5,5,5,5,5],[5,5,5,5,5],[5,5,5,5,5]], [[1,0,0,3,4,4],[1,2,0,2,3,2],[2,1,0,3,1,2],[1,0,1,3,3,1]]))
