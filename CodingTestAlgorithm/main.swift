@@ -13631,54 +13631,91 @@ import Foundation
 
 // MARK: - 프로그래머스 level3 파괴되지 않은 건물
 
-func solution(_ board:[[Int]], _ skill:[[Int]]) -> Int {
-    
-    var addNumBoard: [[Int]] = Array(repeating: Array(repeating: 0, count: board[0].count+1), count: board.count+1)
-    for sk in skill {
-        changeBoard(&addNumBoard, sk)
+//func solution(_ board:[[Int]], _ skill:[[Int]]) -> Int {
+//
+//    var addNumBoard: [[Int]] = Array(repeating: Array(repeating: 0, count: board[0].count+1), count: board.count+1)
+//    for sk in skill {
+//        changeBoard(&addNumBoard, sk)
+//    }
+//    addVertical(&addNumBoard)
+//
+//
+//    return addHotizontal(&addNumBoard, board)
+//}
+//
+//
+//func addHotizontal(_ board: inout [[Int]], _ original: [[Int]]) -> Int {
+//    var count: Int = 0
+//
+//    for i in 0..<board.count-1 {
+//        for j in 0..<board[0].count-1 {
+//            if j != 0 {
+//                board[i][j] += board[i][j-1]
+//            }
+//            if board[i][j] + original[i][j] > 0 {
+//                count += 1
+//            }
+//        }
+//    }
+//    return count
+//}
+//
+//func addVertical(_ board: inout [[Int]]) {
+//    for j in 0..<board[0].count-1 {
+//        for i in 1..<board.count-1 {
+//            board[i][j] += board[i-1][j]
+//        }
+//    }
+//}
+//
+//func changeBoard(_ board: inout [[Int]], _ skill: [Int]) {
+//    let start: (Int, Int) = (skill[1], skill[2])
+//    let end: (Int, Int) = (skill[3], skill[4])
+//    let degree: Int = skill[0] == 2 ? skill[5] : -skill[5]
+//
+//    board[start.0][start.1] += degree
+//    board[end.0+1][end.1+1] += degree
+//    board[start.0][end.1+1] -= degree
+//    board[end.0+1][start.1] -= degree
+//}
+//
+//
+//print(solution([[5,5,5,5,5],[5,5,5,5,5],[5,5,5,5,5],[5,5,5,5,5]], [[1,0,0,3,4,4],[1,2,0,2,3,2],[2,1,0,3,1,2],[1,0,1,3,3,1]]))
+//
+
+
+//MARK: - 프로그래머스 level2 프린터
+
+func solution(_ priorities:[Int], _ location:Int) -> Int {
+  var priority = priorities   // 프린터 대기열
+  var nowIndex = location     // 요청한 문서의 대기열 index
+  var answer = 0              // 출력된 갯수
+  
+  while true {
+    // 대기열의 첫번째 항목이 우선순위가 가장 높은 지 확인
+    // 1. 가장 높을 경우 -> 대기열에서 삭제되고 answer + 1
+    if priority.first! == priority.max() {
+      priority.removeFirst()
+      answer += 1
+      
+      if nowIndex == 0 {  // 내가 요청한 문서가 출력이 된 경우
+        break
+      } else {            // 내가 요청한 문서가 대기열에서 앞으로 한 칸 당겨지게 된 경우
+        nowIndex -= 1
+      }
+      
+    } else { // 2. 대기열의 첫번째 항목이 우선순위가 가장 높지 않은 경우
+             // priority.first! != priority.max()
+             // -> 대기열의 첫번째 항목을 대기열의 맨 뒤로 보내야 함
+      let temp = priority.removeFirst()
+      priority.append(temp)
+      
+      if nowIndex == 0 {      // 내가 요청한 문서가 대기열 매 뒤로 보내지는 상황
+        nowIndex = priority.count - 1
+      } else {                // 그 외 내가 요청하 문서가 대기열에서 한 칸 앞으로 당겨지는 상황
+        nowIndex -= 1
+      }
     }
-    addVertical(&addNumBoard)
-    
-    
-    return addHotizontal(&addNumBoard, board)
+  }
+  return answer
 }
-
-
-func addHotizontal(_ board: inout [[Int]], _ original: [[Int]]) -> Int {
-    var count: Int = 0
-    
-    for i in 0..<board.count-1 {
-        for j in 0..<board[0].count-1 {
-            if j != 0 {
-                board[i][j] += board[i][j-1]
-            }
-            if board[i][j] + original[i][j] > 0 {
-                count += 1
-            }
-        }
-    }
-    return count
-}
-
-func addVertical(_ board: inout [[Int]]) {
-    for j in 0..<board[0].count-1 {
-        for i in 1..<board.count-1 {
-            board[i][j] += board[i-1][j]
-        }
-    }
-}
-
-func changeBoard(_ board: inout [[Int]], _ skill: [Int]) {
-    let start: (Int, Int) = (skill[1], skill[2])
-    let end: (Int, Int) = (skill[3], skill[4])
-    let degree: Int = skill[0] == 2 ? skill[5] : -skill[5]
-    
-    board[start.0][start.1] += degree
-    board[end.0+1][end.1+1] += degree
-    board[start.0][end.1+1] -= degree
-    board[end.0+1][start.1] -= degree
-}
-
-
-print(solution([[5,5,5,5,5],[5,5,5,5,5],[5,5,5,5,5],[5,5,5,5,5]], [[1,0,0,3,4,4],[1,2,0,2,3,2],[2,1,0,3,1,2],[1,0,1,3,3,1]]))
-
