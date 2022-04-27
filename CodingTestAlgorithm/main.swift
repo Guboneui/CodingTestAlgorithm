@@ -13741,64 +13741,151 @@ import Foundation
 
 
 // MARK: - 프로그래머스 level2 [1차]뉴스 클러스터링
-func solution(_ str1:String, _ str2:String) -> Int {
-    let alphabetSet: [String:Int] = ["a":1,"b":1,"c":1,"d":1,"e":1,"f":1,"g":1,"h":1,"i":1,"j":1,"k":1,"l":1,"m":1,"n":1,"o":1,"p":1,"q":1,"r":1,"s":1,"t":1,"u":1,"v":1,"w":1,"x":1,"y":1,"z":1]
-    let str1Arr: [String] = str1.lowercased().map{String($0)}
-    var str1Set: Set<String> = []
-    var str1Dict: [String:Int] = [:]
-    let str2Arr: [String] = str2.lowercased().map{String($0)}
-    var str2Set: Set<String> = []
-    var str2Dict: [String:Int] = [:]
-    
-    for i in 0..<str1Arr.count-1 {
-        if alphabetSet[str1Arr[i]] != nil && alphabetSet[str1Arr[i+1]] != nil {
-            let str: String = str1Arr[i] + str1Arr[i+1]
-            str1Set.insert(str)
-            if str1Dict[str] == nil {
-                str1Dict[str] = 1
-            } else {
-                str1Dict[str]! += 1
-            }
-        }
-    }
-    
-    
-    for i in 0..<str2Arr.count-1 {
-        if alphabetSet[str2Arr[i]] != nil && alphabetSet[str2Arr[i+1]] != nil {
-            let str: String = str2Arr[i] + str2Arr[i+1]
-            str2Set.insert(str)
-            if str2Dict[str] == nil {
-                str2Dict[str] = 1
-            } else {
-                str2Dict[str]! += 1
-            }
-        }
-    }
-    
-    
-    if str1Set.count == 0 && str2Set.count == 0 {
-        return 65536
-    }
-    
-    
-    var intersectionArr: [String] = Array(str1Set.intersection(str2Set))
-    var unionArr: [String] = Array(str1Set.union(str2Set))
-    
-    var intersectionCount: Int = 0
-    var unionCount: Int = 0
-    
-    
-    for str in intersectionArr {
-        intersectionCount += min(str1Dict[str]!, str2Dict[str]!)
-    }
-    
-    for str in unionArr {
-        unionCount += max(str1Dict[str] ?? 0, str2Dict[str] ?? 0)
-    }
-    
+//func solution(_ str1:String, _ str2:String) -> Int {
+//    let alphabetSet: [String:Int] = ["a":1,"b":1,"c":1,"d":1,"e":1,"f":1,"g":1,"h":1,"i":1,"j":1,"k":1,"l":1,"m":1,"n":1,"o":1,"p":1,"q":1,"r":1,"s":1,"t":1,"u":1,"v":1,"w":1,"x":1,"y":1,"z":1]
+//    let str1Arr: [String] = str1.lowercased().map{String($0)}
+//    var str1Set: Set<String> = []
+//    var str1Dict: [String:Int] = [:]
+//    let str2Arr: [String] = str2.lowercased().map{String($0)}
+//    var str2Set: Set<String> = []
+//    var str2Dict: [String:Int] = [:]
+//
+//    for i in 0..<str1Arr.count-1 {
+//        if alphabetSet[str1Arr[i]] != nil && alphabetSet[str1Arr[i+1]] != nil {
+//            let str: String = str1Arr[i] + str1Arr[i+1]
+//            str1Set.insert(str)
+//            if str1Dict[str] == nil {
+//                str1Dict[str] = 1
+//            } else {
+//                str1Dict[str]! += 1
+//            }
+//        }
+//    }
+//
+//
+//    for i in 0..<str2Arr.count-1 {
+//        if alphabetSet[str2Arr[i]] != nil && alphabetSet[str2Arr[i+1]] != nil {
+//            let str: String = str2Arr[i] + str2Arr[i+1]
+//            str2Set.insert(str)
+//            if str2Dict[str] == nil {
+//                str2Dict[str] = 1
+//            } else {
+//                str2Dict[str]! += 1
+//            }
+//        }
+//    }
+//
+//
+//    if str1Set.count == 0 && str2Set.count == 0 {
+//        return 65536
+//    }
+//
+//
+//    var intersectionArr: [String] = Array(str1Set.intersection(str2Set))
+//    var unionArr: [String] = Array(str1Set.union(str2Set))
+//
+//    var intersectionCount: Int = 0
+//    var unionCount: Int = 0
+//
+//
+//    for str in intersectionArr {
+//        intersectionCount += min(str1Dict[str]!, str2Dict[str]!)
+//    }
+//
+//    for str in unionArr {
+//        unionCount += max(str1Dict[str] ?? 0, str2Dict[str] ?? 0)
+//    }
+//
+//
+//
+//    return Int(Double(intersectionCount)/Double(unionCount) * 65536)
+//}
+//
+//print(solution("aa1+aa2", "AAAA12"))
 
+
+// MARK: - 프로그래머스 level2 [1차]프렌즈4블록
+
+func solution(_ m:Int, _ n:Int, _ board:[String]) -> Int {
+    var newBoard: [[String]] = []
+    for b in board {
+        newBoard.append(b.map{String($0)})
+    }
+    var result: Int = 0
+
+    let dx: [Int] = [0, 1, 1]
+    let dy: [Int] = [1, 0, 1]
+
+    while true {
+        var removeIndex: Set<[Int]> = []
+
+        for i in 0..<m-1 {
+            for j in 0..<n-1 {
+                if newBoard[i][j] == "" { continue }
+                let nowBlock: String = newBoard[i][j]
+
+                if newBoard[i+1][j] == nowBlock && newBoard[i][j+1] == nowBlock && newBoard[i+1][j+1] == nowBlock {
+                    removeIndex.insert([i, j])
+                    removeIndex.insert([i+1, j])
+                    removeIndex.insert([i, j+1])
+                    removeIndex.insert([i+1, j+1])
+                }
+            }
+        }
+
+
+        for remove in removeIndex {
+            newBoard[remove[0]][remove[1]] = ""
+        }
+
+        if removeIndex.count == 0 {
+            break
+        }
+        
+        newBoard = makeNewBoard(newBoard, m, n)
+        result += removeIndex.count
+        
+    }
     
-    return Int(Double(intersectionCount)/Double(unionCount) * 65536)
+    
+    
+    
+    return result
 }
 
-print(solution("aa1+aa2", "AAAA12"))
+
+
+func makeNewBoard(_ board: [[String]], _ m: Int, _ n: Int) -> [[String]] {
+
+    var tempBoard: [[String]] = []
+
+    for i in 0..<n {
+        var tempArr: [String] = []
+        for j in 0..<m {
+            if board[j][i] == "" { continue }
+            tempArr.append(board[j][i])
+        }
+
+
+        if tempArr.count < n {
+            for _ in 0..<m-tempArr.count {
+                tempArr.insert("", at: 0)
+            }
+        }
+        
+        tempBoard.append(tempArr)
+    }
+    
+    var newBoard: [[String]] = Array(repeating: Array(repeating: "", count: n), count: m)
+    
+    
+    for i in 0..<n {
+        for j in 0..<m {
+            newBoard[j][i] = tempBoard[i][j]
+        }
+    }
+    return newBoard
+}
+
+
+//print(makeNewBoard([["C", "C", "B", "D", "E"], ["", "", "", "D", "E"], ["", "", "", "B", "F"], ["C", "C", "B", "B", "F"]], 4, 5))
