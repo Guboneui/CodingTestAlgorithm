@@ -13895,33 +13895,27 @@ import Foundation
 
 func solution(_ number:String, _ k:Int) -> String {
     let num: [String] = number.map{String($0)}
-
-    var visited: [Bool] = Array(repeating: false, count: num.count)
-    var arr: [String] = []
-    var result: Int = 0
-    func dfs(_ depth: Int, _ startIndex: Int) {
-        if depth == num.count - k {
-            if Int(arr.joined(separator: ""))! > result {
-                result = Int(arr.joined(separator: ""))!
-            }
+    var stack: [String] = []
+    var count: Int = 0
+    
+    for i in 0..<num.count {
+        while stack.count > 0 && stack.last! < num[i] && count < k {
+            stack.removeLast()
             
+            count += 1
         }
         
-        for i in startIndex..<num.count {
-            if visited[i] == false {
-                visited[i] = true
-                arr.append(num[i])
-                dfs(depth + 1, i+1)
-                arr.removeLast()
-                visited[i] = false
-            }
+        if count >= k {
+            stack.append(contentsOf: num[i...])
+            break
+        } else {
+            stack.append(num[i])
         }
         
     }
-    
-    dfs(0, 0)
 
+    print(stack)
     
-    return String(result)
+    return String(stack.joined().prefix(number.count-k))
 }
-print(solution("4177252841", 4))
+print(solution("1924", 2))
