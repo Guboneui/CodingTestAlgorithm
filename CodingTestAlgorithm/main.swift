@@ -13806,86 +13806,122 @@ import Foundation
 
 // MARK: - 프로그래머스 level2 [1차]프렌즈4블록
 
-func solution(_ m:Int, _ n:Int, _ board:[String]) -> Int {
-    var newBoard: [[String]] = []
-    for b in board {
-        newBoard.append(b.map{String($0)})
-    }
+//func solution(_ m:Int, _ n:Int, _ board:[String]) -> Int {
+//    var newBoard: [[String]] = []
+//    for b in board {
+//        newBoard.append(b.map{String($0)})
+//    }
+//    var result: Int = 0
+//
+//    let dx: [Int] = [0, 1, 1]
+//    let dy: [Int] = [1, 0, 1]
+//
+//    while true {
+//        var removeIndex: Set<[Int]> = []
+//
+//        for i in 0..<m-1 {
+//            for j in 0..<n-1 {
+//                if newBoard[i][j] == "" { continue }
+//                let nowBlock: String = newBoard[i][j]
+//
+//                if newBoard[i+1][j] == nowBlock && newBoard[i][j+1] == nowBlock && newBoard[i+1][j+1] == nowBlock {
+//                    removeIndex.insert([i, j])
+//                    removeIndex.insert([i+1, j])
+//                    removeIndex.insert([i, j+1])
+//                    removeIndex.insert([i+1, j+1])
+//                }
+//            }
+//        }
+//
+//
+//        for remove in removeIndex {
+//            newBoard[remove[0]][remove[1]] = ""
+//        }
+//
+//        if removeIndex.count == 0 {
+//            break
+//        }
+//
+//        newBoard = makeNewBoard(newBoard, m, n)
+//        result += removeIndex.count
+//
+//    }
+//
+//
+//
+//
+//    return result
+//}
+//
+//
+//
+//func makeNewBoard(_ board: [[String]], _ m: Int, _ n: Int) -> [[String]] {
+//
+//    var tempBoard: [[String]] = []
+//
+//    for i in 0..<n {
+//        var tempArr: [String] = []
+//        for j in 0..<m {
+//            if board[j][i] == "" { continue }
+//            tempArr.append(board[j][i])
+//        }
+//
+//
+//        if tempArr.count < n {
+//            for _ in 0..<m-tempArr.count {
+//                tempArr.insert("", at: 0)
+//            }
+//        }
+//
+//        tempBoard.append(tempArr)
+//    }
+//
+//    var newBoard: [[String]] = Array(repeating: Array(repeating: "", count: n), count: m)
+//
+//
+//    for i in 0..<n {
+//        for j in 0..<m {
+//            newBoard[j][i] = tempBoard[i][j]
+//        }
+//    }
+//    return newBoard
+//}
+//
+//
+////print(makeNewBoard([["C", "C", "B", "D", "E"], ["", "", "", "D", "E"], ["", "", "", "B", "F"], ["C", "C", "B", "B", "F"]], 4, 5))
+
+
+// MARK: - 프로그래머스 level2 큰 수 만들기
+
+func solution(_ number:String, _ k:Int) -> String {
+    let num: [String] = number.map{String($0)}
+
+    var visited: [Bool] = Array(repeating: false, count: num.count)
+    var arr: [String] = []
     var result: Int = 0
-
-    let dx: [Int] = [0, 1, 1]
-    let dy: [Int] = [1, 0, 1]
-
-    while true {
-        var removeIndex: Set<[Int]> = []
-
-        for i in 0..<m-1 {
-            for j in 0..<n-1 {
-                if newBoard[i][j] == "" { continue }
-                let nowBlock: String = newBoard[i][j]
-
-                if newBoard[i+1][j] == nowBlock && newBoard[i][j+1] == nowBlock && newBoard[i+1][j+1] == nowBlock {
-                    removeIndex.insert([i, j])
-                    removeIndex.insert([i+1, j])
-                    removeIndex.insert([i, j+1])
-                    removeIndex.insert([i+1, j+1])
-                }
+    func dfs(_ depth: Int, _ startIndex: Int) {
+        if depth == num.count - k {
+            if Int(arr.joined(separator: ""))! > result {
+                result = Int(arr.joined(separator: ""))!
             }
-        }
-
-
-        for remove in removeIndex {
-            newBoard[remove[0]][remove[1]] = ""
-        }
-
-        if removeIndex.count == 0 {
-            break
+            
         }
         
-        newBoard = makeNewBoard(newBoard, m, n)
-        result += removeIndex.count
-        
-    }
-    
-    
-    
-    
-    return result
-}
-
-
-
-func makeNewBoard(_ board: [[String]], _ m: Int, _ n: Int) -> [[String]] {
-
-    var tempBoard: [[String]] = []
-
-    for i in 0..<n {
-        var tempArr: [String] = []
-        for j in 0..<m {
-            if board[j][i] == "" { continue }
-            tempArr.append(board[j][i])
-        }
-
-
-        if tempArr.count < n {
-            for _ in 0..<m-tempArr.count {
-                tempArr.insert("", at: 0)
+        for i in startIndex..<num.count {
+            if visited[i] == false {
+                visited[i] = true
+                arr.append(num[i])
+                dfs(depth + 1, i+1)
+                arr.removeLast()
+                visited[i] = false
             }
         }
         
-        tempBoard.append(tempArr)
     }
     
-    var newBoard: [[String]] = Array(repeating: Array(repeating: "", count: n), count: m)
+    dfs(0, 0)
+
     
-    
-    for i in 0..<n {
-        for j in 0..<m {
-            newBoard[j][i] = tempBoard[i][j]
-        }
-    }
-    return newBoard
+    return String(result)
 }
-
-
-//print(makeNewBoard([["C", "C", "B", "D", "E"], ["", "", "", "D", "E"], ["", "", "", "B", "F"], ["C", "C", "B", "B", "F"]], 4, 5))
+print(solution("4177252841", 4))
