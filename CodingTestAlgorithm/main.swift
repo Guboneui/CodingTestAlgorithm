@@ -13717,24 +13717,88 @@ import Foundation
 
 // MARK: - 프로그래머스 level2 짝지어 제거하기
 
-func solution(_ s:String) -> Int{
+//func solution(_ s:String) -> Int{
+//
+//    var str: [String] = s.map{String($0)}
+//    var stack: [String] = []
+//
+//
+//    for i in 0..<str.count {
+//        if stack.isEmpty {stack.append(str[i])}
+//        else {
+//            if stack.last! == str[i] {
+//                stack.removeLast()
+//            } else {
+//                stack.append(str[i])
+//            }
+//        }
+//    }
+//
+//    return stack.isEmpty ? 1 : 0
+//}
+//
+//solution("baabaa")
 
-    var str: [String] = s.map{String($0)}
-    var stack: [String] = []
+
+// MARK: - 프로그래머스 level2 [1차]뉴스 클러스터링
+func solution(_ str1:String, _ str2:String) -> Int {
+    let alphabetSet: [String:Int] = ["a":1,"b":1,"c":1,"d":1,"e":1,"f":1,"g":1,"h":1,"i":1,"j":1,"k":1,"l":1,"m":1,"n":1,"o":1,"p":1,"q":1,"r":1,"s":1,"t":1,"u":1,"v":1,"w":1,"x":1,"y":1,"z":1]
+    let str1Arr: [String] = str1.lowercased().map{String($0)}
+    var str1Set: Set<String> = []
+    var str1Dict: [String:Int] = [:]
+    let str2Arr: [String] = str2.lowercased().map{String($0)}
+    var str2Set: Set<String> = []
+    var str2Dict: [String:Int] = [:]
     
-    
-    for i in 0..<str.count {
-        if stack.isEmpty {stack.append(str[i])}
-        else {
-            if stack.last! == str[i] {
-                stack.removeLast()
+    for i in 0..<str1Arr.count-1 {
+        if alphabetSet[str1Arr[i]] != nil && alphabetSet[str1Arr[i+1]] != nil {
+            let str: String = str1Arr[i] + str1Arr[i+1]
+            str1Set.insert(str)
+            if str1Dict[str] == nil {
+                str1Dict[str] = 1
             } else {
-                stack.append(str[i])
+                str1Dict[str]! += 1
             }
         }
     }
     
-    return stack.isEmpty ? 1 : 0
+    
+    for i in 0..<str2Arr.count-1 {
+        if alphabetSet[str2Arr[i]] != nil && alphabetSet[str2Arr[i+1]] != nil {
+            let str: String = str2Arr[i] + str2Arr[i+1]
+            str2Set.insert(str)
+            if str2Dict[str] == nil {
+                str2Dict[str] = 1
+            } else {
+                str2Dict[str]! += 1
+            }
+        }
+    }
+    
+    
+    if str1Set.count == 0 && str2Set.count == 0 {
+        return 65536
+    }
+    
+    
+    var intersectionArr: [String] = Array(str1Set.intersection(str2Set))
+    var unionArr: [String] = Array(str1Set.union(str2Set))
+    
+    var intersectionCount: Int = 0
+    var unionCount: Int = 0
+    
+    
+    for str in intersectionArr {
+        intersectionCount += min(str1Dict[str]!, str2Dict[str]!)
+    }
+    
+    for str in unionArr {
+        unionCount += max(str1Dict[str] ?? 0, str2Dict[str] ?? 0)
+    }
+    
+
+    
+    return Int(Double(intersectionCount)/Double(unionCount) * 65536)
 }
 
-solution("baabaa")
+print(solution("aa1+aa2", "AAAA12"))
