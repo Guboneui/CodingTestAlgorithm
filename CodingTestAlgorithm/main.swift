@@ -13686,30 +13686,55 @@ import Foundation
 
 //MARK: - 프로그래머스 level2 프린터
 
-func solution(_ priorities:[Int], _ location:Int) -> Int {
+//func solution(_ priorities:[Int], _ location:Int) -> Int {
+//
+//    var arr: [(Int, Int)] = []
+//    for (index, priority) in priorities.enumerated() {
+//        arr.append((index, priority))
+//    }
+//    var count: Int = 0
+//    while true {
+//        let maxPriorities: Int = arr.map{Int($0.1)}.max()!
+//
+//        if arr[0].1 == maxPriorities {
+//            if arr[0].0 == location {
+//                count += 1
+//                break
+//            }
+//            arr.removeFirst()
+//            count += 1
+//        } else {
+//            let popValue: (Int, Int) = arr.removeFirst()
+//            arr.append(popValue)
+//        }
+//
+//    }
+//
+//    return count
+//}
+//solution([1, 1, 9, 1, 1, 1], 0)
+
+
+// MARK: - 프로그래머스 level2 짝지어 제거하기
+
+func solution(_ s:String) -> Int{
+
+    var str: [String] = s.map{String($0)}
+    var stack: [String] = []
     
-    var arr: [(Int, Int)] = []
-    for (index, priority) in priorities.enumerated() {
-        arr.append((index, priority))
-    }
-    var count: Int = 0
-    while true {
-        let maxPriorities: Int = arr.map{Int($0.1)}.max()!
-        
-        if arr[0].1 == maxPriorities {
-            if arr[0].0 == location {
-                count += 1
-                break
+    
+    for i in 0..<str.count {
+        if stack.isEmpty {stack.append(str[i])}
+        else {
+            if stack.last! == str[i] {
+                stack.removeLast()
+            } else {
+                stack.append(str[i])
             }
-            arr.removeFirst()
-            count += 1
-        } else {
-            let popValue: (Int, Int) = arr.removeFirst()
-            arr.append(popValue)
         }
-        
     }
     
-    return count
+    return stack.isEmpty ? 1 : 0
 }
-solution([1, 1, 9, 1, 1, 1], 0)
+
+solution("baabaa")
