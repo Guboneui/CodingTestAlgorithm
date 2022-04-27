@@ -13687,35 +13687,29 @@ import Foundation
 //MARK: - 프로그래머스 level2 프린터
 
 func solution(_ priorities:[Int], _ location:Int) -> Int {
-  var priority = priorities   // 프린터 대기열
-  var nowIndex = location     // 요청한 문서의 대기열 index
-  var answer = 0              // 출력된 갯수
-  
-  while true {
-    // 대기열의 첫번째 항목이 우선순위가 가장 높은 지 확인
-    // 1. 가장 높을 경우 -> 대기열에서 삭제되고 answer + 1
-    if priority.first! == priority.max() {
-      priority.removeFirst()
-      answer += 1
-      
-      if nowIndex == 0 {  // 내가 요청한 문서가 출력이 된 경우
-        break
-      } else {            // 내가 요청한 문서가 대기열에서 앞으로 한 칸 당겨지게 된 경우
-        nowIndex -= 1
-      }
-      
-    } else { // 2. 대기열의 첫번째 항목이 우선순위가 가장 높지 않은 경우
-             // priority.first! != priority.max()
-             // -> 대기열의 첫번째 항목을 대기열의 맨 뒤로 보내야 함
-      let temp = priority.removeFirst()
-      priority.append(temp)
-      
-      if nowIndex == 0 {      // 내가 요청한 문서가 대기열 매 뒤로 보내지는 상황
-        nowIndex = priority.count - 1
-      } else {                // 그 외 내가 요청하 문서가 대기열에서 한 칸 앞으로 당겨지는 상황
-        nowIndex -= 1
-      }
+    
+    var arr: [(Int, Int)] = []
+    for (index, priority) in priorities.enumerated() {
+        arr.append((index, priority))
     }
-  }
-  return answer
+    var count: Int = 0
+    while true {
+        let maxPriorities: Int = arr.map{Int($0.1)}.max()!
+        
+        if arr[0].1 == maxPriorities {
+            if arr[0].0 == location {
+                count += 1
+                break
+            }
+            arr.removeFirst()
+            count += 1
+        } else {
+            let popValue: (Int, Int) = arr.removeFirst()
+            arr.append(popValue)
+        }
+        
+    }
+    
+    return count
 }
+solution([1, 1, 9, 1, 1, 1], 0)
