@@ -13923,38 +13923,75 @@ import Foundation
 
 // MARK: - 프로그래머스 level2 N개의 최소공배수
 
-func solution(_ arr:[Int]) -> Int {
-    var numArr: [Int] = arr
-    var tempArr: [Int] = []
+//func solution(_ arr:[Int]) -> Int {
+//    var numArr: [Int] = arr
+//    var tempArr: [Int] = []
+//
+//    while numArr.count != 1 {
+//        for i in stride(from: 0, to: numArr.count, by: 2) {
+//            if i == numArr.count-1 && numArr.count%2 != 0 {
+//                tempArr.append(numArr[i])
+//                break
+//            }
+//
+//            tempArr.append(numArr[i]*numArr[i+1]/gcd(numArr[i], numArr[i+1]))
+//        }
+//
+//        numArr = tempArr
+//        tempArr.removeAll()
+//
+//    }
+//
+//
+//    return numArr[0]
+//}
+//
+//func gcd(_ x: Int, _ y: Int) -> Int {
+//
+//    var a: Int = x
+//    var b: Int = y
+//    while b>0 {
+//        let temp = a
+//        a = b
+//        b = temp%b
+//
+//    }
+//    return a
+//}
 
-    while numArr.count != 1 {
-        for i in stride(from: 0, to: numArr.count, by: 2) {
-            if i == numArr.count-1 && numArr.count%2 != 0 {
-                tempArr.append(numArr[i])
-                break
-            }
+// MARK: - 프로그래머스 level2 스킬트리
 
-            tempArr.append(numArr[i]*numArr[i+1]/gcd(numArr[i], numArr[i+1]))
-        }
-
-        numArr = tempArr
-        tempArr.removeAll()
-
-    }
-
-
-    return numArr[0]
-}
-
-func gcd(_ x: Int, _ y: Int) -> Int {
+func solution(_ skill:String, _ skill_trees:[String]) -> Int {
     
-    var a: Int = x
-    var b: Int = y
-    while b>0 {
-        let temp = a
-        a = b
-        b = temp%b
-
+    let skillArr: [String] = skill.map{String($0)}
+    var skillDict: [String:Int] = [:]
+    for sk in skillArr {
+        if skillDict[sk] == nil {
+            skillDict[sk] = 1
+        }
     }
-    return a
+    var result: Int = 0
+    
+    for skill_tree in skill_trees {
+        var skillTree: [String] = skill_tree.map{String($0)}
+        for i in 0..<skillTree.count {
+            if skillDict[skillTree[i]] == nil {
+                skillTree[i] = ""
+            }
+        }
+        skillTree = skillTree.joined(separator: "").map{String($0)}
+        
+        var check: Bool = true
+        for i in 0..<skillTree.count {
+            if skillTree[i] != skillArr[i] { check = false}
+        }
+        
+        if check == true { result += 1 }
+        
+    }
+    
+    
+    return result
 }
+
+print(solution("CBD", ["BACDE", "CBADF", "AECB", "BDA"]))
