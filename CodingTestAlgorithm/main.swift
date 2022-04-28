@@ -13961,37 +13961,51 @@ import Foundation
 
 // MARK: - 프로그래머스 level2 스킬트리
 
+//func solution(_ skill:String, _ skill_trees:[String]) -> Int {
+//
+//    let skillArr: [String] = skill.map{String($0)}
+//    var skillDict: [String:Int] = [:]
+//    for sk in skillArr {
+//        if skillDict[sk] == nil {
+//            skillDict[sk] = 1
+//        }
+//    }
+//    var result: Int = 0
+//
+//    for skill_tree in skill_trees {
+//        var skillTree: [String] = skill_tree.map{String($0)}
+//        for i in 0..<skillTree.count {
+//            if skillDict[skillTree[i]] == nil {
+//                skillTree[i] = ""
+//            }
+//        }
+//        skillTree = skillTree.joined(separator: "").map{String($0)}
+//
+//        var check: Bool = true
+//        for i in 0..<skillTree.count {
+//            if skillTree[i] != skillArr[i] { check = false}
+//        }
+//
+//        if check == true { result += 1 }
+//
+//    }
+//
+//
+//    return result
+//}
+
 func solution(_ skill:String, _ skill_trees:[String]) -> Int {
     
-    let skillArr: [String] = skill.map{String($0)}
-    var skillDict: [String:Int] = [:]
-    for sk in skillArr {
-        if skillDict[sk] == nil {
-            skillDict[sk] = 1
-        }
-    }
     var result: Int = 0
     
-    for skill_tree in skill_trees {
-        var skillTree: [String] = skill_tree.map{String($0)}
-        for i in 0..<skillTree.count {
-            if skillDict[skillTree[i]] == nil {
-                skillTree[i] = ""
-            }
-        }
-        skillTree = skillTree.joined(separator: "").map{String($0)}
+    for st in skill_trees {
+        let str: String = st.filter{skill.contains($0)}
         
-        var check: Bool = true
-        for i in 0..<skillTree.count {
-            if skillTree[i] != skillArr[i] { check = false}
-        }
-        
-        if check == true { result += 1 }
-        
+        if skill.starts(with: str) { result += 1 }
     }
-    
-    
     return result
 }
+
+
 
 print(solution("CBD", ["BACDE", "CBADF", "AECB", "BDA"]))
