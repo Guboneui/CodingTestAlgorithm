@@ -14080,20 +14080,125 @@ import Foundation
 
 // MARK: - 프로그래머스 level2 행렬의 곱셈
 
-func solution(_ arr1:[[Int]], _ arr2:[[Int]]) -> [[Int]] {
-    var result: [[Int]] = Array(repeating: [Int](), count: arr1.count)
+//func solution(_ arr1:[[Int]], _ arr2:[[Int]]) -> [[Int]] {
+//    var result: [[Int]] = Array(repeating: [Int](), count: arr1.count)
+//
+//    for i in 0..<arr1.count {
+//        for j in 0..<arr2[0].count {
+//            var temp: Int = 0
+//            for k in 0..<arr2.count {
+//                temp += arr1[i][k] * arr2[k][j]
+//            }
+//            result[i].append(temp)
+//        }
+//    }
+//
+//    return result
+//}
+//
+//print(solution([[2, 3, 2], [4, 2, 4], [3, 1, 4]], [[5, 4, 3], [2, 4, 1], [3, 1, 1]]))
+
+// MARK: - 프로그래머스 level2 [3차]방금그곡
+
+func solution(_ m:String, _ musicinfos:[String]) -> String {
     
-    for i in 0..<arr1.count {
-        for j in 0..<arr2[0].count {
-            var temp: Int = 0
-            for k in 0..<arr2.count {
-                temp += arr1[i][k] * arr2[k][j]
-            }
-            result[i].append(temp)
+    let neoMusic: [String] = sliceMusic(m)
+
+    
+    var newMusicInfos: [(Int, String, String, [String])] = []
+    
+    for music in musicinfos {
+        let musicInfo: [String] = music.split(separator: ",").map{String($0)}
+        let time: Int = playTime(musicInfo[0], musicInfo[1])
+        newMusicInfos.append((time, musicInfo[0], musicInfo[2], playTimeOfMusic(time, musicInfo[3])))
+    }
+    
+    newMusicInfos = newMusicInfos.filter{$0.0 >= neoMusic.count}
+    newMusicInfos = newMusicInfos.filter{checkContain(neoMusic, $0.3)}
+    
+    newMusicInfos = newMusicInfos.sorted{
+        if $0.0 == $1.0 {
+            return $0.1 < $1.1
+        }
+        return $0.0 > $1.0
+    }
+    
+    if newMusicInfos.isEmpty {
+        return "'(None)'"
+    } else {
+        return newMusicInfos[0].2
+    }
+}
+
+func sliceMusic(_ inputMusic: String) -> [String] {
+    var music: String = inputMusic
+    var musicArr: [String] = []
+    while music.count > 0 {
+        if music.starts(with: "C#") || music.starts(with: "D#") || music.starts(with: "F#") || music.starts(with: "G#") || music.starts(with: "A#") {
+            var m: String = ""
+            m += String(music.removeFirst())
+            m += String(music.removeFirst())
+            musicArr.append(m)
+            
+        }  else if music.starts(with: "C") || music.starts(with: "D") || music.starts(with: "E") || music.starts(with: "F") || music.starts(with: "G") ||  music.starts(with: "A") || music.starts(with: "B") {
+            var m: String = ""
+            m += String(music.removeFirst())
+            musicArr.append(m)
         }
     }
     
-    return result
+    return musicArr
 }
 
-print(solution([[2, 3, 2], [4, 2, 4], [3, 1, 4]], [[5, 4, 3], [2, 4, 1], [3, 1, 1]]))
+func checkContain(_ inputNeoMusic: [String], _ inputRadioMusic: [String]) -> Bool{
+    var stack: [String] = []
+    var radioMusicIndex: Int = 0
+    var neoMusicIndex: Int = 0
+    
+    while neoMusicIndex != inputNeoMusic.count {
+        if radioMusicIndex >= inputRadioMusic.count { break }
+        stack.append(inputRadioMusic[radioMusicIndex])
+        
+        if stack.last! == inputNeoMusic[neoMusicIndex] {
+            neoMusicIndex += 1
+        } else {
+            stack.removeLast()
+            radioMusicIndex += 1
+        }
+        
+    }
+    
+    if neoMusicIndex == inputNeoMusic.count {
+        return true
+    } else {
+        return false
+    }
+}
+
+//print(checkContain(["A", "B", "C"], ["C", "#", "D", "E", "F", "G", "A", "B", "C", "#", "D", "E", "F", "G"]))
+
+
+
+func playTimeOfMusic(_ time: Int, _ inputMusic: String) -> [String] {
+    let inputMusicArr: [String] = sliceMusic(inputMusic)
+    var music: [String] = []
+    var index: Int = 0
+    while music.count != time {
+        music.append(inputMusicArr[index])
+        index += 1
+        if index == inputMusicArr.count { index = 0 }
+    }
+    
+    return music
+}
+
+func playTime(_ startTime: String, _ endTime: String) -> Int {
+    let startTimeArr: [Int] = startTime.split(separator: ":").map{Int(String($0))!}
+    let endTimeArr: [Int] = endTime.split(separator: ":").map{Int(String($0))!}
+    
+    return ((endTimeArr[0] - startTimeArr[0]) * 60) + (endTimeArr[1] - startTimeArr[1])
+}
+
+print(solution("ABC", ["12:00,12:14,HELLO,C#DEFGAB", "13:00,13:05,WORLD,ABCDEF"]))
+
+print("'(None)'")
