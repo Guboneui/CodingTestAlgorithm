@@ -14049,30 +14049,51 @@ import Foundation
 
 // MARK: - 프로그래머스 level2 모음사전
 
-func solution(_ word:String) -> Int {
-    let aeiou: [String] = ["A", "E", "I", "O", "U"]
-    var arr: [String] = []
+//func solution(_ word:String) -> Int {
+//    let aeiou: [String] = ["A", "E", "I", "O", "U"]
+//    var arr: [String] = []
+//
+//    var arrCollection: [String] = []
+//    var arrDict: [String:Int] = [:]
+//    var index: Int = 1
+//    func tracking(_ depth: Int, _ startIndex: Int) {
+//        if depth > 5 { return }
+//        if depth > 0 {
+//            arrCollection.append(arr.joined(separator: ""))
+//            arrDict[arr.joined(separator: "")] = index
+//            index += 1
+//        }
+//
+//        for i in 0..<aeiou.count {
+//            arr.append(aeiou[i])
+//            tracking(depth + 1, i)
+//            arr.removeLast()
+//        }
+//    }
+//
+//    tracking(0, 0)
+//    return arrDict[word]!
+//}
+//
+//print(solution("EIO"))
+
+
+// MARK: - 프로그래머스 level2 행렬의 곱셈
+
+func solution(_ arr1:[[Int]], _ arr2:[[Int]]) -> [[Int]] {
+    var result: [[Int]] = Array(repeating: [Int](), count: arr1.count)
     
-    var arrCollection: [String] = []
-    var arrDict: [String:Int] = [:]
-    var index: Int = 1
-    func tracking(_ depth: Int, _ startIndex: Int) {
-        if depth > 5 { return }
-        if depth > 0 {
-            arrCollection.append(arr.joined(separator: ""))
-            arrDict[arr.joined(separator: "")] = index
-            index += 1
-        }
-        
-        for i in 0..<aeiou.count {
-            arr.append(aeiou[i])
-            tracking(depth + 1, i)
-            arr.removeLast()
+    for i in 0..<arr1.count {
+        for j in 0..<arr2[0].count {
+            var temp: Int = 0
+            for k in 0..<arr2.count {
+                temp += arr1[i][k] * arr2[k][j]
+            }
+            result[i].append(temp)
         }
     }
     
-    tracking(0, 0)
-    return arrDict[word]!
+    return result
 }
 
-print(solution("EIO"))
+print(solution([[2, 3, 2], [4, 2, 4], [3, 1, 4]], [[5, 4, 3], [2, 4, 1], [3, 1, 1]]))
