@@ -13994,18 +13994,54 @@ import Foundation
 //    return result
 //}
 
-func solution(_ skill:String, _ skill_trees:[String]) -> Int {
+//func solution(_ skill:String, _ skill_trees:[String]) -> Int {
+//
+//    var result: Int = 0
+//
+//    for st in skill_trees {
+//        let str: String = st.filter{skill.contains($0)}
+//
+//        if skill.starts(with: str) { result += 1 }
+//    }
+//    return result
+//}
+//
+//
+//
+//print(solution("CBD", ["BACDE", "CBADF", "AECB", "BDA"]))
+
+
+// MARK: - 프로그래머스 level2 [1차]캐시
+
+func solution(_ cacheSize:Int, _ cities:[String]) -> Int {
+    if cacheSize == 0 {
+        return 5 * cities.count
+    }
     
+    let lowerCities: [String] = cities.map{String($0).lowercased()}
+    var cache: [String] = []
     var result: Int = 0
     
-    for st in skill_trees {
-        let str: String = st.filter{skill.contains($0)}
-        
-        if skill.starts(with: str) { result += 1 }
+    
+    for city in lowerCities {
+        if cache.contains(city) {
+            cache.remove(at: cache.firstIndex(of: city)!)
+            cache.append(city)
+            result += 1
+            
+        } else {
+            if cache.count >= cacheSize {
+                cache.removeFirst()
+                cache.append(city)
+            } else {
+                cache.append(city)
+            }
+            result += 5
+        }
     }
+    
+    
     return result
 }
 
-
-
-print(solution("CBD", ["BACDE", "CBADF", "AECB", "BDA"]))
+print(solution(2, ["Jeju", "Pangyo", "Seoul", "NewYork", "LA", "SanFrancisco", "Seoul", "Rome", "Paris", "Jeju", "NewYork", "Rome"]))
