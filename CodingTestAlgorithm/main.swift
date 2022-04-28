@@ -13893,29 +13893,68 @@ import Foundation
 
 // MARK: - 프로그래머스 level2 큰 수 만들기
 
-func solution(_ number:String, _ k:Int) -> String {
-    let num: [String] = number.map{String($0)}
-    var stack: [String] = []
-    var count: Int = 0
-    
-    for i in 0..<num.count {
-        while stack.count > 0 && stack.last! < num[i] && count < k {
-            stack.removeLast()
-            
-            count += 1
+//func solution(_ number:String, _ k:Int) -> String {
+//    let num: [String] = number.map{String($0)}
+//    var stack: [String] = []
+//    var count: Int = 0
+//
+//    for i in 0..<num.count {
+//        while stack.count > 0 && stack.last! < num[i] && count < k {
+//            stack.removeLast()
+//
+//            count += 1
+//        }
+//
+//        if count >= k {
+//            stack.append(contentsOf: num[i...])
+//            break
+//        } else {
+//            stack.append(num[i])
+//        }
+//
+//    }
+//
+//    print(stack)
+//
+//    return String(stack.joined().prefix(number.count-k))
+//}
+//print(solution("1924", 2))
+
+
+// MARK: - 프로그래머스 level2 N개의 최소공배수
+
+func solution(_ arr:[Int]) -> Int {
+    var numArr: [Int] = arr
+    var tempArr: [Int] = []
+
+    while numArr.count != 1 {
+        for i in stride(from: 0, to: numArr.count, by: 2) {
+            if i == numArr.count-1 && numArr.count%2 != 0 {
+                tempArr.append(numArr[i])
+                break
+            }
+
+            tempArr.append(numArr[i]*numArr[i+1]/gcd(numArr[i], numArr[i+1]))
         }
-        
-        if count >= k {
-            stack.append(contentsOf: num[i...])
-            break
-        } else {
-            stack.append(num[i])
-        }
-        
+
+        numArr = tempArr
+        tempArr.removeAll()
+
     }
 
-    print(stack)
-    
-    return String(stack.joined().prefix(number.count-k))
+
+    return numArr[0]
 }
-print(solution("1924", 2))
+
+func gcd(_ x: Int, _ y: Int) -> Int {
+    
+    var a: Int = x
+    var b: Int = y
+    while b>0 {
+        let temp = a
+        a = b
+        b = temp%b
+
+    }
+    return a
+}
