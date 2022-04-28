@@ -14013,35 +14013,66 @@ import Foundation
 
 // MARK: - 프로그래머스 level2 [1차]캐시
 
-func solution(_ cacheSize:Int, _ cities:[String]) -> Int {
-    if cacheSize == 0 {
-        return 5 * cities.count
-    }
+//func solution(_ cacheSize:Int, _ cities:[String]) -> Int {
+//    if cacheSize == 0 {
+//        return 5 * cities.count
+//    }
+//
+//    let lowerCities: [String] = cities.map{String($0).lowercased()}
+//    var cache: [String] = []
+//    var result: Int = 0
+//
+//
+//    for city in lowerCities {
+//        if cache.contains(city) {
+//            cache.remove(at: cache.firstIndex(of: city)!)
+//            cache.append(city)
+//            result += 1
+//
+//        } else {
+//            if cache.count >= cacheSize {
+//                cache.removeFirst()
+//                cache.append(city)
+//            } else {
+//                cache.append(city)
+//            }
+//            result += 5
+//        }
+//    }
+//
+//
+//    return result
+//}
+//
+//print(solution(2, ["Jeju", "Pangyo", "Seoul", "NewYork", "LA", "SanFrancisco", "Seoul", "Rome", "Paris", "Jeju", "NewYork", "Rome"]))
+
+
+// MARK: - 프로그래머스 level2 모음사전
+
+func solution(_ word:String) -> Int {
+    let aeiou: [String] = ["A", "E", "I", "O", "U"]
+    var arr: [String] = []
     
-    let lowerCities: [String] = cities.map{String($0).lowercased()}
-    var cache: [String] = []
-    var result: Int = 0
-    
-    
-    for city in lowerCities {
-        if cache.contains(city) {
-            cache.remove(at: cache.firstIndex(of: city)!)
-            cache.append(city)
-            result += 1
-            
-        } else {
-            if cache.count >= cacheSize {
-                cache.removeFirst()
-                cache.append(city)
-            } else {
-                cache.append(city)
-            }
-            result += 5
+    var arrCollection: [String] = []
+    var arrDict: [String:Int] = [:]
+    var index: Int = 1
+    func tracking(_ depth: Int, _ startIndex: Int) {
+        if depth > 5 { return }
+        if depth > 0 {
+            arrCollection.append(arr.joined(separator: ""))
+            arrDict[arr.joined(separator: "")] = index
+            index += 1
+        }
+        
+        for i in 0..<aeiou.count {
+            arr.append(aeiou[i])
+            tracking(depth + 1, i)
+            arr.removeLast()
         }
     }
     
-    
-    return result
+    tracking(0, 0)
+    return arrDict[word]!
 }
 
-print(solution(2, ["Jeju", "Pangyo", "Seoul", "NewYork", "LA", "SanFrancisco", "Seoul", "Rome", "Paris", "Jeju", "NewYork", "Rome"]))
+print(solution("EIO"))
