@@ -14102,103 +14102,63 @@ import Foundation
 
 func solution(_ m:String, _ musicinfos:[String]) -> String {
     
-    let neoMusic: [String] = sliceMusic(m)
-
-    
-    var newMusicInfos: [(Int, String, String, [String])] = []
-    
-    for music in musicinfos {
-        let musicInfo: [String] = music.split(separator: ",").map{String($0)}
-        let time: Int = playTime(musicInfo[0], musicInfo[1])
-        newMusicInfos.append((time, musicInfo[0], musicInfo[2], playTimeOfMusic(time, musicInfo[3])))
+    let myMusic: String = makeNewMusic(m)
+    var musicInfos: [(Int, String, String, String)] = []
+    for musicinfo in musicinfos {
+        let music: [String] = musicinfo.split(separator: ",").map{String($0)}
+        let time: Int = playTime(music[0], music[1])
+        let musicWithTime: String = musicOfPlayTime(music[3], time)
+        if myMusic.count <= time {
+            if musicWithTime.contains(myMusic) {
+                musicInfos.append((time, music[0], music[2], musicOfPlayTime(music[3], time)))
+            }
+        }
     }
     
-    newMusicInfos = newMusicInfos.filter{$0.0 >= neoMusic.count}
-    newMusicInfos = newMusicInfos.filter{checkContain(neoMusic, $0.3)}
-    
-    newMusicInfos = newMusicInfos.sorted{
+    musicInfos = musicInfos.sorted {
         if $0.0 == $1.0 {
             return $0.1 < $1.1
         }
         return $0.0 > $1.0
     }
     
-    if newMusicInfos.isEmpty {
-        return "'(None)'"
-    } else {
-        return newMusicInfos[0].2
-    }
-}
-
-func sliceMusic(_ inputMusic: String) -> [String] {
-    var music: String = inputMusic
-    var musicArr: [String] = []
-    while music.count > 0 {
-        if music.starts(with: "C#") || music.starts(with: "D#") || music.starts(with: "F#") || music.starts(with: "G#") || music.starts(with: "A#") {
-            var m: String = ""
-            m += String(music.removeFirst())
-            m += String(music.removeFirst())
-            musicArr.append(m)
-            
-        }  else if music.starts(with: "C") || music.starts(with: "D") || music.starts(with: "E") || music.starts(with: "F") || music.starts(with: "G") ||  music.starts(with: "A") || music.starts(with: "B") {
-            var m: String = ""
-            m += String(music.removeFirst())
-            musicArr.append(m)
-        }
+    if musicInfos.isEmpty {
+        return "(None)"
     }
     
-    return musicArr
+    return musicInfos[0].2
 }
 
-func checkContain(_ inputNeoMusic: [String], _ inputRadioMusic: [String]) -> Bool{
-    var stack: [String] = []
-    var radioMusicIndex: Int = 0
-    var neoMusicIndex: Int = 0
-    
-    while neoMusicIndex != inputNeoMusic.count {
-        if radioMusicIndex >= inputRadioMusic.count { break }
-        stack.append(inputRadioMusic[radioMusicIndex])
-        
-        if stack.last! == inputNeoMusic[neoMusicIndex] {
-            neoMusicIndex += 1
-        } else {
-            stack.removeLast()
-            radioMusicIndex += 1
-        }
-        
-    }
-    
-    if neoMusicIndex == inputNeoMusic.count {
-        return true
-    } else {
-        return false
-    }
+func playTime(_ start: String, _ end: String) -> Int {
+    let startTime: [Int] = start.split(separator: ":").map{Int(String($0))!}
+    let endTime: [Int] = end.split(separator: ":").map{Int(String($0))!}
+    return ((endTime[0] - startTime[0]) * 60) + (endTime[1] - startTime[1])
 }
 
-//print(checkContain(["A", "B", "C"], ["C", "#", "D", "E", "F", "G", "A", "B", "C", "#", "D", "E", "F", "G"]))
-
-
-
-func playTimeOfMusic(_ time: Int, _ inputMusic: String) -> [String] {
-    let inputMusicArr: [String] = sliceMusic(inputMusic)
-    var music: [String] = []
+func musicOfPlayTime(_ inputMusic: String, _ inputTime: Int) -> String {
+    let music: [String] = makeNewMusic(inputMusic).map{String($0)}
+    var musicStr: String = ""
     var index: Int = 0
-    while music.count != time {
-        music.append(inputMusicArr[index])
+    while musicStr.count != inputTime {
+        musicStr.append(music[index])
         index += 1
-        if index == inputMusicArr.count { index = 0 }
+        if index == music.count { index = 0 }
     }
     
+    return musicStr
+}
+
+func makeNewMusic(_ musicInfo: String) -> String {
+    var music: String = musicInfo
+    music = music.replacingOccurrences(of: "C#", with: "c")
+    music = music.replacingOccurrences(of: "D#", with: "d")
+    music = music.replacingOccurrences(of: "F#", with: "f")
+    music = music.replacingOccurrences(of: "G#", with: "g")
+    music = music.replacingOccurrences(of: "A#", with: "a")
     return music
 }
 
-func playTime(_ startTime: String, _ endTime: String) -> Int {
-    let startTimeArr: [Int] = startTime.split(separator: ":").map{Int(String($0))!}
-    let endTimeArr: [Int] = endTime.split(separator: ":").map{Int(String($0))!}
-    
-    return ((endTimeArr[0] - startTimeArr[0]) * 60) + (endTimeArr[1] - startTimeArr[1])
-}
+print(makeNewMusic("CC#BCC#BCC#BCC#B"))
 
-print(solution("ABC", ["12:00,12:14,HELLO,C#DEFGAB", "13:00,13:05,WORLD,ABCDEF"]))
 
-print("'(None)'")
+print(solution("ABCDEFG", ["12:00,12:14,HELLO,CDEFGAB", "13:00,13:05,WORLD,ABCDEF"]    ))
