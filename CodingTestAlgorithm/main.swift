@@ -14100,65 +14100,91 @@ import Foundation
 
 // MARK: - 프로그래머스 level2 [3차]방금그곡
 
-func solution(_ m:String, _ musicinfos:[String]) -> String {
+//func solution(_ m:String, _ musicinfos:[String]) -> String {
+//
+//    let myMusic: String = makeNewMusic(m)
+//    var musicInfos: [(Int, String, String, String)] = []
+//    for musicinfo in musicinfos {
+//        let music: [String] = musicinfo.split(separator: ",").map{String($0)}
+//        let time: Int = playTime(music[0], music[1])
+//        let musicWithTime: String = musicOfPlayTime(music[3], time)
+//        if myMusic.count <= time {
+//            if musicWithTime.contains(myMusic) {
+//                musicInfos.append((time, music[0], music[2], musicOfPlayTime(music[3], time)))
+//            }
+//        }
+//    }
+//
+//    musicInfos = musicInfos.sorted {
+//        if $0.0 == $1.0 {
+//            return $0.1 < $1.1
+//        }
+//        return $0.0 > $1.0
+//    }
+//
+//    if musicInfos.isEmpty {
+//        return "(None)"
+//    }
+//
+//    return musicInfos[0].2
+//}
+//
+//func playTime(_ start: String, _ end: String) -> Int {
+//    let startTime: [Int] = start.split(separator: ":").map{Int(String($0))!}
+//    let endTime: [Int] = end.split(separator: ":").map{Int(String($0))!}
+//    return ((endTime[0] - startTime[0]) * 60) + (endTime[1] - startTime[1])
+//}
+//
+//func musicOfPlayTime(_ inputMusic: String, _ inputTime: Int) -> String {
+//    let music: [String] = makeNewMusic(inputMusic).map{String($0)}
+//    var musicStr: String = ""
+//    var index: Int = 0
+//    while musicStr.count != inputTime {
+//        musicStr.append(music[index])
+//        index += 1
+//        if index == music.count { index = 0 }
+//    }
+//
+//    return musicStr
+//}
+//
+//func makeNewMusic(_ musicInfo: String) -> String {
+//    var music: String = musicInfo
+//    music = music.replacingOccurrences(of: "C#", with: "c")
+//    music = music.replacingOccurrences(of: "D#", with: "d")
+//    music = music.replacingOccurrences(of: "F#", with: "f")
+//    music = music.replacingOccurrences(of: "G#", with: "g")
+//    music = music.replacingOccurrences(of: "A#", with: "a")
+//    return music
+//}
+//
+//print(makeNewMusic("CC#BCC#BCC#BCC#B"))
+//
+//
+//print(solution("ABCDEFG", ["12:00,12:14,HELLO,CDEFGAB", "13:00,13:05,WORLD,ABCDEF"]    ))
+
+
+// MARK: - 프로그래머스 예상 대진표
+
+func solution(_ n: Int, _ a: Int, _ b: Int) -> Int {
+    var result: Int = 0
+    var A: Int = a
+    var B: Int = b
     
-    let myMusic: String = makeNewMusic(m)
-    var musicInfos: [(Int, String, String, String)] = []
-    for musicinfo in musicinfos {
-        let music: [String] = musicinfo.split(separator: ",").map{String($0)}
-        let time: Int = playTime(music[0], music[1])
-        let musicWithTime: String = musicOfPlayTime(music[3], time)
-        if myMusic.count <= time {
-            if musicWithTime.contains(myMusic) {
-                musicInfos.append((time, music[0], music[2], musicOfPlayTime(music[3], time)))
-            }
+    while A != B {
+        if A%2 == 1 {
+            A = (A+1) / 2
+        } else {
+            A = A / 2
         }
-    }
-    
-    musicInfos = musicInfos.sorted {
-        if $0.0 == $1.0 {
-            return $0.1 < $1.1
+        
+        if B%2 == 1 {
+            B = (B+1) / 2
+        } else {
+            B = B / 2
         }
-        return $0.0 > $1.0
+        
+        result += 1
     }
-    
-    if musicInfos.isEmpty {
-        return "(None)"
-    }
-    
-    return musicInfos[0].2
+    return result
 }
-
-func playTime(_ start: String, _ end: String) -> Int {
-    let startTime: [Int] = start.split(separator: ":").map{Int(String($0))!}
-    let endTime: [Int] = end.split(separator: ":").map{Int(String($0))!}
-    return ((endTime[0] - startTime[0]) * 60) + (endTime[1] - startTime[1])
-}
-
-func musicOfPlayTime(_ inputMusic: String, _ inputTime: Int) -> String {
-    let music: [String] = makeNewMusic(inputMusic).map{String($0)}
-    var musicStr: String = ""
-    var index: Int = 0
-    while musicStr.count != inputTime {
-        musicStr.append(music[index])
-        index += 1
-        if index == music.count { index = 0 }
-    }
-    
-    return musicStr
-}
-
-func makeNewMusic(_ musicInfo: String) -> String {
-    var music: String = musicInfo
-    music = music.replacingOccurrences(of: "C#", with: "c")
-    music = music.replacingOccurrences(of: "D#", with: "d")
-    music = music.replacingOccurrences(of: "F#", with: "f")
-    music = music.replacingOccurrences(of: "G#", with: "g")
-    music = music.replacingOccurrences(of: "A#", with: "a")
-    return music
-}
-
-print(makeNewMusic("CC#BCC#BCC#BCC#B"))
-
-
-print(solution("ABCDEFG", ["12:00,12:14,HELLO,CDEFGAB", "13:00,13:05,WORLD,ABCDEF"]    ))
