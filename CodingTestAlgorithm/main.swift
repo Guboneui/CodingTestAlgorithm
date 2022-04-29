@@ -14166,25 +14166,59 @@ import Foundation
 
 // MARK: - 프로그래머스 예상 대진표
 
-func solution(_ n: Int, _ a: Int, _ b: Int) -> Int {
+//func solution(_ n: Int, _ a: Int, _ b: Int) -> Int {
+//    var result: Int = 0
+//    var A: Int = a
+//    var B: Int = b
+//
+//    while A != B {
+//        if A%2 == 1 {
+//            A = (A+1) / 2
+//        } else {
+//            A = A / 2
+//        }
+//
+//        if B%2 == 1 {
+//            B = (B+1) / 2
+//        } else {
+//            B = B / 2
+//        }
+//
+//        result += 1
+//    }
+//    return result
+//}
+
+
+// MARK: - 프로그래머스 level2 괄호 회전하기
+func solution(_ s:String) -> Int {
+    if s.count % 2 == 1 { return 0 }
+    var arr: [String] = s.map{String($0)}
     var result: Int = 0
-    var A: Int = a
-    var B: Int = b
-    
-    while A != B {
-        if A%2 == 1 {
-            A = (A+1) / 2
-        } else {
-            A = A / 2
-        }
-        
-        if B%2 == 1 {
-            B = (B+1) / 2
-        } else {
-            B = B / 2
-        }
-        
-        result += 1
+    for _ in 0..<arr.count {
+        if checkRight(arr) { result += 1 }
+        arr.append(arr.removeFirst())
     }
+    
     return result
+}
+
+func checkRight(_ arr: [String]) -> Bool {
+    var stack: [String] = []
+    for i in 0..<arr.count {
+        if stack.isEmpty { stack.append(arr[i]) }
+        else {
+            if stack.last! == "[" && arr[i] == "]" {
+                stack.removeLast()
+            } else if stack.last! == "{" && arr[i] == "}" {
+                stack.removeLast()
+            } else if stack.last! == "(" && arr[i] == ")" {
+                stack.removeLast()
+            } else {
+                stack.append(arr[i])
+            }
+        }
+    }
+    
+    return stack.isEmpty ? true : false
 }
