@@ -14225,28 +14225,55 @@ import Foundation
 
 // MARK: - 프로그래머스 level2 다리를 지나는 트럭
 
-func solution(_ bridge_length:Int, _ weight:Int, _ truck_weights:[Int]) -> Int {
-    var bridge: [Int] = Array(repeating: 0, count: bridge_length)
-    var truck: [Int] = truck_weights
+//func solution(_ bridge_length:Int, _ weight:Int, _ truck_weights:[Int]) -> Int {
+//    var bridge: [Int] = Array(repeating: 0, count: bridge_length)
+//    var truck: [Int] = truck_weights
+//    var result: Int = 0
+//    var currentWeight: Int = 0
+//
+//    while !bridge.isEmpty {
+//        result += 1
+//        currentWeight -= bridge.removeFirst()
+//
+//        if let t = truck.first {
+//            if t + currentWeight <= weight {
+//                currentWeight += truck.removeFirst()
+//                bridge.append(t)
+//            } else {
+//                bridge.append(0)
+//            }
+//        }
+//    }
+//
+//    return result
+//}
+//
+//print(solution(2, 10, [7, 4, 5, 6]))
+
+// MARK: - 프로그래머스 H-Index
+
+func solution(_ citations:[Int]) -> Int {
     var result: Int = 0
-    var currentWeight: Int = 0
     
-    while !bridge.isEmpty {
-        result += 1
-        currentWeight -= bridge.removeFirst()
-        
-        if let t = truck.first {
-            if t + currentWeight <= weight {
-                currentWeight += truck.removeFirst()
-                bridge.append(t)
+    for i in 0...citations.max()! {
+        var a: [Int] = []
+        var b: [Int] = []
+        citations.forEach {
+            if $0 >= i {
+                a.append($0)
             } else {
-                bridge.append(0)
+                b.append($0)
             }
         }
+        
+        if a.count >= i && b.count <= i {
+            result = max(result, i)
+            
+        }
     }
+    
     
     return result
 }
 
-print(solution(2, 10, [7, 4, 5, 6]))
-
+print(solution([3, 0, 6, 1, 5]))
