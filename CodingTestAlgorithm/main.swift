@@ -14191,34 +14191,62 @@ import Foundation
 
 
 // MARK: - 프로그래머스 level2 괄호 회전하기
-func solution(_ s:String) -> Int {
-    if s.count % 2 == 1 { return 0 }
-    var arr: [String] = s.map{String($0)}
+//func solution(_ s:String) -> Int {
+//    if s.count % 2 == 1 { return 0 }
+//    var arr: [String] = s.map{String($0)}
+//    var result: Int = 0
+//    for _ in 0..<arr.count {
+//        if checkRight(arr) { result += 1 }
+//        arr.append(arr.removeFirst())
+//    }
+//
+//    return result
+//}
+//
+//func checkRight(_ arr: [String]) -> Bool {
+//    var stack: [String] = []
+//    for i in 0..<arr.count {
+//        if stack.isEmpty { stack.append(arr[i]) }
+//        else {
+//            if stack.last! == "[" && arr[i] == "]" {
+//                stack.removeLast()
+//            } else if stack.last! == "{" && arr[i] == "}" {
+//                stack.removeLast()
+//            } else if stack.last! == "(" && arr[i] == ")" {
+//                stack.removeLast()
+//            } else {
+//                stack.append(arr[i])
+//            }
+//        }
+//    }
+//
+//    return stack.isEmpty ? true : false
+//}
+
+// MARK: - 프로그래머스 level2 다리를 지나는 트럭
+
+func solution(_ bridge_length:Int, _ weight:Int, _ truck_weights:[Int]) -> Int {
+    var bridge: [Int] = Array(repeating: 0, count: bridge_length)
+    var truck: [Int] = truck_weights
     var result: Int = 0
-    for _ in 0..<arr.count {
-        if checkRight(arr) { result += 1 }
-        arr.append(arr.removeFirst())
+    var currentWeight: Int = 0
+    
+    while !bridge.isEmpty {
+        result += 1
+        currentWeight -= bridge.removeFirst()
+        
+        if let t = truck.first {
+            if t + currentWeight <= weight {
+                currentWeight += truck.removeFirst()
+                bridge.append(t)
+            } else {
+                bridge.append(0)
+            }
+        }
     }
     
     return result
 }
 
-func checkRight(_ arr: [String]) -> Bool {
-    var stack: [String] = []
-    for i in 0..<arr.count {
-        if stack.isEmpty { stack.append(arr[i]) }
-        else {
-            if stack.last! == "[" && arr[i] == "]" {
-                stack.removeLast()
-            } else if stack.last! == "{" && arr[i] == "}" {
-                stack.removeLast()
-            } else if stack.last! == "(" && arr[i] == ")" {
-                stack.removeLast()
-            } else {
-                stack.append(arr[i])
-            }
-        }
-    }
-    
-    return stack.isEmpty ? true : false
-}
+print(solution(2, 10, [7, 4, 5, 6]))
+
