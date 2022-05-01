@@ -14378,16 +14378,29 @@ import Foundation
 //    return answer
 //}
 
-func solution(_ n:Int) -> Int{
-    var answer:Int = n+1
-    let oneCount: Int = n.nonzeroBitCount
-    while true {
-        if oneCount == answer.nonzeroBitCount {
-            break
-        }
-        answer += 1
-    }
-    return answer
-}
+//func solution(_ n:Int) -> Int{
+//    var answer:Int = n+1
+//    let oneCount: Int = n.nonzeroBitCount
+//    while true {
+//        if oneCount == answer.nonzeroBitCount {
+//            break
+//        }
+//        answer += 1
+//    }
+//    return answer
+//}
+//
 
-print(solution(78))
+// MARK: - 프로그래머스 level2 피보나치 수
+
+func solution(_ n: Int) -> Int {
+    var arr: [Int] = Array(repeating: 0, count: n+1)
+    arr[0] = 0
+    arr[1] = 1
+    for i in 2...n {
+        arr[i] = (arr[i-1] + arr[i-2]) % 1234567
+    }
+    
+    return arr[n]
+}
+print(solution(5))
