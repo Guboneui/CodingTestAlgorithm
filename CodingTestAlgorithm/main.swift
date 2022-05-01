@@ -14351,15 +14351,43 @@ import Foundation
 ////print(tempIndex)
 
 // MARK: - 프로그래머스 level2 최대값과 최솟값
-func solution(_ s:String) -> String {
-    let arr: [Int] = s.split(separator: " ").map{Int(String($0))!}
-    var maxValue: Int = Int.min
-    var minValue: Int = Int.max
-    for num in arr {
-        maxValue = max(maxValue, num)
-        minValue = min(minValue, num)
+//func solution(_ s:String) -> String {
+//    let arr: [Int] = s.split(separator: " ").map{Int(String($0))!}
+//    var maxValue: Int = Int.min
+//    var minValue: Int = Int.max
+//    for num in arr {
+//        maxValue = max(maxValue, num)
+//        minValue = min(minValue, num)
+//    }
+//    return "\(minValue) \(maxValue)"
+//}
+//
+//print(solution("-1 -2 -3 -4"))
+
+// MARK: - 프로그래머스 level2 다음 큰 숫자
+//func solution(_ n:Int) -> Int{
+//    var answer:Int = n+1
+//    let oneCount: Int = String(n, radix: 2).map{String($0)}.filter{$0 == "1"}.count
+//    while true {
+//        let count: Int = String(answer, radix: 2).map{String($0)}.filter{$0 == "1"}.count
+//        if count == oneCount {
+//            break
+//        }
+//        answer += 1
+//    }
+//    return answer
+//}
+
+func solution(_ n:Int) -> Int{
+    var answer:Int = n+1
+    let oneCount: Int = n.nonzeroBitCount
+    while true {
+        if oneCount == answer.nonzeroBitCount {
+            break
+        }
+        answer += 1
     }
-    return "\(minValue) \(maxValue)"
+    return answer
 }
 
-print(solution("-1 -2 -3 -4"))
+print(solution(78))
