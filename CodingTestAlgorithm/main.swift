@@ -14491,18 +14491,41 @@ import Foundation
 //print(solution("(()("))
 
 // MARK: - 프로그래머스 level2 [3차]n진수 게임
-func solution(_ n:Int, _ t:Int, _ m:Int, _ p:Int) -> String {
-    let arr: [Int] = Array(0...t*m)
-    var numArr: [String] = []
-    var result: String = ""
-    for num in arr {
-        numArr.append(contentsOf: String(num, radix: n).map{String($0)})
+//func solution(_ n:Int, _ t:Int, _ m:Int, _ p:Int) -> String {
+//    let arr: [Int] = Array(0...t*m)
+//    var numArr: [String] = []
+//    var result: String = ""
+//    for num in arr {
+//        numArr.append(contentsOf: String(num, radix: n).map{String($0)})
+//    }
+//    var index: Int = p-1
+//    while result.count != t {
+//        result += numArr[index].uppercased()
+//        index += m
+//    }
+//    return result
+//}
+//print(solution(16, 16, 2, 1))
+
+// MARK: - 프로그래머스 levle2 영어 끝말잇기
+func solution(_ n:Int, _ words:[String]) -> [Int] {
+    var dict: [String:Int] = [:]
+    dict[words[0]] = 1
+    for i in 1..<words.count {
+        if words[i-1].last == words[i].first! {
+            if dict[words[i]] == nil {
+                dict[words[i]] = 1
+            } else {
+                return [i%n+1, i/n+1]
+            }
+        } else {
+            
+            return [i%n+1, i/n+1]
+        }
     }
-    var index: Int = p-1
-    while result.count != t {
-        result += numArr[index].uppercased()
-        index += m
-    }
-    return result
+    
+    
+    return [0, 0]
 }
-print(solution(16, 16, 2, 1))
+
+print(solution(2, ["hello", "one", "even", "never", "now", "world", "draw"]))
