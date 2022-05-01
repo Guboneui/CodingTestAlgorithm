@@ -14252,28 +14252,49 @@ import Foundation
 
 // MARK: - 프로그래머스 H-Index
 
-func solution(_ citations:[Int]) -> Int {
+//func solution(_ citations:[Int]) -> Int {
+//    var result: Int = 0
+//
+//    for i in 0...citations.max()! {
+//        var a: [Int] = []
+//        var b: [Int] = []
+//        citations.forEach {
+//            if $0 >= i {
+//                a.append($0)
+//            } else {
+//                b.append($0)
+//            }
+//        }
+//
+//        if a.count >= i && b.count <= i {
+//            result = max(result, i)
+//
+//        }
+//    }
+//
+//
+//    return result
+//}
+//
+//print(solution([3, 0, 6, 1, 5]))
+
+// MARK: - 프로그래머스 level2 이진 변환 반복하기
+
+func solution(_ s:String) -> [Int] {
+    var str: [String] =  s.map{String($0)}
+    var removeZeroCount: Int = 0
     var result: Int = 0
-    
-    for i in 0...citations.max()! {
-        var a: [Int] = []
-        var b: [Int] = []
-        citations.forEach {
-            if $0 >= i {
-                a.append($0)
-            } else {
-                b.append($0)
-            }
-        }
-        
-        if a.count >= i && b.count <= i {
-            result = max(result, i)
-            
-        }
+
+    while str != ["1"] {
+        removeZeroCount += str.filter{$0 == "0"}.count
+        str = str.joined(separator: "").replacingOccurrences(of: "0", with: "").map{String($0)}
+        let count: Int = str.count
+        str = String(count, radix: 2).map{String($0)}
+        result += 1
     }
     
-    
-    return result
+    return [result, removeZeroCount]
 }
 
-print(solution([3, 0, 6, 1, 5]))
+print(solution("1111111"))
+print(String(4, radix: 2))
