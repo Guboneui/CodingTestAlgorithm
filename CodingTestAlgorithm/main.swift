@@ -14301,51 +14301,65 @@ import Foundation
 
 
 // MARK: - 프로그래머스 levle2 [3차] 파일명 정렬
-func solution(_ files:[String]) -> [String] {
-    var newFiles: [(Int, String, String, String)] = []
-    var result: [String] = []
-    for i in 0..<files.count {
-        var file: [String] = files[i].map{String($0)}
-        let Head: String = String(files[i].prefix{!$0.isNumber})
-        file = Array(file[Head.count...])
-        var Number: [String] = []
-        var Tail: [String] = []
-        
-        for i in 0..<file.count {
-            if i < 5 && Int(file[i]) != nil {
-                Number.append(file[i])
-            } else { break }
-        }
-        
-        Tail = Array(file[Number.count...])
-        
+//func solution(_ files:[String]) -> [String] {
+//    var newFiles: [(Int, String, String, String)] = []
+//    var result: [String] = []
+//    for i in 0..<files.count {
+//        var file: [String] = files[i].map{String($0)}
+//        let Head: String = String(files[i].prefix{!$0.isNumber})
+//        file = Array(file[Head.count...])
+//        var Number: [String] = []
+//        var Tail: [String] = []
+//
+//        for i in 0..<file.count {
+//            if i < 5 && Int(file[i]) != nil {
+//                Number.append(file[i])
+//            } else { break }
+//        }
+//
+//        Tail = Array(file[Number.count...])
+//
+//
+//        newFiles.append((i, Head, Number.joined(separator: ""), Tail.joined(separator: "")))
+//
+//    }
+//
+//    newFiles = newFiles.sorted{
+//
+//        if $0.1.description.lowercased() == $1.1.description.lowercased() {
+//            return Int($0.2)! < Int($1.2)!
+//        }
+//
+//        if $0.1.description.lowercased() == $1.1.description.lowercased() && Int($0.2)! == Int($1.2)! {
+//            return $0.0 < $1.0
+//        }
+//
+//        return $0.1.description.lowercased() < $1.1.description.lowercased()
+//    }
+//
+//    for file in newFiles {
+//        result.append(file.1 + file.2 + file.3)
+//    }
+//
+//    return result
+//}
+//print(solution(["F-5 Freedom Fighter", "B-50 Superfortress", "A-10 Thunderbolt II", "F-99999999 ", "k=========================================adsjfkalsdnjk1"]))
+//
+//var tempIndex: Int = 0
+//var file: String = "k=========================================adsjfkalsdnjk1"
+//print(file.prefix{!$0.isNumber})
+////print(tempIndex)
 
-        newFiles.append((i, Head, Number.joined(separator: ""), Tail.joined(separator: "")))
-
+// MARK: - 프로그래머스 level2 최대값과 최솟값
+func solution(_ s:String) -> String {
+    let arr: [Int] = s.split(separator: " ").map{Int(String($0))!}
+    var maxValue: Int = Int.min
+    var minValue: Int = Int.max
+    for num in arr {
+        maxValue = max(maxValue, num)
+        minValue = min(minValue, num)
     }
-
-    newFiles = newFiles.sorted{
-
-        if $0.1.description.lowercased() == $1.1.description.lowercased() {
-            return Int($0.2)! < Int($1.2)!
-        }
-
-        if $0.1.description.lowercased() == $1.1.description.lowercased() && Int($0.2)! == Int($1.2)! {
-            return $0.0 < $1.0
-        }
-
-        return $0.1.description.lowercased() < $1.1.description.lowercased()
-    }
-
-    for file in newFiles {
-        result.append(file.1 + file.2 + file.3)
-    }
-
-    return result
+    return "\(minValue) \(maxValue)"
 }
-print(solution(["F-5 Freedom Fighter", "B-50 Superfortress", "A-10 Thunderbolt II", "F-99999999 ", "k=========================================adsjfkalsdnjk1"]))
 
-var tempIndex: Int = 0
-var file: String = "k=========================================adsjfkalsdnjk1"
-print(file.prefix{!$0.isNumber})
-//print(tempIndex)
+print(solution("-1 -2 -3 -4"))
