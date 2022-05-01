@@ -14477,15 +14477,32 @@ import Foundation
 
 // MARK: - 프로그래머스 levle2 올바른 괄호
 
-func solution(_ s:String) -> Bool{
-    let arr: [String] = s.map{String($0)}
-    var result: Int = 0
-    for str in arr {
-        if str == "(" { result += 1 }
-        else if str == ")" { result -= 1 }
-        if result < 0 { return false }
-    }
+//func solution(_ s:String) -> Bool{
+//    let arr: [String] = s.map{String($0)}
+//    var result: Int = 0
+//    for str in arr {
+//        if str == "(" { result += 1 }
+//        else if str == ")" { result -= 1 }
+//        if result < 0 { return false }
+//    }
+//
+//    return result == 0 ? true : false
+//}
+//print(solution("(()("))
 
-    return result == 0 ? true : false
+// MARK: - 프로그래머스 level2 [3차]n진수 게임
+func solution(_ n:Int, _ t:Int, _ m:Int, _ p:Int) -> String {
+    let arr: [Int] = Array(0...t*m)
+    var numArr: [String] = []
+    var result: String = ""
+    for num in arr {
+        numArr.append(contentsOf: String(num, radix: n).map{String($0)})
+    }
+    var index: Int = p-1
+    while result.count != t {
+        result += numArr[index].uppercased()
+        index += m
+    }
+    return result
 }
-print(solution("(()("))
+print(solution(16, 16, 2, 1))
