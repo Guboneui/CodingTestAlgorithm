@@ -14444,33 +14444,48 @@ import Foundation
 //solution("123     123")
 
 // MARK: - 프로그래머스 level2 n^2 배열 자르기
-func solution(_ n:Int, _ left:Int64, _ right:Int64) -> [Int] {
-    var numArr: [Int] = []
-    let startR: Int = Int(left) / n
-    let startC: Int = Int(left) % n
-    let endR: Int = Int(right) / n
-    let endC: Int = Int(right) % n
-    
-    for i in startR...endR {
-        var temp: [Int] = Array(repeating: i+1, count: i+1)
-        
-        if i+1 < n {
-            temp.append(contentsOf: Array(i+2...n))
-        }
-        
-        if startR == endR {
-            return Array(temp[startC...endC])
-        }
-        
-        if i == startR {
-            numArr.append(contentsOf: temp[startC...])
-        } else if i == endR {
-            numArr.append(contentsOf: temp[...endC])
-        } else {
-            numArr.append(contentsOf: temp)
-        }
+//func solution(_ n:Int, _ left:Int64, _ right:Int64) -> [Int] {
+//    var numArr: [Int] = []
+//    let startR: Int = Int(left) / n
+//    let startC: Int = Int(left) % n
+//    let endR: Int = Int(right) / n
+//    let endC: Int = Int(right) % n
+//
+//    for i in startR...endR {
+//        var temp: [Int] = Array(repeating: i+1, count: i+1)
+//
+//        if i+1 < n {
+//            temp.append(contentsOf: Array(i+2...n))
+//        }
+//
+//        if startR == endR {
+//            return Array(temp[startC...endC])
+//        }
+//
+//        if i == startR {
+//            numArr.append(contentsOf: temp[startC...])
+//        } else if i == endR {
+//            numArr.append(contentsOf: temp[...endC])
+//        } else {
+//            numArr.append(contentsOf: temp)
+//        }
+//
+//    }
+//    return numArr
+//}
+//print(solution(4, 8, 10))
 
+// MARK: - 프로그래머스 levle2 올바른 괄호
+
+func solution(_ s:String) -> Bool{
+    let arr: [String] = s.map{String($0)}
+    var result: Int = 0
+    for str in arr {
+        if str == "(" { result += 1 }
+        else if str == ")" { result -= 1 }
+        if result < 0 { return false }
     }
-    return numArr
+
+    return result == 0 ? true : false
 }
-print(solution(4, 8, 10))
+print(solution("(()("))
