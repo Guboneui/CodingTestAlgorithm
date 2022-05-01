@@ -14425,21 +14425,52 @@ import Foundation
 
 // MARK: - 프로그래머스 JadenCase 문자열 만들기
 
-func solution(_ s:String) -> String {
-    var arr: [String] = s.components(separatedBy: " ").map{$0.lowercased()}
-    print(arr.joined(separator: " "))
-    for i in 0..<arr.count {
-        if !arr[i].isEmpty {
-            var temp: [String] = arr[i].map{String($0)}
-            if Character(temp[0]).isLetter {
-                temp[0] = temp[0].uppercased()
-            }
-            arr[i] = temp.joined(separator: "")
-        }
-
-    }
-    return arr.joined(separator: " ")
-}
+//func solution(_ s:String) -> String {
+//    var arr: [String] = s.components(separatedBy: " ").map{$0.lowercased()}
+//    print(arr.joined(separator: " "))
+//    for i in 0..<arr.count {
+//        if !arr[i].isEmpty {
+//            var temp: [String] = arr[i].map{String($0)}
+//            if Character(temp[0]).isLetter {
+//                temp[0] = temp[0].uppercased()
+//            }
+//            arr[i] = temp.joined(separator: "")
+//        }
+//
+//    }
+//    return arr.joined(separator: " ")
+//}
 
 //solution("123     123")
 
+// MARK: - 프로그래머스 level2 n^2 배열 자르기
+func solution(_ n:Int, _ left:Int64, _ right:Int64) -> [Int] {
+    var numArr: [Int] = []
+    let startR: Int = Int(left) / n
+    let startC: Int = Int(left) % n
+    let endR: Int = Int(right) / n
+    let endC: Int = Int(right) % n
+    
+    for i in startR...endR {
+        var temp: [Int] = Array(repeating: i+1, count: i+1)
+        
+        if i+1 < n {
+            temp.append(contentsOf: Array(i+2...n))
+        }
+        
+        if startR == endR {
+            return Array(temp[startC...endC])
+        }
+        
+        if i == startR {
+            numArr.append(contentsOf: temp[startC...])
+        } else if i == endR {
+            numArr.append(contentsOf: temp[...endC])
+        } else {
+            numArr.append(contentsOf: temp)
+        }
+
+    }
+    return numArr
+}
+print(solution(4, 8, 10))
