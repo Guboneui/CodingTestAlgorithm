@@ -14408,17 +14408,38 @@ import Foundation
 
 // MARK: - 프로그래머스 level2 최솟값 만들기
 
-func solution(_ A:[Int], _ B:[Int]) -> Int {
-    let newA: [Int] = A.sorted(by: <)
-    let newB: [Int] = B.sorted(by: >)
+//func solution(_ A:[Int], _ B:[Int]) -> Int {
+//    let newA: [Int] = A.sorted(by: <)
+//    let newB: [Int] = B.sorted(by: >)
+//
+//    var result: Int = 0
+//
+//    for i in 0..<newA.count {
+//        result += newA[i] * newB[i]
+//    }
+//
+//    return result
+//}
+//
+//print(solution([1, 4, 2], [5, 4, 4]))
 
-    var result: Int = 0
-    
-    for i in 0..<newA.count {
-        result += newA[i] * newB[i]
+// MARK: - 프로그래머스 JadenCase 문자열 만들기
+
+func solution(_ s:String) -> String {
+    var arr: [String] = s.components(separatedBy: " ").map{$0.lowercased()}
+    print(arr.joined(separator: " "))
+    for i in 0..<arr.count {
+        if !arr[i].isEmpty {
+            var temp: [String] = arr[i].map{String($0)}
+            if Character(temp[0]).isLetter {
+                temp[0] = temp[0].uppercased()
+            }
+            arr[i] = temp.joined(separator: "")
+        }
+
     }
-    
-    return result
+    return arr.joined(separator: " ")
 }
 
-print(solution([1, 4, 2], [5, 4, 4]))
+//solution("123     123")
+
