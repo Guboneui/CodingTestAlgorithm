@@ -14565,46 +14565,46 @@ import Foundation
 //print(solution("ABABABABABABABAB"))
 
 // MARK: - 프로그래머스 level2 땅따먹기
-//func solution(_ land:[[Int]]) -> Int {
-//    var result: [[Int]] = land
-//
-//    for i in 1..<land.count {
-//        result[i][0] += max(result[i-1][1], result[i-1][2], result[i-1][3])
-//        result[i][1] += max(result[i-1][0], result[i-1][2], result[i-1][3])
-//        result[i][2] += max(result[i-1][0], result[i-1][1], result[i-1][3])
-//        result[i][3] += max(result[i-1][0], result[i-1][1], result[i-1][2])
-//    }
-//
-//    return result.last!.max()!
-//}
-//
-//print(solution([[1,2,3,5],[5,6,7,8],[4,3,2,1]]))
+func solution(_ land:[[Int]]) -> Int {
+    var result: [[Int]] = land
+
+    for i in 1..<land.count {
+        result[i][0] += max(result[i-1][1], result[i-1][2], result[i-1][3])
+        result[i][1] += max(result[i-1][0], result[i-1][2], result[i-1][3])
+        result[i][2] += max(result[i-1][0], result[i-1][1], result[i-1][3])
+        result[i][3] += max(result[i-1][0], result[i-1][1], result[i-1][2])
+    }
+
+    return result.last!.max()!
+}
+
+print(solution([[1,2,3,5],[5,6,7,8],[4,3,2,1]]))
 
 // MARK: - 프로그래머스 level2 가장 큰 정사각형 찾기
 
-func solution(_ board:[[Int]]) -> Int {
-    
-    var newBoard: [[Int]] = board
-    var result: Int = 0
-    
-    if board.count == 1 || board[0].count == 1 {
-        for i in 0..<board.count {
-            for j in 0..<board[0].count {
-                result = result < newBoard[i][j] ? newBoard[i][j] : result
-            }
-        }
-    } else {
-        for i in 1..<board.count {
-            for j in 1..<board[0].count {
-                if board[i][j] == 1 {
-                    newBoard[i][j] += min(newBoard[i-1][j-1], newBoard[i-1][j], newBoard[i][j-1])
-                    result = result < newBoard[i][j] ? newBoard[i][j] : result
-                }
-            }
-        }
-    }
-    
-    return result * result
-}
-
-print(solution([[0,1,1,1]]))
+//func solution(_ board:[[Int]]) -> Int {
+//
+//    var newBoard: [[Int]] = board
+//    var result: Int = 0
+//
+//    if board.count == 1 || board[0].count == 1 {
+//        for i in 0..<board.count {
+//            for j in 0..<board[0].count {
+//                result = result < newBoard[i][j] ? newBoard[i][j] : result
+//            }
+//        }
+//    } else {
+//        for i in 1..<board.count {
+//            for j in 1..<board[0].count {
+//                if board[i][j] == 1 {
+//                    newBoard[i][j] += min(newBoard[i-1][j-1], newBoard[i-1][j], newBoard[i][j-1])
+//                    result = result < newBoard[i][j] ? newBoard[i][j] : result
+//                }
+//            }
+//        }
+//    }
+//
+//    return result * result
+//}
+//
+//print(solution([[0,1,1,1]]))
