@@ -14531,35 +14531,80 @@ import Foundation
 //print(solution(2, ["hello", "one", "even", "never", "now", "world", "draw"]))
 
 // MARK: - 프로그래머스 level2 [3차]압축
-func solution(_ msg:String) -> [Int] {
-    var result: [Int] = []
-    let message: [String] = msg.map{String($0)}
-    let arr: [String] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".map{String($0)}
-    var dict: [String:Int] = [:]
-    for (index, alphabet) in arr.enumerated() {
-        dict[alphabet] = index+1
-    }
+//func solution(_ msg:String) -> [Int] {
+//    var result: [Int] = []
+//    let message: [String] = msg.map{String($0)}
+//    let arr: [String] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".map{String($0)}
+//    var dict: [String:Int] = [:]
+//    for (index, alphabet) in arr.enumerated() {
+//        dict[alphabet] = index+1
+//    }
+//
+//    var index: Int = 0
+//    var str: String = ""
+//    while index < message.count {
+//        let next: String = message[index]
+//        let tempString: String = str + next
+//
+//        guard let _ = dict[tempString] else {
+//            dict[tempString] = dict.count+1
+//            result.append(dict[str]!)
+//
+//            str = ""
+//            continue
+//        }
+//
+//        str += next
+//        index += 1
+//    }
+//
+//    result.append(dict[str]!)
+//    return result
+//}
+//
+//print(solution("ABABABABABABABAB"))
+
+// MARK: - 프로그래머스 level2 땅따먹기
+//func solution(_ land:[[Int]]) -> Int {
+//    var result: [[Int]] = land
+//
+//    for i in 1..<land.count {
+//        result[i][0] += max(result[i-1][1], result[i-1][2], result[i-1][3])
+//        result[i][1] += max(result[i-1][0], result[i-1][2], result[i-1][3])
+//        result[i][2] += max(result[i-1][0], result[i-1][1], result[i-1][3])
+//        result[i][3] += max(result[i-1][0], result[i-1][1], result[i-1][2])
+//    }
+//
+//    return result.last!.max()!
+//}
+//
+//print(solution([[1,2,3,5],[5,6,7,8],[4,3,2,1]]))
+
+// MARK: - 프로그래머스 level2 가장 큰 정사각형 찾기
+
+func solution(_ board:[[Int]]) -> Int {
     
-    var index: Int = 0
-    var str: String = ""
-    while index < message.count {
-        let next: String = message[index]
-        let tempString: String = str + next
-        
-        guard let _ = dict[tempString] else {
-            dict[tempString] = dict.count+1
-            result.append(dict[str]!)
-            
-            str = ""
-            continue
+    var newBoard: [[Int]] = board
+    var result: Int = 0
+    
+    if board.count == 1 || board[0].count == 1 {
+        for i in 0..<board.count {
+            for j in 0..<board[0].count {
+                result = result < newBoard[i][j] ? newBoard[i][j] : result
+            }
         }
-        
-        str += next
-        index += 1
+    } else {
+        for i in 1..<board.count {
+            for j in 1..<board[0].count {
+                if board[i][j] == 1 {
+                    newBoard[i][j] += min(newBoard[i-1][j-1], newBoard[i-1][j], newBoard[i][j-1])
+                    result = result < newBoard[i][j] ? newBoard[i][j] : result
+                }
+            }
+        }
     }
     
-    result.append(dict[str]!)
-    return result
+    return result * result
 }
 
-print(solution("ABABABABABABABAB"))
+print(solution([[0,1,1,1]]))
