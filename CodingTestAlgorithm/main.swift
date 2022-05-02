@@ -14508,24 +14508,58 @@ import Foundation
 //print(solution(16, 16, 2, 1))
 
 // MARK: - 프로그래머스 levle2 영어 끝말잇기
-func solution(_ n:Int, _ words:[String]) -> [Int] {
+//func solution(_ n:Int, _ words:[String]) -> [Int] {
+//    var dict: [String:Int] = [:]
+//    dict[words[0]] = 1
+//    for i in 1..<words.count {
+//        if words[i-1].last == words[i].first! {
+//            if dict[words[i]] == nil {
+//                dict[words[i]] = 1
+//            } else {
+//                return [i%n+1, i/n+1]
+//            }
+//        } else {
+//
+//            return [i%n+1, i/n+1]
+//        }
+//    }
+//
+//
+//    return [0, 0]
+//}
+//
+//print(solution(2, ["hello", "one", "even", "never", "now", "world", "draw"]))
+
+// MARK: - 프로그래머스 level2 [3차]압축
+func solution(_ msg:String) -> [Int] {
+    var result: [Int] = []
+    let message: [String] = msg.map{String($0)}
+    let arr: [String] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".map{String($0)}
     var dict: [String:Int] = [:]
-    dict[words[0]] = 1
-    for i in 1..<words.count {
-        if words[i-1].last == words[i].first! {
-            if dict[words[i]] == nil {
-                dict[words[i]] = 1
-            } else {
-                return [i%n+1, i/n+1]
-            }
-        } else {
-            
-            return [i%n+1, i/n+1]
-        }
+    for (index, alphabet) in arr.enumerated() {
+        dict[alphabet] = index+1
     }
     
+    var index: Int = 0
+    var str: String = ""
+    while index < message.count {
+        let next: String = message[index]
+        let tempString: String = str + next
+        
+        guard let _ = dict[tempString] else {
+            dict[tempString] = dict.count+1
+            result.append(dict[str]!)
+            
+            str = ""
+            continue
+        }
+        
+        str += next
+        index += 1
+    }
     
-    return [0, 0]
+    result.append(dict[str]!)
+    return result
 }
 
-print(solution(2, ["hello", "one", "even", "never", "now", "world", "draw"]))
+print(solution("ABABABABABABABAB"))
