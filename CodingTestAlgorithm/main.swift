@@ -14565,20 +14565,20 @@ import Foundation
 //print(solution("ABABABABABABABAB"))
 
 // MARK: - 프로그래머스 level2 땅따먹기
-func solution(_ land:[[Int]]) -> Int {
-    var result: [[Int]] = land
-
-    for i in 1..<land.count {
-        result[i][0] += max(result[i-1][1], result[i-1][2], result[i-1][3])
-        result[i][1] += max(result[i-1][0], result[i-1][2], result[i-1][3])
-        result[i][2] += max(result[i-1][0], result[i-1][1], result[i-1][3])
-        result[i][3] += max(result[i-1][0], result[i-1][1], result[i-1][2])
-    }
-
-    return result.last!.max()!
-}
-
-print(solution([[1,2,3,5],[5,6,7,8],[4,3,2,1]]))
+//func solution(_ land:[[Int]]) -> Int {
+//    var result: [[Int]] = land
+//
+//    for i in 1..<land.count {
+//        result[i][0] += max(result[i-1][1], result[i-1][2], result[i-1][3])
+//        result[i][1] += max(result[i-1][0], result[i-1][2], result[i-1][3])
+//        result[i][2] += max(result[i-1][0], result[i-1][1], result[i-1][3])
+//        result[i][3] += max(result[i-1][0], result[i-1][1], result[i-1][2])
+//    }
+//
+//    return result.last!.max()!
+//}
+//
+//print(solution([[1,2,3,5],[5,6,7,8],[4,3,2,1]]))
 
 // MARK: - 프로그래머스 level2 가장 큰 정사각형 찾기
 
@@ -14608,3 +14608,47 @@ print(solution([[1,2,3,5],[5,6,7,8],[4,3,2,1]]))
 //}
 //
 //print(solution([[0,1,1,1]]))
+
+// MARK: - 프로그래머스 level2 방문 길이
+
+func solution(_ dirs:String) -> Int {
+    var arr: [[Int]] = [[0, 0]]
+    var result: Int = 0
+    var checkDict: [[Int]:Int] = [:]
+    var start: (Int, Int) = (0, 0)
+    for dir in dirs {
+        var temp: (Int, Int) = start
+        if dir == "U" {
+            temp = (temp.0, temp.1 + 1)
+        } else if dir == "D" {
+            temp = (temp.0, temp.1 - 1)
+        } else if dir == "L" {
+            temp = (temp.0 - 1, temp.1)
+        } else if dir == "R" {
+            temp = (temp.0 + 1, temp.1)
+        }
+        
+        if temp.0 >= -5 && temp.0 <= 5 && temp.1 >= -5 && temp.1 <= 5 {
+            
+            arr.append([temp.0, temp.1])
+            start = temp
+            
+        } else {
+            continue
+        }
+    }
+    
+    for i in 0..<arr.count-1 {
+        let temp1: [Int] = arr[i] + arr[i+1]
+        let temp2: [Int] = arr[i+1] + arr[i]
+        if checkDict[temp1] == nil && checkDict[temp2] == nil {
+            checkDict[temp1] = 1
+            checkDict[temp2] = 1
+            result += 1
+        }
+    }
+    
+    return result
+}
+
+print(solution("UUUUDUDUDUUU"))
