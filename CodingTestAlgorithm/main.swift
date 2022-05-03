@@ -14611,44 +14611,65 @@ import Foundation
 
 // MARK: - 프로그래머스 level2 방문 길이
 
-func solution(_ dirs:String) -> Int {
-    var arr: [[Int]] = [[0, 0]]
-    var result: Int = 0
-    var checkDict: [[Int]:Int] = [:]
-    var start: (Int, Int) = (0, 0)
-    for dir in dirs {
-        var temp: (Int, Int) = start
-        if dir == "U" {
-            temp = (temp.0, temp.1 + 1)
-        } else if dir == "D" {
-            temp = (temp.0, temp.1 - 1)
-        } else if dir == "L" {
-            temp = (temp.0 - 1, temp.1)
-        } else if dir == "R" {
-            temp = (temp.0 + 1, temp.1)
-        }
-        
-        if temp.0 >= -5 && temp.0 <= 5 && temp.1 >= -5 && temp.1 <= 5 {
-            
-            arr.append([temp.0, temp.1])
-            start = temp
-            
-        } else {
-            continue
-        }
-    }
+//func solution(_ dirs:String) -> Int {
+//    var arr: [[Int]] = [[0, 0]]
+//    var result: Int = 0
+//    var checkDict: [[Int]:Int] = [:]
+//    var start: (Int, Int) = (0, 0)
+//    for dir in dirs {
+//        var temp: (Int, Int) = start
+//        if dir == "U" {
+//            temp = (temp.0, temp.1 + 1)
+//        } else if dir == "D" {
+//            temp = (temp.0, temp.1 - 1)
+//        } else if dir == "L" {
+//            temp = (temp.0 - 1, temp.1)
+//        } else if dir == "R" {
+//            temp = (temp.0 + 1, temp.1)
+//        }
+//
+//        if temp.0 >= -5 && temp.0 <= 5 && temp.1 >= -5 && temp.1 <= 5 {
+//
+//            arr.append([temp.0, temp.1])
+//            start = temp
+//
+//        } else {
+//            continue
+//        }
+//    }
+//
+//    for i in 0..<arr.count-1 {
+//        let temp1: [Int] = arr[i] + arr[i+1]
+//        let temp2: [Int] = arr[i+1] + arr[i]
+//        if checkDict[temp1] == nil && checkDict[temp2] == nil {
+//            checkDict[temp1] = 1
+//            checkDict[temp2] = 1
+//            result += 1
+//        }
+//    }
+//
+//    return result
+//}
+//
+//print(solution("UUUUDUDUDUUU"))
+
+// MARK: - 프로그래머스 level2 점프와 순간 이동
+
+func solution(_ n:Int) -> Int {
     
-    for i in 0..<arr.count-1 {
-        let temp1: [Int] = arr[i] + arr[i+1]
-        let temp2: [Int] = arr[i+1] + arr[i]
-        if checkDict[temp1] == nil && checkDict[temp2] == nil {
-            checkDict[temp1] = 1
-            checkDict[temp2] = 1
+    var result: Int = 0
+    var number: Int = n
+    
+    while number != 0 {
+        if number % 2 == 1 {
             result += 1
         }
+        number /= 2
     }
+    
+    
     
     return result
 }
 
-print(solution("UUUUDUDUDUUU"))
+print(solution(5000))
