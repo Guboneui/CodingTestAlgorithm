@@ -14877,9 +14877,6 @@ func solution(_ N:Int, _ road:[[Int]], _ k:Int) -> Int {
         
     }
     
-    print(graph)
-    print(graphWeight)
-    
     var result: [Int] = Array(repeating: 500001, count: N+1)
     
     result[1] = 0
@@ -14900,8 +14897,7 @@ func solution(_ N:Int, _ road:[[Int]], _ k:Int) -> Int {
         }
         
     }
-    
-    print(result)
+   
     
     for i in 2...N {
         if result[i] > 0 && result[i] <= k  {
