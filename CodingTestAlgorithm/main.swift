@@ -14755,57 +14755,104 @@ import Foundation
 
 // MARK: - 프로그래머스 level2 전략망을 둘로 나누기
 
-func solution(_ n:Int, _ wires:[[Int]]) -> Int {
-    var graph: [[Int]] = Array(repeating: [Int](), count: n+1)
-    var maxCount: Int = 0
-    for wire in wires {
-        graph[wire[0]].append(wire[1])
-        graph[wire[1]].append(wire[0])
-        maxCount = max(maxCount, graph[wire[0]].count, graph[wire[1]].count)
-    }
-    
-    var countArr: [Int] = []
-    
+//func solution(_ n:Int, _ wires:[[Int]]) -> Int {
+//    var graph: [[Int]] = Array(repeating: [Int](), count: n+1)
+//    var maxCount: Int = 0
+//    for wire in wires {
+//        graph[wire[0]].append(wire[1])
+//        graph[wire[1]].append(wire[0])
+//        maxCount = max(maxCount, graph[wire[0]].count, graph[wire[1]].count)
+//    }
+//
+//    var countArr: [Int] = []
+//
+//
+//    var result: Int = n
+//    for node in 1...n {
+//        for startNode in graph[node] {
+//            var copyGraph: [[Int]] = graph
+//            copyGraph[node] = copyGraph[node].filter{$0 != startNode}
+//            copyGraph[startNode] = copyGraph[startNode].filter{$0 != node}
+//
+//            var visited: [Bool] = Array(repeating: false, count: n+1)
+//
+//
+//            for i in 1...n {
+//
+//                if visited[i] == false {
+//                    var queue: [Int] = copyGraph[i]
+//                    var sum: Int = 0
+//                    while !queue.isEmpty {
+//                        let popValue: Int = queue.removeFirst()
+//                        if visited[popValue] == false {
+//                            queue.append(contentsOf: copyGraph[popValue])
+//                            visited[popValue] = true
+//                            sum += 1
+//                        }
+//                    }
+//
+//                    if sum == 0 {countArr.append(1)}
+//                    else {countArr.append(sum)}
+//                }
+//            }
+//            let a: Int = countArr.removeLast()
+//            let b: Int = countArr.removeLast()
+//            result = min(result, abs(a-b))
+//
+//        }
+//    }
+//
+//
+//
+//    return result
+//}
+//print(solution(7, [[1,2],[2,7],[3,7],[3,4],[4,5],[6,7]]))
+//
+//
+// MARK: - 프로그래머스 level2 피로도
 
-    var result: Int = n
-    for node in 1...n {
-        for startNode in graph[node] {
-            var copyGraph: [[Int]] = graph
-            copyGraph[node] = copyGraph[node].filter{$0 != startNode}
-            copyGraph[startNode] = copyGraph[startNode].filter{$0 != node}
-
-            var visited: [Bool] = Array(repeating: false, count: n+1)
-            
-            
-            for i in 1...n {
-                
-                if visited[i] == false {
-                    var queue: [Int] = copyGraph[i]
-                    var sum: Int = 0
-                    while !queue.isEmpty {
-                        let popValue: Int = queue.removeFirst()
-                        if visited[popValue] == false {
-                            queue.append(contentsOf: copyGraph[popValue])
-                            visited[popValue] = true
-                            sum += 1
-                        }
-                    }
-                    
-                    if sum == 0 {countArr.append(1)}
-                    else {countArr.append(sum)}
-                }
+func solution(_ k:Int, _ dungeons:[[Int]]) -> Int {
+    
+    var arr: [[Int]] = []
+    var arrVisited: [Bool] = Array(repeating: false, count: dungeons.count)
+    func dfs(_ start: Int, _ dfsArr: [Int]) {
+        if dfsArr.count == dungeons.count {
+            arr.append(dfsArr)
+            return
+        }
+        
+        for i in 0..<dungeons.count {
+            if arrVisited[i] == false {
+                arrVisited[i] = true
+                dfs(i+1, dfsArr + [i])
+                arrVisited[i] = false
             }
-            let a: Int = countArr.removeLast()
-            let b: Int = countArr.removeLast()
-            result = min(result, abs(a-b))
-
         }
     }
-
-
-
+    
+    dfs(0, [])
+   
+    
+    var result: Int = 0
+    
+    for i in arr {
+        var count: Int = 0
+        var newK: Int = k
+        for j in i {
+            if dungeons[j][0] <= newK {
+                newK -= dungeons[j][1]
+                count += 1
+            } else {
+                break
+            }
+        }
+        result = max(result, count)
+    }
+    
+    
+    
     return result
 }
-print(solution(7, [[1,2],[2,7],[3,7],[3,4],[4,5],[6,7]]))
 
+print(solution(80, [[80,20],[50,40],[30,10]]))
 
