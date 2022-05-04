@@ -14655,21 +14655,59 @@ import Foundation
 
 // MARK: - 프로그래머스 level2 점프와 순간 이동
 
-func solution(_ n:Int) -> Int {
+//func solution(_ n:Int) -> Int {
+//
+//    var result: Int = 0
+//    var number: Int = n
+//
+//    while number != 0 {
+//        if number % 2 == 1 {
+//            result += 1
+//        }
+//        number /= 2
+//    }
+//
+//
+//
+//    return result
+//}
+//
+//print(solution(5000))
+
+
+// MARK: - 프로그래머스 level2 2개 이하로 다른 비트
+
+func solution(_ numbers:[Int64]) -> [Int64] {
+    var result: [Int64] = []
     
-    var result: Int = 0
-    var number: Int = n
-    
-    while number != 0 {
-        if number % 2 == 1 {
-            result += 1
+    for number in numbers {
+        if number%2 == 0 {result.append(number+1)}
+        else {
+            var numberArr: [String] = String(number, radix: 2).map{String($0)}
+            if !numberArr.contains("0") {
+                numberArr[0] = "0"
+                numberArr = ["1"] + numberArr
+                result.append(Int64(numberArr.joined(separator: ""), radix: 2)!)
+            } else {
+                numberArr = numberArr.reversed()
+                for i in 0..<numberArr.count {
+                    if numberArr[i] == "0" {
+                        numberArr[i] = "1"
+                        numberArr[i-1] = "0"
+                        result.append(Int64(numberArr.reversed().joined(separator: ""), radix: 2)!)
+                        break
+                    }
+                }
+                
+            }
         }
-        number /= 2
     }
-    
     
     
     return result
 }
 
-print(solution(5000))
+print(solution([2, 11]))
+
+
+
