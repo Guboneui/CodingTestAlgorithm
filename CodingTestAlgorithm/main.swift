@@ -14811,48 +14811,104 @@ import Foundation
 //
 // MARK: - 프로그래머스 level2 피로도
 
-func solution(_ k:Int, _ dungeons:[[Int]]) -> Int {
+//func solution(_ k:Int, _ dungeons:[[Int]]) -> Int {
+//
+//    var arr: [[Int]] = []
+//    var arrVisited: [Bool] = Array(repeating: false, count: dungeons.count)
+//    func dfs(_ start: Int, _ dfsArr: [Int]) {
+//        if dfsArr.count == dungeons.count {
+//            arr.append(dfsArr)
+//            return
+//        }
+//
+//        for i in 0..<dungeons.count {
+//            if arrVisited[i] == false {
+//                arrVisited[i] = true
+//                dfs(i+1, dfsArr + [i])
+//                arrVisited[i] = false
+//            }
+//        }
+//    }
+//
+//    dfs(0, [])
+//
+//
+//    var result: Int = 0
+//
+//    for i in arr {
+//        var count: Int = 0
+//        var newK: Int = k
+//        for j in i {
+//            if dungeons[j][0] <= newK {
+//                newK -= dungeons[j][1]
+//                count += 1
+//            } else {
+//                break
+//            }
+//        }
+//        result = max(result, count)
+//    }
+//
+//
+//
+//    return result
+//}
+//
+//print(solution(80, [[80,20],[50,40],[30,10]]))
+//
+
+
+// MARK: - 프로그래머스 level2 배달
+func solution(_ N:Int, _ road:[[Int]], _ k:Int) -> Int {
+    var answer = 0
     
-    var arr: [[Int]] = []
-    var arrVisited: [Bool] = Array(repeating: false, count: dungeons.count)
-    func dfs(_ start: Int, _ dfsArr: [Int]) {
-        if dfsArr.count == dungeons.count {
-            arr.append(dfsArr)
-            return
+    if N == 1 { return 1 }
+    
+    var graph: [[Int]] = Array(repeating: [Int](), count: N+1)
+    var graphWeight: [[Int]] = Array(repeating: Array(repeating: 500001, count: N+1), count: N+1)
+    for r in road {
+        
+        graph[r[0]].append(r[1])
+        graph[r[1]].append(r[0])
+    
+        graphWeight[r[0]][r[1]] = min(graphWeight[r[0]][r[1]], r[2])
+        graphWeight[r[1]][r[0]] = min(graphWeight[r[1]][r[0]], r[2])
+
+        
+    }
+    
+    print(graph)
+    print(graphWeight)
+    
+    var result: [Int] = Array(repeating: 500001, count: N+1)
+    
+    result[1] = 0
+    for i in 1...N {
+        let temp: [Int] = graph[i]
+        var visited: [Bool] = Array(repeating: false, count: N+1)
+        var queue: [Int] = graph[i]
+        while !queue.isEmpty {
+            let popValue: Int = queue.removeFirst()
+            if visited[popValue] == false {
+                visited[popValue] = true
+                queue.append(contentsOf: graph[popValue])
+                for j in graph[popValue] {
+                    result[j] = min(result[j], result[popValue] + graphWeight[popValue][j])
+                }
+                
+            }
         }
         
-        for i in 0..<dungeons.count {
-            if arrVisited[i] == false {
-                arrVisited[i] = true
-                dfs(i+1, dfsArr + [i])
-                arrVisited[i] = false
-            }
-        }
     }
     
-    dfs(0, [])
-   
+    print(result)
     
-    var result: Int = 0
-    
-    for i in arr {
-        var count: Int = 0
-        var newK: Int = k
-        for j in i {
-            if dungeons[j][0] <= newK {
-                newK -= dungeons[j][1]
-                count += 1
-            } else {
-                break
-            }
+    for i in 2...N {
+        if result[i] > 0 && result[i] <= k  {
+            answer += 1
         }
-        result = max(result, count)
     }
-    
-    
-    
-    return result
+    return answer+1
 }
 
-print(solution(80, [[80,20],[50,40],[30,10]]))
-
+print(solution(5, [[1, 2, 4], [1, 3, 1], [3, 4, 1], [4, 2, 1], [2, 5, 1]], 4))
