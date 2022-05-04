@@ -14677,37 +14677,78 @@ import Foundation
 
 // MARK: - 프로그래머스 level2 2개 이하로 다른 비트
 
-func solution(_ numbers:[Int64]) -> [Int64] {
-    var result: [Int64] = []
+//func solution(_ numbers:[Int64]) -> [Int64] {
+//    var result: [Int64] = []
+//
+//    for number in numbers {
+//        if number%2 == 0 {result.append(number+1)}
+//        else {
+//            var numberArr: [String] = String(number, radix: 2).map{String($0)}
+//            if !numberArr.contains("0") {
+//                numberArr[0] = "0"
+//                numberArr = ["1"] + numberArr
+//                result.append(Int64(numberArr.joined(separator: ""), radix: 2)!)
+//            } else {
+//                numberArr = numberArr.reversed()
+//                for i in 0..<numberArr.count {
+//                    if numberArr[i] == "0" {
+//                        numberArr[i] = "1"
+//                        numberArr[i-1] = "0"
+//                        result.append(Int64(numberArr.reversed().joined(separator: ""), radix: 2)!)
+//                        break
+//                    }
+//                }
+//
+//            }
+//        }
+//    }
+//
+//
+//    return result
+//}
+
+//print(solution([2, 11]))
+
+// MARK: - 프로그래머스 level2 교점에 별 만들기
+func solution(_ line:[[Int]]) -> [String] {
+    var arr: [(Int, Int)] = []
+    var minXValue: Int = Int.max
+    var maxXValue: Int = Int.min
+    var minYValue: Int = Int.max
+    var maxYValue: Int = Int.min
     
-    for number in numbers {
-        if number%2 == 0 {result.append(number+1)}
-        else {
-            var numberArr: [String] = String(number, radix: 2).map{String($0)}
-            if !numberArr.contains("0") {
-                numberArr[0] = "0"
-                numberArr = ["1"] + numberArr
-                result.append(Int64(numberArr.joined(separator: ""), radix: 2)!)
-            } else {
-                numberArr = numberArr.reversed()
-                for i in 0..<numberArr.count {
-                    if numberArr[i] == "0" {
-                        numberArr[i] = "1"
-                        numberArr[i-1] = "0"
-                        result.append(Int64(numberArr.reversed().joined(separator: ""), radix: 2)!)
-                        break
-                    }
-                }
-                
+    for i in 0..<line.count-1 {
+        let A: Int = line[i][0]
+        let B: Int = line[i][1]
+        let E: Int = line[i][2]
+        
+        for j in i+1..<line.count {
+            let C: Int = line[j][0]
+            let D: Int = line[j][1]
+            let F: Int = line[j][2]
+            
+            if (A*D)-(B*C) != 0 && (B*F - E*D) % (A*D - B*C) == 0 && (E*C - A*F) % (A*D - B*C) == 0 {
+                arr.append(((B*F - E*D) / (A*D - B*C), (E*C - A*F) / (A*D - B*C)))
+                minXValue = min(minXValue, (B*F - E*D) / (A*D - B*C))
+                maxXValue = max(maxXValue, (B*F - E*D) / (A*D - B*C))
+                minYValue = min(minYValue, (E*C - A*F) / (A*D - B*C))
+                maxYValue = max(maxYValue, (E*C - A*F) / (A*D - B*C))
             }
         }
     }
+
+    var tempArr: [[String]] = Array(repeating: Array(repeating: ".", count: maxXValue-minXValue+1), count: maxYValue-minYValue+1)
+   
+    for location in arr {
+        tempArr[location.1 - minYValue][location.0 - minXValue] = "*"
+    }
     
+    var result: [String] = []
+    for i in tempArr.reversed() {
+        result.append(i.joined(separator: ""))
+    }
     
     return result
 }
 
-print(solution([2, 11]))
-
-
-
+print(solution([[2, -1, 4], [-2, -1, 4], [0, -1, 1], [5, -8, -12], [5, 8, 12]]))
