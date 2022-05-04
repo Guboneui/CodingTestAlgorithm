@@ -14859,52 +14859,87 @@ import Foundation
 
 
 // MARK: - 프로그래머스 level2 배달
-func solution(_ N:Int, _ road:[[Int]], _ k:Int) -> Int {
+//func solution(_ N:Int, _ road:[[Int]], _ k:Int) -> Int {
+//    var answer = 0
+//
+//    if N == 1 { return 1 }
+//
+//    var graph: [[Int]] = Array(repeating: [Int](), count: N+1)
+//    var graphWeight: [[Int]] = Array(repeating: Array(repeating: 500001, count: N+1), count: N+1)
+//    for r in road {
+//
+//        graph[r[0]].append(r[1])
+//        graph[r[1]].append(r[0])
+//
+//        graphWeight[r[0]][r[1]] = min(graphWeight[r[0]][r[1]], r[2])
+//        graphWeight[r[1]][r[0]] = min(graphWeight[r[1]][r[0]], r[2])
+//
+//
+//    }
+//
+//    var result: [Int] = Array(repeating: 500001, count: N+1)
+//
+//    result[1] = 0
+//    for i in 1...N {
+//        let temp: [Int] = graph[i]
+//        var visited: [Bool] = Array(repeating: false, count: N+1)
+//        var queue: [Int] = graph[i]
+//        while !queue.isEmpty {
+//            let popValue: Int = queue.removeFirst()
+//            if visited[popValue] == false {
+//                visited[popValue] = true
+//                queue.append(contentsOf: graph[popValue])
+//                for j in graph[popValue] {
+//                    result[j] = min(result[j], result[popValue] + graphWeight[popValue][j])
+//                }
+//
+//            }
+//        }
+//
+//    }
+//
+//
+//    for i in 2...N {
+//        if result[i] > 0 && result[i] <= k  {
+//            answer += 1
+//        }
+//    }
+//    return answer+1
+//}
+//
+//print(solution(5, [[1, 2, 4], [1, 3, 1], [3, 4, 1], [4, 2, 1], [2, 5, 1]], 4))
+
+
+func solution(_ N:Int, _ road:[[Int]], _ k:Int) -> Int {    // 플로이드 와샬 알고리즘
     var answer = 0
     
-    if N == 1 { return 1 }
-    
-    var graph: [[Int]] = Array(repeating: [Int](), count: N+1)
     var graphWeight: [[Int]] = Array(repeating: Array(repeating: 500001, count: N+1), count: N+1)
-    for r in road {
-        
-        graph[r[0]].append(r[1])
-        graph[r[1]].append(r[0])
     
+    for r in road {
         graphWeight[r[0]][r[1]] = min(graphWeight[r[0]][r[1]], r[2])
         graphWeight[r[1]][r[0]] = min(graphWeight[r[1]][r[0]], r[2])
-
-        
     }
     
-    var result: [Int] = Array(repeating: 500001, count: N+1)
-    
-    result[1] = 0
     for i in 1...N {
-        let temp: [Int] = graph[i]
-        var visited: [Bool] = Array(repeating: false, count: N+1)
-        var queue: [Int] = graph[i]
-        while !queue.isEmpty {
-            let popValue: Int = queue.removeFirst()
-            if visited[popValue] == false {
-                visited[popValue] = true
-                queue.append(contentsOf: graph[popValue])
-                for j in graph[popValue] {
-                    result[j] = min(result[j], result[popValue] + graphWeight[popValue][j])
+        graphWeight[i][i] = 0
+    }
+    
+    for k in 1...N {
+        for i in 1...N {
+            for j in 1...N {
+                if graphWeight[i][k] + graphWeight[k][j] < graphWeight[i][j] {
+                    graphWeight[i][j] = graphWeight[i][k] + graphWeight[k][j]
                 }
-                
             }
         }
-        
     }
-   
-    
-    for i in 2...N {
-        if result[i] > 0 && result[i] <= k  {
+
+    for i in 1...N{
+        if graphWeight[1][i] <= k{
             answer += 1
         }
     }
-    return answer+1
+    
+    return answer
 }
-
 print(solution(5, [[1, 2, 4], [1, 3, 1], [3, 4, 1], [4, 2, 1], [2, 5, 1]], 4))
