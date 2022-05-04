@@ -14710,45 +14710,102 @@ import Foundation
 //print(solution([2, 11]))
 
 // MARK: - 프로그래머스 level2 교점에 별 만들기
-func solution(_ line:[[Int]]) -> [String] {
-    var arr: [(Int, Int)] = []
-    var minXValue: Int = Int.max
-    var maxXValue: Int = Int.min
-    var minYValue: Int = Int.max
-    var maxYValue: Int = Int.min
+//func solution(_ line:[[Int]]) -> [String] {
+//    var arr: [(Int, Int)] = []
+//    var minXValue: Int = Int.max
+//    var maxXValue: Int = Int.min
+//    var minYValue: Int = Int.max
+//    var maxYValue: Int = Int.min
+//
+//    for i in 0..<line.count-1 {
+//        let A: Int = line[i][0]
+//        let B: Int = line[i][1]
+//        let E: Int = line[i][2]
+//
+//        for j in i+1..<line.count {
+//            let C: Int = line[j][0]
+//            let D: Int = line[j][1]
+//            let F: Int = line[j][2]
+//
+//            if (A*D)-(B*C) != 0 && (B*F - E*D) % (A*D - B*C) == 0 && (E*C - A*F) % (A*D - B*C) == 0 {
+//                arr.append(((B*F - E*D) / (A*D - B*C), (E*C - A*F) / (A*D - B*C)))
+//                minXValue = min(minXValue, (B*F - E*D) / (A*D - B*C))
+//                maxXValue = max(maxXValue, (B*F - E*D) / (A*D - B*C))
+//                minYValue = min(minYValue, (E*C - A*F) / (A*D - B*C))
+//                maxYValue = max(maxYValue, (E*C - A*F) / (A*D - B*C))
+//            }
+//        }
+//    }
+//
+//    var tempArr: [[String]] = Array(repeating: Array(repeating: ".", count: maxXValue-minXValue+1), count: maxYValue-minYValue+1)
+//
+//    for location in arr {
+//        tempArr[location.1 - minYValue][location.0 - minXValue] = "*"
+//    }
+//
+//    var result: [String] = []
+//    for i in tempArr.reversed() {
+//        result.append(i.joined(separator: ""))
+//    }
+//
+//    return result
+//}
+//
+//print(solution([[2, -1, 4], [-2, -1, 4], [0, -1, 1], [5, -8, -12], [5, 8, 12]]))
+
+// MARK: - 프로그래머스 level2 전략망을 둘로 나누기
+
+func solution(_ n:Int, _ wires:[[Int]]) -> Int {
+    var graph: [[Int]] = Array(repeating: [Int](), count: n+1)
+    var maxCount: Int = 0
+    for wire in wires {
+        graph[wire[0]].append(wire[1])
+        graph[wire[1]].append(wire[0])
+        maxCount = max(maxCount, graph[wire[0]].count, graph[wire[1]].count)
+    }
     
-    for i in 0..<line.count-1 {
-        let A: Int = line[i][0]
-        let B: Int = line[i][1]
-        let E: Int = line[i][2]
-        
-        for j in i+1..<line.count {
-            let C: Int = line[j][0]
-            let D: Int = line[j][1]
-            let F: Int = line[j][2]
+    var countArr: [Int] = []
+    
+
+    var result: Int = n
+    for node in 1...n {
+        for startNode in graph[node] {
+            var copyGraph: [[Int]] = graph
+            copyGraph[node] = copyGraph[node].filter{$0 != startNode}
+            copyGraph[startNode] = copyGraph[startNode].filter{$0 != node}
+
+            var visited: [Bool] = Array(repeating: false, count: n+1)
             
-            if (A*D)-(B*C) != 0 && (B*F - E*D) % (A*D - B*C) == 0 && (E*C - A*F) % (A*D - B*C) == 0 {
-                arr.append(((B*F - E*D) / (A*D - B*C), (E*C - A*F) / (A*D - B*C)))
-                minXValue = min(minXValue, (B*F - E*D) / (A*D - B*C))
-                maxXValue = max(maxXValue, (B*F - E*D) / (A*D - B*C))
-                minYValue = min(minYValue, (E*C - A*F) / (A*D - B*C))
-                maxYValue = max(maxYValue, (E*C - A*F) / (A*D - B*C))
+            
+            for i in 1...n {
+                
+                if visited[i] == false {
+                    var queue: [Int] = copyGraph[i]
+                    var sum: Int = 0
+                    while !queue.isEmpty {
+                        let popValue: Int = queue.removeFirst()
+                        if visited[popValue] == false {
+                            queue.append(contentsOf: copyGraph[popValue])
+                            visited[popValue] = true
+                            sum += 1
+                        }
+                    }
+                    
+                    if sum == 0 {countArr.append(1)}
+                    else {countArr.append(sum)}
+                }
             }
+            let a: Int = countArr.removeLast()
+            let b: Int = countArr.removeLast()
+            result = min(result, abs(a-b))
+
         }
     }
 
-    var tempArr: [[String]] = Array(repeating: Array(repeating: ".", count: maxXValue-minXValue+1), count: maxYValue-minYValue+1)
-   
-    for location in arr {
-        tempArr[location.1 - minYValue][location.0 - minXValue] = "*"
-    }
-    
-    var result: [String] = []
-    for i in tempArr.reversed() {
-        result.append(i.joined(separator: ""))
-    }
-    
+
+
     return result
 }
+print(solution(7, [[1,2],[2,7],[3,7],[3,4],[4,5],[6,7]]))
 
-print(solution([[2, -1, 4], [-2, -1, 4], [0, -1, 1], [5, -8, -12], [5, 8, 12]]))
+
