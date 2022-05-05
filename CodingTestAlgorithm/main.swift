@@ -14910,36 +14910,100 @@ import Foundation
 //print(solution(5, [[1, 2, 4], [1, 3, 1], [3, 4, 1], [4, 2, 1], [2, 5, 1]], 4))
 
 
-func solution(_ N:Int, _ road:[[Int]], _ k:Int) -> Int {    // 플로이드 와샬 알고리즘
-    var answer = 0
-    
-    var graphWeight: [[Int]] = Array(repeating: Array(repeating: 500001, count: N+1), count: N+1)
-    
-    for r in road {
-        graphWeight[r[0]][r[1]] = min(graphWeight[r[0]][r[1]], r[2])
-        graphWeight[r[1]][r[0]] = min(graphWeight[r[1]][r[0]], r[2])
+//func solution(_ N:Int, _ road:[[Int]], _ k:Int) -> Int {    // 플로이드 와샬 알고리즘
+//    var answer = 0
+//
+//    var graphWeight: [[Int]] = Array(repeating: Array(repeating: 500001, count: N+1), count: N+1)
+//
+//    for r in road {
+//        graphWeight[r[0]][r[1]] = min(graphWeight[r[0]][r[1]], r[2])
+//        graphWeight[r[1]][r[0]] = min(graphWeight[r[1]][r[0]], r[2])
+//    }
+//
+//    for i in 1...N {
+//        graphWeight[i][i] = 0
+//    }
+//
+//    for k in 1...N {
+//        for i in 1...N {
+//            for j in 1...N {
+//                if graphWeight[i][k] + graphWeight[k][j] < graphWeight[i][j] {
+//                    graphWeight[i][j] = graphWeight[i][k] + graphWeight[k][j]
+//                }
+//            }
+//        }
+//    }
+//
+//    for i in 1...N{
+//        if graphWeight[1][i] <= k{
+//            answer += 1
+//        }
+//    }
+//
+//    return answer
+//}
+//print(solution(5, [[1, 2, 4], [1, 3, 1], [3, 4, 1], [4, 2, 1], [2, 5, 1]], 4))
+
+// MARK: - 프로그래머스 level3 [1차]셔틀 버스
+
+func solution(_ n:Int, _ t:Int, _ m:Int, _ timetable:[String]) -> String {
+    // 버스 시간 분으로 통일
+    var busTime: [Int] = [540]
+    if n>1 {
+        for i in 1..<n {
+            busTime.append(busTime[i-1] + t)
+        }
     }
-    
-    for i in 1...N {
-        graphWeight[i][i] = 0
+   // print(busTime)
+    // 크루 시간 분으로 통일
+    var crewsTime: [Int] = []
+    for times in timetable {
+        let time = times.split(separator: ":").map{Int($0)!}
+        let totalTime: Int = time[0]*60 + time[1]
+        crewsTime.append(totalTime)
     }
+    crewsTime.sort()
+   
+    var arr: [[Int]] = []
+    var index: Int = 0
+    for i in 0..<busTime.count {
     
-    for k in 1...N {
-        for i in 1...N {
-            for j in 1...N {
-                if graphWeight[i][k] + graphWeight[k][j] < graphWeight[i][j] {
-                    graphWeight[i][j] = graphWeight[i][k] + graphWeight[k][j]
-                }
+        var temp: [Int] = []
+        
+        
+        while temp.count < m && index < crewsTime.count{
+            if crewsTime[index] <= busTime[i] {
+                temp.append(crewsTime[index])
+            } else {
+                break
+            }
+            index += 1
+        }
+        arr.append(temp)
+        
+    }
+
+    var result: Int = 0
+    
+    for i in 0..<arr.count {
+        if i == arr.count-1 {   // 마지막 버스 탑승
+            if arr[i].count == m { // 마지막 버스가 가득 찼을 경우
+                // 탑승 인원 중 가장 늦게 도착한 인원보다 1분 빨리 도착하면 됌.
+                result = arr[i].max()! - 1
+            } else if arr[i].count < m {
+                // 마지막 버스에 여유가 있을 경우
+                // 마지막 버스 시간에 맞추면 됌.
+                result = busTime[i]
             }
         }
     }
-
-    for i in 1...N{
-        if graphWeight[1][i] <= k{
-            answer += 1
-        }
-    }
     
-    return answer
+   
+    var h: String = String(result/60)
+    if h.count==1 { h = "0"+h}
+    var m: String = String(result%60)
+    if m.count == 1 { m = "0"+m}
+    return "\(h):\(m)"
 }
-print(solution(5, [[1, 2, 4], [1, 3, 1], [3, 4, 1], [4, 2, 1], [2, 5, 1]], 4))
+
+print(solution(10, 60, 45, ["23:59","23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59"]))
