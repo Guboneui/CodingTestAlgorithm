@@ -15114,50 +15114,74 @@ import Foundation
 
 // MARK: - 프로그래머스 level3 네트워크
 
+//func solution(_ n:Int, _ computers:[[Int]]) -> Int {
+//
+//    var graph: [[Int]] = Array(repeating: [Int](), count: n)
+//    var result: [Int] = []
+//    for i in 0..<computers.count {
+//        for j in 0..<computers[i].count {
+//            if i != j {
+//                if computers[i][j] == 1 {
+//                    graph[i].append(j)
+//                }
+//            }
+//        }
+//    }
+//
+//    //print(graph)
+//    var visited: [Bool] = Array(repeating: false, count: n)
+//    for i in 0..<n {
+//
+//        result.append(dfs(i, &visited, 0, graph))
+//    }
+//
+//    //print(result)
+//
+//    return result.filter{$0 != 0}.count
+//}
+//
+////print(solution(3, [[1, 1, 0], [1, 1, 1], [0, 1, 1]]))
+//
+//func dfs(_ startNode: Int, _ visited: inout [Bool], _ networkCount: Int, _ networkGraph: [[Int]]) -> Int {
+//
+//    var count: Int = 0
+//    var queue: [Int] = [startNode]
+//
+//    while !queue.isEmpty {
+//        let popValue: Int = queue.removeFirst()
+//        if visited[popValue] == false {
+//            visited[popValue] = true
+//            count += 1
+//            queue.append(contentsOf: networkGraph[popValue])
+//        }
+//    }
+//
+//    return count
+//}
+
+
 func solution(_ n:Int, _ computers:[[Int]]) -> Int {
-    
-    var graph: [[Int]] = Array(repeating: [Int](), count: n)
-    var result: [Int] = []
-    for i in 0..<computers.count {
-        for j in 0..<computers[i].count {
-            if i != j {
-                if computers[i][j] == 1 {
-                    graph[i].append(j)
-                }
+    var visited: [Bool] = Array(repeating: false, count: n)
+    var result: Int = 0
+
+    func dfs(_ v: Int) {
+        visited[v] = true
+        for i in 0..<n {
+            if computers[v][i] == 1 && visited[i] == false {
+                dfs(i)
             }
         }
     }
-    
-    //print(graph)
-    var visited: [Bool] = Array(repeating: false, count: n)
+
     for i in 0..<n {
-        
-        result.append(dfs(i, &visited, 0, graph))
-    }
-    
-    //print(result)
-    
-    return result.filter{$0 != 0}.count
-}
-
-//print(solution(3, [[1, 1, 0], [1, 1, 1], [0, 1, 1]]))
-
-func dfs(_ startNode: Int, _ visited: inout [Bool], _ networkCount: Int, _ networkGraph: [[Int]]) -> Int {
-    
-    var count: Int = 0
-    var queue: [Int] = [startNode]
-    
-    while !queue.isEmpty {
-        let popValue: Int = queue.removeFirst()
-        if visited[popValue] == false {
-            visited[popValue] = true
-            count += 1
-            queue.append(contentsOf: networkGraph[popValue])
+        if visited[i] == false {
+            result += 1
+            dfs(i)
         }
     }
-    
-    return count
+    return result
 }
 
 
 
+print(solution(3, [[1, 1, 0], [1, 1, 1], [0, 1, 1]]))
