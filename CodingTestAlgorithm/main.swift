@@ -15186,189 +15186,103 @@ import Foundation
 //
 //print(solution(3, [[1, 1, 0], [1, 1, 1], [0, 1, 1]]))
 
-// MARK: - 프로그래머스 level3 자물쇠와 열쇠
-
-func solution(_ key:[[Int]], _ lock:[[Int]]) -> Bool {
+// MARK: - 프로그래머스 level3 광고 삽입
+func solution(_ play_time:String, _ adv_time:String, _ logs:[String]) -> String {
     
-    var holeCount: Int = 0
-    for i in 0..<lock.count {
-        for j in 0..<lock.count {
-            if lock[i][j] == 0 { holeCount += 1 }
-        }
+    if play_time == adv_time { return "00:00:00" }
+    
+    let input_play_time: [Int] = play_time.split(separator: ":").map{Int($0)!}
+    /// 초로 환산한 전체 플레이 타임
+    let playTime: Int = 60*60*input_play_time[0] + 60*input_play_time[1] + input_play_time[2]
+    //print(playTime)
+    
+    let input_adv_time: [Int] = adv_time.split(separator: ":").map{Int($0)!}
+    /// 초로 환산한 전체 광고 시간
+    let advTime: Int = 60*60*input_adv_time[0] + 60*input_adv_time[1] + input_adv_time[2]
+    //print(advTime)
+    
+    /// 전체 동영상 시청 시작 및 종료 시간 초로 환산
+    var logsArr: [(Int, Int)] = []
+    for log in logs {
+        let time: [String] = log.split(separator: "-").map{String($0)}
+        
+        let startTimeArr: [Int] = time[0].split(separator: ":").map{Int($0)!}
+        let endTimeArr: [Int] = time[1].split(separator: ":").map{Int($0)!}
+        
+        let startTime: Int = 60*60*startTimeArr[0] + 60*startTimeArr[1] + startTimeArr[2]
+        let endTime: Int = 60*60*endTimeArr[0] + 60*endTimeArr[1] + endTimeArr[2]
+        
+        logsArr.append((startTime, endTime))
     }
     
-    var result: Bool = false
     
-    var fourCaseKey: [[[Int]]] = [key]
-    var allCasesKey: [[[Int]]] = []
-    for i in 1..<4 {
-        fourCaseKey.append(rotateArray(fourCaseKey[i-1]))
+    var tempBestAdvStartTime: [(Int, Int)] = []
+    
+    for log in logsArr {
+        tempBestAdvStartTime.append((log.0, log.0+advTime))
     }
     
-    for i in 0..<fourCaseKey.count {
-        fourCaseKey[i] = fillArray(fourCaseKey[i], lock)
-    }
-  
     
-    //print(fourCaseKey)
-    
-    for i in 0..<fourCaseKey.count {
-        allCasesKey.append(contentsOf: makeAllCases(fourCaseKey[i], lock.count))
-    }
-    
-    var keyArr: [[[Int]]] = []
-    
-   // print(allCasesKey)
-    
-    
-    
-    for k in 0..<allCasesKey.count {
-        var count: Int = 0
-        for i in 0..<allCasesKey[k].count {
-            for j in 0..<allCasesKey[k].count {
-                if allCasesKey[k][i][j] == 1 { count += 1 }
+    //print(tempBestAdvStartTime)
+    //print(logsArr)
+    /// 전체 플레이 타임과 관련된 배열   (광고 시작 시간, 전체 광고 상영 시간)
+    var totalAdvTimeArr: [(Int, Int)] = []
+    var maxTime: Int = 0
+    for adv in tempBestAdvStartTime {
+        //print("광고 상영 시간: \(adv)")
+        var possibleTime: [(Int, Int)] = logsArr.filter{$0.0 <= adv.1 && $0.1 >= adv.0}
+        var totalTime: Int = 0
+        
+        for t in possibleTime {
+            
+            if adv.0 >= t.0 && adv.1 <= t.1 { // 영상 안에 광고 포함
+                totalTime += advTime
+            } else if adv.0 < t.0 && adv.1 < t.1{ // 영상 앞에 광고 포함
+                totalTime += adv.1 - t.0
+            } else if adv.0 > t.0 && adv.1 > t.1{ // 영상 뒤에 광고 포함
+                totalTime += t.1 - adv.0
             }
-        }
-        if count == holeCount {
-            keyArr.append(allCasesKey[k])
-        }
-    }
-    
-    
-    //print(keyArr)
-    
-    
-    
-    for k in 0..<keyArr.count {
-        var tempCheck: Bool = true
-        for i in 0..<keyArr[k].count {
-            for j in 0..<keyArr[k].count {
-                if keyArr[k][i][j] == lock[i][j] {
-                    tempCheck = false
-                    break
-                }
-            }
+            
+            
         }
         
-        if tempCheck == true {
-            result = true
-            break
-        }
+        maxTime = max(maxTime, totalTime)
+        totalAdvTimeArr.append((adv.0, totalTime))
     }
     
+    //print("최장 플레이 타임")
+    var resultTime: Int = totalAdvTimeArr.filter{$0.1 == maxTime}.sorted{$0.0<$1.0}[0].0
     
+    var h: String = ""
+    var m: String = ""
+    var s: String = ""
     
+    for i in 0..<3 {
+        if i == 0 {
+            var hour: String = String(resultTime / (60*60))
+            if hour.count == 1 {
+                hour = "0" + hour
+            }
+            h = hour
+            resultTime %= 3600
+        } else if i == 1 {
+            var minute: String = String(resultTime / 60)
+            if minute.count == 1 {
+                minute = "0" + minute
+            }
+            m = minute
+            resultTime %= 60
+        } else if i == 2 {
+            var sec: String = String(resultTime)
+            if sec.count == 1 {
+                sec = "0" + sec
+            }
+            s = sec
+        }
+    }
+
     
-    return result
+    return "\(h):\(m):\(s)"
 }
 
-
-print(solution([[0, 0, 0], [1, 0, 0], [0, 1, 1]], [[1, 1, 1], [1, 1, 0], [1, 0, 1]]))
-
-
-
-func rotateArray(_ inputArr: [[Int]]) -> [[Int]] {
-    
-    var newArr: [[Int]] = Array(repeating: Array(repeating: 0, count: inputArr.count), count: inputArr.count)
-    //print(newArr)
-    for i in stride(from: inputArr.count-1, through: 0, by: -1) {
-        for j in stride(from: inputArr.count-1, through: 0, by: -1) {
-            newArr[inputArr.count-1-i][inputArr.count-1-j] = inputArr[j][inputArr.count-1-i]
-        }
-    }
-    
-    //print(newArr)
-    return newArr
-}
-
-
-func fillArray(_ inputKeyArr: [[Int]], _ inputLockArr: [[Int]]) -> [[Int]] {
-    
-    var newArr: [[Int]] = Array(repeating: Array(repeating: 0, count: inputLockArr.count), count: inputLockArr.count)
-    for i in 0..<inputKeyArr.count {
-        for j in 0..<inputKeyArr.count {
-            newArr[i][j] = inputKeyArr[i][j]
-        }
-    }
-    
-    return newArr
-}
-
-//print(fillArray([[1, 2, 3],[4, 5, 6],[7, 8, 9]], [[1, 2, 3, 0],[4, 5, 6, 0],[7, 8, 9, 0], [7, 8, 9, 0]]))
-
-func makeAllCases(_ baseArr: [[Int]], _ n: Int) -> [[[Int]]]{
-    
-    var newArr: [[[Int]]] = [baseArr]
-    var test: [[Int]] = baseArr
-    
-    // 우측으로 이동
-    
-    for arr in newArr {
-        for k in 1..<n {
-            for i in 0..<n {
-                for j in 0..<n {
-                    if j-k < 0 {
-                        test[i][j] = 0
-                    } else {
-                        test[i][j] = arr[i][j-k]
-                    }
-                }
-            }
-            newArr.append(test)
-        }
-    }
-    
-    
-    
-    // 좌측으로 이동
-    for arr in newArr {
-        for k in 1..<n {
-            for i in 0..<n {
-                for j in 0..<n {
-                    if k+j >= n {
-                        test[i][j] = 0
-                    } else {
-                        test[i][j] = arr[i][j+k]
-                    }
-                }
-            }
-            newArr.append(test)
-        }
-    }
-    
-    
-    // 아래로 이동
-    for arr in newArr {
-        for k in 1..<n {
-            for i in 0..<n {
-                for j in 0..<n {
-                    if i-k < 0 {
-                        test[i][j] = 0
-                    } else {
-                        test[i][j] = arr[i-k][j]
-                    }
-                }
-            }
-            newArr.append(test)
-        }
-    }
-    
-    // 위로 이동
-    for arr in newArr {
-        for k in 1..<n {
-            for i in 0..<n {
-                for j in 0..<n {
-                    if k+i >= n {
-                        test[i][j] = 0
-                    } else {
-                        test[i][j] = arr[i+k][j]
-                    }
-                }
-            }
-            newArr.append(test)
-        }
-    }
-    return newArr
-}
-
-//print(makeAllCases([[1, 2, 3], [4, 5, 6], [7, 8, 9]], 3))
+print(solution("02:03:55", "00:14:15", ["01:20:15-01:45:14", "00:40:31-01:00:00", "00:25:50-00:48:29", "01:30:59-01:53:29", "01:37:44-02:02:30"]))
