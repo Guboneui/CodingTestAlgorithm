@@ -15010,6 +15010,38 @@ import Foundation
 
 // MARK: - 프로그래머스 level3 가장 먼 노드
 
+//func solution(_ n:Int, _ edge:[[Int]]) -> Int {
+//    var graph: [[Int]] = Array(repeating: [Int](), count: n+1)
+//    for edge in edge {
+//        graph[edge[0]].append(edge[1])
+//        graph[edge[1]].append(edge[0])
+//    }
+//
+//    var arr: [[Int]] = Array(repeating: Array(repeating: 999999, count: n+1), count: n+1)
+//    for i in 1...n {
+//        arr[i][i] = 0
+//    }
+//    for i in 0..<graph.count {
+//        for j in graph[i] {
+//            arr[i][j] = 1
+//        }
+//    }
+//
+//    for k in 1...n {
+//        for i in 1...n {
+//            for j in 1...n {
+//                if arr[i][k] + arr[k][j] < arr[i][j] {
+//                    arr[i][j] = arr[i][k] + arr[k][j]
+//                }
+//            }
+//        }
+//    }
+//    arr[1][0] = 0
+//    let maxValue: Int = arr[1].max()!
+//
+//    return arr[1].filter{$0 == maxValue}.count
+//}
+
 func solution(_ n:Int, _ edge:[[Int]]) -> Int {
     var graph: [[Int]] = Array(repeating: [Int](), count: n+1)
     for edge in edge {
@@ -15017,29 +15049,31 @@ func solution(_ n:Int, _ edge:[[Int]]) -> Int {
         graph[edge[1]].append(edge[0])
     }
     
-    var arr: [[Int]] = Array(repeating: Array(repeating: 999999, count: n+1), count: n+1)
-    for i in 1...n {
-        arr[i][i] = 0
-    }
-    for i in 0..<graph.count {
-        for j in graph[i] {
-            arr[i][j] = 1
-        }
-    }
-    
-    for k in 1...n {
-        for i in 1...n {
-            for j in 1...n {
-                if arr[i][k] + arr[k][j] < arr[i][j] {
-                    arr[i][j] = arr[i][k] + arr[k][j]
+    var route: [Int] = Array(repeating: 999999, count: n+1)
+    route[0] = 0
+    route[1] = 0
+    var visited: [Bool] = Array(repeating: false, count: n+1)
+    func bfs(_ v: Int) {
+        
+        var queue: [Int] = [v]
+        while !queue.isEmpty {
+            let popValue: Int = queue.removeFirst()
+            if visited[popValue] == false {
+                visited[popValue] = true
+                
+                for index in graph[popValue] {
+                    route[index] = min(route[index], route[popValue]+1)
                 }
+                
+                queue.append(contentsOf: graph[popValue])
+                
             }
         }
     }
-    arr[1][0] = 0
-    let maxValue: Int = arr[1].max()!
-    
-    return arr[1].filter{$0 == maxValue}.count
+
+    bfs(1)
+    let maxValue: Int = route.max()!
+    return route.filter{$0 == maxValue}.count
 }
 
 print(solution(6, [[3, 6], [4, 3], [3, 2], [1, 3], [1, 2], [2, 4], [5, 2]]    ))
