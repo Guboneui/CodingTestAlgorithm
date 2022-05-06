@@ -15160,28 +15160,215 @@ import Foundation
 //}
 
 
-func solution(_ n:Int, _ computers:[[Int]]) -> Int {
-    var visited: [Bool] = Array(repeating: false, count: n)
-    var result: Int = 0
+//func solution(_ n:Int, _ computers:[[Int]]) -> Int {
+//    var visited: [Bool] = Array(repeating: false, count: n)
+//    var result: Int = 0
+//
+//    func dfs(_ v: Int) {
+//        visited[v] = true
+//        for i in 0..<n {
+//            if computers[v][i] == 1 && visited[i] == false {
+//                dfs(i)
+//            }
+//        }
+//    }
+//
+//    for i in 0..<n {
+//        if visited[i] == false {
+//            result += 1
+//            dfs(i)
+//        }
+//    }
+//    return result
+//}
+//
+//
+//
+//print(solution(3, [[1, 1, 0], [1, 1, 1], [0, 1, 1]]))
 
-    func dfs(_ v: Int) {
-        visited[v] = true
-        for i in 0..<n {
-            if computers[v][i] == 1 && visited[i] == false {
-                dfs(i)
+// MARK: - 프로그래머스 level3 자물쇠와 열쇠
+
+func solution(_ key:[[Int]], _ lock:[[Int]]) -> Bool {
+    
+    var holeCount: Int = 0
+    for i in 0..<lock.count {
+        for j in 0..<lock.count {
+            if lock[i][j] == 0 { holeCount += 1 }
+        }
+    }
+    
+    var result: Bool = false
+    
+    var fourCaseKey: [[[Int]]] = [key]
+    var allCasesKey: [[[Int]]] = []
+    for i in 1..<4 {
+        fourCaseKey.append(rotateArray(fourCaseKey[i-1]))
+    }
+    
+    for i in 0..<fourCaseKey.count {
+        fourCaseKey[i] = fillArray(fourCaseKey[i], lock)
+    }
+  
+    
+    //print(fourCaseKey)
+    
+    for i in 0..<fourCaseKey.count {
+        allCasesKey.append(contentsOf: makeAllCases(fourCaseKey[i], lock.count))
+    }
+    
+    var keyArr: [[[Int]]] = []
+    
+   // print(allCasesKey)
+    
+    
+    
+    for k in 0..<allCasesKey.count {
+        var count: Int = 0
+        for i in 0..<allCasesKey[k].count {
+            for j in 0..<allCasesKey[k].count {
+                if allCasesKey[k][i][j] == 1 { count += 1 }
             }
         }
-    }
-
-    for i in 0..<n {
-        if visited[i] == false {
-            result += 1
-            dfs(i)
+        if count == holeCount {
+            keyArr.append(allCasesKey[k])
         }
     }
+    
+    
+    //print(keyArr)
+    
+    
+    
+    for k in 0..<keyArr.count {
+        var tempCheck: Bool = true
+        for i in 0..<keyArr[k].count {
+            for j in 0..<keyArr[k].count {
+                if keyArr[k][i][j] == lock[i][j] {
+                    tempCheck = false
+                    break
+                }
+            }
+        }
+        
+        if tempCheck == true {
+            result = true
+            break
+        }
+    }
+    
+    
+    
+    
     return result
 }
 
 
+print(solution([[0, 0, 0], [1, 0, 0], [0, 1, 1]], [[1, 1, 1], [1, 1, 0], [1, 0, 1]]))
 
-print(solution(3, [[1, 1, 0], [1, 1, 1], [0, 1, 1]]))
+
+
+func rotateArray(_ inputArr: [[Int]]) -> [[Int]] {
+    
+    var newArr: [[Int]] = Array(repeating: Array(repeating: 0, count: inputArr.count), count: inputArr.count)
+    //print(newArr)
+    for i in stride(from: inputArr.count-1, through: 0, by: -1) {
+        for j in stride(from: inputArr.count-1, through: 0, by: -1) {
+            newArr[inputArr.count-1-i][inputArr.count-1-j] = inputArr[j][inputArr.count-1-i]
+        }
+    }
+    
+    //print(newArr)
+    return newArr
+}
+
+
+func fillArray(_ inputKeyArr: [[Int]], _ inputLockArr: [[Int]]) -> [[Int]] {
+    
+    var newArr: [[Int]] = Array(repeating: Array(repeating: 0, count: inputLockArr.count), count: inputLockArr.count)
+    for i in 0..<inputKeyArr.count {
+        for j in 0..<inputKeyArr.count {
+            newArr[i][j] = inputKeyArr[i][j]
+        }
+    }
+    
+    return newArr
+}
+
+//print(fillArray([[1, 2, 3],[4, 5, 6],[7, 8, 9]], [[1, 2, 3, 0],[4, 5, 6, 0],[7, 8, 9, 0], [7, 8, 9, 0]]))
+
+func makeAllCases(_ baseArr: [[Int]], _ n: Int) -> [[[Int]]]{
+    
+    var newArr: [[[Int]]] = [baseArr]
+    var test: [[Int]] = baseArr
+    
+    // 우측으로 이동
+    
+    for arr in newArr {
+        for k in 1..<n {
+            for i in 0..<n {
+                for j in 0..<n {
+                    if j-k < 0 {
+                        test[i][j] = 0
+                    } else {
+                        test[i][j] = arr[i][j-k]
+                    }
+                }
+            }
+            newArr.append(test)
+        }
+    }
+    
+    
+    
+    // 좌측으로 이동
+    for arr in newArr {
+        for k in 1..<n {
+            for i in 0..<n {
+                for j in 0..<n {
+                    if k+j >= n {
+                        test[i][j] = 0
+                    } else {
+                        test[i][j] = arr[i][j+k]
+                    }
+                }
+            }
+            newArr.append(test)
+        }
+    }
+    
+    
+    // 아래로 이동
+    for arr in newArr {
+        for k in 1..<n {
+            for i in 0..<n {
+                for j in 0..<n {
+                    if i-k < 0 {
+                        test[i][j] = 0
+                    } else {
+                        test[i][j] = arr[i-k][j]
+                    }
+                }
+            }
+            newArr.append(test)
+        }
+    }
+    
+    // 위로 이동
+    for arr in newArr {
+        for k in 1..<n {
+            for i in 0..<n {
+                for j in 0..<n {
+                    if k+i >= n {
+                        test[i][j] = 0
+                    } else {
+                        test[i][j] = arr[i+k][j]
+                    }
+                }
+            }
+            newArr.append(test)
+        }
+    }
+    return newArr
+}
+
+//print(makeAllCases([[1, 2, 3], [4, 5, 6], [7, 8, 9]], 3))
