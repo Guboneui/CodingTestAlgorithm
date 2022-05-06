@@ -15188,67 +15188,299 @@ import Foundation
 
 // MARK: - 프로그래머스 level3 광고 삽입
 
-func solution(_ play_time:String, _ adv_time:String, _ logs:[String]) -> String {
+//func solution(_ play_time:String, _ adv_time:String, _ logs:[String]) -> String {
+//
+//    if play_time == adv_time { return "00:00:00" }
+//    let playTime: Int = stringToSec(play_time)
+//    let advTime: Int = stringToSec(adv_time)
+//    var allTime: [Int] = Array(repeating: 0, count: playTime+1)
+//
+//    for log in logs {
+//        let time: (String, String) = makeLog(log)
+//        let startTime: Int = stringToSec(time.0)
+//        let endTime: Int = stringToSec(time.1)
+//        allTime[startTime] += 1
+//        allTime[endTime] -= 1
+//    }
+//
+//    for i in 1..<allTime.count {
+//        allTime[i] += allTime[i-1]
+//    }
+//
+//    var currentTime: Int = allTime[0..<advTime].reduce(0, +)
+//    var maxTime: Int = currentTime
+//    var maxIndex: Int = 0
+//
+//
+//    for i in advTime..<playTime {
+//        currentTime = currentTime + allTime[i] - allTime[i-advTime]
+//        if currentTime > maxTime {
+//            maxTime = currentTime
+//            maxIndex = i-advTime+1
+//        }
+//    }
+//
+//    return secToString(maxIndex)
+//}
+//
+//
+//func makeLog(_ inputLog: String) -> (String, String) {
+//    let log: [String] = inputLog.split(separator: "-").map{String($0)}
+//    let startTime: String = log[0]
+//    let endTime: String = log[1]
+//    return (startTime, endTime)
+//}
+//
+//func stringToSec(_ inputStr: String) -> Int {
+//    let time: [Int] = inputStr.split(separator: ":").map{Int($0)!}
+//    let hour: Int = time[0]*60*60
+//    let minute: Int = time[1]*60
+//    let second: Int = time[2]
+//    return hour + minute + second
+//}
+//
+//func secToString(_ inputTime: Int) -> String {
+//    let h: String = 0...9 ~= inputTime/3600 ? "0\(inputTime/3600)" : "\(inputTime/3600)"
+//    let m: String = 0...9 ~= inputTime/60%60 ? "0\(inputTime/60%60)" : "\(inputTime/60%60)"
+//    let s: String = 0...9 ~= inputTime%60 ? "0\(inputTime%60)" : "\(inputTime%60)"
+//
+//    return "\(h):\(m):\(s)"
+//}
+//
+//
+////print(makeLog("01:20:15-01:45:14"))
+//print(solution("02:03:55", "00:14:15", ["01:20:15-01:45:14", "00:40:31-01:00:00", "00:25:50-00:48:29", "01:30:59-01:53:29", "01:37:44-02:02:30"]))
 
-    if play_time == adv_time { return "00:00:00" }
-    let playTime: Int = stringToSec(play_time)
-    let advTime: Int = stringToSec(adv_time)
-    var allTime: [Int] = Array(repeating: 0, count: playTime+1)
 
-    for log in logs {
-        let time: (String, String) = makeLog(log)
-        let startTime: Int = stringToSec(time.0)
-        let endTime: Int = stringToSec(time.1)
-        allTime[startTime] += 1
-        allTime[endTime] -= 1
-    }
+// MARK: - 프로그래머스 level3 사라지는 발판
+
+func solution(_ board:[[Int]], _ aloc:[Int], _ bloc:[Int]) -> Int {
+    var caseAResult: Int = 0
+    var caseBResult: Int = 0
+    var caseABoard: [[(Bool, Int)]] = Array(repeating: Array(repeating: (false, 0), count: board[0].count), count: board.count)
+    var caseBBoard: [[(Bool, Int)]] = Array(repeating: Array(repeating: (false, 0), count: board[0].count), count: board.count)
+    var currentUserByCaseA: Int = 0   // 짝수 = A, 홀수 = B
+    var currentUserByCaseB: Int = 0   // 짝수 = A, 홀수 = B
+    var aLocationByCaseA: [Int] = aloc
+    var bLocationByCaseA: [Int] = bloc
     
-    for i in 1..<allTime.count {
-        allTime[i] += allTime[i-1]
-    }
+    var aLocationByCaseB: [Int] = aloc
+    var bLocationByCaseB: [Int] = bloc
     
-    var currentTime: Int = allTime[0..<advTime].reduce(0, +)
-    var maxTime: Int = currentTime
-    var maxIndex: Int = 0
-    
-    
-    for i in advTime..<playTime {
-        currentTime = currentTime + allTime[i] - allTime[i-advTime]
-        if currentTime > maxTime {
-            maxTime = currentTime
-            maxIndex = i-advTime+1
+    for i in 0..<board.count {
+        for j in 0..<board[i].count {
+            caseABoard[i][j] = (false, board[i][j])
+            caseBBoard[i][j] = (false, board[i][j])
         }
     }
     
-    return secToString(maxIndex)
-}
-
-
-func makeLog(_ inputLog: String) -> (String, String) {
-    let log: [String] = inputLog.split(separator: "-").map{String($0)}
-    let startTime: String = log[0]
-    let endTime: String = log[1]
-    return (startTime, endTime)
-}
-
-func stringToSec(_ inputStr: String) -> Int {
-    let time: [Int] = inputStr.split(separator: ":").map{Int($0)!}
-    let hour: Int = time[0]*60*60
-    let minute: Int = time[1]*60
-    let second: Int = time[2]
-    return hour + minute + second
-}
-
-func secToString(_ inputTime: Int) -> String {
-    let h: String = 0...9 ~= inputTime/3600 ? "0\(inputTime/3600)" : "\(inputTime/3600)"
-    let m: String = 0...9 ~= inputTime/60%60 ? "0\(inputTime/60%60)" : "\(inputTime/60%60)"
-    let s: String = 0...9 ~= inputTime%60 ? "0\(inputTime%60)" : "\(inputTime%60)"
     
-    return "\(h):\(m):\(s)"
+    // A가 이기는 사람이라면
+    while true {
+        // A가 이기는 방법 = 거리가 1이면서 B와의 거리가 제일 작은 좌표로 이동
+        // B가 이기는 방법 = 거리가 1이면서 A와의 거리가 제일 큰 좌표로 이동
+//        print(currentUserByCaseA%2 == 0 ? "A순서" : "B순서")
+
+
+//        if currentUser%2 == 0 && aLocation == bLocation {
+//            return result + 1
+//        }
+//
+
+        ///(방문여부, x, y,  a거리, b거리)
+        var tempBoard: [[(Bool, Int, Int, Int, Int)]] = Array(repeating: Array(repeating: (false, 0, 0, 0, 0), count: board[0].count), count: board.count)
+
+        // A와 B각각의 거리에 대한 값 정렬
+        for i in 0..<board.count {
+            for j in 0..<board[i].count {
+                let state: Bool = caseABoard[i][j].0
+                let distanceA: Int = abs(aLocationByCaseA[0] - i) + abs(aLocationByCaseA[1] - j)
+                let distanceB: Int = abs(bLocationByCaseA[0] - i) + abs(bLocationByCaseA[1] - j)
+                tempBoard[i][j] = (state, i, j, distanceA, distanceB)
+            }
+        }
+
+//        print("---A와 B로 부터 각각의 거리---")
+//        print(tempBoard)
+//
+
+        if currentUserByCaseA%2 == 0 { // A이동
+            var possibleARoot: [(Bool, Int, Int, Int, Int)] = []
+            for i in 0..<tempBoard.count {
+                for j in 0..<tempBoard[i].count {
+                    if tempBoard[i][j].0 == false && tempBoard[i][j].3 == 1 && caseABoard[i][j].1 == 1{
+                        possibleARoot.append(tempBoard[i][j])
+                    }
+                }
+            }
+
+            if possibleARoot.count == 0 {
+//                print("A가 더 이상 갈 곳이 없어서 종료")
+                break
+                //return caseAResult
+            }
+
+            let a = possibleARoot.sorted{$0.4 < $1.4}[0]
+
+            caseABoard[aLocationByCaseA[0]][aLocationByCaseA[1]].0 = true
+
+            if [aLocationByCaseA[0], aLocationByCaseA[1]] == bLocationByCaseA {
+//                print("A와 B가 같은 자리에 있었고, A가 이동하면서 B발판이 사라져 게임 종료")
+                caseAResult += 1
+                break
+                //return caseAResult + 1
+            }
+
+
+            aLocationByCaseA = [a.1, a.2]
+//            print("이동한 A의 좌표: \(aLocationByCaseA)")
+
+
+
+
+        } else { // B이동
+            var possibleBRoot: [(Bool, Int, Int, Int, Int)] = []
+            for i in 0..<tempBoard.count {
+                for j in 0..<tempBoard[i].count {
+                    if tempBoard[i][j].0 == false && tempBoard[i][j].4 == 1 && caseABoard[i][j].1 == 1{
+                        possibleBRoot.append(tempBoard[i][j])
+                    }
+                }
+            }
+
+            if possibleBRoot.count == 0 {
+//                print("B가 더 이상 갈 곳이 없어서 종료")
+                break
+
+            }
+
+
+            let b = possibleBRoot.sorted{$0.3 > $1.3}[0]
+            //print(b)
+            caseABoard[bLocationByCaseA[0]][bLocationByCaseA[1]].0 = true
+            if [bLocationByCaseA[0], bLocationByCaseA[1]] == aLocationByCaseA {
+//                print("A와 B가 같은 자리에 있었고, B가 이동하면서 A발판이 사라져 게임 종료")
+                caseAResult += 1
+                break
+                //return caseAResult + 1
+            }
+
+            bLocationByCaseA = [b.1, b.2]
+//            print("이동한 B의 좌표: \(bLocationByCaseA)")
+
+        }
+        currentUserByCaseA += 1
+        caseAResult += 1
+//        print("<----발판 갱신---->")
+//        print(caseABoard)
+//        print("A의 현재 위치: \(aLocationByCaseA) --- B의 현재 위치: \(bLocationByCaseA)")
+
+    }
+    
+    // B가 이기는 사람이라면
+    while true {
+        // A가 이기는 방법 = 거리가 1이면서 B와의 거리가 제일 작은 좌표로 이동
+        // B가 이기는 방법 = 거리가 1이면서 A와의 거리가 제일 큰 좌표로 이동
+        //print(currentUserByCaseB%2 == 0 ? "A순서" : "B순서")
+        
+        
+//        if currentUser%2 == 0 && aLocation == bLocation {
+//            return result + 1
+//        }
+//
+        
+        ///(방문여부, x, y,  a거리, b거리)
+        var tempBoard: [[(Bool, Int, Int, Int, Int)]] = Array(repeating: Array(repeating: (false, 0, 0, 0, 0), count: board[0].count), count: board.count)
+        
+        // A와 B각각의 거리에 대한 값 정렬
+        for i in 0..<board.count {
+            for j in 0..<board[i].count {
+                let state: Bool = caseBBoard[i][j].0
+                let distanceA: Int = abs(aLocationByCaseB[0] - i) + abs(aLocationByCaseB[1] - j)
+                let distanceB: Int = abs(bLocationByCaseB[0] - i) + abs(bLocationByCaseB[1] - j)
+                tempBoard[i][j] = (state, i, j, distanceA, distanceB)
+            }
+        }
+//
+//        print("---A와 B로 부터 각각의 거리---")
+//        print(tempBoard)
+//
+        
+        if currentUserByCaseB%2 == 0 { // A이동
+            var possibleARoot: [(Bool, Int, Int, Int, Int)] = []
+            for i in 0..<tempBoard.count {
+                for j in 0..<tempBoard[i].count {
+                    if tempBoard[i][j].0 == false && tempBoard[i][j].3 == 1 && caseBBoard[i][j].1 == 1{
+                        possibleARoot.append(tempBoard[i][j])
+                    }
+                }
+            }
+            
+            if possibleARoot.count == 0 {
+                //print("A가 더 이상 갈 곳이 없어서 종료")
+                break
+                //return caseAResult
+            }
+            
+            let a = possibleARoot.sorted{$0.4 > $1.4}[0]
+            
+            caseBBoard[aLocationByCaseB[0]][aLocationByCaseB[1]].0 = true
+            
+            if [aLocationByCaseB[0], aLocationByCaseB[1]] == bLocationByCaseB {
+              //  print("A와 B가 같은 자리에 있었고, A가 이동하면서 B발판이 사라져 게임 종료")
+                caseBResult += 1
+                break
+                //return caseAResult + 1
+            }
+            
+            
+            aLocationByCaseB = [a.1, a.2]
+            //print("이동한 A의 좌표: \(aLocationByCaseB)")
+            
+            
+            
+            
+        } else { // B이동
+            var possibleBRoot: [(Bool, Int, Int, Int, Int)] = []
+            for i in 0..<tempBoard.count {
+                for j in 0..<tempBoard[i].count {
+                    if tempBoard[i][j].0 == false && tempBoard[i][j].4 == 1 && caseBBoard[i][j].1 == 1{
+                        possibleBRoot.append(tempBoard[i][j])
+                    }
+                }
+            }
+            
+            if possibleBRoot.count == 0 {
+               // print("B가 더 이상 갈 곳이 없어서 종료")
+                break
+                
+            }
+           
+            
+            let b = possibleBRoot.sorted{$0.3 < $1.3}[0]
+            //print(b)
+            caseBBoard[bLocationByCaseB[0]][bLocationByCaseB[1]].0 = true
+            if [bLocationByCaseB[0], bLocationByCaseB[1]] == aLocationByCaseB {
+             //   print("A와 B가 같은 자리에 있었고, B가 이동하면서 A발판이 사라져 게임 종료")
+                caseBResult += 1
+                break
+                //return caseAResult + 1
+            }
+            
+            bLocationByCaseB = [b.1, b.2]
+           // print("이동한 B의 좌표: \(bLocationByCaseB)")
+
+        }
+        currentUserByCaseB += 1
+        caseBResult += 1
+//        print("<----발판 갱신---->")
+//        print(caseBBoard)
+//        print("A의 현재 위치: \(aLocationByCaseB) --- B의 현재 위치: \(bLocationByCaseB)")
+        
+    }
+    
+    
+    return min(caseAResult, caseBResult)
 }
 
-
-//print(makeLog("01:20:15-01:45:14"))
-print(solution("02:03:55", "00:14:15", ["01:20:15-01:45:14", "00:40:31-01:00:00", "00:25:50-00:48:29", "01:30:59-01:53:29", "01:37:44-02:02:30"]))
-
-
+print(solution([[1, 1, 1, 0], [1, 1, 0, 1], [1, 0, 1, 1], [0, 1, 1, 1]], [0, 0], [3, 3]))
