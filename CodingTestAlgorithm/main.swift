@@ -15187,126 +15187,68 @@ import Foundation
 //print(solution(3, [[1, 1, 0], [1, 1, 1], [0, 1, 1]]))
 
 // MARK: - 프로그래머스 level3 광고 삽입
+
 func solution(_ play_time:String, _ adv_time:String, _ logs:[String]) -> String {
-    
+
     if play_time == adv_time { return "00:00:00" }
-    
-    let input_play_time: [Int] = play_time.split(separator: ":").map{Int($0)!}
-    /// 초로 환산한 전체 플레이 타임
-    let playTime: Int = 60*60*input_play_time[0] + 60*input_play_time[1] + input_play_time[2]
-    //print(playTime)
-    
-    let input_adv_time: [Int] = adv_time.split(separator: ":").map{Int($0)!}
-    /// 초로 환산한 전체 광고 시간
-    let advTime: Int = 60*60*input_adv_time[0] + 60*input_adv_time[1] + input_adv_time[2]
-    //print(advTime)
-    
-    /// 전체 동영상 시청 시작 및 종료 시간 초로 환산
-    var logsArr: [(Int, Int)] = []
+    let playTime: Int = stringToSec(play_time)
+    let advTime: Int = stringToSec(adv_time)
+    var allTime: [Int] = Array(repeating: 0, count: playTime+1)
+
     for log in logs {
-        let time: [String] = log.split(separator: "-").map{String($0)}
-        
-        let startTimeArr: [Int] = time[0].split(separator: ":").map{Int($0)!}
-        let endTimeArr: [Int] = time[1].split(separator: ":").map{Int($0)!}
-        
-        let startTime: Int = 60*60*startTimeArr[0] + 60*startTimeArr[1] + startTimeArr[2]
-        let endTime: Int = 60*60*endTimeArr[0] + 60*endTimeArr[1] + endTimeArr[2]
-        
-        logsArr.append((startTime, endTime))
-    }
-    
-    var allTime: [Int] = Array(repeating: 0, count: playTime + 1)
-    
-    for log in logsArr {
-        allTime[log.0] += 1
-        allTime[log.1] -= 1
+        let time: (String, String) = makeLog(log)
+        let startTime: Int = stringToSec(time.0)
+        let endTime: Int = stringToSec(time.1)
+        allTime[startTime] += 1
+        allTime[endTime] -= 1
     }
     
     for i in 1..<allTime.count {
         allTime[i] += allTime[i-1]
     }
     
-    var currentTotalTime: Int = allTime[0...advTime].reduce(0, +)
-    var maxTime: Int = currentTotalTime
+    var currentTime: Int = allTime[0..<advTime].reduce(0, +)
+    var maxTime: Int = currentTime
     var maxIndex: Int = 0
     
+    
     for i in advTime..<playTime {
-        currentTotalTime = currentTotalTime + allTime[i] - allTime[i-advTime]
-        if currentTotalTime > maxTime {
-            maxTime = currentTotalTime
+        currentTime = currentTime + allTime[i] - allTime[i-advTime]
+        if currentTime > maxTime {
+            maxTime = currentTime
             maxIndex = i-advTime+1
         }
     }
     
-    //print(maxIndex)
-//    var tempBestAdvStartTime: [(Int, Int)] = []
-//
-//    for log in logsArr {
-//        tempBestAdvStartTime.append((log.0, log.0+advTime))
-//    }
-//
-//
-//    //print(tempBestAdvStartTime)
-//    //print(logsArr)
-//    /// 전체 플레이 타임과 관련된 배열   (광고 시작 시간, 전체 광고 상영 시간)
-//    var totalAdvTimeArr: [(Int, Int)] = []
-//    var maxTime: Int = 0
-//    for adv in tempBestAdvStartTime {
-//        //print("광고 상영 시간: \(adv)")
-//        var possibleTime: [(Int, Int)] = logsArr.filter{$0.0 <= adv.1 && $0.1 >= adv.0}
-//        var totalTime: Int = 0
-//
-//        for t in possibleTime {
-//
-//            if adv.0 >= t.0 && adv.1 <= t.1 { // 영상 안에 광고 포함
-//                totalTime += advTime
-//            } else if adv.0 < t.0 && adv.1 < t.1{ // 영상 앞에 광고 포함
-//                totalTime += adv.1 - t.0
-//            } else if adv.0 > t.0 && adv.1 > t.1{ // 영상 뒤에 광고 포함
-//                totalTime += t.1 - adv.0
-//            }
-//
-//
-//        }
-//
-//        maxTime = max(maxTime, totalTime)
-//        totalAdvTimeArr.append((adv.0, totalTime))
-//    }
-//
-//    //print("최장 플레이 타임")
-//    var resultTime: Int = totalAdvTimeArr.filter{$0.1 == maxTime}.sorted{$0.0<$1.0}[0].0
-//
-    var h: String = ""
-    var m: String = ""
-    var s: String = ""
-//
-    for i in 0..<3 {
-        if i == 0 {
-            var hour: String = String(maxIndex / (60*60))
-            if hour.count == 1 {
-                hour = "0" + hour
-            }
-            h = hour
-            maxIndex %= 3600
-        } else if i == 1 {
-            var minute: String = String(maxIndex / 60)
-            if minute.count == 1 {
-                minute = "0" + minute
-            }
-            m = minute
-            maxIndex %= 60
-        } else if i == 2 {
-            var sec: String = String(maxIndex)
-            if sec.count == 1 {
-                sec = "0" + sec
-            }
-            s = sec
-        }
-    }
-//
-//
+    return secToString(maxIndex)
+}
+
+
+func makeLog(_ inputLog: String) -> (String, String) {
+    let log: [String] = inputLog.split(separator: "-").map{String($0)}
+    let startTime: String = log[0]
+    let endTime: String = log[1]
+    return (startTime, endTime)
+}
+
+func stringToSec(_ inputStr: String) -> Int {
+    let time: [Int] = inputStr.split(separator: ":").map{Int($0)!}
+    let hour: Int = time[0]*60*60
+    let minute: Int = time[1]*60
+    let second: Int = time[2]
+    return hour + minute + second
+}
+
+func secToString(_ inputTime: Int) -> String {
+    let h: String = 0...9 ~= inputTime/3600 ? "0\(inputTime/3600)" : "\(inputTime/3600)"
+    let m: String = 0...9 ~= inputTime/60%60 ? "0\(inputTime/60%60)" : "\(inputTime/60%60)"
+    let s: String = 0...9 ~= inputTime%60 ? "0\(inputTime%60)" : "\(inputTime%60)"
+    
     return "\(h):\(m):\(s)"
 }
 
+
+//print(makeLog("01:20:15-01:45:14"))
 print(solution("02:03:55", "00:14:15", ["01:20:15-01:45:14", "00:40:31-01:00:00", "00:25:50-00:48:29", "01:30:59-01:53:29", "01:37:44-02:02:30"]))
+
 
