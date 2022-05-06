@@ -14946,64 +14946,103 @@ import Foundation
 
 // MARK: - 프로그래머스 level3 [1차]셔틀 버스
 
-func solution(_ n:Int, _ t:Int, _ m:Int, _ timetable:[String]) -> String {
-    // 버스 시간 분으로 통일
-    var busTime: [Int] = [540]
-    if n>1 {
-        for i in 1..<n {
-            busTime.append(busTime[i-1] + t)
-        }
-    }
-   // print(busTime)
-    // 크루 시간 분으로 통일
-    var crewsTime: [Int] = []
-    for times in timetable {
-        let time = times.split(separator: ":").map{Int($0)!}
-        let totalTime: Int = time[0]*60 + time[1]
-        crewsTime.append(totalTime)
-    }
-    crewsTime.sort()
-   
-    var arr: [[Int]] = []
-    var index: Int = 0
-    for i in 0..<busTime.count {
-    
-        var temp: [Int] = []
-        
-        
-        while temp.count < m && index < crewsTime.count{
-            if crewsTime[index] <= busTime[i] {
-                temp.append(crewsTime[index])
-            } else {
-                break
-            }
-            index += 1
-        }
-        arr.append(temp)
-        
-    }
+//func solution(_ n:Int, _ t:Int, _ m:Int, _ timetable:[String]) -> String {
+//    // 버스 시간 분으로 통일
+//    var busTime: [Int] = [540]
+//    if n>1 {
+//        for i in 1..<n {
+//            busTime.append(busTime[i-1] + t)
+//        }
+//    }
+//   // print(busTime)
+//    // 크루 시간 분으로 통일
+//    var crewsTime: [Int] = []
+//    for times in timetable {
+//        let time = times.split(separator: ":").map{Int($0)!}
+//        let totalTime: Int = time[0]*60 + time[1]
+//        crewsTime.append(totalTime)
+//    }
+//    crewsTime.sort()
+//
+//    var arr: [[Int]] = []
+//    var index: Int = 0
+//    for i in 0..<busTime.count {
+//
+//        var temp: [Int] = []
+//
+//
+//        while temp.count < m && index < crewsTime.count{
+//            if crewsTime[index] <= busTime[i] {
+//                temp.append(crewsTime[index])
+//            } else {
+//                break
+//            }
+//            index += 1
+//        }
+//        arr.append(temp)
+//
+//    }
+//
+//    var result: Int = 0
+//
+//    for i in 0..<arr.count {
+//        if i == arr.count-1 {   // 마지막 버스 탑승
+//            if arr[i].count == m { // 마지막 버스가 가득 찼을 경우
+//                // 탑승 인원 중 가장 늦게 도착한 인원보다 1분 빨리 도착하면 됌.
+//                result = arr[i].max()! - 1
+//            } else if arr[i].count < m {
+//                // 마지막 버스에 여유가 있을 경우
+//                // 마지막 버스 시간에 맞추면 됌.
+//                result = busTime[i]
+//            }
+//        }
+//    }
+//
+//
+//    var h: String = String(result/60)
+//    if h.count==1 { h = "0"+h}
+//    var m: String = String(result%60)
+//    if m.count == 1 { m = "0"+m}
+//    return "\(h):\(m)"
+//}
+//
+//print(solution(10, 60, 45, ["23:59","23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59"]))
 
-    var result: Int = 0
+// MARK: - 프로그래머스 level3 가장 먼 노드
+
+func solution(_ n:Int, _ edge:[[Int]]) -> Int {
+    var graph: [[Int]] = Array(repeating: [Int](), count: n+1)
+    for edge in edge {
+        graph[edge[0]].append(edge[1])
+        graph[edge[1]].append(edge[0])
+    }
     
-    for i in 0..<arr.count {
-        if i == arr.count-1 {   // 마지막 버스 탑승
-            if arr[i].count == m { // 마지막 버스가 가득 찼을 경우
-                // 탑승 인원 중 가장 늦게 도착한 인원보다 1분 빨리 도착하면 됌.
-                result = arr[i].max()! - 1
-            } else if arr[i].count < m {
-                // 마지막 버스에 여유가 있을 경우
-                // 마지막 버스 시간에 맞추면 됌.
-                result = busTime[i]
-            }
+    var arr: [[Int]] = Array(repeating: Array(repeating: 999999, count: n+1), count: n+1)
+    for i in 1...n {
+        arr[i][i] = 0
+    }
+    for i in 0..<graph.count {
+        for j in graph[i] {
+            arr[i][j] = 1
         }
     }
     
-   
-    var h: String = String(result/60)
-    if h.count==1 { h = "0"+h}
-    var m: String = String(result%60)
-    if m.count == 1 { m = "0"+m}
-    return "\(h):\(m)"
+    for k in 1...n {
+        for i in 1...n {
+            for j in 1...n {
+                if arr[i][k] + arr[k][j] < arr[i][j] {
+                    arr[i][j] = arr[i][k] + arr[k][j]
+                }
+            }
+        }
+    }
+    arr[1][0] = 0
+    let maxValue: Int = arr[1].max()!
+    
+    return arr[1].filter{$0 == maxValue}.count
 }
 
-print(solution(10, 60, 45, ["23:59","23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59"]))
+print(solution(6, [[3, 6], [4, 3], [3, 2], [1, 3], [1, 2], [2, 4], [5, 2]]    ))
+
+
+
