@@ -15254,233 +15254,297 @@ import Foundation
 
 // MARK: - 프로그래머스 level3 사라지는 발판
 
+//func solution(_ board:[[Int]], _ aloc:[Int], _ bloc:[Int]) -> Int {
+//    var caseAResult: Int = 0
+//    var caseBResult: Int = 0
+//    var caseABoard: [[(Bool, Int)]] = Array(repeating: Array(repeating: (false, 0), count: board[0].count), count: board.count)
+//    var caseBBoard: [[(Bool, Int)]] = Array(repeating: Array(repeating: (false, 0), count: board[0].count), count: board.count)
+//    var currentUserByCaseA: Int = 0   // 짝수 = A, 홀수 = B
+//    var currentUserByCaseB: Int = 0   // 짝수 = A, 홀수 = B
+//    var aLocationByCaseA: [Int] = aloc
+//    var bLocationByCaseA: [Int] = bloc
+//
+//    var aLocationByCaseB: [Int] = aloc
+//    var bLocationByCaseB: [Int] = bloc
+//
+//    for i in 0..<board.count {
+//        for j in 0..<board[i].count {
+//            caseABoard[i][j] = (false, board[i][j])
+//            caseBBoard[i][j] = (false, board[i][j])
+//        }
+//    }
+//
+//
+//    // A가 이기는 사람이라면
+//    while true {
+//        // A가 이기는 방법 = 거리가 1이면서 B와의 거리가 제일 작은 좌표로 이동
+//        // B가 이기는 방법 = 거리가 1이면서 A와의 거리가 제일 큰 좌표로 이동
+////        print(currentUserByCaseA%2 == 0 ? "A순서" : "B순서")
+//
+//
+////        if currentUser%2 == 0 && aLocation == bLocation {
+////            return result + 1
+////        }
+////
+//
+//        ///(방문여부, x, y,  a거리, b거리)
+//        var tempBoard: [[(Bool, Int, Int, Int, Int)]] = Array(repeating: Array(repeating: (false, 0, 0, 0, 0), count: board[0].count), count: board.count)
+//
+//        // A와 B각각의 거리에 대한 값 정렬
+//        for i in 0..<board.count {
+//            for j in 0..<board[i].count {
+//                let state: Bool = caseABoard[i][j].0
+//                let distanceA: Int = abs(aLocationByCaseA[0] - i) + abs(aLocationByCaseA[1] - j)
+//                let distanceB: Int = abs(bLocationByCaseA[0] - i) + abs(bLocationByCaseA[1] - j)
+//                tempBoard[i][j] = (state, i, j, distanceA, distanceB)
+//            }
+//        }
+//
+////        print("---A와 B로 부터 각각의 거리---")
+////        print(tempBoard)
+////
+//
+//        if currentUserByCaseA%2 == 0 { // A이동
+//            var possibleARoot: [(Bool, Int, Int, Int, Int)] = []
+//            for i in 0..<tempBoard.count {
+//                for j in 0..<tempBoard[i].count {
+//                    if tempBoard[i][j].0 == false && tempBoard[i][j].3 == 1 && caseABoard[i][j].1 == 1{
+//                        possibleARoot.append(tempBoard[i][j])
+//                    }
+//                }
+//            }
+//
+//            if possibleARoot.count == 0 {
+////                print("A가 더 이상 갈 곳이 없어서 종료")
+//                break
+//                //return caseAResult
+//            }
+//
+//            let a = possibleARoot.sorted{$0.4 < $1.4}[0]
+//
+//            caseABoard[aLocationByCaseA[0]][aLocationByCaseA[1]].0 = true
+//
+//            if [aLocationByCaseA[0], aLocationByCaseA[1]] == bLocationByCaseA {
+////                print("A와 B가 같은 자리에 있었고, A가 이동하면서 B발판이 사라져 게임 종료")
+//                caseAResult += 1
+//                break
+//                //return caseAResult + 1
+//            }
+//
+//
+//            aLocationByCaseA = [a.1, a.2]
+////            print("이동한 A의 좌표: \(aLocationByCaseA)")
+//
+//
+//
+//
+//        } else { // B이동
+//            var possibleBRoot: [(Bool, Int, Int, Int, Int)] = []
+//            for i in 0..<tempBoard.count {
+//                for j in 0..<tempBoard[i].count {
+//                    if tempBoard[i][j].0 == false && tempBoard[i][j].4 == 1 && caseABoard[i][j].1 == 1{
+//                        possibleBRoot.append(tempBoard[i][j])
+//                    }
+//                }
+//            }
+//
+//            if possibleBRoot.count == 0 {
+////                print("B가 더 이상 갈 곳이 없어서 종료")
+//                break
+//
+//            }
+//
+//
+//            let b = possibleBRoot.sorted{$0.3 > $1.3}[0]
+//            //print(b)
+//            caseABoard[bLocationByCaseA[0]][bLocationByCaseA[1]].0 = true
+//            if [bLocationByCaseA[0], bLocationByCaseA[1]] == aLocationByCaseA {
+////                print("A와 B가 같은 자리에 있었고, B가 이동하면서 A발판이 사라져 게임 종료")
+//                caseAResult += 1
+//                break
+//                //return caseAResult + 1
+//            }
+//
+//            bLocationByCaseA = [b.1, b.2]
+////            print("이동한 B의 좌표: \(bLocationByCaseA)")
+//
+//        }
+//        currentUserByCaseA += 1
+//        caseAResult += 1
+////        print("<----발판 갱신---->")
+////        print(caseABoard)
+////        print("A의 현재 위치: \(aLocationByCaseA) --- B의 현재 위치: \(bLocationByCaseA)")
+//
+//    }
+//
+//    // B가 이기는 사람이라면
+//    while true {
+//        // A가 이기는 방법 = 거리가 1이면서 B와의 거리가 제일 작은 좌표로 이동
+//        // B가 이기는 방법 = 거리가 1이면서 A와의 거리가 제일 큰 좌표로 이동
+//        //print(currentUserByCaseB%2 == 0 ? "A순서" : "B순서")
+//
+//
+////        if currentUser%2 == 0 && aLocation == bLocation {
+////            return result + 1
+////        }
+////
+//
+//        ///(방문여부, x, y,  a거리, b거리)
+//        var tempBoard: [[(Bool, Int, Int, Int, Int)]] = Array(repeating: Array(repeating: (false, 0, 0, 0, 0), count: board[0].count), count: board.count)
+//
+//        // A와 B각각의 거리에 대한 값 정렬
+//        for i in 0..<board.count {
+//            for j in 0..<board[i].count {
+//                let state: Bool = caseBBoard[i][j].0
+//                let distanceA: Int = abs(aLocationByCaseB[0] - i) + abs(aLocationByCaseB[1] - j)
+//                let distanceB: Int = abs(bLocationByCaseB[0] - i) + abs(bLocationByCaseB[1] - j)
+//                tempBoard[i][j] = (state, i, j, distanceA, distanceB)
+//            }
+//        }
+////
+////        print("---A와 B로 부터 각각의 거리---")
+////        print(tempBoard)
+////
+//
+//        if currentUserByCaseB%2 == 0 { // A이동
+//            var possibleARoot: [(Bool, Int, Int, Int, Int)] = []
+//            for i in 0..<tempBoard.count {
+//                for j in 0..<tempBoard[i].count {
+//                    if tempBoard[i][j].0 == false && tempBoard[i][j].3 == 1 && caseBBoard[i][j].1 == 1{
+//                        possibleARoot.append(tempBoard[i][j])
+//                    }
+//                }
+//            }
+//
+//            if possibleARoot.count == 0 {
+//                //print("A가 더 이상 갈 곳이 없어서 종료")
+//                break
+//                //return caseAResult
+//            }
+//
+//            let a = possibleARoot.sorted{$0.4 > $1.4}[0]
+//
+//            caseBBoard[aLocationByCaseB[0]][aLocationByCaseB[1]].0 = true
+//
+//            if [aLocationByCaseB[0], aLocationByCaseB[1]] == bLocationByCaseB {
+//              //  print("A와 B가 같은 자리에 있었고, A가 이동하면서 B발판이 사라져 게임 종료")
+//                caseBResult += 1
+//                break
+//                //return caseAResult + 1
+//            }
+//
+//
+//            aLocationByCaseB = [a.1, a.2]
+//            //print("이동한 A의 좌표: \(aLocationByCaseB)")
+//
+//
+//
+//
+//        } else { // B이동
+//            var possibleBRoot: [(Bool, Int, Int, Int, Int)] = []
+//            for i in 0..<tempBoard.count {
+//                for j in 0..<tempBoard[i].count {
+//                    if tempBoard[i][j].0 == false && tempBoard[i][j].4 == 1 && caseBBoard[i][j].1 == 1{
+//                        possibleBRoot.append(tempBoard[i][j])
+//                    }
+//                }
+//            }
+//
+//            if possibleBRoot.count == 0 {
+//               // print("B가 더 이상 갈 곳이 없어서 종료")
+//                break
+//
+//            }
+//
+//
+//            let b = possibleBRoot.sorted{$0.3 < $1.3}[0]
+//            //print(b)
+//            caseBBoard[bLocationByCaseB[0]][bLocationByCaseB[1]].0 = true
+//            if [bLocationByCaseB[0], bLocationByCaseB[1]] == aLocationByCaseB {
+//             //   print("A와 B가 같은 자리에 있었고, B가 이동하면서 A발판이 사라져 게임 종료")
+//                caseBResult += 1
+//                break
+//                //return caseAResult + 1
+//            }
+//
+//            bLocationByCaseB = [b.1, b.2]
+//           // print("이동한 B의 좌표: \(bLocationByCaseB)")
+//
+//        }
+//        currentUserByCaseB += 1
+//        caseBResult += 1
+////        print("<----발판 갱신---->")
+////        print(caseBBoard)
+////        print("A의 현재 위치: \(aLocationByCaseB) --- B의 현재 위치: \(bLocationByCaseB)")
+//
+//    }
+//
+//
+//    return min(caseAResult, caseBResult)
+//}
+//
+//print(solution([[1, 1, 1, 0], [1, 1, 0, 1], [1, 0, 1, 1], [0, 1, 1, 1]], [0, 0], [3, 3]))
+
 func solution(_ board:[[Int]], _ aloc:[Int], _ bloc:[Int]) -> Int {
-    var caseAResult: Int = 0
-    var caseBResult: Int = 0
-    var caseABoard: [[(Bool, Int)]] = Array(repeating: Array(repeating: (false, 0), count: board[0].count), count: board.count)
-    var caseBBoard: [[(Bool, Int)]] = Array(repeating: Array(repeating: (false, 0), count: board[0].count), count: board.count)
-    var currentUserByCaseA: Int = 0   // 짝수 = A, 홀수 = B
-    var currentUserByCaseB: Int = 0   // 짝수 = A, 홀수 = B
-    var aLocationByCaseA: [Int] = aloc
-    var bLocationByCaseA: [Int] = bloc
+    let dx: [Int] = [1, -1, 0, 0]
+    let dy: [Int] = [0, 0, 1, -1]
     
-    var aLocationByCaseB: [Int] = aloc
-    var bLocationByCaseB: [Int] = bloc
+    let n: Int = board.count
+    let m: Int = board[0].count
     
-    for i in 0..<board.count {
-        for j in 0..<board[i].count {
-            caseABoard[i][j] = (false, board[i][j])
-            caseBBoard[i][j] = (false, board[i][j])
+    var newBoard: [[Int]] = Array(repeating: Array(repeating: 0, count: 5), count: 5)
+    for i in 0..<n {
+        for j in 0..<m {
+            newBoard[i][j] = board[i][j]
         }
+    }
+    var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: 5), count: 5)
+    
+    func checkIndex(_ x: Int, _ y: Int) -> Bool {
+        return x<0 || x>=n || y<0 || y>=m
+    }
+    
+    func solve(_ curx: Int, _ cury: Int, _ opx: Int, _ opy: Int) -> Int {
+        if visited[curx][cury] { return 0 }
+        var ret: Int = 0
+        
+        for i in 0..<4 {
+            let nx: Int = curx + dx[i]
+            let ny: Int = cury + dy[i]
+            
+            if checkIndex(nx, ny) || visited[nx][ny] || newBoard[nx][ny] == 0 { continue }
+            visited[curx][cury] = true
+            
+            var val: Int = solve(opx, opy, nx, ny) + 1
+            
+            visited[curx][cury] = false
+            
+            
+            if ret%2 == 0 && val%2 == 1 {
+                ret = val
+            } else if ret%2 == 0 && val%2 == 0 {
+                ret = max(ret, val)
+            } else if ret%2 == 1 && val%2 == 1 {
+               ret = min(ret, val)
+            }
+        }
+        
+        
+        return ret
     }
     
     
-    // A가 이기는 사람이라면
-    while true {
-        // A가 이기는 방법 = 거리가 1이면서 B와의 거리가 제일 작은 좌표로 이동
-        // B가 이기는 방법 = 거리가 1이면서 A와의 거리가 제일 큰 좌표로 이동
-//        print(currentUserByCaseA%2 == 0 ? "A순서" : "B순서")
-
-
-//        if currentUser%2 == 0 && aLocation == bLocation {
-//            return result + 1
-//        }
-//
-
-        ///(방문여부, x, y,  a거리, b거리)
-        var tempBoard: [[(Bool, Int, Int, Int, Int)]] = Array(repeating: Array(repeating: (false, 0, 0, 0, 0), count: board[0].count), count: board.count)
-
-        // A와 B각각의 거리에 대한 값 정렬
-        for i in 0..<board.count {
-            for j in 0..<board[i].count {
-                let state: Bool = caseABoard[i][j].0
-                let distanceA: Int = abs(aLocationByCaseA[0] - i) + abs(aLocationByCaseA[1] - j)
-                let distanceB: Int = abs(bLocationByCaseA[0] - i) + abs(bLocationByCaseA[1] - j)
-                tempBoard[i][j] = (state, i, j, distanceA, distanceB)
-            }
-        }
-
-//        print("---A와 B로 부터 각각의 거리---")
-//        print(tempBoard)
-//
-
-        if currentUserByCaseA%2 == 0 { // A이동
-            var possibleARoot: [(Bool, Int, Int, Int, Int)] = []
-            for i in 0..<tempBoard.count {
-                for j in 0..<tempBoard[i].count {
-                    if tempBoard[i][j].0 == false && tempBoard[i][j].3 == 1 && caseABoard[i][j].1 == 1{
-                        possibleARoot.append(tempBoard[i][j])
-                    }
-                }
-            }
-
-            if possibleARoot.count == 0 {
-//                print("A가 더 이상 갈 곳이 없어서 종료")
-                break
-                //return caseAResult
-            }
-
-            let a = possibleARoot.sorted{$0.4 < $1.4}[0]
-
-            caseABoard[aLocationByCaseA[0]][aLocationByCaseA[1]].0 = true
-
-            if [aLocationByCaseA[0], aLocationByCaseA[1]] == bLocationByCaseA {
-//                print("A와 B가 같은 자리에 있었고, A가 이동하면서 B발판이 사라져 게임 종료")
-                caseAResult += 1
-                break
-                //return caseAResult + 1
-            }
-
-
-            aLocationByCaseA = [a.1, a.2]
-//            print("이동한 A의 좌표: \(aLocationByCaseA)")
-
-
-
-
-        } else { // B이동
-            var possibleBRoot: [(Bool, Int, Int, Int, Int)] = []
-            for i in 0..<tempBoard.count {
-                for j in 0..<tempBoard[i].count {
-                    if tempBoard[i][j].0 == false && tempBoard[i][j].4 == 1 && caseABoard[i][j].1 == 1{
-                        possibleBRoot.append(tempBoard[i][j])
-                    }
-                }
-            }
-
-            if possibleBRoot.count == 0 {
-//                print("B가 더 이상 갈 곳이 없어서 종료")
-                break
-
-            }
-
-
-            let b = possibleBRoot.sorted{$0.3 > $1.3}[0]
-            //print(b)
-            caseABoard[bLocationByCaseA[0]][bLocationByCaseA[1]].0 = true
-            if [bLocationByCaseA[0], bLocationByCaseA[1]] == aLocationByCaseA {
-//                print("A와 B가 같은 자리에 있었고, B가 이동하면서 A발판이 사라져 게임 종료")
-                caseAResult += 1
-                break
-                //return caseAResult + 1
-            }
-
-            bLocationByCaseA = [b.1, b.2]
-//            print("이동한 B의 좌표: \(bLocationByCaseA)")
-
-        }
-        currentUserByCaseA += 1
-        caseAResult += 1
-//        print("<----발판 갱신---->")
-//        print(caseABoard)
-//        print("A의 현재 위치: \(aLocationByCaseA) --- B의 현재 위치: \(bLocationByCaseA)")
-
-    }
-    
-    // B가 이기는 사람이라면
-    while true {
-        // A가 이기는 방법 = 거리가 1이면서 B와의 거리가 제일 작은 좌표로 이동
-        // B가 이기는 방법 = 거리가 1이면서 A와의 거리가 제일 큰 좌표로 이동
-        //print(currentUserByCaseB%2 == 0 ? "A순서" : "B순서")
-        
-        
-//        if currentUser%2 == 0 && aLocation == bLocation {
-//            return result + 1
-//        }
-//
-        
-        ///(방문여부, x, y,  a거리, b거리)
-        var tempBoard: [[(Bool, Int, Int, Int, Int)]] = Array(repeating: Array(repeating: (false, 0, 0, 0, 0), count: board[0].count), count: board.count)
-        
-        // A와 B각각의 거리에 대한 값 정렬
-        for i in 0..<board.count {
-            for j in 0..<board[i].count {
-                let state: Bool = caseBBoard[i][j].0
-                let distanceA: Int = abs(aLocationByCaseB[0] - i) + abs(aLocationByCaseB[1] - j)
-                let distanceB: Int = abs(bLocationByCaseB[0] - i) + abs(bLocationByCaseB[1] - j)
-                tempBoard[i][j] = (state, i, j, distanceA, distanceB)
-            }
-        }
-//
-//        print("---A와 B로 부터 각각의 거리---")
-//        print(tempBoard)
-//
-        
-        if currentUserByCaseB%2 == 0 { // A이동
-            var possibleARoot: [(Bool, Int, Int, Int, Int)] = []
-            for i in 0..<tempBoard.count {
-                for j in 0..<tempBoard[i].count {
-                    if tempBoard[i][j].0 == false && tempBoard[i][j].3 == 1 && caseBBoard[i][j].1 == 1{
-                        possibleARoot.append(tempBoard[i][j])
-                    }
-                }
-            }
-            
-            if possibleARoot.count == 0 {
-                //print("A가 더 이상 갈 곳이 없어서 종료")
-                break
-                //return caseAResult
-            }
-            
-            let a = possibleARoot.sorted{$0.4 > $1.4}[0]
-            
-            caseBBoard[aLocationByCaseB[0]][aLocationByCaseB[1]].0 = true
-            
-            if [aLocationByCaseB[0], aLocationByCaseB[1]] == bLocationByCaseB {
-              //  print("A와 B가 같은 자리에 있었고, A가 이동하면서 B발판이 사라져 게임 종료")
-                caseBResult += 1
-                break
-                //return caseAResult + 1
-            }
-            
-            
-            aLocationByCaseB = [a.1, a.2]
-            //print("이동한 A의 좌표: \(aLocationByCaseB)")
-            
-            
-            
-            
-        } else { // B이동
-            var possibleBRoot: [(Bool, Int, Int, Int, Int)] = []
-            for i in 0..<tempBoard.count {
-                for j in 0..<tempBoard[i].count {
-                    if tempBoard[i][j].0 == false && tempBoard[i][j].4 == 1 && caseBBoard[i][j].1 == 1{
-                        possibleBRoot.append(tempBoard[i][j])
-                    }
-                }
-            }
-            
-            if possibleBRoot.count == 0 {
-               // print("B가 더 이상 갈 곳이 없어서 종료")
-                break
-                
-            }
-           
-            
-            let b = possibleBRoot.sorted{$0.3 < $1.3}[0]
-            //print(b)
-            caseBBoard[bLocationByCaseB[0]][bLocationByCaseB[1]].0 = true
-            if [bLocationByCaseB[0], bLocationByCaseB[1]] == aLocationByCaseB {
-             //   print("A와 B가 같은 자리에 있었고, B가 이동하면서 A발판이 사라져 게임 종료")
-                caseBResult += 1
-                break
-                //return caseAResult + 1
-            }
-            
-            bLocationByCaseB = [b.1, b.2]
-           // print("이동한 B의 좌표: \(bLocationByCaseB)")
-
-        }
-        currentUserByCaseB += 1
-        caseBResult += 1
-//        print("<----발판 갱신---->")
-//        print(caseBBoard)
-//        print("A의 현재 위치: \(aLocationByCaseB) --- B의 현재 위치: \(bLocationByCaseB)")
-        
-    }
     
     
-    return min(caseAResult, caseBResult)
+    return solve(aloc[0], aloc[1], bloc[0], bloc[1])
 }
+
+
+
+
+
+
+
+
 
 print(solution([[1, 1, 1, 0], [1, 1, 0, 1], [1, 0, 1, 1], [0, 1, 1, 1]], [0, 0], [3, 3]))
