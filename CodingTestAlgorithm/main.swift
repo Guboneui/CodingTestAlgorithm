@@ -15215,74 +15215,98 @@ func solution(_ play_time:String, _ adv_time:String, _ logs:[String]) -> String 
         logsArr.append((startTime, endTime))
     }
     
-    
-    var tempBestAdvStartTime: [(Int, Int)] = []
+    var allTime: [Int] = Array(repeating: 0, count: playTime + 1)
     
     for log in logsArr {
-        tempBestAdvStartTime.append((log.0, log.0+advTime))
+        allTime[log.0] += 1
+        allTime[log.1] -= 1
     }
     
+    for i in 1..<allTime.count {
+        allTime[i] += allTime[i-1]
+    }
     
-    //print(tempBestAdvStartTime)
-    //print(logsArr)
-    /// 전체 플레이 타임과 관련된 배열   (광고 시작 시간, 전체 광고 상영 시간)
-    var totalAdvTimeArr: [(Int, Int)] = []
-    var maxTime: Int = 0
-    for adv in tempBestAdvStartTime {
-        //print("광고 상영 시간: \(adv)")
-        var possibleTime: [(Int, Int)] = logsArr.filter{$0.0 <= adv.1 && $0.1 >= adv.0}
-        var totalTime: Int = 0
-        
-        for t in possibleTime {
-            
-            if adv.0 >= t.0 && adv.1 <= t.1 { // 영상 안에 광고 포함
-                totalTime += advTime
-            } else if adv.0 < t.0 && adv.1 < t.1{ // 영상 앞에 광고 포함
-                totalTime += adv.1 - t.0
-            } else if adv.0 > t.0 && adv.1 > t.1{ // 영상 뒤에 광고 포함
-                totalTime += t.1 - adv.0
-            }
-            
-            
+    var currentTotalTime: Int = allTime[0...advTime].reduce(0, +)
+    var maxTime: Int = currentTotalTime
+    var maxIndex: Int = 0
+    
+    for i in advTime..<playTime {
+        currentTotalTime = currentTotalTime + allTime[i] - allTime[i-advTime]
+        if currentTotalTime > maxTime {
+            maxTime = currentTotalTime
+            maxIndex = i-advTime+1
         }
-        
-        maxTime = max(maxTime, totalTime)
-        totalAdvTimeArr.append((adv.0, totalTime))
     }
     
-    //print("최장 플레이 타임")
-    var resultTime: Int = totalAdvTimeArr.filter{$0.1 == maxTime}.sorted{$0.0<$1.0}[0].0
-    
+    //print(maxIndex)
+//    var tempBestAdvStartTime: [(Int, Int)] = []
+//
+//    for log in logsArr {
+//        tempBestAdvStartTime.append((log.0, log.0+advTime))
+//    }
+//
+//
+//    //print(tempBestAdvStartTime)
+//    //print(logsArr)
+//    /// 전체 플레이 타임과 관련된 배열   (광고 시작 시간, 전체 광고 상영 시간)
+//    var totalAdvTimeArr: [(Int, Int)] = []
+//    var maxTime: Int = 0
+//    for adv in tempBestAdvStartTime {
+//        //print("광고 상영 시간: \(adv)")
+//        var possibleTime: [(Int, Int)] = logsArr.filter{$0.0 <= adv.1 && $0.1 >= adv.0}
+//        var totalTime: Int = 0
+//
+//        for t in possibleTime {
+//
+//            if adv.0 >= t.0 && adv.1 <= t.1 { // 영상 안에 광고 포함
+//                totalTime += advTime
+//            } else if adv.0 < t.0 && adv.1 < t.1{ // 영상 앞에 광고 포함
+//                totalTime += adv.1 - t.0
+//            } else if adv.0 > t.0 && adv.1 > t.1{ // 영상 뒤에 광고 포함
+//                totalTime += t.1 - adv.0
+//            }
+//
+//
+//        }
+//
+//        maxTime = max(maxTime, totalTime)
+//        totalAdvTimeArr.append((adv.0, totalTime))
+//    }
+//
+//    //print("최장 플레이 타임")
+//    var resultTime: Int = totalAdvTimeArr.filter{$0.1 == maxTime}.sorted{$0.0<$1.0}[0].0
+//
     var h: String = ""
     var m: String = ""
     var s: String = ""
-    
+//
     for i in 0..<3 {
         if i == 0 {
-            var hour: String = String(resultTime / (60*60))
+            var hour: String = String(maxIndex / (60*60))
             if hour.count == 1 {
                 hour = "0" + hour
             }
             h = hour
-            resultTime %= 3600
+            maxIndex %= 3600
         } else if i == 1 {
-            var minute: String = String(resultTime / 60)
+            var minute: String = String(maxIndex / 60)
             if minute.count == 1 {
                 minute = "0" + minute
             }
             m = minute
-            resultTime %= 60
+            maxIndex %= 60
         } else if i == 2 {
-            var sec: String = String(resultTime)
+            var sec: String = String(maxIndex)
             if sec.count == 1 {
                 sec = "0" + sec
             }
             s = sec
         }
     }
-
-    
+//
+//
     return "\(h):\(m):\(s)"
 }
 
 print(solution("02:03:55", "00:14:15", ["01:20:15-01:45:14", "00:40:31-01:00:00", "00:25:50-00:48:29", "01:30:59-01:53:29", "01:37:44-02:02:30"]))
+
