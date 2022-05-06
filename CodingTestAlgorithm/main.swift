@@ -15042,41 +15042,122 @@ import Foundation
 //    return arr[1].filter{$0 == maxValue}.count
 //}
 
-func solution(_ n:Int, _ edge:[[Int]]) -> Int {
-    var graph: [[Int]] = Array(repeating: [Int](), count: n+1)
-    for edge in edge {
-        graph[edge[0]].append(edge[1])
-        graph[edge[1]].append(edge[0])
-    }
+//func solution(_ n:Int, _ edge:[[Int]]) -> Int {
+//    var graph: [[Int]] = Array(repeating: [Int](), count: n+1)
+//    for edge in edge {
+//        graph[edge[0]].append(edge[1])
+//        graph[edge[1]].append(edge[0])
+//    }
+//
+//    var route: [Int] = Array(repeating: 999999, count: n+1)
+//    route[0] = 0
+//    route[1] = 0
+//    var visited: [Bool] = Array(repeating: false, count: n+1)
+//    func bfs(_ v: Int) {
+//
+//        var queue: [Int] = [v]
+//        while !queue.isEmpty {
+//            let popValue: Int = queue.removeFirst()
+//            if visited[popValue] == false {
+//                visited[popValue] = true
+//
+//                for index in graph[popValue] {
+//                    route[index] = min(route[index], route[popValue]+1)
+//                }
+//
+//                queue.append(contentsOf: graph[popValue])
+//
+//            }
+//        }
+//    }
+//
+//    bfs(1)
+//    let maxValue: Int = route.max()!
+//    return route.filter{$0 == maxValue}.count
+//}
+//
+//print(solution(6, [[3, 6], [4, 3], [3, 2], [1, 3], [1, 2], [2, 4], [5, 2]]    ))
+
+
+
+// MARK: - 프로그래머스 level3 디스크 컨트롤
+
+//func solution(_ jobs:[[Int]]) -> Int {
+//
+//    if jobs.count == 1 { return jobs[0][1]}
+//
+//    let newJobs: [[Int]] = jobs.sorted {
+//        if $0[1] == $1[1] {
+//            return $0[0] < $1[0]
+//        }
+//        return $0[1] < $1[1]
+//    }
+//
+//    var doingTime: [[Int]] = [newJobs[0]]
+//
+//    for i in 1..<jobs.count {
+//        doingTime.append([doingTime[i-1][1], doingTime[i-1][1] + newJobs[i][1]])
+//    }
+//
+//
+//    var result: Int = 0
+//    for i in 0..<newJobs.count {
+//        result += doingTime[i][1] - newJobs[i][0]
+//    }
+//
+//
+//
+//    return result / jobs.count
+//}
+//
+//print(solution([[0, 3], [1, 9], [2, 6]]))
+
+// MARK: - 프로그래머스 level3 네트워크
+
+func solution(_ n:Int, _ computers:[[Int]]) -> Int {
     
-    var route: [Int] = Array(repeating: 999999, count: n+1)
-    route[0] = 0
-    route[1] = 0
-    var visited: [Bool] = Array(repeating: false, count: n+1)
-    func bfs(_ v: Int) {
-        
-        var queue: [Int] = [v]
-        while !queue.isEmpty {
-            let popValue: Int = queue.removeFirst()
-            if visited[popValue] == false {
-                visited[popValue] = true
-                
-                for index in graph[popValue] {
-                    route[index] = min(route[index], route[popValue]+1)
+    var graph: [[Int]] = Array(repeating: [Int](), count: n)
+    var result: [Int] = []
+    for i in 0..<computers.count {
+        for j in 0..<computers[i].count {
+            if i != j {
+                if computers[i][j] == 1 {
+                    graph[i].append(j)
                 }
-                
-                queue.append(contentsOf: graph[popValue])
-                
             }
         }
     }
-
-    bfs(1)
-    let maxValue: Int = route.max()!
-    return route.filter{$0 == maxValue}.count
+    
+    //print(graph)
+    var visited: [Bool] = Array(repeating: false, count: n)
+    for i in 0..<n {
+        
+        result.append(dfs(i, &visited, 0, graph))
+    }
+    
+    //print(result)
+    
+    return result.filter{$0 != 0}.count
 }
 
-print(solution(6, [[3, 6], [4, 3], [3, 2], [1, 3], [1, 2], [2, 4], [5, 2]]    ))
+//print(solution(3, [[1, 1, 0], [1, 1, 1], [0, 1, 1]]))
+
+func dfs(_ startNode: Int, _ visited: inout [Bool], _ networkCount: Int, _ networkGraph: [[Int]]) -> Int {
+    
+    var count: Int = 0
+    var queue: [Int] = [startNode]
+    
+    while !queue.isEmpty {
+        let popValue: Int = queue.removeFirst()
+        if visited[popValue] == false {
+            visited[popValue] = true
+            count += 1
+            queue.append(contentsOf: networkGraph[popValue])
+        }
+    }
+    
+    return count
+}
 
 
 
