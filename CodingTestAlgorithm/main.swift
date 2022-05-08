@@ -15544,62 +15544,111 @@ import Foundation
 
 // MARK: - 프로그래머스 Gold5 7576번 토마토
 
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let m: Int = read[0]
+//let n: Int = read[1]
+//
+//var box: [[Int]] = []
+//for _ in 0..<n {
+//    box.append(readLine()!.split(separator: " ").map{Int($0)!})
+//}
+//
+//var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: m), count: n)
+//let dx: [Int] = [1, -1, 0, 0]
+//let dy: [Int] = [0, 0, 1, -1]
+//var result: Int = 1
+//
+//var queue: [[Int]] = []
+//for i in 0..<n {
+//    for j in 0..<m {
+//        if box[i][j] == 1 {
+//            queue.append([i, j])
+//        }
+//    }
+//}
+//
+//var index: Int = 0
+//
+//while index < queue.count {
+//    let popValue: [Int] = queue[index]
+//    index += 1
+//
+//    for i in 0..<4 {
+//        let nx: Int = popValue[0] + dx[i]
+//        let ny: Int = popValue[1] + dy[i]
+//
+//        if nx>=0 && nx<n && ny>=0 && ny<m {
+//            if box[nx][ny] == 0 {
+//                box[nx][ny] = box[popValue[0]][popValue[1]] + 1
+//                queue.append([nx, ny])
+//                if result < box[popValue[0]][popValue[1]] + 1 {
+//                    result = box[popValue[0]][popValue[1]] + 1
+//                }
+//            }
+//        }
+//    }
+//}
+//
+//
+//var check: Bool = true
+//for i in 0..<n {
+//    for j in 0..<m {
+//        if box[i][j] == 0 {
+//            check = false
+//            break
+//        }
+//    }
+//}
+//
+//if check { print(result-1) }
+//else { print(-1) }
+//
+
+// MARK: - 프로그래머스 Gold5 1753번 최단경로
+
 let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let m: Int = read[0]
-let n: Int = read[1]
+let V: Int = read[0]
+let E: Int = read[1]
+let startNode: Int = Int(readLine()!)!
+var graph: [[Int]] = Array(repeating: [Int](), count: V+1)
+var weight: [[Int]] = Array(repeating: Array(repeating: 999999, count: V+1), count: V+1)
 
-var box: [[Int]] = []
-for _ in 0..<n {
-    box.append(readLine()!.split(separator: " ").map{Int($0)!})
+for _ in 0..<E {
+    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    graph[temp[0]].append(temp[1])
+    weight[temp[0]][temp[1]] = temp[2]
 }
 
-var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: m), count: n)
-let dx: [Int] = [1, -1, 0, 0]
-let dy: [Int] = [0, 0, 1, -1]
-var result: Int = 1
-
-var queue: [[Int]] = []
-for i in 0..<n {
-    for j in 0..<m {
-        if box[i][j] == 1 {
-            queue.append([i, j])
-        }
-    }
+for i in 1..<weight.count {
+    weight[i][i] = 0
 }
 
+var visited: [Bool] = Array(repeating: false, count: V+1)
+var result: [Int] = Array(repeating: 999999, count: V+1)
 var index: Int = 0
-
-while index < queue.count {
-    let popValue: [Int] = queue[index]
-    index += 1
-    
-    for i in 0..<4 {
-        let nx: Int = popValue[0] + dx[i]
-        let ny: Int = popValue[1] + dy[i]
-        
-        if nx>=0 && nx<n && ny>=0 && ny<m {
-            if box[nx][ny] == 0 {
-                box[nx][ny] = box[popValue[0]][popValue[1]] + 1
-                queue.append([nx, ny])
-                if result < box[popValue[0]][popValue[1]] + 1 {
-                    result = box[popValue[0]][popValue[1]] + 1
-                }
+func bfs(_ node: Int) {
+    result[node] = 0
+    var queue: [Int] = [node]
+    while index < queue.count {
+        let popValue: Int = queue[index]
+        index += 1
+        if visited[popValue] == false {
+            visited[popValue] = true
+            for i in graph[popValue] {
+                result[i] = min(result[i], result[popValue] + weight[popValue][i])
             }
+            queue.append(contentsOf: graph[popValue])
         }
     }
 }
 
+bfs(startNode)
 
-var check: Bool = true
-for i in 0..<n {
-    for j in 0..<m {
-        if box[i][j] == 0 {
-            check = false
-            break
-        }
+for i in 1..<result.count {
+    if result[i] == 999999 {
+        print("INF")
+    } else {
+        print(result[i])
     }
 }
-
-if check { print(result-1) }
-else { print(-1) }
 
