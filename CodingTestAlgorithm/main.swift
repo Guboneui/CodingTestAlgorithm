@@ -15485,66 +15485,121 @@ import Foundation
 //
 //print(solution([[1, 1, 1, 0], [1, 1, 0, 1], [1, 0, 1, 1], [0, 1, 1, 1]], [0, 0], [3, 3]))
 
-func solution(_ board:[[Int]], _ aloc:[Int], _ bloc:[Int]) -> Int {
-    let dx: [Int] = [1, -1, 0, 0]
-    let dy: [Int] = [0, 0, 1, -1]
-    
-    let n: Int = board.count
-    let m: Int = board[0].count
-    
-    var newBoard: [[Int]] = Array(repeating: Array(repeating: 0, count: 5), count: 5)
-    for i in 0..<n {
-        for j in 0..<m {
-            newBoard[i][j] = board[i][j]
+//func solution(_ board:[[Int]], _ aloc:[Int], _ bloc:[Int]) -> Int {
+//    let dx: [Int] = [1, -1, 0, 0]
+//    let dy: [Int] = [0, 0, 1, -1]
+//
+//    let n: Int = board.count
+//    let m: Int = board[0].count
+//
+//    var newBoard: [[Int]] = Array(repeating: Array(repeating: 0, count: 5), count: 5)
+//    for i in 0..<n {
+//        for j in 0..<m {
+//            newBoard[i][j] = board[i][j]
+//        }
+//    }
+//    var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: 5), count: 5)
+//
+//    func checkIndex(_ x: Int, _ y: Int) -> Bool {
+//        return x<0 || x>=n || y<0 || y>=m
+//    }
+//
+//    func solve(_ curx: Int, _ cury: Int, _ opx: Int, _ opy: Int) -> Int {
+//        if visited[curx][cury] { return 0 }
+//        var ret: Int = 0
+//
+//        for i in 0..<4 {
+//            let nx: Int = curx + dx[i]
+//            let ny: Int = cury + dy[i]
+//
+//            if checkIndex(nx, ny) || visited[nx][ny] || newBoard[nx][ny] == 0 { continue }
+//            visited[curx][cury] = true
+//
+//            var val: Int = solve(opx, opy, nx, ny) + 1
+//
+//            visited[curx][cury] = false
+//
+//
+//            if ret%2 == 0 && val%2 == 1 {
+//                ret = val
+//            } else if ret%2 == 0 && val%2 == 0 {
+//                ret = max(ret, val)
+//            } else if ret%2 == 1 && val%2 == 1 {
+//               ret = min(ret, val)
+//            }
+//        }
+//
+//
+//        return ret
+//    }
+//
+//
+//
+//
+//    return solve(aloc[0], aloc[1], bloc[0], bloc[1])
+//}
+//
+//
+//print(solution([[1, 1, 1, 0], [1, 1, 0, 1], [1, 0, 1, 1], [0, 1, 1, 1]], [0, 0], [3, 3]))
+
+// MARK: - 프로그래머스 Gold5 7576번 토마토
+
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let m: Int = read[0]
+let n: Int = read[1]
+
+var box: [[Int]] = []
+for _ in 0..<n {
+    box.append(readLine()!.split(separator: " ").map{Int($0)!})
+}
+
+var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: m), count: n)
+let dx: [Int] = [1, -1, 0, 0]
+let dy: [Int] = [0, 0, 1, -1]
+var result: Int = 1
+
+var queue: [[Int]] = []
+for i in 0..<n {
+    for j in 0..<m {
+        if box[i][j] == 1 {
+            queue.append([i, j])
         }
     }
-    var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: 5), count: 5)
+}
+
+var index: Int = 0
+
+while index < queue.count {
+    let popValue: [Int] = queue[index]
+    index += 1
     
-    func checkIndex(_ x: Int, _ y: Int) -> Bool {
-        return x<0 || x>=n || y<0 || y>=m
-    }
-    
-    func solve(_ curx: Int, _ cury: Int, _ opx: Int, _ opy: Int) -> Int {
-        if visited[curx][cury] { return 0 }
-        var ret: Int = 0
+    for i in 0..<4 {
+        let nx: Int = popValue[0] + dx[i]
+        let ny: Int = popValue[1] + dy[i]
         
-        for i in 0..<4 {
-            let nx: Int = curx + dx[i]
-            let ny: Int = cury + dy[i]
-            
-            if checkIndex(nx, ny) || visited[nx][ny] || newBoard[nx][ny] == 0 { continue }
-            visited[curx][cury] = true
-            
-            var val: Int = solve(opx, opy, nx, ny) + 1
-            
-            visited[curx][cury] = false
-            
-            
-            if ret%2 == 0 && val%2 == 1 {
-                ret = val
-            } else if ret%2 == 0 && val%2 == 0 {
-                ret = max(ret, val)
-            } else if ret%2 == 1 && val%2 == 1 {
-               ret = min(ret, val)
+        if nx>=0 && nx<n && ny>=0 && ny<m {
+            if box[nx][ny] == 0 {
+                box[nx][ny] = box[popValue[0]][popValue[1]] + 1
+                queue.append([nx, ny])
+                if result < box[popValue[0]][popValue[1]] + 1 {
+                    result = box[popValue[0]][popValue[1]] + 1
+                }
             }
         }
-        
-        
-        return ret
     }
-    
-    
-    
-    
-    return solve(aloc[0], aloc[1], bloc[0], bloc[1])
 }
 
 
+var check: Bool = true
+for i in 0..<n {
+    for j in 0..<m {
+        if box[i][j] == 0 {
+            check = false
+            break
+        }
+    }
+}
 
+if check { print(result-1) }
+else { print(-1) }
 
-
-
-
-
-
-print(solution([[1, 1, 1, 0], [1, 1, 0, 1], [1, 0, 1, 1], [0, 1, 1, 1]], [0, 0], [3, 3]))
