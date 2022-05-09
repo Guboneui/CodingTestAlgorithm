@@ -15661,107 +15661,146 @@ import Foundation
 
 // MARK: - 백준 Gold5 14502번 연구소
 
-let NM: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let n: Int = NM[0]
-let m: Int = NM[1]
+//let NM: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = NM[0]
+//let m: Int = NM[1]
+//var result: Int = 0
+//
+//var graph: [[Int]] = []
+//for _ in 0..<n {
+//    graph.append(readLine()!.split(separator: " ").map{Int($0)!})
+//}
+//var zeroIndex: [(Int, Int)] = []
+//var virusIndex: [(Int, Int)] = []
+//
+//for i in 0..<n {
+//    for j in 0..<m {
+//        if graph[i][j] == 0 {
+//            zeroIndex.append((i, j))
+//        }
+//
+//        if graph[i][j] == 2 {
+//            virusIndex.append((i, j))
+//        }
+//    }
+//}
+//
+//var trackingVisited: [Bool] = Array(repeating: false, count: zeroIndex.count)
+//var trackingCollection: [[Int]] = []
+//var trackingArr: [Int] = []
+//
+//func tracking(_ depth: Int, _ start: Int) {
+//    if depth == 3 {
+//        trackingCollection.append(trackingArr)
+//        return
+//    }
+//
+//    for i in start..<zeroIndex.count {
+//        if trackingVisited[i] == false {
+//            trackingVisited[i] = true
+//            trackingArr.append(i)
+//            tracking(depth+1, i+1)
+//            trackingArr.removeLast()
+//            trackingVisited[i] = false
+//        }
+//    }
+//
+//}
+//
+//tracking(0, 0)
+//
+//func checkSafeArea(_ inputGraph: [[Int]]) -> Int {
+//    var zeroCount: Int = 0
+//    for i in 0..<inputGraph.count {
+//        for j in 0..<inputGraph[i].count {
+//            if inputGraph[i][j] == 0 { zeroCount += 1 }
+//        }
+//    }
+//    return zeroCount
+//}
+//
+//
+//func bfs(_ inputGraph: [[Int]], _ inputVirusIndex: [(Int, Int)]) -> [[Int]] {
+//    var graph: [[Int]] = inputGraph
+//    let dx: [Int] = [1, -1, 0, 0]
+//    let dy: [Int] = [0, 0, 1, -1]
+//    var queue: [(Int, Int)] = inputVirusIndex
+//    var index: Int = 0
+//    var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: graph[0].count), count: graph.count)
+//
+//    while index < queue.count {
+//        let popValue: (Int, Int) = queue[index]
+//        index += 1
+//
+//        if visited[popValue.0][popValue.1] == false {
+//            visited[popValue.0][popValue.1] = true
+//            for i in 0...3 {
+//                let nx: Int = popValue.0 + dx[i]
+//                let ny: Int = popValue.1 + dy[i]
+//
+//                if nx>=0 && nx<graph.count && ny>=0 && ny<graph[0].count {
+//                    if graph[nx][ny] == 0 {
+//                        graph[nx][ny] = 2
+//                        queue.append((nx, ny))
+//                    }
+//                }
+//            }
+//        }
+//
+//
+//    }
+//
+//    return graph
+//}
+//
+//
+//for node in trackingCollection {
+//    var copyGraph: [[Int]] = graph
+//    for i in 0..<node.count {
+//        copyGraph[zeroIndex[node[i]].0][zeroIndex[node[i]].1] = 1
+//    }
+//    copyGraph = bfs(copyGraph, virusIndex)
+//    result = max(result, checkSafeArea(copyGraph))
+//}
+//
+//
+//print(result)
+
+
+// MARK: - 백준 Gold5 12865번 평범한 배낭
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let N: Int = read[0]
+let K: Int = read[1]
+var arr: [[Int]] = []
+for _ in 0..<N {
+    arr.append(readLine()!.split(separator: " ").map{Int($0)!})
+}
+
+var bagVisited: [Bool] = Array(repeating: false, count: arr.count)
+var bagArr: [Int] = []
+var sum: Int = 0
 var result: Int = 0
-
-var graph: [[Int]] = []
-for _ in 0..<n {
-    graph.append(readLine()!.split(separator: " ").map{Int($0)!})
-}
-var zeroIndex: [(Int, Int)] = []
-var virusIndex: [(Int, Int)] = []
-
-for i in 0..<n {
-    for j in 0..<m {
-        if graph[i][j] == 0 {
-            zeroIndex.append((i, j))
+func tracking(_ start: Int) {
+    if sum > 0 && sum <= K{
+        var weight: Int = 0
+        for i in bagArr {
+            weight += arr[i][1]
         }
-
-        if graph[i][j] == 2 {
-            virusIndex.append((i, j))
-        }
+        result = max(result, weight)
     }
-}
-
-var trackingVisited: [Bool] = Array(repeating: false, count: zeroIndex.count)
-var trackingCollection: [[Int]] = []
-var trackingArr: [Int] = []
-
-func tracking(_ depth: Int, _ start: Int) {
-    if depth == 3 {
-        trackingCollection.append(trackingArr)
-        return
-    }
-
-    for i in start..<zeroIndex.count {
-        if trackingVisited[i] == false {
-            trackingVisited[i] = true
-            trackingArr.append(i)
-            tracking(depth+1, i+1)
-            trackingArr.removeLast()
-            trackingVisited[i] = false
+    for i in start..<bagVisited.count {
+        if bagVisited[i] == false {
+            bagVisited[i] = true
+            sum += arr[i][0]
+            bagArr.append(i)
+            tracking(i+1)
+            bagArr.removeLast()
+            sum -= arr[i][0]
+            bagVisited[i] = false
+            
         }
     }
-
 }
 
-tracking(0, 0)
-
-func checkSafeArea(_ inputGraph: [[Int]]) -> Int {
-    var zeroCount: Int = 0
-    for i in 0..<inputGraph.count {
-        for j in 0..<inputGraph[i].count {
-            if inputGraph[i][j] == 0 { zeroCount += 1 }
-        }
-    }
-    return zeroCount
-}
-
-
-func bfs(_ inputGraph: [[Int]], _ inputVirusIndex: [(Int, Int)]) -> [[Int]] {
-    var graph: [[Int]] = inputGraph
-    let dx: [Int] = [1, -1, 0, 0]
-    let dy: [Int] = [0, 0, 1, -1]
-    var queue: [(Int, Int)] = inputVirusIndex
-    var index: Int = 0
-    var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: graph[0].count), count: graph.count)
-    
-    while index < queue.count {
-        let popValue: (Int, Int) = queue[index]
-        index += 1
-        
-        if visited[popValue.0][popValue.1] == false {
-            visited[popValue.0][popValue.1] = true
-            for i in 0...3 {
-                let nx: Int = popValue.0 + dx[i]
-                let ny: Int = popValue.1 + dy[i]
-                
-                if nx>=0 && nx<graph.count && ny>=0 && ny<graph[0].count {
-                    if graph[nx][ny] == 0 {
-                        graph[nx][ny] = 2
-                        queue.append((nx, ny))
-                    }
-                }
-            }
-        }
-        
-        
-    }
-    
-    return graph
-}
-
-
-for node in trackingCollection {
-    var copyGraph: [[Int]] = graph
-    for i in 0..<node.count {
-        copyGraph[zeroIndex[node[i]].0][zeroIndex[node[i]].1] = 1
-    }
-    copyGraph = bfs(copyGraph, virusIndex)
-    result = max(result, checkSafeArea(copyGraph))
-}
-
-
+tracking(0)
 print(result)
