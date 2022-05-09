@@ -15606,49 +15606,162 @@ import Foundation
 
 // MARK: - 프로그래머스 Gold5 1753번 최단경로
 
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let V: Int = read[0]
-let E: Int = read[1]
-let startNode: Int = Int(readLine()!)!
-var graph: [[Int]] = Array(repeating: [Int](), count: V+1)
-var weight: [[Int]] = Array(repeating: Array(repeating: 999999, count: V+1), count: V+1)
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let V: Int = read[0]
+//let E: Int = read[1]
+//let startNode: Int = Int(readLine()!)!
+//var graph: [[Int]] = Array(repeating: [Int](), count: V+1)
+//var weight: [Int:[Int:Int]] = [:]
+//
+//for _ in 0..<E {
+//    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    graph[temp[0]].append(temp[1])
+//    if weight[temp[0]] == nil {
+//        weight[temp[0]] = [temp[1]:temp[2]]
+//
+//    } else {
+//        if weight[temp[0]]![temp[1]] == nil {
+//            weight[temp[0]]!.updateValue(temp[2], forKey: temp[1])
+//        } else {
+//            weight[temp[0]]!.updateValue(min(temp[2], weight[temp[0]]![temp[1]]!), forKey: temp[1])
+//        }
+//    }
+//}
+//
+//
+//var visited: [Bool] = Array(repeating: false, count: V+1)
+//var result: [Int] = Array(repeating: 999999, count: V+1)
+//var index: Int = 0
+//func bfs(_ node: Int) {
+//    result[node] = 0
+//    var queue: [Int] = [node]
+//    while index < queue.count {
+//        let popValue: Int = queue[index]
+//        index += 1
+//        if visited[popValue] == false {
+//            visited[popValue] = true
+//            for i in graph[popValue] {
+//                result[i] = min(result[i], result[popValue] + weight[popValue]![i]!)
+//            }
+//            queue.append(contentsOf: graph[popValue])
+//        }
+//    }
+//}
+//
+//bfs(startNode)
+//
+//for i in 1..<result.count {
+//    if result[i] == 999999 {
+//        print("INF")
+//    } else {
+//        print(result[i])
+//    }
+//}
+//
 
-for _ in 0..<E {
-    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    graph[temp[0]].append(temp[1])
-    weight[temp[0]][temp[1]] = temp[2]
+// MARK: - 백준 Gold5 14502번 연구소
+
+let NM: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let n: Int = NM[0]
+let m: Int = NM[1]
+var result: Int = 0
+
+var graph: [[Int]] = []
+for _ in 0..<n {
+    graph.append(readLine()!.split(separator: " ").map{Int($0)!})
 }
+var zeroIndex: [(Int, Int)] = []
+var virusIndex: [(Int, Int)] = []
 
-for i in 1..<weight.count {
-    weight[i][i] = 0
-}
+for i in 0..<n {
+    for j in 0..<m {
+        if graph[i][j] == 0 {
+            zeroIndex.append((i, j))
+        }
 
-var visited: [Bool] = Array(repeating: false, count: V+1)
-var result: [Int] = Array(repeating: 999999, count: V+1)
-var index: Int = 0
-func bfs(_ node: Int) {
-    result[node] = 0
-    var queue: [Int] = [node]
-    while index < queue.count {
-        let popValue: Int = queue[index]
-        index += 1
-        if visited[popValue] == false {
-            visited[popValue] = true
-            for i in graph[popValue] {
-                result[i] = min(result[i], result[popValue] + weight[popValue][i])
-            }
-            queue.append(contentsOf: graph[popValue])
+        if graph[i][j] == 2 {
+            virusIndex.append((i, j))
         }
     }
 }
 
-bfs(startNode)
+var trackingVisited: [Bool] = Array(repeating: false, count: zeroIndex.count)
+var trackingCollection: [[Int]] = []
+var trackingArr: [Int] = []
 
-for i in 1..<result.count {
-    if result[i] == 999999 {
-        print("INF")
-    } else {
-        print(result[i])
+func tracking(_ depth: Int, _ start: Int) {
+    if depth == 3 {
+        trackingCollection.append(trackingArr)
+        return
     }
+
+    for i in start..<zeroIndex.count {
+        if trackingVisited[i] == false {
+            trackingVisited[i] = true
+            trackingArr.append(i)
+            tracking(depth+1, i+1)
+            trackingArr.removeLast()
+            trackingVisited[i] = false
+        }
+    }
+
 }
 
+tracking(0, 0)
+
+func checkSafeArea(_ inputGraph: [[Int]]) -> Int {
+    var zeroCount: Int = 0
+    for i in 0..<inputGraph.count {
+        for j in 0..<inputGraph[i].count {
+            if inputGraph[i][j] == 0 { zeroCount += 1 }
+        }
+    }
+    return zeroCount
+}
+
+
+func bfs(_ inputGraph: [[Int]], _ inputVirusIndex: [(Int, Int)]) -> [[Int]] {
+    var graph: [[Int]] = inputGraph
+    let dx: [Int] = [1, -1, 0, 0]
+    let dy: [Int] = [0, 0, 1, -1]
+    var queue: [(Int, Int)] = inputVirusIndex
+    var index: Int = 0
+    var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: graph[0].count), count: graph.count)
+    
+    while index < queue.count {
+        let popValue: (Int, Int) = queue[index]
+        index += 1
+        
+        if visited[popValue.0][popValue.1] == false {
+            visited[popValue.0][popValue.1] = true
+            for i in 0...3 {
+                let nx: Int = popValue.0 + dx[i]
+                let ny: Int = popValue.1 + dy[i]
+                
+                if nx>=0 && nx<graph.count && ny>=0 && ny<graph[0].count {
+                    if graph[nx][ny] == 0 {
+                        graph[nx][ny] = 2
+                        queue.append((nx, ny))
+                    }
+                }
+            }
+        }
+        
+        
+    }
+    
+    return graph
+}
+
+
+for node in trackingCollection {
+    var copyGraph: [[Int]] = graph
+    for i in 0..<node.count {
+        copyGraph[zeroIndex[node[i]].0][zeroIndex[node[i]].1] = 1
+    }
+    copyGraph = bfs(copyGraph, virusIndex)
+    result = max(result, checkSafeArea(copyGraph))
+}
+
+
+print(result)
