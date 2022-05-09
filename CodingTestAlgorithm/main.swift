@@ -15805,22 +15805,46 @@ import Foundation
 //tracking(0)
 //print(result)
 
+//
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let N: Int = read[0]
+//let K: Int = read[1]
+//var arr: [Int] = Array(repeating: 0, count: K+1)
+//for _ in 0..<N {
+//    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    let w: Int = temp[0]
+//    let v: Int = temp[1]
+//    if w > K { continue }
+//    for j in stride(from: K, to: 0, by: -1) {
+//        if j + w <= K && arr[j] != 0 {
+//            arr[j+w] = max(arr[j+w], arr[j] + v)
+//        }
+//    }
+//    arr[w] = max(arr[w], v)
+//}
+//
+//print(arr.max()!)
 
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let N: Int = read[0]
-let K: Int = read[1]
-var arr: [Int] = Array(repeating: 0, count: K+1)
-for _ in 0..<N {
-    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    let w: Int = temp[0]
-    let v: Int = temp[1]
-    if w > K { continue }
-    for j in stride(from: K, to: 0, by: -1) {
-        if j + w <= K && arr[j] != 0 {
-            arr[j+w] = max(arr[j+w], arr[j] + v)
+// MARK: - 백준 Gold5 9251번
+
+
+let firstString: [String] = readLine()!.map{String($0)}
+let secondString: [String] = readLine()!.map{String($0)}
+
+var arr: [[Int]] = Array(repeating: Array(repeating: 0, count: secondString.count+1), count: firstString.count+1)
+
+for i in 1...firstString.count {
+    for j in 1...secondString.count {
+        
+        if firstString[i-1] == secondString[j-1] {
+            
+            arr[i][j] = arr[i-1][j-1] + 1
+            
+        } else {
+            
+            arr[i][j] = max(arr[i][j-1], arr[i-1][j])
         }
     }
-    arr[w] = max(arr[w], v)
 }
 
-print(arr.max()!)
+print(arr[firstString.count][secondString.count])
