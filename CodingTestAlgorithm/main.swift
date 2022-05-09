@@ -15768,39 +15768,59 @@ import Foundation
 
 
 // MARK: - 백준 Gold5 12865번 평범한 배낭
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let N: Int = read[0]
+//let K: Int = read[1]
+//var arr: [[Int]] = []
+//for _ in 0..<N {
+//    arr.append(readLine()!.split(separator: " ").map{Int($0)!})
+//}
+//
+//var bagVisited: [Bool] = Array(repeating: false, count: arr.count)
+//var bagArr: [Int] = []
+//var sum: Int = 0
+//var result: Int = 0
+//func tracking(_ start: Int) {
+//    if sum > 0 && sum <= K{
+//        var weight: Int = 0
+//        for i in bagArr {
+//            weight += arr[i][1]
+//        }
+//        result = max(result, weight)
+//    }
+//    for i in start..<bagVisited.count {
+//        if bagVisited[i] == false {
+//            bagVisited[i] = true
+//            sum += arr[i][0]
+//            bagArr.append(i)
+//            tracking(i+1)
+//            bagArr.removeLast()
+//            sum -= arr[i][0]
+//            bagVisited[i] = false
+//
+//        }
+//    }
+//}
+//
+//tracking(0)
+//print(result)
+
+
 let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
 let N: Int = read[0]
 let K: Int = read[1]
-var arr: [[Int]] = []
+var arr: [Int] = Array(repeating: 0, count: K+1)
 for _ in 0..<N {
-    arr.append(readLine()!.split(separator: " ").map{Int($0)!})
-}
-
-var bagVisited: [Bool] = Array(repeating: false, count: arr.count)
-var bagArr: [Int] = []
-var sum: Int = 0
-var result: Int = 0
-func tracking(_ start: Int) {
-    if sum > 0 && sum <= K{
-        var weight: Int = 0
-        for i in bagArr {
-            weight += arr[i][1]
-        }
-        result = max(result, weight)
-    }
-    for i in start..<bagVisited.count {
-        if bagVisited[i] == false {
-            bagVisited[i] = true
-            sum += arr[i][0]
-            bagArr.append(i)
-            tracking(i+1)
-            bagArr.removeLast()
-            sum -= arr[i][0]
-            bagVisited[i] = false
-            
+    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    let w: Int = temp[0]
+    let v: Int = temp[1]
+    if w > K { continue }
+    for j in stride(from: K, to: 0, by: -1) {
+        if j + w <= K && arr[j] != 0 {
+            arr[j+w] = max(arr[j+w], arr[j] + v)
         }
     }
+    arr[w] = max(arr[w], v)
 }
 
-tracking(0)
-print(result)
+print(arr.max()!)
