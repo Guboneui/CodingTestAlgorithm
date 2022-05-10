@@ -15955,74 +15955,98 @@ import Foundation
 
 // MARK: - 백준 Gold5 7569번 토마토
 
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let m: Int = read[0]
-let n: Int = read[1]
-let h: Int = read[2]
-var box: [[[Int]]] = []
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let m: Int = read[0]
+//let n: Int = read[1]
+//let h: Int = read[2]
+//var box: [[[Int]]] = []
+//
+//for _ in 0..<h {
+//    var temp: [[Int]] = []
+//    for _ in 0..<n {
+//        temp.append(readLine()!.split(separator: " ").map{Int($0)!})
+//    }
+//    box.append(temp)
+//}
+//
+//var queue: [[Int]] = []
+//var index: Int = 0
+//
+//for i in 0..<h {
+//    for j in 0..<n {
+//        for k in 0..<m {
+//            if box[i][j][k] == 1 {
+//                queue.append([i, j, k])
+//            }
+//        }
+//    }
+//}
+//
+//let dx: [Int] = [1, -1, 0, 0, 0, 0]
+//let dy: [Int] = [0, 0, 1, -1, 0, 0]
+//let dz: [Int] = [0, 0, 0, 0, 1, -1]
+//
+//
+//while index<queue.count {
+//    let popValue: [Int] = queue[index]
+//    index += 1
+//    for i in 0..<dz.count {
+//        let nz: Int = popValue[0] + dz[i]
+//        let nx: Int = popValue[1] + dx[i]
+//        let ny: Int = popValue[2] + dy[i]
+//
+//        if nz>=0 && nz<h && nx>=0 && nx<n && ny>=0 && ny<m {
+//            if box[nz][nx][ny] == 0 {
+//                queue.append([nz, nx, ny])
+//                box[nz][nx][ny] = box[popValue[0]][popValue[1]][popValue[2]] + 1
+//            }
+//        }
+//    }
+//}
+//
+//
+//var check: Bool = true
+//var result: Int = 0
+//for i in 0..<h {
+//    for j in 0..<n {
+//        for k in 0..<m {
+//            if box[i][j][k] == 0 {
+//                check = false
+//
+//            }
+//            result = max(result, box[i][j][k])
+//        }
+//    }
+//}
+//
+//
+//if check {
+//    print(result - 1)
+//} else {
+//    print(-1)
+//}
+//
 
-for _ in 0..<h {
-    var temp: [[Int]] = []
-    for _ in 0..<n {
-        temp.append(readLine()!.split(separator: " ").map{Int($0)!})
-    }
-    box.append(temp)
+// MARK: - 백준 Gold5 2293번 동전1
+
+var read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+var n: Int = read[0]
+var k: Int = read[1]
+var coin: [Int] = []
+for _ in 0..<n {
+    coin.append(Int(readLine()!)!)
 }
 
-var queue: [[Int]] = []
-var index: Int = 0
+var dp: [Int] = Array(repeating: 0, count: k+1)
+dp[0] = 1
 
-for i in 0..<h {
-    for j in 0..<n {
-        for k in 0..<m {
-            if box[i][j][k] == 1 {
-                queue.append([i, j, k])
-            }
+for c in coin {
+    for j in 1...k {
+        if c <= j {
+            dp[j] += dp[j-c]
+            if dp[j] > Int(pow(2.0, 31.0)){ dp[j] = 0 }
         }
     }
 }
 
-let dx: [Int] = [1, -1, 0, 0, 0, 0]
-let dy: [Int] = [0, 0, 1, -1, 0, 0]
-let dz: [Int] = [0, 0, 0, 0, 1, -1]
-
-
-while index<queue.count {
-    let popValue: [Int] = queue[index]
-    index += 1
-    for i in 0..<dz.count {
-        let nz: Int = popValue[0] + dz[i]
-        let nx: Int = popValue[1] + dx[i]
-        let ny: Int = popValue[2] + dy[i]
-        
-        if nz>=0 && nz<h && nx>=0 && nx<n && ny>=0 && ny<m {
-            if box[nz][nx][ny] == 0 {
-                queue.append([nz, nx, ny])
-                box[nz][nx][ny] = box[popValue[0]][popValue[1]][popValue[2]] + 1
-            }
-        }
-    }
-}
-
-
-var check: Bool = true
-var result: Int = 0
-for i in 0..<h {
-    for j in 0..<n {
-        for k in 0..<m {
-            if box[i][j][k] == 0 {
-                check = false
-                
-            }
-            result = max(result, box[i][j][k])
-        }
-    }
-}
-
-
-if check {
-    print(result - 1)
-} else {
-    print(-1)
-}
-
+print(dp[k])
