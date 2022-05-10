@@ -15827,24 +15827,72 @@ import Foundation
 
 // MARK: - 백준 Gold5 9251번
 
+//let firstString: [String] = readLine()!.map{String($0)}
+//let secondString: [String] = readLine()!.map{String($0)}
+//
+//var arr: [[Int]] = Array(repeating: Array(repeating: 0, count: secondString.count+1), count: firstString.count+1)
+//
+//for i in 1...firstString.count {
+//    for j in 1...secondString.count {
+//
+//        if firstString[i-1] == secondString[j-1] {
+//
+//            arr[i][j] = arr[i-1][j-1] + 1
+//
+//        } else {
+//
+//            arr[i][j] = max(arr[i][j-1], arr[i-1][j])
+//        }
+//    }
+//}
+//
+//print(arr[firstString.count][secondString.count])
 
-let firstString: [String] = readLine()!.map{String($0)}
-let secondString: [String] = readLine()!.map{String($0)}
+// MARK: - 백준 Gold5 1759번 암호 만들기
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let target: Int = read[0]
+let count: Int = read[1]
 
-var arr: [[Int]] = Array(repeating: Array(repeating: 0, count: secondString.count+1), count: firstString.count+1)
+print(target, count)
 
-for i in 1...firstString.count {
-    for j in 1...secondString.count {
+var inputAlphabet: [String] = readLine()!.split(separator: " ").map{String($0)}.sorted(by: <)
+
+var arr: [String] = []
+var visited: [Bool] = Array(repeating: false, count: count)
+var strCollections: [[String]] = []
+
+
+var aeiou: Int = 0
+var others: Int = 0
+
+
+func tracking(_ depth: Int, _ startIndex: Int) {
+    if depth == target && aeiou >= 1 && others >= 2{
+        strCollections.append(arr)
+    }
         
-        if firstString[i-1] == secondString[j-1] {
+    for i in startIndex..<count {
+        if visited[i] == false {
+            visited[i] = true
             
-            arr[i][j] = arr[i-1][j-1] + 1
+            if ["a", "e", "i", "o", "u"].contains(inputAlphabet[i]) { aeiou += 1 }
+            else { others += 1 }
             
-        } else {
+            arr.append(inputAlphabet[i])
+            tracking(depth+1, i+1)
             
-            arr[i][j] = max(arr[i][j-1], arr[i-1][j])
+            if ["a", "e", "i", "o", "u"].contains(arr.last!) { aeiou -= 1 }
+            else { others -= 1 }
+            
+            arr.removeLast()
+            visited[i] = false
         }
     }
 }
 
-print(arr[firstString.count][secondString.count])
+tracking(0, 0)
+
+strCollections.forEach {
+    print($0.joined(separator: ""))
+}
+
