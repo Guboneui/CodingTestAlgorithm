@@ -15849,50 +15849,105 @@ import Foundation
 //print(arr[firstString.count][secondString.count])
 
 // MARK: - 백준 Gold5 1759번 암호 만들기
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let target: Int = read[0]
-let count: Int = read[1]
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let target: Int = read[0]
+//let count: Int = read[1]
+//
+//print(target, count)
+//
+//var inputAlphabet: [String] = readLine()!.split(separator: " ").map{String($0)}.sorted(by: <)
+//
+//var arr: [String] = []
+//var visited: [Bool] = Array(repeating: false, count: count)
+//var strCollections: [[String]] = []
+//
+//
+//var aeiou: Int = 0
+//var others: Int = 0
+//
+//
+//func tracking(_ depth: Int, _ startIndex: Int) {
+//    if depth == target && aeiou >= 1 && others >= 2{
+//        strCollections.append(arr)
+//    }
+//
+//    for i in startIndex..<count {
+//        if visited[i] == false {
+//            visited[i] = true
+//
+//            if ["a", "e", "i", "o", "u"].contains(inputAlphabet[i]) { aeiou += 1 }
+//            else { others += 1 }
+//
+//            arr.append(inputAlphabet[i])
+//            tracking(depth+1, i+1)
+//
+//            if ["a", "e", "i", "o", "u"].contains(arr.last!) { aeiou -= 1 }
+//            else { others -= 1 }
+//
+//            arr.removeLast()
+//            visited[i] = false
+//        }
+//    }
+//}
+//
+//tracking(0, 0)
+//
+//strCollections.forEach {
+//    print($0.joined(separator: ""))
+//}
+//
 
-print(target, count)
+// MARK: - 백준 Gold5 10026번 적록색약
+let n: Int = Int(readLine()!)!
+var baseArr: [[String]] = []
+var a: Int = 0
+var b: Int = 0
+for _ in 0..<n {
+    baseArr.append(readLine()!.map{String($0)})
+}
+var newArr: [[String]] = baseArr
 
-var inputAlphabet: [String] = readLine()!.split(separator: " ").map{String($0)}.sorted(by: <)
-
-var arr: [String] = []
-var visited: [Bool] = Array(repeating: false, count: count)
-var strCollections: [[String]] = []
-
-
-var aeiou: Int = 0
-var others: Int = 0
-
-
-func tracking(_ depth: Int, _ startIndex: Int) {
-    if depth == target && aeiou >= 1 && others >= 2{
-        strCollections.append(arr)
+for i in 0..<n {
+    for j in 0..<n {
+        if newArr[i][j] == "G" { newArr[i][j] = "R" }
     }
+}
+
+let dx: [Int] = [1, -1, 0, 0]
+let dy: [Int] = [0, 0, 1, -1]
+
+func DFS(_ n: Int, _ x: Int, _ y: Int, _ inputArr: [[String]], _ inputVisited: inout [[Bool]]) {
+    if inputVisited[x][y] == false {
+        inputVisited[x][y] = true
         
-    for i in startIndex..<count {
-        if visited[i] == false {
-            visited[i] = true
+        for i in 0..<4 {
+            let nx: Int = x + dx[i]
+            let ny: Int = y + dy[i]
             
-            if ["a", "e", "i", "o", "u"].contains(inputAlphabet[i]) { aeiou += 1 }
-            else { others += 1 }
-            
-            arr.append(inputAlphabet[i])
-            tracking(depth+1, i+1)
-            
-            if ["a", "e", "i", "o", "u"].contains(arr.last!) { aeiou -= 1 }
-            else { others -= 1 }
-            
-            arr.removeLast()
-            visited[i] = false
+            if nx>=0 && nx<n && ny>=0 && ny<n {
+                if inputArr[x][y] == inputArr[nx][ny] {
+                    DFS(n, nx, ny, inputArr, &inputVisited)
+                }
+            }
+        
         }
     }
 }
 
-tracking(0, 0)
-
-strCollections.forEach {
-    print($0.joined(separator: ""))
+var visitedA: [[Bool]] = Array(repeating: Array(repeating: false, count: n), count: n)
+var visitedB: [[Bool]] = Array(repeating: Array(repeating: false, count: n), count: n)
+for i in 0..<n {
+    for j in 0..<n {
+        if visitedA[i][j] == false {
+            a += 1
+            DFS(n, i, j, baseArr, &visitedA)
+        }
+        
+        if visitedB[i][j] == false {
+            b += 1
+            DFS(n, i, j, newArr, &visitedB)
+        }
+    }
 }
 
+print(a, b)
