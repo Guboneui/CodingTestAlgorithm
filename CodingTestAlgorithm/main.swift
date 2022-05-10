@@ -15898,56 +15898,131 @@ import Foundation
 //
 
 // MARK: - 백준 Gold5 10026번 적록색약
-let n: Int = Int(readLine()!)!
-var baseArr: [[String]] = []
-var a: Int = 0
-var b: Int = 0
-for _ in 0..<n {
-    baseArr.append(readLine()!.map{String($0)})
-}
-var newArr: [[String]] = baseArr
+//let n: Int = Int(readLine()!)!
+//var baseArr: [[String]] = []
+//var a: Int = 0
+//var b: Int = 0
+//for _ in 0..<n {
+//    baseArr.append(readLine()!.map{String($0)})
+//}
+//var newArr: [[String]] = baseArr
+//
+//for i in 0..<n {
+//    for j in 0..<n {
+//        if newArr[i][j] == "G" { newArr[i][j] = "R" }
+//    }
+//}
+//
+//let dx: [Int] = [1, -1, 0, 0]
+//let dy: [Int] = [0, 0, 1, -1]
+//
+//func DFS(_ n: Int, _ x: Int, _ y: Int, _ inputArr: [[String]], _ inputVisited: inout [[Bool]]) {
+//    if inputVisited[x][y] == false {
+//        inputVisited[x][y] = true
+//
+//        for i in 0..<4 {
+//            let nx: Int = x + dx[i]
+//            let ny: Int = y + dy[i]
+//
+//            if nx>=0 && nx<n && ny>=0 && ny<n {
+//                if inputArr[x][y] == inputArr[nx][ny] {
+//                    DFS(n, nx, ny, inputArr, &inputVisited)
+//                }
+//            }
+//
+//        }
+//    }
+//}
+//
+//var visitedA: [[Bool]] = Array(repeating: Array(repeating: false, count: n), count: n)
+//var visitedB: [[Bool]] = Array(repeating: Array(repeating: false, count: n), count: n)
+//for i in 0..<n {
+//    for j in 0..<n {
+//        if visitedA[i][j] == false {
+//            a += 1
+//            DFS(n, i, j, baseArr, &visitedA)
+//        }
+//
+//        if visitedB[i][j] == false {
+//            b += 1
+//            DFS(n, i, j, newArr, &visitedB)
+//        }
+//    }
+//}
+//
+//print(a, b)
 
-for i in 0..<n {
-    for j in 0..<n {
-        if newArr[i][j] == "G" { newArr[i][j] = "R" }
+
+// MARK: - 백준 Gold5 7569번 토마토
+
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let m: Int = read[0]
+let n: Int = read[1]
+let h: Int = read[2]
+var box: [[[Int]]] = []
+
+for _ in 0..<h {
+    var temp: [[Int]] = []
+    for _ in 0..<n {
+        temp.append(readLine()!.split(separator: " ").map{Int($0)!})
     }
+    box.append(temp)
 }
 
-let dx: [Int] = [1, -1, 0, 0]
-let dy: [Int] = [0, 0, 1, -1]
+var queue: [[Int]] = []
+var index: Int = 0
 
-func DFS(_ n: Int, _ x: Int, _ y: Int, _ inputArr: [[String]], _ inputVisited: inout [[Bool]]) {
-    if inputVisited[x][y] == false {
-        inputVisited[x][y] = true
-        
-        for i in 0..<4 {
-            let nx: Int = x + dx[i]
-            let ny: Int = y + dy[i]
-            
-            if nx>=0 && nx<n && ny>=0 && ny<n {
-                if inputArr[x][y] == inputArr[nx][ny] {
-                    DFS(n, nx, ny, inputArr, &inputVisited)
-                }
+for i in 0..<h {
+    for j in 0..<n {
+        for k in 0..<m {
+            if box[i][j][k] == 1 {
+                queue.append([i, j, k])
             }
-        
         }
     }
 }
 
-var visitedA: [[Bool]] = Array(repeating: Array(repeating: false, count: n), count: n)
-var visitedB: [[Bool]] = Array(repeating: Array(repeating: false, count: n), count: n)
-for i in 0..<n {
+let dx: [Int] = [1, -1, 0, 0, 0, 0]
+let dy: [Int] = [0, 0, 1, -1, 0, 0]
+let dz: [Int] = [0, 0, 0, 0, 1, -1]
+
+
+while index<queue.count {
+    let popValue: [Int] = queue[index]
+    index += 1
+    for i in 0..<dz.count {
+        let nz: Int = popValue[0] + dz[i]
+        let nx: Int = popValue[1] + dx[i]
+        let ny: Int = popValue[2] + dy[i]
+        
+        if nz>=0 && nz<h && nx>=0 && nx<n && ny>=0 && ny<m {
+            if box[nz][nx][ny] == 0 {
+                queue.append([nz, nx, ny])
+                box[nz][nx][ny] = box[popValue[0]][popValue[1]][popValue[2]] + 1
+            }
+        }
+    }
+}
+
+
+var check: Bool = true
+var result: Int = 0
+for i in 0..<h {
     for j in 0..<n {
-        if visitedA[i][j] == false {
-            a += 1
-            DFS(n, i, j, baseArr, &visitedA)
-        }
-        
-        if visitedB[i][j] == false {
-            b += 1
-            DFS(n, i, j, newArr, &visitedB)
+        for k in 0..<m {
+            if box[i][j][k] == 0 {
+                check = false
+                
+            }
+            result = max(result, box[i][j][k])
         }
     }
 }
 
-print(a, b)
+
+if check {
+    print(result - 1)
+} else {
+    print(-1)
+}
+
