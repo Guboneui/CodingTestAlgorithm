@@ -16112,66 +16112,137 @@ import Foundation
 
 // MARK: - 백준 Gold5 14503번 로봇청소기
 
-let firstRead: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let n: Int = firstRead[0]
-let m: Int = firstRead[1]
+//let firstRead: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = firstRead[0]
+//let m: Int = firstRead[1]
+//
+//let secondRead: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let r: Int = secondRead[0]
+//let c: Int = secondRead[1]
+//let d: Int = secondRead[2]
+//
+//var arr: [[Int]] = []
+//for _ in 0..<n {
+//    arr.append(readLine()!.split(separator: " ").map{Int($0)!})
+//}
+//
+//let dx: [Int] = [-1, 0, 1, 0]
+//let dy: [Int] = [0, 1, 0, -1]
+//
+//var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: m), count: n)
+//var result: Int = 1
+//
+//var currentR: Int = r
+//var currentC: Int = c
+//var currentD: Int = d
+//var rotateCount: Int = 0
+//
+//visited[r][c] = true
+//
+//while true {
+//    currentD -= 1
+//    if currentD == -1 { currentD = 3 }
+//
+//    var nx: Int = currentR + dx[currentD]
+//    var ny: Int = currentC + dy[currentD]
+//
+//    if visited[nx][ny] == false && arr[nx][ny] != 1 {
+//        visited[nx][ny] = true
+//        currentR = nx
+//        currentC = ny
+//        result += 1
+//        rotateCount = 0
+//        continue
+//    } else {
+//        rotateCount += 1
+//    }
+//
+//
+//    if rotateCount == 4 {
+//        rotateCount = 0
+//        nx = currentR - dx[currentD]
+//        ny = currentC - dy[currentD]
+//
+//        if arr[nx][ny] != 1 {
+//            currentR = nx
+//            currentC = ny
+//        } else {
+//            break
+//        }
+//    }
+//}
+//
+//print(result)
+//
 
-let secondRead: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let r: Int = secondRead[0]
-let c: Int = secondRead[1]
-let d: Int = secondRead[2]
-
-var arr: [[Int]] = []
-for _ in 0..<n {
-    arr.append(readLine()!.split(separator: " ").map{Int($0)!})
+// MARK: - 백준 Gold5 3190번 뱀
+let n: Int = Int(readLine()!)!
+var board: [[Int]] = Array(repeating: Array(repeating: 0, count: n), count: n)
+for _ in 0..<Int(readLine()!)! {
+    let xy: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    board[xy[0]-1][xy[1]-1] = 1
 }
 
-let dx: [Int] = [-1, 0, 1, 0]
-let dy: [Int] = [0, 1, 0, -1]
+var changeDirect: [Int:String] = [:]
+for _ in 0..<Int(readLine()!)! {
+    let temp: [String] = readLine()!.split(separator: " ").map{String($0)}
+    changeDirect[Int(temp[0])!] = temp[1]
+}
 
-var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: m), count: n)
-var result: Int = 1
+var currentDirect: Int = 0
+var index: Int = 0
 
-var currentR: Int = r
-var currentC: Int = c
-var currentD: Int = d
-var rotateCount: Int = 0
+var dx: [Int] = [0, 1, 0, -1]
+var dy: [Int] = [1, 0, -1, 0]
 
-visited[r][c] = true
+func checkDirect(_ direct: inout Int) {
+    if direct == -1 { direct = 3 }
+    if direct == 4 { direct = 0 }
+}
 
+func checkBounds(_ n: Int, _ x: Int, _ y: Int) -> Bool {
+    if x>=0 && x<n && y>=0 && y<n {
+        return true
+    }
+    return false
+}
+func checkSnakeBody(_ inputArr: [[Int]], _ head: [Int]) -> Bool {
+    let body: [[Int]] = Array(inputArr[0..<inputArr.count-1])
+    if body.contains(head) { return false }
+    return true
+}
+
+var currentXY: [Int] = [0, 0]
+var result: Int = 0
+var snake: [[Int]] = [[0, 0]]
 while true {
-    currentD -= 1
-    if currentD == -1 { currentD = 3 }
+
+    index += 1
+    if currentDirect == 0 { currentXY[1] += 1 }
+    if currentDirect == 1 { currentXY[0] += 1 }
+    if currentDirect == 2 { currentXY[1] -= 1 }
+    if currentDirect == 3 { currentXY[0] -= 1 }
     
-    var nx: Int = currentR + dx[currentD]
-    var ny: Int = currentC + dy[currentD]
-    
-    if visited[nx][ny] == false && arr[nx][ny] != 1 {
-        visited[nx][ny] = true
-        currentR = nx
-        currentC = ny
-        result += 1
-        rotateCount = 0
-        continue
-    } else {
-        rotateCount += 1
-    }
-    
-    
-    if rotateCount == 4 {
-        rotateCount = 0
-        nx = currentR - dx[currentD]
-        ny = currentC - dy[currentD]
+    if changeDirect[index] != nil {
+        if changeDirect[index] == "D" { currentDirect += 1 }
+        else if changeDirect[index] == "L" { currentDirect -= 1 }
         
-        if arr[nx][ny] != 1 {
-            currentR = nx
-            currentC = ny
-        } else {
-            break
-        }
+        checkDirect(&currentDirect)
     }
+    
+    result += 1
+    
+    if !checkBounds(n, currentXY[0], currentXY[1]) { break }
+    if !checkSnakeBody(snake, currentXY) { break }
+    
+    snake.append(currentXY)
+    
+    if board[currentXY[0]][currentXY[1]] == 0 {
+        snake.removeFirst()
+    } else {
+        board[currentXY[0]][currentXY[1]] = 0
+    }
+    
 }
 
 print(result)
-
-
