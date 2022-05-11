@@ -16029,24 +16029,83 @@ import Foundation
 
 // MARK: - 백준 Gold5 2293번 동전1
 
-var read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-var n: Int = read[0]
-var k: Int = read[1]
-var coin: [Int] = []
-for _ in 0..<n {
-    coin.append(Int(readLine()!)!)
-}
+//var read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//var n: Int = read[0]
+//var k: Int = read[1]
+//var coin: [Int] = []
+//for _ in 0..<n {
+//    coin.append(Int(readLine()!)!)
+//}
+//
+//var dp: [Int] = Array(repeating: 0, count: k+1)
+//dp[0] = 1
+//
+//for c in coin {
+//    for j in 1...k {
+//        if c <= j {
+//            dp[j] += dp[j-c]
+//            if dp[j] > Int(pow(2.0, 31.0)){ dp[j] = 0 }
+//        }
+//    }
+//}
+//
+//print(dp[k])
 
-var dp: [Int] = Array(repeating: 0, count: k+1)
-dp[0] = 1
-
-for c in coin {
-    for j in 1...k {
-        if c <= j {
-            dp[j] += dp[j-c]
-            if dp[j] > Int(pow(2.0, 31.0)){ dp[j] = 0 }
-        }
-    }
-}
-
-print(dp[k])
+// MARK: - 백준 Gold5 15686번 치킨 배달
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = read[0]
+//let m: Int = read[1]
+//var board: [[Int]] = []
+//
+//for _ in 0..<n {
+//    board.append(readLine()!.split(separator: " ").map{Int($0)!})
+//}
+//var houses: [(Int, Int)] = []
+//var chickens: [(Int, Int)] = []
+//
+//for i in 0..<n {
+//    for j in 0..<n {
+//        if board[i][j] == 1 { houses.append((i, j)) }
+//        if board[i][j] == 2 { chickens.append((i, j)) }
+//    }
+//}
+//
+//var chickensCollection: [[Int]] = []
+//var visited: [Bool] = Array(repeating: false, count: chickens.count)
+//
+//var tempArr: [Int] = []
+//func tracking(_ depth: Int, _ startIndex: Int) {
+//    if depth >= 1 && tempArr.count <= m {
+//        chickensCollection.append(tempArr)
+//    }
+//
+//    for i in startIndex..<chickens.count {
+//        if visited[i] == false {
+//            visited[i] = true
+//            tempArr.append(i)
+//            tracking(depth + 1, i+1)
+//            tempArr.removeLast()
+//            visited[i] = false
+//        }
+//    }
+//}
+//
+//tracking(0, 0)
+//
+//var result: Int = Int.max
+//
+//for chicken in chickensCollection {
+//
+//    var tempSum: Int = 0
+//    for house in houses {
+//        var temp: Int = Int.max
+//        for i in chicken {
+//            temp = min(temp, abs(house.0 - chickens[i].0) + abs(house.1 - chickens[i].1))
+//        }
+//        tempSum += temp
+//    }
+//
+//    result = min(result, tempSum)
+//}
+//
+//print(result)
