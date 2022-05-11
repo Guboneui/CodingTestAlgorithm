@@ -16109,3 +16109,69 @@ import Foundation
 //}
 //
 //print(result)
+
+// MARK: - 백준 Gold5 14503번 로봇청소기
+
+let firstRead: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let n: Int = firstRead[0]
+let m: Int = firstRead[1]
+
+let secondRead: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let r: Int = secondRead[0]
+let c: Int = secondRead[1]
+let d: Int = secondRead[2]
+
+var arr: [[Int]] = []
+for _ in 0..<n {
+    arr.append(readLine()!.split(separator: " ").map{Int($0)!})
+}
+
+let dx: [Int] = [-1, 0, 1, 0]
+let dy: [Int] = [0, 1, 0, -1]
+
+var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: m), count: n)
+var result: Int = 1
+
+var currentR: Int = r
+var currentC: Int = c
+var currentD: Int = d
+var rotateCount: Int = 0
+
+visited[r][c] = true
+
+while true {
+    currentD -= 1
+    if currentD == -1 { currentD = 3 }
+    
+    var nx: Int = currentR + dx[currentD]
+    var ny: Int = currentC + dy[currentD]
+    
+    if visited[nx][ny] == false && arr[nx][ny] != 1 {
+        visited[nx][ny] = true
+        currentR = nx
+        currentC = ny
+        result += 1
+        rotateCount = 0
+        continue
+    } else {
+        rotateCount += 1
+    }
+    
+    
+    if rotateCount == 4 {
+        rotateCount = 0
+        nx = currentR - dx[currentD]
+        ny = currentC - dy[currentD]
+        
+        if arr[nx][ny] != 1 {
+            currentR = nx
+            currentC = ny
+        } else {
+            break
+        }
+    }
+}
+
+print(result)
+
+
