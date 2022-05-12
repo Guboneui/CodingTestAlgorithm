@@ -16249,43 +16249,84 @@ import Foundation
 
 // MARK: - 백준 Gold5 5430번 AC
 
-let testCases: Int = Int(readLine()!)!
-for _ in 0..<testCases {
-    let RD: [String] = readLine()!.map{String($0)}
-    let inputLength: Int = Int(readLine()!)!
-    var inputString: String = readLine()!
-    inputString.removeFirst()
-    inputString.removeLast()
-    let inputArr: [Int] = inputString.split(separator: ",").map{Int($0)!}
-    
-    var checkError: Bool = false
-    var checkReversed: Bool = false
-    
-    var left: Int = 0
-    var right: Int = inputLength - 1
-    
-    
-    for text in RD {
-        if text == "R" {
-            checkReversed.toggle()
+//let testCases: Int = Int(readLine()!)!
+//for _ in 0..<testCases {
+//    let RD: [String] = readLine()!.map{String($0)}
+//    let inputLength: Int = Int(readLine()!)!
+//    var inputString: String = readLine()!
+//    inputString.removeFirst()
+//    inputString.removeLast()
+//    let inputArr: [Int] = inputString.split(separator: ",").map{Int($0)!}
+//
+//    var checkError: Bool = false
+//    var checkReversed: Bool = false
+//
+//    var left: Int = 0
+//    var right: Int = inputLength - 1
+//
+//
+//    for text in RD {
+//        if text == "R" {
+//            checkReversed.toggle()
+//        } else {
+//            if left > right {
+//                checkError.toggle()
+//                break
+//            }
+//
+//            if checkReversed == true { right -= 1 }
+//            else { left += 1 }
+//        }
+//    }
+//
+//    if checkError { print("error") }
+//    else if left > right { print("[]") }
+//    else {
+//        if checkReversed {
+//            print("[\(inputArr[left...right].reversed().map{String($0)}.joined(separator: ","))]")
+//        } else {
+//            print("[\(inputArr[left...right].map{String($0)}.joined(separator: ","))]")
+//        }
+//    }
+//}
+
+// MARK: - 백준 Gold5 1107번 리모컨
+
+let targetNum: Int = Int(readLine()!)!
+let removeButtonCount: Int = Int(readLine()!)!
+var removeButton: [Int] = []
+
+if removeButtonCount == 0 {
+    removeButton = []
+} else {
+    removeButton = readLine()!.split(separator: " ").map{Int($0)!}
+}
+
+var minValue: Int = abs(targetNum - 100)
+for i in 0...1000000 {
+    let len: Int = check(i)
+    if len > 0 {
+        let clickedCount: Int = abs(targetNum - i)
+        minValue = min(minValue, len + clickedCount)
+    }
+}
+
+print(minValue)
+
+func check(_ inputNum: Int) -> Int {
+    var n: Int = inputNum
+    if n == 0 {
+        if removeButton.contains(0) {
+            return 0
         } else {
-            if left > right {
-                checkError.toggle()
-                break
-            }
-            
-            if checkReversed == true { right -= 1 }
-            else { left += 1 }
+            return 1
         }
     }
-    
-    if checkError { print("error") }
-    else if left > right { print("[]") }
-    else {
-        if checkReversed {
-            print("[\(inputArr[left...right].reversed().map{String($0)}.joined(separator: ","))]")
-        } else {
-            print("[\(inputArr[left...right].map{String($0)}.joined(separator: ","))]")
-        }
+    var len: Int = 0
+    while n>0 {
+        if removeButton.contains(n%10) { return 0 }
+        n /= 10
+        len += 1
     }
+    return len
 }
