@@ -16176,73 +16176,116 @@ import Foundation
 //
 
 // MARK: - 백준 Gold5 3190번 뱀
-let n: Int = Int(readLine()!)!
-var board: [[Int]] = Array(repeating: Array(repeating: 0, count: n), count: n)
-for _ in 0..<Int(readLine()!)! {
-    let xy: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    board[xy[0]-1][xy[1]-1] = 1
-}
+//let n: Int = Int(readLine()!)!
+//var board: [[Int]] = Array(repeating: Array(repeating: 0, count: n), count: n)
+//for _ in 0..<Int(readLine()!)! {
+//    let xy: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    board[xy[0]-1][xy[1]-1] = 1
+//}
+//
+//var changeDirect: [Int:String] = [:]
+//for _ in 0..<Int(readLine()!)! {
+//    let temp: [String] = readLine()!.split(separator: " ").map{String($0)}
+//    changeDirect[Int(temp[0])!] = temp[1]
+//}
+//
+//var currentDirect: Int = 0
+//var index: Int = 0
+//
+//var dx: [Int] = [0, 1, 0, -1]
+//var dy: [Int] = [1, 0, -1, 0]
+//
+//func checkDirect(_ direct: inout Int) {
+//    if direct == -1 { direct = 3 }
+//    if direct == 4 { direct = 0 }
+//}
+//
+//func checkBounds(_ n: Int, _ x: Int, _ y: Int) -> Bool {
+//    if x>=0 && x<n && y>=0 && y<n {
+//        return true
+//    }
+//    return false
+//}
+//func checkSnakeBody(_ inputArr: [[Int]], _ head: [Int]) -> Bool {
+//    let body: [[Int]] = Array(inputArr[0..<inputArr.count-1])
+//    if body.contains(head) { return false }
+//    return true
+//}
+//
+//var currentXY: [Int] = [0, 0]
+//var result: Int = 0
+//var snake: [[Int]] = [[0, 0]]
+//while true {
+//
+//    index += 1
+//    if currentDirect == 0 { currentXY[1] += 1 }
+//    if currentDirect == 1 { currentXY[0] += 1 }
+//    if currentDirect == 2 { currentXY[1] -= 1 }
+//    if currentDirect == 3 { currentXY[0] -= 1 }
+//
+//    if changeDirect[index] != nil {
+//        if changeDirect[index] == "D" { currentDirect += 1 }
+//        else if changeDirect[index] == "L" { currentDirect -= 1 }
+//
+//        checkDirect(&currentDirect)
+//    }
+//
+//    result += 1
+//
+//    if !checkBounds(n, currentXY[0], currentXY[1]) { break }
+//    if !checkSnakeBody(snake, currentXY) { break }
+//
+//    snake.append(currentXY)
+//
+//    if board[currentXY[0]][currentXY[1]] == 0 {
+//        snake.removeFirst()
+//    } else {
+//        board[currentXY[0]][currentXY[1]] = 0
+//    }
+//
+//}
+//
+//print(result)
 
-var changeDirect: [Int:String] = [:]
-for _ in 0..<Int(readLine()!)! {
-    let temp: [String] = readLine()!.split(separator: " ").map{String($0)}
-    changeDirect[Int(temp[0])!] = temp[1]
-}
+// MARK: - 백준 Gold5 5430번 AC
 
-var currentDirect: Int = 0
-var index: Int = 0
-
-var dx: [Int] = [0, 1, 0, -1]
-var dy: [Int] = [1, 0, -1, 0]
-
-func checkDirect(_ direct: inout Int) {
-    if direct == -1 { direct = 3 }
-    if direct == 4 { direct = 0 }
-}
-
-func checkBounds(_ n: Int, _ x: Int, _ y: Int) -> Bool {
-    if x>=0 && x<n && y>=0 && y<n {
-        return true
+let testCases: Int = Int(readLine()!)!
+for _ in 0..<testCases {
+    let RD: [String] = readLine()!.map{String($0)}
+    let inputLength: Int = Int(readLine()!)!
+    var inputString: String = readLine()!
+    inputString.removeFirst()
+    inputString.removeLast()
+    let inputArr: [Int] = inputString.split(separator: ",").map{Int($0)!}
+    
+    var checkError: Bool = false
+    var checkReversed: Bool = false
+    
+    var left: Int = 0
+    var right: Int = inputLength - 1
+    
+    
+    for text in RD {
+        if text == "R" {
+            checkReversed.toggle()
+        } else {
+            if left > right {
+                checkError.toggle()
+                break
+            }
+            
+            if checkReversed == true { right -= 1 }
+            else { left += 1 }
+        }
     }
-    return false
-}
-func checkSnakeBody(_ inputArr: [[Int]], _ head: [Int]) -> Bool {
-    let body: [[Int]] = Array(inputArr[0..<inputArr.count-1])
-    if body.contains(head) { return false }
-    return true
-}
-
-var currentXY: [Int] = [0, 0]
-var result: Int = 0
-var snake: [[Int]] = [[0, 0]]
-while true {
-
-    index += 1
-    if currentDirect == 0 { currentXY[1] += 1 }
-    if currentDirect == 1 { currentXY[0] += 1 }
-    if currentDirect == 2 { currentXY[1] -= 1 }
-    if currentDirect == 3 { currentXY[0] -= 1 }
     
-    if changeDirect[index] != nil {
-        if changeDirect[index] == "D" { currentDirect += 1 }
-        else if changeDirect[index] == "L" { currentDirect -= 1 }
-        
-        checkDirect(&currentDirect)
+    if checkError { print("error") }
+    else if left > right { print("[]") }
+    else {
+        if checkReversed {
+            print("[\(inputArr[left...right].reversed().map{String($0)}.joined(separator: ","))]")
+        } else {
+            print("[\(inputArr[left...right].map{String($0)}.joined(separator: ","))]")
+        }
     }
-    
-    result += 1
-    
-    if !checkBounds(n, currentXY[0], currentXY[1]) { break }
-    if !checkSnakeBody(snake, currentXY) { break }
-    
-    snake.append(currentXY)
-    
-    if board[currentXY[0]][currentXY[1]] == 0 {
-        snake.removeFirst()
-    } else {
-        board[currentXY[0]][currentXY[1]] = 0
-    }
-    
 }
-
-print(result)
