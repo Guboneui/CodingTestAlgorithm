@@ -16292,41 +16292,54 @@ import Foundation
 
 // MARK: - 백준 Gold5 1107번 리모컨
 
-let targetNum: Int = Int(readLine()!)!
-let removeButtonCount: Int = Int(readLine()!)!
-var removeButton: [Int] = []
+//let targetNum: Int = Int(readLine()!)!
+//let removeButtonCount: Int = Int(readLine()!)!
+//var removeButton: [Int] = []
+//
+//if removeButtonCount == 0 {
+//    removeButton = []
+//} else {
+//    removeButton = readLine()!.split(separator: " ").map{Int($0)!}
+//}
+//
+//var minValue: Int = abs(targetNum - 100)
+//for i in 0...1000000 {
+//    let len: Int = check(i)
+//    if len > 0 {
+//        let clickedCount: Int = abs(targetNum - i)
+//        minValue = min(minValue, len + clickedCount)
+//    }
+//}
+//
+//print(minValue)
+//
+//func check(_ inputNum: Int) -> Int {
+//    var n: Int = inputNum
+//    if n == 0 {
+//        if removeButton.contains(0) {
+//            return 0
+//        } else {
+//            return 1
+//        }
+//    }
+//    var len: Int = 0
+//    while n>0 {
+//        if removeButton.contains(n%10) { return 0 }
+//        n /= 10
+//        len += 1
+//    }
+//    return len
+//}
 
-if removeButtonCount == 0 {
-    removeButton = []
-} else {
-    removeButton = readLine()!.split(separator: " ").map{Int($0)!}
-}
-
-var minValue: Int = abs(targetNum - 100)
-for i in 0...1000000 {
-    let len: Int = check(i)
-    if len > 0 {
-        let clickedCount: Int = abs(targetNum - i)
-        minValue = min(minValue, len + clickedCount)
+// MARK: - 백준 Gold5 2133번 타일 채우기
+let n: Int = Int(readLine()!)!
+var dp: [Int] = Array(repeating: 0, count: 31)
+dp[0] = 1
+dp[2] = 3
+for i in stride(from: 4, through: n, by: 1) {
+    dp[i] = dp[i-2] * 3
+    for j in stride(from: 4, through: i, by: 2) {
+        dp[i] += dp[i-j] * 2
     }
 }
-
-print(minValue)
-
-func check(_ inputNum: Int) -> Int {
-    var n: Int = inputNum
-    if n == 0 {
-        if removeButton.contains(0) {
-            return 0
-        } else {
-            return 1
-        }
-    }
-    var len: Int = 0
-    while n>0 {
-        if removeButton.contains(n%10) { return 0 }
-        n /= 10
-        len += 1
-    }
-    return len
-}
+print(dp[n])
