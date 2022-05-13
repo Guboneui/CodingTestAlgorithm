@@ -16332,14 +16332,35 @@ import Foundation
 //}
 
 // MARK: - 백준 Gold5 2133번 타일 채우기
-let n: Int = Int(readLine()!)!
-var dp: [Int] = Array(repeating: 0, count: 31)
-dp[0] = 1
-dp[2] = 3
-for i in stride(from: 4, through: n, by: 1) {
-    dp[i] = dp[i-2] * 3
-    for j in stride(from: 4, through: i, by: 2) {
-        dp[i] += dp[i-j] * 2
+//let n: Int = Int(readLine()!)!
+//var dp: [Int] = Array(repeating: 0, count: 31)
+//dp[0] = 1
+//dp[2] = 3
+//for i in stride(from: 4, through: n, by: 1) {
+//    dp[i] = dp[i-2] * 3
+//    for j in stride(from: 4, through: i, by: 2) {
+//        dp[i] += dp[i-j] * 2
+//    }
+//}
+//print(dp[n])
+
+// MARK: - 백준 1916번 최소비용 구하기
+
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let n: Int = read[0]
+let k: Int = read[1]
+
+var result: Int = 0
+
+var dp: [[Int]] = Array(repeating: Array(repeating: 0, count: 201), count: 201)
+for i in 0...200 {
+    dp[i][0] = 1
+}
+
+for i in 1...200 {
+    for j in 1...200 {
+        dp[i][j] = (dp[i-1][j] + dp[i][j-1]) % 1000000000
     }
 }
-print(dp[n])
+
+print(dp[k][n])
