@@ -16367,77 +16367,95 @@ import Foundation
 
 // MARK: - 백준 14891번 톱니바퀴
 
-var arr: [[Int]] = []
-for _ in 0..<4 {
-    arr.append(readLine()!.map{Int(String($0))!})
+//var arr: [[Int]] = []
+//for _ in 0..<4 {
+//    arr.append(readLine()!.map{Int(String($0))!})
+//}
+//
+//let rotateCount: Int = Int(readLine()!)!
+//var rotates: [[Int]] = []
+//for _ in 0..<rotateCount {
+//    rotates.append(readLine()!.split(separator: " ").map{Int($0)!})
+//}
+//
+//var change: Set<[Int]> = []
+//
+//for rotate in rotates {
+//    var rota: [Int] = rotate
+//    check(rota[0], &rota[1])
+//    change.forEach({rotation($0[0], $0[1])})
+//    change.removeAll()
+//
+//}
+//
+//printAnswer()
+//
+//func check(_ index: Int, _ start: inout Int) {
+//    let first: Int = start
+//    change.insert([index-1, start])
+//    for i in index-1..<3 {
+//        if arr[i][2] != arr[i+1][6] {
+//            change.insert([i, start])
+//            start = -start
+//            change.insert([i+1, start])
+//        } else { break }
+//    }
+//
+//    start = first
+//    for i in (1..<index).reversed() {
+//        if arr[i][6] != arr[i-1][2] {
+//            change.insert([i, start])
+//            start = -start
+//            change.insert([i-1, start])
+//        } else { break }
+//    }
+//
+//}
+//
+//
+//func rotation(_ index: Int, _ direct: Int) {
+//    if direct == 1 {
+//        let last = arr[index].removeLast()
+//        arr[index].insert(last, at: 0)
+//    } else {
+//        let first = arr[index].removeFirst()
+//        arr[index].append(first)
+//    }
+//}
+//
+//func printAnswer() {
+//    var sum = 0
+//    for i in 0..<4 {
+//        if arr[i][0] == 1 {
+//            if i == 0 {
+//                sum += 1
+//            }else if i == 3 {
+//                sum += 8
+//            }else {
+//                sum += 2*i
+//            }
+//        }
+//    }
+//    print(sum)
+//
+//}
+
+// MARK: - 백준 Gold5 2631번 줄세우기
+
+let n: Int = Int(readLine()!)!
+var arr: [Int] = []
+for _ in 0..<n {
+    arr.append(Int(readLine()!)!)
 }
 
-let rotateCount: Int = Int(readLine()!)!
-var rotates: [[Int]] = []
-for _ in 0..<rotateCount {
-    rotates.append(readLine()!.split(separator: " ").map{Int($0)!})
-}
+var dp: [Int] = Array(repeating: 1, count: n)
 
-var change: Set<[Int]> = []
-
-for rotate in rotates {
-    var rota: [Int] = rotate
-    check(rota[0], &rota[1])
-    change.forEach({rotation($0[0], $0[1])})
-    change.removeAll()
-    
-}
-
-printAnswer()
-
-func check(_ index: Int, _ start: inout Int) {
-    let first: Int = start
-    change.insert([index-1, start])
-    for i in index-1..<3 {
-        if arr[i][2] != arr[i+1][6] {
-            change.insert([i, start])
-            start = -start
-            change.insert([i+1, start])
-        } else { break }
-    }
-    
-    start = first
-    for i in (1..<index).reversed() {
-        if arr[i][6] != arr[i-1][2] {
-            change.insert([i, start])
-            start = -start
-            change.insert([i-1, start])
-        } else { break }
-    }
-    
-}
-
-
-func rotation(_ index: Int, _ direct: Int) {
-    if direct == 1 {
-        let last = arr[index].removeLast()
-        arr[index].insert(last, at: 0)
-    } else {
-        let first = arr[index].removeFirst()
-        arr[index].append(first)
-    }
-}
-
-func printAnswer() {
-    var sum = 0
-    for i in 0..<4 {
-        if arr[i][0] == 1 {
-            if i == 0 {
-                sum += 1
-            }else if i == 3 {
-                sum += 8
-            }else {
-                sum += 2*i
-            }
+for i in 0..<n {
+    for j in 0..<i {
+        if arr[i] > arr[j] {
+            dp[i] = max(dp[i], dp[j] + 1)
         }
     }
-    print(sum)
-
 }
 
-
+print(n - dp.max()!)
