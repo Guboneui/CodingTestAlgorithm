@@ -16442,20 +16442,63 @@ import Foundation
 
 // MARK: - 백준 Gold5 2631번 줄세우기
 
-let n: Int = Int(readLine()!)!
-var arr: [Int] = []
+//let n: Int = Int(readLine()!)!
+//var arr: [Int] = []
+//for _ in 0..<n {
+//    arr.append(Int(readLine()!)!)
+//}
+//
+//var dp: [Int] = Array(repeating: 1, count: n)
+//
+//for i in 0..<n {
+//    for j in 0..<i {
+//        if arr[i] > arr[j] {
+//            dp[i] = max(dp[i], dp[j] + 1)
+//        }
+//    }
+//}
+//
+//print(n - dp.max()!)
+
+// MARK: - 백준 Gold5 2110번 공유기 설치
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let n: Int = read[0]
+let c: Int = read[1]
+
+var board: [Int] = []
 for _ in 0..<n {
-    arr.append(Int(readLine()!)!)
+    board.append(Int(readLine()!)!)
+}
+board.sort()
+
+var minDistance: Int = 1
+var maxDistance: Int = board.last! - board.first!
+var result: Int = 1
+
+
+
+func check(_ d: Int) -> Bool {
+    var count: Int = 1
+    var k: Int = 0
+    
+    for i in 1..<board.count {
+        if board[i] - board[k] >= d {
+            count += 1
+            k = i
+        }
+    }
+    
+    return count>=c
 }
 
-var dp: [Int] = Array(repeating: 1, count: n)
-
-for i in 0..<n {
-    for j in 0..<i {
-        if arr[i] > arr[j] {
-            dp[i] = max(dp[i], dp[j] + 1)
-        }
+while minDistance<=maxDistance {
+    let mid: Int = (minDistance + maxDistance) / 2
+    if check(mid) {
+        result = max(result, mid)
+        minDistance = mid + 1
+    } else {
+        maxDistance = mid - 1
     }
 }
 
-print(n - dp.max()!)
+print(result)
