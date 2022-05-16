@@ -16461,44 +16461,66 @@ import Foundation
 //print(n - dp.max()!)
 
 // MARK: - 백준 Gold5 2110번 공유기 설치
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let n: Int = read[0]
-let c: Int = read[1]
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = read[0]
+//let c: Int = read[1]
+//
+//var board: [Int] = []
+//for _ in 0..<n {
+//    board.append(Int(readLine()!)!)
+//}
+//board.sort()
+//
+//var minDistance: Int = 1
+//var maxDistance: Int = board.last! - board.first!
+//var result: Int = 1
+//
+//
+//
+//func check(_ d: Int) -> Bool {
+//    var count: Int = 1
+//    var k: Int = 0
+//
+//    for i in 1..<board.count {
+//        if board[i] - board[k] >= d {
+//            count += 1
+//            k = i
+//        }
+//    }
+//
+//    return count>=c
+//}
+//
+//while minDistance<=maxDistance {
+//    let mid: Int = (minDistance + maxDistance) / 2
+//    if check(mid) {
+//        result = max(result, mid)
+//        minDistance = mid + 1
+//    } else {
+//        maxDistance = mid - 1
+//    }
+//}
+//
+//print(result)
 
-var board: [Int] = []
-for _ in 0..<n {
-    board.append(Int(readLine()!)!)
-}
-board.sort()
 
-var minDistance: Int = 1
-var maxDistance: Int = board.last! - board.first!
-var result: Int = 1
+// MARK: - 백준 Gold5 2229번 조 짜기
+let n: Int = Int(readLine()!)!
+var score: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+var dp: [Int] = Array(repeating: 0, count: n+1)
 
-
-
-func check(_ d: Int) -> Bool {
-    var count: Int = 1
-    var k: Int = 0
+for i in 1...n {
+    var maxValue: Int = -1
+    var minValue: Int = 10001
     
-    for i in 1..<board.count {
-        if board[i] - board[k] >= d {
-            count += 1
-            k = i
-        }
-    }
-    
-    return count>=c
-}
-
-while minDistance<=maxDistance {
-    let mid: Int = (minDistance + maxDistance) / 2
-    if check(mid) {
-        result = max(result, mid)
-        minDistance = mid + 1
-    } else {
-        maxDistance = mid - 1
+    for j in stride(from: i, through: 1, by: -1) {
+        maxValue = max(score[j-1], maxValue)
+        minValue = min(score[j-1], minValue)
+        
+        let temp: Int = maxValue - minValue
+        
+        dp[i] = max(dp[j-1] + temp, dp[i])
     }
 }
 
-print(result)
+print(dp[n])
