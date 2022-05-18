@@ -16505,22 +16505,43 @@ import Foundation
 
 
 // MARK: - 백준 Gold5 2229번 조 짜기
-let n: Int = Int(readLine()!)!
-var score: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-var dp: [Int] = Array(repeating: 0, count: n+1)
+//let n: Int = Int(readLine()!)!
+//var score: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//var dp: [Int] = Array(repeating: 0, count: n+1)
+//
+//for i in 1...n {
+//    var maxValue: Int = -1
+//    var minValue: Int = 10001
+//
+//    for j in stride(from: i, through: 1, by: -1) {
+//        maxValue = max(score[j-1], maxValue)
+//        minValue = min(score[j-1], minValue)
+//
+//        let temp: Int = maxValue - minValue
+//
+//        dp[i] = max(dp[j-1] + temp, dp[i])
+//    }
+//}
+//
+//print(dp[n])
 
-for i in 1...n {
-    var maxValue: Int = -1
-    var minValue: Int = 10001
-    
-    for j in stride(from: i, through: 1, by: -1) {
-        maxValue = max(score[j-1], maxValue)
-        minValue = min(score[j-1], minValue)
-        
-        let temp: Int = maxValue - minValue
-        
-        dp[i] = max(dp[j-1] + temp, dp[i])
-    }
+// MARK: - 백준 Gold5 13164번 행복 유치원
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let n: Int = read[0]
+let k: Int = read[1]
+
+let child: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+
+var arr: [Int] = []
+for i in 0..<n-1 {
+    arr.append(child[i+1] - child[i])
 }
 
-print(dp[n])
+arr.sort()
+
+var result: Int = 0
+for i in 0..<n-k {
+    result += arr[i]
+}
+
+print(result)
