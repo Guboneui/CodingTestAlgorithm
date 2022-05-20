@@ -16526,22 +16526,49 @@ import Foundation
 //print(dp[n])
 
 // MARK: - 백준 Gold5 13164번 행복 유치원
-let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-let n: Int = read[0]
-let k: Int = read[1]
+//let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let n: Int = read[0]
+//let k: Int = read[1]
+//
+//let child: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//
+//var arr: [Int] = []
+//for i in 0..<n-1 {
+//    arr.append(child[i+1] - child[i])
+//}
+//
+//arr.sort()
+//
+//var result: Int = 0
+//for i in 0..<n-k {
+//    result += arr[i]
+//}
+//
+//print(result)
 
-let child: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+// MARK: - 백준 14051번 퇴사
 
-var arr: [Int] = []
-for i in 0..<n-1 {
-    arr.append(child[i+1] - child[i])
+let n: Int = Int(readLine()!)!
+var arrT: [Int] = Array(repeating: 0, count: n+1)
+var arrP: [Int] = Array(repeating: 0, count: n+1)
+var dp: [Int] = Array(repeating: 0, count: 1001)
+
+for i in 1...n {
+    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    arrT[i] = temp[0]
+    arrP[i] = temp[1]
+    dp[i] = temp[1]
 }
 
-arr.sort()
-
-var result: Int = 0
-for i in 0..<n-k {
-    result += arr[i]
+for i in stride(from: n, through: 1, by: -1) {
+    if arrT[i]+i <= n+1 {
+        dp[i] = max(dp[i+1], dp[i+arrT[i]] + arrP[i])
+    } else {
+        dp[i] = dp[i+1]
+    }
 }
 
-print(result)
+print(dp.max()!)
+
+
+
