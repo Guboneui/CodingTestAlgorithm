@@ -16548,27 +16548,48 @@ import Foundation
 
 // MARK: - 백준 14051번 퇴사
 
+//let n: Int = Int(readLine()!)!
+//var arrT: [Int] = Array(repeating: 0, count: n+1)
+//var arrP: [Int] = Array(repeating: 0, count: n+1)
+//var dp: [Int] = Array(repeating: 0, count: 1001)
+//
+//for i in 1...n {
+//    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    arrT[i] = temp[0]
+//    arrP[i] = temp[1]
+//    dp[i] = temp[1]
+//}
+//
+//for i in stride(from: n, through: 1, by: -1) {
+//    if arrT[i]+i <= n+1 {
+//        dp[i] = max(dp[i+1], dp[i+arrT[i]] + arrP[i])
+//    } else {
+//        dp[i] = dp[i+1]
+//    }
+//}
+//
+//print(dp.max()!)
+
+// MARK: - 백준 1463번 1로 만들기
 let n: Int = Int(readLine()!)!
-var arrT: [Int] = Array(repeating: 0, count: n+1)
-var arrP: [Int] = Array(repeating: 0, count: n+1)
-var dp: [Int] = Array(repeating: 0, count: 1001)
+var dp: [Int] = Array(repeating: 0, count: n+1)
 
 for i in 1...n {
-    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    arrT[i] = temp[0]
-    arrP[i] = temp[1]
-    dp[i] = temp[1]
-}
-
-for i in stride(from: n, through: 1, by: -1) {
-    if arrT[i]+i <= n+1 {
-        dp[i] = max(dp[i+1], dp[i+arrT[i]] + arrP[i])
-    } else {
-        dp[i] = dp[i+1]
+    if i == 1 {
+        dp[i] = 0
+        continue
+    }
+    
+    dp[i] = dp[i-1] + 1
+    
+    if i%2 == 0 {
+        dp[i] = min(dp[i], dp[i/2] + 1)
+    }
+    if i%3 == 0 {
+        dp[i] = min(dp[i], dp[i/3]+1)
     }
 }
 
-print(dp.max()!)
-
+print(dp.last!)
 
 
