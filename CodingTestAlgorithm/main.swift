@@ -16680,22 +16680,84 @@ import Foundation
 //    print(arr.map{String($0)}.joined(separator: " "))
 //}
 
-let n: Int = Int(readLine()!)!
-var graph: [[Int]] = []
-for _ in 0..<n {
-    graph.append(readLine()!.split(separator: " ").map{
-        $0 == "0" ? 999999999 : 0
-    })
-}
+//let n: Int = Int(readLine()!)!
+//var graph: [[Int]] = []
+//for _ in 0..<n {
+//    graph.append(readLine()!.split(separator: " ").map{
+//        $0 == "0" ? 999999999 : 0
+//    })
+//}
+//
+//for k in 0..<n {
+//    for i in 0..<n {
+//        for j in 0..<n {
+//            graph[i][j] = min(graph[i][j], graph[i][k] + graph[k][j])
+//        }
+//    }
+//}
+//
+//for arr in graph {
+//    print(arr.map{ $0 >= 999999999 ? 0 : 1}.map{String($0)}.joined(separator: " "))
+//}
 
-for k in 0..<n {
-    for i in 0..<n {
-        for j in 0..<n {
-            graph[i][j] = min(graph[i][j], graph[i][k] + graph[k][j])
+// MARK: - 백준 Silver1 2583번 영역 구하기
+let read: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+let m: Int = read[0]
+let n: Int = read[1]
+let rec: Int = read[2]
+
+var board: [[Int]] = Array(repeating: Array(repeating: 0, count: n), count: m)
+
+for _ in 0..<rec {
+    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    let x1: Int = temp[0]
+    let y1: Int = temp[1]
+    let x2: Int = temp[2]-1
+    let y2: Int = temp[3]-1
+    
+    for x in x1...x2 {
+        for y in y1...y2 {
+            board[y][x] = 1
         }
     }
 }
+let dx: [Int] = [1, -1, 0, 0]
+let dy: [Int] = [0, 0, 1, -1]
 
-for arr in graph {
-    print(arr.map{ $0 >= 999999999 ? 0 : 1}.map{String($0)}.joined(separator: " "))
+func bfs(_ x: Int, _ y: Int) -> Int {
+    var count: Int = 0
+    var queue: [(Int, Int)] = [(y, x)]
+    
+    while !queue.isEmpty {
+        let popValue: (Int, Int) = queue.removeFirst()
+        if board[popValue.0][popValue.1] == 0 {
+            board[popValue.0][popValue.1] = 1
+            for i in 0..<4 {
+                let nx: Int = popValue.1 + dx[i]
+                let ny: Int = popValue.0 + dy[i]
+                
+                if nx>=0 && nx<n && ny>=0 && ny<m && board[ny][nx] == 0 {
+                    queue.append((ny, nx))
+                }
+            }
+            count += 1
+        }
+        
+    }
+    
+    return count
 }
+
+var result: [Int] = []
+
+for i in 0..<m {
+    for j in 0..<n {
+        if board[i][j] == 0 {
+            result.append(bfs(j, i))
+        }
+        
+    }
+}
+
+print(result.count)
+print(result.sorted().map{String($0)}.joined(separator: " "))
