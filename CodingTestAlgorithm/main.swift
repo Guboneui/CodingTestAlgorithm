@@ -16566,30 +16566,84 @@ import Foundation
 //    } else {
 //        dp[i] = dp[i+1]
 //    }
+//    print(dp)
+//
 //}
 //
 //print(dp.max()!)
 
 // MARK: - 백준 1463번 1로 만들기
-let n: Int = Int(readLine()!)!
-var dp: [Int] = Array(repeating: 0, count: n+1)
+//let n: Int = Int(readLine()!)!
+//var dp: [Int] = Array(repeating: 0, count: n+1)
+//
+//for i in 1...n {
+//    if i == 1 {
+//        dp[i] = 0
+//        continue
+//    }
+//
+//    dp[i] = dp[i-1] + 1
+//
+//    if i%2 == 0 {
+//        dp[i] = min(dp[i], dp[i/2] + 1)
+//    }
+//    if i%3 == 0 {
+//        dp[i] = min(dp[i], dp[i/3]+1)
+//    }
+//}
+//
+//print(dp.last!)
+//
+//
 
-for i in 1...n {
-    if i == 1 {
-        dp[i] = 0
-        continue
-    }
-    
-    dp[i] = dp[i-1] + 1
-    
-    if i%2 == 0 {
-        dp[i] = min(dp[i], dp[i/2] + 1)
-    }
-    if i%3 == 0 {
-        dp[i] = min(dp[i], dp[i/3]+1)
+// MARK: - 백준 Silver1 2468번 안전 영역
+
+let n: Int = Int(readLine()!)!
+var board: [[Int]] = Array(repeating: Array(repeating: 0, count: n), count: n)
+var maxValue: Int = 0
+for i in 0..<n {
+    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    for j in 0..<temp.count {
+        board[i][j] = temp[j]
+        maxValue = max(maxValue, temp[j])
     }
 }
 
-print(dp.last!)
+var result: Int = 1
 
+let dx: [Int] = [1, -1, 0, 0]
+let dy: [Int] = [0, 0, 1, -1]
+
+
+func dfs(_ inputHeight: Int, _ x: Int, _ y: Int, _ visited: inout [[Bool]]) {
+    if visited[x][y] == false {
+        visited[x][y] = true
+        for i in 0..<4 {
+            let nx: Int = x + dx[i]
+            let ny: Int = y + dy[i]
+            if nx>=0 && nx<n && ny>=0 && ny<n && board[nx][ny] > inputHeight {
+                dfs(inputHeight, nx, ny, &visited)
+            }
+        }
+    }
+    
+}
+
+
+for height in 1...maxValue {
+    var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: n), count: n)
+    var count: Int = 0
+    for i in 0..<n {
+        for j in 0..<n {
+            if board[i][j] > height && visited[i][j] == false{
+                dfs(height, i, j, &visited)
+                count += 1
+            }
+        }
+    }
+    result = max(result, count)
+}
+
+
+print(result)
 
