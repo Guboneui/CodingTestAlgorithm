@@ -16598,52 +16598,85 @@ import Foundation
 
 // MARK: - 백준 Silver1 2468번 안전 영역
 
+//let n: Int = Int(readLine()!)!
+//var board: [[Int]] = Array(repeating: Array(repeating: 0, count: n), count: n)
+//var maxValue: Int = 0
+//for i in 0..<n {
+//    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    for j in 0..<temp.count {
+//        board[i][j] = temp[j]
+//        maxValue = max(maxValue, temp[j])
+//    }
+//}
+//
+//var result: Int = 1
+//
+//let dx: [Int] = [1, -1, 0, 0]
+//let dy: [Int] = [0, 0, 1, -1]
+//
+//
+//func dfs(_ inputHeight: Int, _ x: Int, _ y: Int, _ visited: inout [[Bool]]) {
+//    if visited[x][y] == false {
+//        visited[x][y] = true
+//        for i in 0..<4 {
+//            let nx: Int = x + dx[i]
+//            let ny: Int = y + dy[i]
+//            if nx>=0 && nx<n && ny>=0 && ny<n && board[nx][ny] > inputHeight {
+//                dfs(inputHeight, nx, ny, &visited)
+//            }
+//        }
+//    }
+//
+//}
+//
+//
+//for height in 1...maxValue {
+//    var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: n), count: n)
+//    var count: Int = 0
+//    for i in 0..<n {
+//        for j in 0..<n {
+//            if board[i][j] > height && visited[i][j] == false{
+//                dfs(height, i, j, &visited)
+//                count += 1
+//            }
+//        }
+//    }
+//    result = max(result, count)
+//}
+//
+//
+//print(result)
+
+// MARK: - 백준 Silver1 11403번 경로 찾기
 let n: Int = Int(readLine()!)!
-var board: [[Int]] = Array(repeating: Array(repeating: 0, count: n), count: n)
-var maxValue: Int = 0
+var graph: [[Int]] = Array(repeating: [Int](), count: n)
 for i in 0..<n {
     let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
     for j in 0..<temp.count {
-        board[i][j] = temp[j]
-        maxValue = max(maxValue, temp[j])
-    }
-}
-
-var result: Int = 1
-
-let dx: [Int] = [1, -1, 0, 0]
-let dy: [Int] = [0, 0, 1, -1]
-
-
-func dfs(_ inputHeight: Int, _ x: Int, _ y: Int, _ visited: inout [[Bool]]) {
-    if visited[x][y] == false {
-        visited[x][y] = true
-        for i in 0..<4 {
-            let nx: Int = x + dx[i]
-            let ny: Int = y + dy[i]
-            if nx>=0 && nx<n && ny>=0 && ny<n && board[nx][ny] > inputHeight {
-                dfs(inputHeight, nx, ny, &visited)
-            }
+        if temp[j] == 1 {
+            graph[i].append(j)
         }
     }
-    
 }
 
+var result: [[Int]] = []
 
-for height in 1...maxValue {
-    var visited: [[Bool]] = Array(repeating: Array(repeating: false, count: n), count: n)
-    var count: Int = 0
-    for i in 0..<n {
-        for j in 0..<n {
-            if board[i][j] > height && visited[i][j] == false{
-                dfs(height, i, j, &visited)
-                count += 1
-            }
+for i in 0..<n {
+    var arr: [Int] = Array(repeating: 0, count: n)
+    var queue: [Int] = graph[i]
+    var visited: [Bool] = Array(repeating: false, count: n)
+    while !queue.isEmpty {
+        let popValue: Int = queue.removeFirst()
+        if visited[popValue] == false {
+            visited[popValue] = true
+            arr[popValue] = 1
+            queue.append(contentsOf: graph[popValue])
         }
     }
-    result = max(result, count)
+    result.append(arr)
 }
 
-
-print(result)
+for arr in result {
+    print(arr.map{String($0)}.joined(separator: " "))
+}
 
