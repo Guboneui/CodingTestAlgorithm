@@ -16648,35 +16648,54 @@ import Foundation
 //print(result)
 
 // MARK: - 백준 Silver1 11403번 경로 찾기
+//let n: Int = Int(readLine()!)!
+//var graph: [[Int]] = Array(repeating: [Int](), count: n)
+//for i in 0..<n {
+//    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    for j in 0..<temp.count {
+//        if temp[j] == 1 {
+//            graph[i].append(j)
+//        }
+//    }
+//}
+//
+//var result: [[Int]] = []
+//
+//for i in 0..<n {
+//    var arr: [Int] = Array(repeating: 0, count: n)
+//    var queue: [Int] = graph[i]
+//    var visited: [Bool] = Array(repeating: false, count: n)
+//    while !queue.isEmpty {
+//        let popValue: Int = queue.removeFirst()
+//        if visited[popValue] == false {
+//            visited[popValue] = true
+//            arr[popValue] = 1
+//            queue.append(contentsOf: graph[popValue])
+//        }
+//    }
+//    result.append(arr)
+//}
+//
+//for arr in result {
+//    print(arr.map{String($0)}.joined(separator: " "))
+//}
+
 let n: Int = Int(readLine()!)!
-var graph: [[Int]] = Array(repeating: [Int](), count: n)
-for i in 0..<n {
-    let temp: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    for j in 0..<temp.count {
-        if temp[j] == 1 {
-            graph[i].append(j)
+var graph: [[Int]] = []
+for _ in 0..<n {
+    graph.append(readLine()!.split(separator: " ").map{
+        $0 == "0" ? 999999999 : 0
+    })
+}
+
+for k in 0..<n {
+    for i in 0..<n {
+        for j in 0..<n {
+            graph[i][j] = min(graph[i][j], graph[i][k] + graph[k][j])
         }
     }
 }
 
-var result: [[Int]] = []
-
-for i in 0..<n {
-    var arr: [Int] = Array(repeating: 0, count: n)
-    var queue: [Int] = graph[i]
-    var visited: [Bool] = Array(repeating: false, count: n)
-    while !queue.isEmpty {
-        let popValue: Int = queue.removeFirst()
-        if visited[popValue] == false {
-            visited[popValue] = true
-            arr[popValue] = 1
-            queue.append(contentsOf: graph[popValue])
-        }
-    }
-    result.append(arr)
+for arr in graph {
+    print(arr.map{ $0 >= 999999999 ? 0 : 1}.map{String($0)}.joined(separator: " "))
 }
-
-for arr in result {
-    print(arr.map{String($0)}.joined(separator: " "))
-}
-
