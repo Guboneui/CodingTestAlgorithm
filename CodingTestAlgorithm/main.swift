@@ -16764,18 +16764,72 @@ import Foundation
 
 
 //  MARK: - 백준 Silver1 1309번 동물원
-let n = Int(readLine()!)!
-let mod = 9901
+//let n = Int(readLine()!)!
+//let mod = 9901
+//
+//var dp = Array(repeating: [0,0,0], count: n)
+//dp[0] = [1,1,1]
+//
+//for i in 1..<n {
+//    dp[i][0] = (dp[i-1][1] + dp[i-1][2]) % mod
+//    dp[i][1] = (dp[i-1][0] + dp[i-1][2]) % mod
+//    dp[i][2] = (dp[i-1][0] + dp[i-1][1] + dp[i-1][2]) % mod
+//
+//}
+//
+//print(dp[n-1].reduce(0,+) % mod)
 
-var dp = Array(repeating: [0,0,0], count: n)
-dp[0] = [1,1,1]
 
-for i in 1..<n {
-    dp[i][0] = (dp[i-1][1] + dp[i-1][2]) % mod
-    dp[i][1] = (dp[i-1][0] + dp[i-1][2]) % mod
-    dp[i][2] = (dp[i-1][0] + dp[i-1][1] + dp[i-1][2]) % mod
-   
+// MARK: - 백준 Silver1 9205번 맥주 마시면서 걸어가기
+let textCases: Int = Int(readLine()!)!
+for _ in 0..<textCases {
+    let marketCount: Int = Int(readLine()!)!
+    let user: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    var markets: [[Int]] = []
+    for _ in 0..<marketCount {
+        markets.append(readLine()!.split(separator: " ").map{Int($0)!})
+    }
+    let festival: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+
+    var tempGraph: [[Int]] = []
+    tempGraph.append(user)
+    tempGraph.append(contentsOf: markets)
+    tempGraph.append(festival)
+    
+    var graph: [[Bool]] = Array(repeating: Array(repeating: false, count: tempGraph.count), count: tempGraph.count)
+    
+    for i in 0..<tempGraph.count {
+        for j in 0..<tempGraph.count {
+            if abs(tempGraph[i][0] - tempGraph[j][0]) + abs(tempGraph[i][1] - tempGraph[j][1]) <= 1000 {
+                graph[i][j] = true
+            }
+        }
+    }
+    
+    var result: [Bool] = Array(repeating: false, count: graph.count)
+    result[0] = true
+    
+    var stack: [Int] = [0]
+    
+    while !stack.isEmpty {
+        let popValue: Int = stack.removeLast()
+        for i in 0..<graph[popValue].count {
+            if graph[popValue][i] == true {
+                if result[i] == false {
+                    result[i] = true
+                    stack.append(i)
+                }
+            }
+        }
+        
+    }
+    
+    
+    
+    if result[tempGraph.count - 1] { print("happy")}
+    else { print("sad") }
+    
+    
 }
 
-print(dp[n-1].reduce(0,+) % mod)
 
