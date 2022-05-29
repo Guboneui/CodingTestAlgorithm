@@ -16781,55 +16781,85 @@ import Foundation
 
 
 // MARK: - 백준 Silver1 9205번 맥주 마시면서 걸어가기
-let textCases: Int = Int(readLine()!)!
-for _ in 0..<textCases {
-    let marketCount: Int = Int(readLine()!)!
-    let user: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    var markets: [[Int]] = []
-    for _ in 0..<marketCount {
-        markets.append(readLine()!.split(separator: " ").map{Int($0)!})
-    }
-    let festival: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//let textCases: Int = Int(readLine()!)!
+//for _ in 0..<textCases {
+//    let marketCount: Int = Int(readLine()!)!
+//    let user: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    var markets: [[Int]] = []
+//    for _ in 0..<marketCount {
+//        markets.append(readLine()!.split(separator: " ").map{Int($0)!})
+//    }
+//    let festival: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//
+//    var tempGraph: [[Int]] = []
+//    tempGraph.append(user)
+//    tempGraph.append(contentsOf: markets)
+//    tempGraph.append(festival)
+//
+//    var graph: [[Bool]] = Array(repeating: Array(repeating: false, count: tempGraph.count), count: tempGraph.count)
+//
+//    for i in 0..<tempGraph.count {
+//        for j in 0..<tempGraph.count {
+//            if abs(tempGraph[i][0] - tempGraph[j][0]) + abs(tempGraph[i][1] - tempGraph[j][1]) <= 1000 {
+//                graph[i][j] = true
+//            }
+//        }
+//    }
+//
+//    var result: [Bool] = Array(repeating: false, count: graph.count)
+//    result[0] = true
+//
+//    var stack: [Int] = [0]
+//
+//    while !stack.isEmpty {
+//        let popValue: Int = stack.removeLast()
+//        for i in 0..<graph[popValue].count {
+//            if graph[popValue][i] == true {
+//                if result[i] == false {
+//                    result[i] = true
+//                    stack.append(i)
+//                }
+//            }
+//        }
+//
+//    }
+//
+//
+//
+//    if result[tempGraph.count - 1] { print("happy")}
+//    else { print("sad") }
+//
+//
+//}
 
-    var tempGraph: [[Int]] = []
-    tempGraph.append(user)
-    tempGraph.append(contentsOf: markets)
-    tempGraph.append(festival)
+// MARK: - 백준 Silver1 12852번 1로 만들기2
+var n: Int = Int(readLine()!)!
+var dp: [(Int, Int)] = Array(repeating: (Int.max, 0), count: n+1)
+dp[0] = (0, 0)
+
+for i in 1...n {
+    dp[i] = (dp[i-1].0 + 1, i-1)
     
-    var graph: [[Bool]] = Array(repeating: Array(repeating: false, count: tempGraph.count), count: tempGraph.count)
-    
-    for i in 0..<tempGraph.count {
-        for j in 0..<tempGraph.count {
-            if abs(tempGraph[i][0] - tempGraph[j][0]) + abs(tempGraph[i][1] - tempGraph[j][1]) <= 1000 {
-                graph[i][j] = true
-            }
+    if i%2 == 0 && i>=2 {
+        if dp[i].0 > dp[i/2].0 + 1 {
+            dp[i] = (dp[i/2].0+1, i/2)
         }
     }
     
-    var result: [Bool] = Array(repeating: false, count: graph.count)
-    result[0] = true
-    
-    var stack: [Int] = [0]
-    
-    while !stack.isEmpty {
-        let popValue: Int = stack.removeLast()
-        for i in 0..<graph[popValue].count {
-            if graph[popValue][i] == true {
-                if result[i] == false {
-                    result[i] = true
-                    stack.append(i)
-                }
-            }
+    if i%3 == 0 && i>=3 {
+        if dp[i].0 > dp[i/3].0 + 1 {
+            dp[i] = (dp[i/3].0 + 1, i/3)
         }
-        
     }
-    
-    
-    
-    if result[tempGraph.count - 1] { print("happy")}
-    else { print("sad") }
-    
-    
 }
 
+var result: [Int] = []
+print(dp[n].0 - 1)
+
+while n>=1 {
+    result.append(n)
+    n = dp[n].1
+}
+
+print(result.map{String($0)}.joined(separator: " "))
 
