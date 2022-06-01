@@ -16833,33 +16833,79 @@ import Foundation
 //}
 
 // MARK: - 백준 Silver1 12852번 1로 만들기2
-var n: Int = Int(readLine()!)!
-var dp: [(Int, Int)] = Array(repeating: (Int.max, 0), count: n+1)
-dp[0] = (0, 0)
+//var n: Int = Int(readLine()!)!
+//var dp: [(Int, Int)] = Array(repeating: (Int.max, 0), count: n+1)
+//dp[0] = (0, 0)
+//
+//for i in 1...n {
+//    dp[i] = (dp[i-1].0 + 1, i-1)
+//
+//    if i%2 == 0 && i>=2 {
+//        if dp[i].0 > dp[i/2].0 + 1 {
+//            dp[i] = (dp[i/2].0+1, i/2)
+//        }
+//    }
+//
+//    if i%3 == 0 && i>=3 {
+//        if dp[i].0 > dp[i/3].0 + 1 {
+//            dp[i] = (dp[i/3].0 + 1, i/3)
+//        }
+//    }
+//}
+//
+//var result: [Int] = []
+//print(dp[n].0 - 1)
+//
+//while n>=1 {
+//    result.append(n)
+//    n = dp[n].1
+//}
+//
+//print(result.map{String($0)}.joined(separator: " "))
+//
 
-for i in 1...n {
-    dp[i] = (dp[i-1].0 + 1, i-1)
-    
-    if i%2 == 0 && i>=2 {
-        if dp[i].0 > dp[i/2].0 + 1 {
-            dp[i] = (dp[i/2].0+1, i/2)
+// MARK: - 백준 Silver1 1495번 기타리스트
+let input = readLine()!.split(separator : " ").map{Int(String($0))!}
+
+let list = [0] + readLine()!.split(separator : " ").map{Int(String($0))!}
+
+let N = input[0], S = input[1], M = input[2]
+
+var dp = Array(repeating : Array(repeating : false , count : M+1),count:N+1)
+dp[0][S] = true
+
+var last = 0
+for i in 1...N {
+    var isCan = false
+    for j in 0...M {
+        let before = dp[i-1][j]
+        if before {
+            let minus = j - list[i]
+            if  minus >= 0 {
+                dp[i][minus] = true
+                isCan = true
+            }
+            let plus = j + list[i]
+            if plus <= M {
+                dp[i][plus] = true
+                isCan = true
+            }
         }
     }
-    
-    if i%3 == 0 && i>=3 {
-        if dp[i].0 > dp[i/3].0 + 1 {
-            dp[i] = (dp[i/3].0 + 1, i/3)
-        }
+    last = i
+    if !isCan {
+        break }
+}
+
+var answer = -1
+for i in (0...M).reversed() {
+    if dp[last][i] {
+        answer = i
+        break
     }
 }
 
-var result: [Int] = []
-print(dp[n].0 - 1)
+print(answer == -1 ? -1 : answer)
+[출처] 기타리스트 - 백준 1495 - swift|작성자 현무
 
-while n>=1 {
-    result.append(n)
-    n = dp[n].1
-}
-
-print(result.map{String($0)}.joined(separator: " "))
 
