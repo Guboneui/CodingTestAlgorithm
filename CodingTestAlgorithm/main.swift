@@ -16779,4 +16779,50 @@ import Foundation
 //
 //print(dp[n-1].reduce(0,+) % mod)
 
-
+// MARK: - 백준 Silver1 맥주 마시면서 걸어가기
+let testCases: Int = Int(readLine()!)!
+for _ in 0..<testCases {
+    let marketCount: Int = Int(readLine()!)!
+    let user: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    var market: [[Int]] = []
+    for _ in 0..<marketCount {
+        market.append(readLine()!.split(separator: " ").map{Int($0)!})
+    }
+    let festival: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+    
+    func distance(x1: Int, y1: Int, x2: Int, y2: Int) -> Bool {
+        if abs(x1 - x2) + abs(y1 - y2) <= 1000 { return true }
+        else { return false }
+    }
+    
+    market.insert(user, at: 0)
+    market.append(festival)
+    var graph: [[Int]] = Array(repeating: [Int](), count: marketCount+2)
+    
+    for i in 0..<market.count {
+        for j in i+1..<market.count {
+            if distance(x1: market[i][0], y1: market[i][1], x2: market[j][0], y2: market[j][1]) {
+                graph[i].append(j)
+                graph[j].append(i)
+            }
+        }
+    }
+    
+    
+    var visited: [Bool] = Array(repeating: false, count: market.count)
+    visited[0] = true
+    var queue: [Int] = graph[0]
+    
+    while !queue.isEmpty {
+        let popValue: Int = queue.removeFirst()
+        if visited[popValue] == false {
+            visited[popValue] = true
+            queue.append(contentsOf: graph[popValue])
+        }
+    }
+    
+    if visited.last == true { print("happy")}
+    else { print("sad") }
+    
+    
+}
