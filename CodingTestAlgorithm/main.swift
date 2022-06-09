@@ -16780,49 +16780,77 @@ import Foundation
 //print(dp[n-1].reduce(0,+) % mod)
 
 // MARK: - 백준 Silver1 맥주 마시면서 걸어가기
-let testCases: Int = Int(readLine()!)!
-for _ in 0..<testCases {
-    let marketCount: Int = Int(readLine()!)!
-    let user: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    var market: [[Int]] = []
-    for _ in 0..<marketCount {
-        market.append(readLine()!.split(separator: " ").map{Int($0)!})
-    }
-    let festival: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
-    
-    func distance(x1: Int, y1: Int, x2: Int, y2: Int) -> Bool {
-        if abs(x1 - x2) + abs(y1 - y2) <= 1000 { return true }
-        else { return false }
-    }
-    
-    market.insert(user, at: 0)
-    market.append(festival)
-    var graph: [[Int]] = Array(repeating: [Int](), count: marketCount+2)
-    
-    for i in 0..<market.count {
-        for j in i+1..<market.count {
-            if distance(x1: market[i][0], y1: market[i][1], x2: market[j][0], y2: market[j][1]) {
-                graph[i].append(j)
-                graph[j].append(i)
-            }
-        }
-    }
-    
-    
-    var visited: [Bool] = Array(repeating: false, count: market.count)
-    visited[0] = true
-    var queue: [Int] = graph[0]
-    
-    while !queue.isEmpty {
-        let popValue: Int = queue.removeFirst()
-        if visited[popValue] == false {
-            visited[popValue] = true
-            queue.append(contentsOf: graph[popValue])
-        }
-    }
-    
-    if visited.last == true { print("happy")}
-    else { print("sad") }
-    
-    
+//let testCases: Int = Int(readLine()!)!
+//for _ in 0..<testCases {
+//    let marketCount: Int = Int(readLine()!)!
+//    let user: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//    var market: [[Int]] = []
+//    for _ in 0..<marketCount {
+//        market.append(readLine()!.split(separator: " ").map{Int($0)!})
+//    }
+//    let festival: [Int] = readLine()!.split(separator: " ").map{Int($0)!}
+//
+//    func distance(x1: Int, y1: Int, x2: Int, y2: Int) -> Bool {
+//        if abs(x1 - x2) + abs(y1 - y2) <= 1000 { return true }
+//        else { return false }
+//    }
+//
+//    market.insert(user, at: 0)
+//    market.append(festival)
+//    var graph: [[Int]] = Array(repeating: [Int](), count: marketCount+2)
+//
+//    for i in 0..<market.count {
+//        for j in i+1..<market.count {
+//            if distance(x1: market[i][0], y1: market[i][1], x2: market[j][0], y2: market[j][1]) {
+//                graph[i].append(j)
+//                graph[j].append(i)
+//            }
+//        }
+//    }
+//
+//
+//    var visited: [Bool] = Array(repeating: false, count: market.count)
+//    visited[0] = true
+//    var queue: [Int] = graph[0]
+//
+//    while !queue.isEmpty {
+//        let popValue: Int = queue.removeFirst()
+//        if visited[popValue] == false {
+//            visited[popValue] = true
+//            queue.append(contentsOf: graph[popValue])
+//        }
+//    }
+//
+//    if visited.last == true { print("happy")}
+//    else { print("sad") }
+//
+//
+//}
+
+
+// MARK: - 백준 Silver1 21758번 꿀 따기
+
+let n: Int = Int(readLine()!)!
+let board: [Int] = [0] + readLine()!.split(separator: " ").map{Int($0)!}
+var sum: [Int] = board
+
+for i in 1...n {
+    sum[i] = sum[i-1] + board[i]
 }
+
+func cal(start: Int, end: Int) -> Int {
+    return sum[end] - sum[start-1]
+}
+
+var result: Int = 0
+
+for i in 2..<n {
+    // 벌통이 가운데 있는 경우
+    result = max(result, cal(start: 2, end: i) + cal(start: i, end: n-1))
+    // 벌통이 오른쪽 끝에 있는 경우
+    result = max(result, cal(start: 2, end: n) + cal(start: i+1, end: n) - board[i])
+    // 벌통이 왼쪽 끝에 있는 경우
+    result = max(result, cal(start: 1, end: n-1) + cal(start: 1, end: i-1) - board[i])
+}
+
+print(result)
